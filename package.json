@@ -1,6 +1,16 @@
 {
-  "name": "drizzle-box",
+  "name": "rfai-dapp",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singnet/snet-rfai-dapp.git"
+  },
+  "author": "SingularityNET Foundation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/singnet/snet-rfai-dapp/issues"
+  },
+  "homepage": "https://github.com/singnet/snet-rfai-dapp#readme",
   "devDependencies": {
     "ganache-cli": "^6.2.5",
     "openzeppelin-solidity": "^1.12.0",
@@ -11,6 +21,7 @@
   "dependencies": {
     "@material-ui/core": "^3.1.1",
     "@material-ui/icons": "^3.0.2",
+    "aws-sdk": "^2.279.1",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -55,7 +66,8 @@
     "redux-saga": "^0.16.2",
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
-    "singularitynet-token-contracts": "2.0.0",
+    "recursive-readdir": "^2.2.2",
+    "singularitynet-token-contracts": "2.0.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
@@ -67,10 +79,11 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "truffle compile && node scripts/build.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "chain": "ganache-cli",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "deploy": "node scripts/deploy.js rfai.singularitynet.io us-east-1"
   },
   "jest": {
     "collectCoverageFrom": [
