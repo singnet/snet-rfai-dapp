@@ -7,10 +7,8 @@ import RequestList from './components/RequestList'
 import RequestsTab from './components/RequestsTab'
 
 class Home extends Component {
-
   constructor(props, context) {
     super(props)
-
     this.contracts = context.drizzle.contracts
 
     this.handleHomeButton = this.handleHomeButton.bind(this)
@@ -21,7 +19,6 @@ class Home extends Component {
       showViewPage: false,
       readonly: true
     }
-
   }
 
   handleHomeButton() {
@@ -33,7 +30,6 @@ class Home extends Component {
   }
 
   render() {
-
     return (
       <main >
         <LandingPage handlerViewPage={this.handleViewRequest}/>
