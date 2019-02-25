@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/singnet/snet-rfai-dapp/issues"
   },
-  "homepage": "https://github.com/singnet/snet-rfai-dapp#readme",
+  "homepage": "https://github.com/",
   "devDependencies": {
     "ganache-cli": "^6.2.5",
     "openzeppelin-solidity": "^1.12.0",
