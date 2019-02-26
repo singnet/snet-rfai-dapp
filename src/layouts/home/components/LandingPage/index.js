@@ -137,10 +137,10 @@ class LandingPage extends Component {
             <div className="main">
               <div className="row">
                 <div className="col-12">
-                  <h2>Request for AI</h2>
-                    <p className="tagline">Lorem ipsum dolor sit amet, vim congue. </p>            
-                  </div>
+                  { /*<h2>Request for AI</h2>
+                  <p className="tagline">Lorem ipsum dolor sit amet, vim congue. </p>  */ }
                 </div>
+              </div>
                 { /* <button className="blue"  onClick = {this.handleCreateButton}>Create Request</button>
                 <button className="blue ml-4" onClick = {this.props.handlerViewPage}>View Request</button> */ }
               </div> 

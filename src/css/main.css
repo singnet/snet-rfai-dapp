@@ -427,4 +427,26 @@ section.sections.active {
   font-weight: bold;
 }
 
+
+/* changes for page tables */
+.singularity-accordion-main { 
+  width: 77%;
+  margin: 30px auto;
+ }
+
+ .singularity-tabs { box-shadow: none; }
+
+ .singularity-tab {
+  font-weight: normal; 
+  font-size: 14px;
+  outline: none; 
+}
+
+.singularity-stake-details div { padding: 0; }
+
+.main-content .accordion-header.card { width: 100%; }
+
+@media(max-width: 959px) {
+  .singularity-tab { min-width: 160px !important; }
+}
 /*# sourceMappingURL=main.css.map */
