@@ -96,27 +96,27 @@ class ContractConfig extends Component {
           <p>RFAI Contract Configurations</p>
 
           <form className="pure-form pure-form-stacked">
-          <div class="row">
-            <div class="col-4">
-                <div class="singularity-token-counter">
+          <div className="row">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Minimum Stake: <span>{minStake} AGI</span></p>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="singularity-token-counter">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Maximum Stakers: <span>{this.state.maxStakers}</span></p>
                 </div>            
             </div>
-            <div class="col-4">
-                <div class="singularity-token-counter">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Number of Requests: <span>{this.state.nextRequestId}</span></p>
                 </div>                        
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-                <div class="spacer"></div>
-                <label>Contract Owner:</label> <div class="clearfix"></div>
+          <div className="row">
+            <div className="col">
+                <div className="spacer"></div>
+                <label>Contract Owner:</label> <div className="clearfix"></div>
                 <label>{this.state.owner}</label>
             </div>
           </div>            

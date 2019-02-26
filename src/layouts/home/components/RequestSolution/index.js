@@ -202,7 +202,7 @@ class RequestSolution extends Component {
                 <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
                 <TableCell style={tableColStyles} align="right">
                   {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
-                  <button class="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
+                  <button className="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
                   <button className="blue float-right ml-4" disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
                 </TableCell>                
               </TableRow>

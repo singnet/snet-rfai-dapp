@@ -390,9 +390,9 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails>
               <div className="row singularity-stake-details">
                   <div className="col-8">
-                      <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                      <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                      <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
+                      <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
+                      <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
+                      <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
                   </div>                                        
               </div>
           </ExpansionPanelDetails>
@@ -402,9 +402,9 @@ class RequestListV2 extends Component {
             <ExpansionPanelDetails>
               <div className="row singularity-stake-details">
                     <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
+                        <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
+                        <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
+                        <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
                     </div>                                        
                 </div>
             </ExpansionPanelDetails>
@@ -414,9 +414,9 @@ class RequestListV2 extends Component {
             <ExpansionPanelDetails>
               <div className="row singularity-stake-details">
                     <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
+                        <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
+                        <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
+                        <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
                     </div>                                        
                 </div>
             </ExpansionPanelDetails>
@@ -426,9 +426,9 @@ class RequestListV2 extends Component {
             <ExpansionPanelDetails>
                 <div className="row singularity-stake-details">
                     <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
+                        <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
+                        <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
+                        <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
                     </div>                                        
                 </div>
             </ExpansionPanelDetails>
@@ -438,9 +438,9 @@ class RequestListV2 extends Component {
             <ExpansionPanelDetails>
                 <div className="row singularity-stake-details">
                     <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span>  <span>{r.requester}</span></div>
-                        <div>d<span class="singularity-label">ocumentURI:</span>  <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span>  <span>{r.expiration}</span></div>
+                        <div><span className="singularity-label">Requester:</span>  <span>{r.requester}</span></div>
+                        <div>d<span className="singularity-label">ocumentURI:</span>  <span>{docURI}</span></div>
+                        <div><span className="singularity-label">Expiry:</span>  <span>{r.expiration}</span></div>
                     </div>                                        
                 </div>
             </ExpansionPanelDetails>
@@ -599,15 +599,15 @@ class RequestListV2 extends Component {
                             <div > 
                                 <p><strong>Submit Solution to Request Id - {this.state.selectedRequestId} </strong></p>
                                 <form className="pure-form pure-form-stacked">
-                                  <div class="singularity-content">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label>Solution Document URI:</label><div class="clearfix"></div>
+                                  <div className="singularity-content">
+                                    <div className="row">
+                                        <div className="col">
+                                            <label>Solution Document URI:</label><div className="clearfix"></div>
                                             <input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} />
-                                            <div class="spacer"></div>
+                                            <div className="spacer"></div>
                                         </div>
                                     </div>
-                                    <button type="button" class="blue" onClick={this.handleSubmitSolution2Button}>Submit</button>
+                                    <button type="button" className="blue" onClick={this.handleSubmitSolution2Button}>Submit</button>
                                   </div>
                                 </form>
                             </div>

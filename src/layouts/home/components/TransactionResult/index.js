@@ -86,9 +86,9 @@ console.log("txnStatus - " + txnStatus);
           <div> 
             { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
           </div>
-          <div class="singularity-status-text">
-            <p><label class="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus}</p>
-            <p><label class="singularity-gen-label">Txn Hash:</label><div class="clearfix"></div> {this.state.txnHash}</p>            
+          <div className="singularity-status-text">
+            <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus}</p>
+            <p><label className="singularity-gen-label">Txn Hash:</label><div className="clearfix"></div> {this.state.txnHash}</p>            
           </div>
         </div>
         </Paper>

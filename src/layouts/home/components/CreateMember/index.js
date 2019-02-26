@@ -169,30 +169,30 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
         <Paper style={styles} elevation={0} className="singularity-content">
           <p>Add Foundation Member: </p>
           <form className="pure-form pure-form-stacked">
-            <div class="row">
-                <div class="col">
-                    <label>Member address:</label> <div class="clearfix"></div>
+            <div className="row">
+                <div className="col">
+                    <label>Member address:</label> <div className="clearfix"></div>
                     <input className="singularity-input" name="memberAddress" type="text" placeholder="Member address:" autoComplete='off' value={this.state.memberAddress} onChange={this.handleMemberInputChange} /> 
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer-small"></div>                
-                    <label> Role: </label><div class="clearfix"></div>
+            <div className="row">
+                <div className="col">
+                    <div className="spacer-small"></div>                
+                    <label> Role: </label><div className="clearfix"></div>
                     <select name="memberRole" defaultValue="0" onChange={this.handleMemberRoleChange}>
                         <option value="1">Admin</option>
                         <option value="0">Normal</option>
                     </select> 
                 </div>
-                <div class="col">
-                    <div class="spacer-small"></div>                
-                    <label> Status: </label><div class="clearfix"></div>
+                <div className="col">
+                    <div className="spacer-small"></div>                
+                    <label> Status: </label><div className="clearfix"></div>
                     <input name="memberStatus" type="checkbox" checked={this.state.memberStatus} onChange={this.handleMemberStatusChange}/> 
                 </div>        
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer-small"></div>                                
+            <div className="row">
+                <div className="col">
+                    <div className="spacer-small"></div>                                
                     <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleCreateButton}>Create</Button>                
                 </div>
             </div>            

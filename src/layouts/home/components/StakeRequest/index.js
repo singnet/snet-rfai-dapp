@@ -182,13 +182,13 @@ class StakeRequest extends Component {
         <Paper style={styles} elevation={0} className="singularity-content">
             <p>Stake Token for Request Id - {this.state.requestId} </p>
             <form className="pure-form pure-form-stacked">
-              <div class="row">
-                <div class="col-6">
-                    <label>Tokens to Stake:</label> <div class="clearfix"></div>
+              <div className="row">
+                <div className="col-6">
+                    <label>Tokens to Stake:</label> <div className="clearfix"></div>
                     <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to Stake:" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
                 </div>
-                <div class="col-6">
-                    <div class="singularity-token-counter">
+                <div className="col-6">
+                    <div className="singularity-token-counter">
                         <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
                     </div>
                 </div>

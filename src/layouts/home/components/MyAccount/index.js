@@ -54,8 +54,8 @@ class MyAccount extends Component {
     const selectedTab = this.state.selectedTab;
     
     return ( 
-      <div class="main-content">
-      <div class="singularity-accordion"> {/*  class="main" Looks like this style has fixed width for the Tab Control...*/}
+      <div className="main-content">
+      <div className="singularity-accordion"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
         <AppBar className="singularity-accordion-header" position="static" color="default">
           <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange}>
             <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />

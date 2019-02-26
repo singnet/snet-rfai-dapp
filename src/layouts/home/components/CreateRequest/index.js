@@ -176,30 +176,30 @@ class CreateRequest extends Component {
       <div>
         {/* <Paper style={styles} elevation={5}> */}
           <form className="pure-form pure-form-stacked">
-          <div class="singularity-content">
-            <div class="row">
-                <div class="col">
-                    <label>Tokens to stake:</label><div class="clearfix"></div>
+          <div className="singularity-content">
+            <div classN="row">
+                <div className="col">
+                    <label>Tokens to stake:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Expiration block number:</label><div class="clearfix"></div>
+            <div className="row">
+                <div className="col">
+                    <div className="spacer"></div>                
+                    <label>Expiration block number:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} /> 
                 </div>
             </div>
-            <div class="row">            
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div class="clearfix"></div>
+            <div className="row">            
+                <div className="col">
+                    <div className="spacer"></div>                
+                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div className="clearfix"></div>
                 </div>
             </div>    
-            <div class="row">
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Document URI:</label><div class="clearfix"></div>
+            <div className="row">
+                <div className="col">
+                    <div className="spacer"></div>                
+                    <label>Document URI:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
                 </div>
             </div>    

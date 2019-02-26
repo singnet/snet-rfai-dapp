@@ -171,27 +171,27 @@ class DepositToken extends Component {
           <p>Deposit Token to RFAI Escrow Contract </p>
 
           <form className="pure-form pure-form-stacked">
-          <div class="row">
-            <div class="col-4">
-                <div class="singularity-token-counter">
+          <div className="row">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Token Balance: <span>{tknBalance} AGI</span></p>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="singularity-token-counter">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
                 </div>            
             </div>
-            <div class="col-4">
-                <div class="singularity-token-counter">
+            <div className="col-4">
+                <div className="singularity-token-counter">
                     <p>Token Allowance: <span>{tknAllowance} AGI</span></p>
                 </div>                        
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-                <div class="spacer"></div>
-                <label>Tokens to Deposit:</label> <div class="clearfix"></div>
+          <div className="row">
+            <div className="col">
+                <div className="spacer"></div>
+                <label>Tokens to Deposit:</label> <div className="clearfix"></div>
                 <input className="singularity-input" name="depositAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.depositAmount} onChange={this.handleAmountInputChange} />
             </div>
           </div>

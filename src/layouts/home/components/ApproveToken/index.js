@@ -130,13 +130,13 @@ console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + co
           <p>Approve Tokens to spend by RFAI Escrow Contract </p>
 
           <form className="pure-form pure-form-stacked">
-          <div class="row">
-            <div class="col-6">
-                <label>Tokens to Approve:</label> <div class="clearfix"></div>
+          <div className="row">
+            <div className="col-6">
+                <label>Tokens to Approve:</label> <div className="clearfix"></div>
                 <input className="singularity-input" name="approveAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
             </div>
-            <div class="col-6">
-                <div class="singularity-token-counter">
+            <div className="col-6">
+                <div className="singularity-token-counter">
                     <p>Approved allowance: <span>{tknAllowance} AGI</span></p>
                 </div>
                 

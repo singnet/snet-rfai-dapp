@@ -120,34 +120,34 @@ console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + thi
     return (
       <div>
         <form className="pure-form pure-form-stacked">
-          <div class="singularity-content">
-            <div class="row">
-                <div class="col">
-                    <label>End submission block number:</label><div class="clearfix"></div>
+          <div className="singularity-content">
+            <div className="row">
+                <div className="col">
+                    <label>End submission block number:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="endSubmission" type="number" placeholder="End of Submission:" autoComplete='off' value={this.state.endSubmission} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label>End evaluation block number:</label><div class="clearfix"></div>
+            <div className="row">
+                <div className="col">
+                    <label>End evaluation block number:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="endEvaluation" type="number" placeholder="End of Evaluation:" autoComplete='off' value={this.state.endEvaluation} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
                 </div>
             </div>
-            <div class="row">
-                <div class="col">          
-                    <label>Expiration block number:</label><div class="clearfix"></div>
+            <div className="row">
+                <div className="col">          
+                    <label>Expiration block number:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="newExpiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.newExpiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
             
                 </div>
             </div>
-            <div class="row">            
-                <div class="col">
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div class="clearfix"></div>
-                    <div class="spacer"></div>
+            <div className="row">            
+                <div className="col">
+                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div className="clearfix"></div>
+                    <div className="spacer"></div>
                 </div>
             </div>    
 
-            <button type="button" class="blue" onClick={this.handleApproveButton}>Submit</button>
+            <button type="button" className="blue" onClick={this.handleApproveButton}>Submit</button>
             </div>
           </form>
 

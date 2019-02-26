@@ -156,7 +156,7 @@ class RequestStakeDetails extends Component {
   render() {
  
     return (
-      <div class="singularity-dialog-table-class">
+      <div className="singularity-dialog-table-class">
         <Paper styles={rootStyles}>
           <Table style={tableStyles} elevation={0}>
             <TableHead>
