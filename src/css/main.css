@@ -449,7 +449,7 @@ section.sections.active {
 .account-table {
   width: 510px;
   padding: 15px;
-  margin: 30px auto 0;
+  margin: 30px auto;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
 
@@ -462,13 +462,6 @@ section.sections.active {
   outline: none;
   font-size: 14px;
   font-weight: normal;
-}
-
-.account-table .singularity-input {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #999;
-  padding: 5px;
 }
 
 .singularity-token-counter {
@@ -490,7 +483,8 @@ section.sections.active {
 
 }
 
-.account-table .singularity-button-blue {
+.account-table .singularity-button-blue,
+.admin-table .singularity-button-blue {
   outline: 0;
   font-size: 13px;
   color: #fff;
@@ -502,7 +496,8 @@ section.sections.active {
   cursor: pointer;
 }
 
-.account-table .singularity-button-blue:hover {
+.account-table .singularity-button-blue:hover,
+.admin-table .singularity-button-blue:hover {
   color: #02304f;
   background: #c0e4fd;
 }
@@ -510,7 +505,7 @@ section.sections.active {
 .admin-table {
   width: 500px;
   padding: 15px;
-  margin: 30px auto 0;
+  margin: 30px auto;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
 
@@ -525,6 +520,8 @@ section.sections.active {
   outline: none;
 }
 
+.admin-table .singularity-table { box-shadow: none; }
+
 .create-request-form {
   width: 500px;
   padding: 15px;
@@ -532,7 +529,7 @@ section.sections.active {
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
 
-.create-request-form .singularity-input {
+.singularity-input {
   width: 100%;
   padding: 5px;
   border: none;
@@ -543,8 +540,13 @@ section.sections.active {
   margin-bottom: 0;
 }
 
-.create-request-form .spacer {
+.spacer {
   margin-top: 30px;
+  height: 1px;
+}
+
+.spacer-small {
+  margin-top: 15px;
   height: 1px;
 }
 
