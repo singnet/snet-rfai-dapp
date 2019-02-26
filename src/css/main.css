@@ -446,6 +446,67 @@ section.sections.active {
 
 .main-content .accordion-header.card { width: 100%; }
 
+.account-table {
+  width: 510px;
+  padding: 15px;
+  margin: 30px auto 0;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.account-table .singularity-accordion-header {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.account-table .singularity-accordion-tab {
+  outline: none;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.account-table .singularity-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 5px;
+}
+
+.singularity-token-counter {
+    background: #7dc7fc;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.singularity-token-counter p {
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+
+.singularity-token-counter p span {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+
+}
+
+.account-table .singularity-button-blue {
+  outline: 0;
+  font-size: 13px;
+  color: #fff;
+  border-radius: 200px;
+  margin-top: 30px;
+  padding: 10px 18px;
+  background: #4cb4fa;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.account-table .singularity-button-blue:hover {
+  color: #02304f;
+  background: #c0e4fd;
+}
+
 @media(max-width: 959px) {
   .singularity-tab { min-width: 160px !important; }
 }
