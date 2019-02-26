@@ -26,12 +26,10 @@ TabContainer.propTypes = {
 };
 
 class MyAccount extends Component {
-
   constructor(props, context) {
     super(props)
 
     this.contracts = context.drizzle.contracts;
-
     this.state = {
       selectedTab: 0,
       dialogOpen: false,
@@ -39,23 +37,18 @@ class MyAccount extends Component {
     }
   }
 
-  componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-  }
+  componentDidMount() {}
+  componentDidUpdate(prevProps, prevState) {}
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
   };
 
   render() {
-
     const selectedTab = this.state.selectedTab;
-    
     return ( 
       <div className="main-content">
-      <div className="singularity-accordion"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
+      <div className="singularity-accordion account-table"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
         <AppBar className="singularity-accordion-header" position="static" color="default">
           <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange}>
             <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />

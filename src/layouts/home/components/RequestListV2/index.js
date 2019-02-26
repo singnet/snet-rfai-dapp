@@ -524,11 +524,9 @@ class RequestListV2 extends Component {
               <div className="accordion-header card">
                   <div className="card-header">
                         <div className="row singularity-stake-details">
-                          <div className="col-3"><span className="float-left text-left">Request Id</span></div>
-                          <div className="col-5"><span className="float-left text-left">Requester</span></div>
-                          <div className="col-3"><span className="float-right text-right">Total Funds (AGI)</span></div>
-                          <div className="col-1">
-                          </div>
+                          <div className="col-4"><span className="float-left text-left">Request Id</span></div>
+                          <div className="col-4"><span className="float-left text-left">Requester</span></div>
+                          <div className="col-4"><span className="float-right text-right">Total Funds (AGI)</span></div>
                       </div>
                   </div>
               </div>
