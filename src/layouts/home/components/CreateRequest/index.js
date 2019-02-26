@@ -175,9 +175,9 @@ class CreateRequest extends Component {
     return (
       <div>
         {/* <Paper style={styles} elevation={5}> */}
-          <form className="pure-form pure-form-stacked">
+          <form className="pure-form pure-form-stacked create-request-form">
           <div className="singularity-content">
-            <div classN="row">
+            <div className="row">
                 <div className="col">
                     <label>Tokens to stake:</label><div className="clearfix"></div>
                     <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            

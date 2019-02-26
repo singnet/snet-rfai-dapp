@@ -525,6 +525,29 @@ section.sections.active {
   outline: none;
 }
 
+.create-request-form {
+  width: 500px;
+  padding: 15px;
+  margin: 30px auto;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.create-request-form .singularity-input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #999;
+}
+
+.create-request-form .singularity-content {
+  margin-bottom: 0;
+}
+
+.create-request-form .spacer {
+  margin-top: 30px;
+  height: 1px;
+}
+
 @media(max-width: 959px) {
   .singularity-tab { min-width: 160px !important; }
 }
