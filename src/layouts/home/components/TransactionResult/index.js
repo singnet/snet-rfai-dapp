@@ -57,11 +57,16 @@ console.log(" this.props.transactionStack[this.state.stackId] - " + this.props.t
 console.log("txnHash - " + txnHash)
       this.setState({txnHash});
       // Status Will Changes from Pending to Success - Logic can be implemented accordingly
-      const txnStatus = this.props.transactions[txnHash].status
-      this.setState({txnStatus});
-console.log("txnStatus - " + txnStatus);
-      if(txnStatus !== "Pending")
-        this.setState({loadingIndicator: false});
+      if(this.props.transactions[txnHash]) {
+
+        const txnStatus = this.props.transactions[txnHash].status
+        this.setState({txnStatus});
+  console.log("txnStatus - " + txnStatus);
+        if(txnStatus !== "pending" )
+          this.setState({loadingIndicator: false});
+
+      }
+
     }
   }
 

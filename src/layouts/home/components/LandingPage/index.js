@@ -39,12 +39,66 @@ class LandingPage extends Component {
     this.showMenu = this.showMenu.bind(this);
 
     this.state = {
+      dataKeyMemberKeys: null,
+      foundationMembers: [],
+      dataKeyOwner: null,
+      owner: null,
+      isFoundationMember: false,
       dialogCreateRequest: false,
       dialogMyAccount: false,
       dialogAdmin: false,
       anchorEl: null,
       alertText: '',
       showMenu: false
+    }
+  }
+  componentDidMount() {
+    const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
+    this.setState({dataKeyMemberKeys})
+    this.setFoundationMembers(this.props.ServiceRequest)
+
+    const dataKeyOwner  = this.contracts.ServiceRequest.methods.owner.cacheCall();
+    this.setState({dataKeyOwner})
+    this.setOwner(this.props.ServiceRequest)
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyMemberKeys !== prevState.dataKeyMemberKeys) {
+        this.setFoundationMembers(this.props.ServiceRequest)
+    }
+    if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyOwner !== prevState.dataKeyOwner) {
+      this.setOwner(this.props.ServiceRequest)
+    }
+  }
+
+  setFoundationMembers(contract) {
+
+    if (contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys] !== undefined && this.state.dataKeyMemberKeys !== null) {
+      this.setState({
+        foundationMembers: contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].value
+      }, () => {
+        const exists = this.state.foundationMembers.some(m => m === this.props.accounts[0])
+        if(exists) {
+          this.setState({isFoundationMember : exists});
+          //if(this.state.selectedTab !== 0) this.setState ({selectedTab : 0})  
+        }
+          
+      });
+    }
+
+  }
+
+  setOwner(contract) {
+    if (contract.owner[this.state.dataKeyOwner] !== undefined && this.state.dataKeyOwner !== null) {
+      this.setState({
+        owner: contract.owner[this.state.dataKeyOwner].value
+      }, () => {
+        if( this.state.owner === this.props.accounts[0]) {
+          this.setState({isFoundationMember : true});
+          //if(this.state.selectedTab !== 0) this.setState ({selectedTab : 0})
+        }          
+      });
     }
   }
 
@@ -92,7 +146,7 @@ class LandingPage extends Component {
   render() {
   //handleCreateRequest={this.handleCreateRequest} handleAdmin={this.handleAdmin} handleAccount={this.handleAccount} handlerViewPage={this.handleViewRequest
   const menuList = <ul>
-                      <li><a href="#" onClick = {this.props.handleAdmin} alt="Admin">Admin</a></li>
+                      {this.state.isFoundationMember === true && <li><a href="#" onClick = {this.props.handleAdmin} alt="Admin">Admin</a></li> }
                       <li><a href="#" onClick = {this.props.handleCreateRequest} alt="Create">Create</a></li>
                       <li><a href="#" onClick = {this.props.handleAccount} alt="Account">Account</a></li>
                       <li><a href="#" onClick = {this.props.handlerViewPage} alt="Account">View Requests</a></li>

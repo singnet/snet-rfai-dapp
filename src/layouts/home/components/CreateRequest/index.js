@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import web3 from 'web3'
 
 //components
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
@@ -28,6 +29,8 @@ class CreateRequest extends Component {
     this.context = context
     this.helperFunctions = new HelperFunctions();
 
+    this.handleLeftNavClick = this.handleLeftNavClick.bind(this)
+
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleAmountInputChange = this.handleAmountInputChange.bind(this)
     this.handleBlockNumInputChange = this.handleBlockNumInputChange.bind(this)
@@ -36,16 +39,23 @@ class CreateRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
+    var dt = new Date()
+    // Default expiration date is set to 100 Days
+    var defExpirtaionDate = new Date(Date.parse(dt) + (100*24*60*60*1000))
+
     this.state = {
       dialogOpen: false,
+      requestTitle: '',
       initialStake: 0,
       expiration: 0,
+      expirationDate: defExpirtaionDate.toISOString().slice(0,10),
       documentURI: '',
       dataKeyTokenBalance: null,
       tknBalance: 0,
       blockNumber: 0,
       stackId: null,
       showStatus: false,
+      selectedLeftNav: 'nav1',
       alertText: ''
     }
 
@@ -132,41 +142,166 @@ class CreateRequest extends Component {
 
   handleCreateButton() {
 
+    const sTitle = "Sample Request Title"
+    const ipfsURL = "https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
+    //"http://ipfs.singularitynet.io/api/v0/cat?arg=QmVqtqGcTM63EktBx4XQgekw9epn8fDED11M7bXpWMPKty"
+    //"https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
+
     //value, expiration, documentURI 
     var zeroBN = new BN(0)
     var initialStakeBN = new BN(this.helperFunctions.toWei(this.state.initialStake))
     var tokenBalanceBN = new BN(this.state.tokenBalance)
 
-    const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
+    //const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
+    const expiration = parseInt(this.state.blockNumber,10) + this.helperFunctions.computeBlocksFromDates(new Date(), this.state.expirationDate)
 
+    // console.log("this.state.expirationDate - " + this.state.expirationDate);
+    // console.log("expiration - this.state.blockNumber " + expiration + " - " + this.state.blockNumber);
 
-    console.log("this.state.initialStake - " + this.state.initialStake)
-    console.log("this.helperFunctions.toWei(this.state.initialStake) - " + this.helperFunctions.toWei(this.state.initialStake))
-    console.log("initialStakeBN - " + initialStakeBN.toString())
+    // console.log("this.state.initialStake - " + this.state.initialStake)
+    // console.log("this.helperFunctions.toWei(this.state.initialStake) - " + this.helperFunctions.toWei(this.state.initialStake))
+    // console.log("initialStakeBN - " + initialStakeBN.toString())
 
-    if(this.state.documentURI.length > 0 && 
+    if(this.state.documentURI.length > 0 && this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
       initialStakeBN.lte(tokenBalanceBN) && 
-      parseInt(this.state.expiration,10) > parseInt(this.state.blockNumber,10)) {
-      const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), this.state.expiration, docURIinBytes, {from: this.props.accounts[0]})
+      parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
-      this.setState({stackId});
-      this.setState({loadingIndicator: true});
-      this.setState({showStatus: true});
+        var ipfsInput = { "title" : this.state.requestTitle, "documentURI": this.state.documentURI}
+        const body = {
+          'mode': 'cors',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST',
+          body: JSON.stringify(ipfsInput)
+        }
 
+        fetch(ipfsURL, body)
+        .then(response => response.json())
+        .then(data => 
+          {
+console.log("data - " + data.data.hash);
+            const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(data.data.hash);
+            const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
+
+            this.setState({stackId});
+            this.setState({loadingIndicator: true});
+            this.setState({showStatus: true});
+
+          })
+          .catch(err => 
+            {
+              console.log("err - " + err)
+              this.setState({ alertText: `Oops! Something went wrong while creating the request.`})
+              this.handleDialogOpen()
+          })
+
+    } else if (this.state.requestTitle.length === 0) {
+      this.setState({ alertText: `Oops! It is invalid request title.`})
+      this.handleDialogOpen()
     } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gte(tokenBalanceBN)) {
       this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow.`})
       this.handleDialogOpen()
-    } else if (this.state.expiration === '' || parseInt(this.state.expiration,10) < parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Expiration should be great than current blocknumber.`})
+    } else if (expiration === '' || parseInt(expiration,10) <= parseInt(this.state.blockNumber,10)) {
+      this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
       this.handleDialogOpen()  
-    }else if (this.state.documentURI.length === 0) {
+    } else if (this.state.documentURI.length === 0) {
       this.setState({ alertText: `Oops! It is invalid document URI.`})
       this.handleDialogOpen()  
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
     }
+
+  }
+
+  handleLeftNavClick(event, selectedLeftNav) {
+    this.setState({selectedLeftNav});
+  }
+
+  renderRightPane() {
+
+    if(this.state.selectedLeftNav === 'nav1') {
+      return (
+        <div className="singularity-content">
+          <p>place holder for nav1</p>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav2') {
+      return (
+        <div className="singularity-content">
+          <p>place holder for nav2</p>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav3') {
+      return (
+        <div className="singularity-content">
+          <p>place holder for nav3</p>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav4') {
+      return (
+        <div className="singularity-content">
+          <p>place holder for nav4</p>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'navCreateRequest') {
+      return (
+                <div className="singularity-content">
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Request title:</label><div className="clearfix"></div>
+                      <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title:" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} /><br/><br/>            
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <label>Tokens to stake:</label>
+                      <div className="clearfix"></div>
+                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Expiration date:</label>
+                      <div className="clearfix"></div>
+                      <TextField
+                            name="expirationDate"
+                            id="expirationDate"
+                            type="date"
+                            className="singularity-input"
+                            defaultValue={this.state.expirationDate}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            onChange={this.handleRequestInputChange}
+                          />
+                      {/* <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />  */}
+                    </div>
+                  </div>
+                  <div className="row">            
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Current Blocknumber: {this.state.blockNumber}</label> 
+                      <div className="clearfix"></div>
+                    </div>
+                  </div>    
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Document URI:</label><div className="clearfix"></div>
+                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
+                    </div>
+                  </div>
+                  <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
+                  { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
+                </div>
+      )
+    }
+
 
   }
 
@@ -184,52 +319,19 @@ class CreateRequest extends Component {
             <div className="row">
               <div className="col-md-3 create-req-tabs">
                 <ul>
-                  <li className="active"><a href="#" title="Lorem">Lorem Ipsum</a></li>
-                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
-                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
-                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
-                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "nav4"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav4')}>Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>New Request</a></li>
                 </ul>
               </div>
               <div className="col-md-9">
-                <div className="singularity-content">
-                  <div className="row">
-                    <div className="col">
-                      <label>Tokens to stake:</label>
-                      <div className="clearfix"></div>
-                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Expiration block number:</label>
-                      <div className="clearfix"></div>
-                      <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} /> 
-                    </div>
-                  </div>
-                  <div className="row">            
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Current Blocknumber: {this.state.blockNumber}</label> 
-                      <div className="clearfix"></div>
-                    </div>
-                  </div>    
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Document URI:</label><div className="clearfix"></div>
-                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
-                    </div>
-                  </div>
-                  <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
-                </div>    
+                  {this.renderRightPane()}
               </div>
             </div>          
           </form>
         {/* </Paper> */}
-
-        { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
 
       <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
         <p>{this.state.alertText}</p>

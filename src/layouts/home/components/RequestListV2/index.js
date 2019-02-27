@@ -19,7 +19,7 @@ import Divider from '@material-ui/core/Divider';
 
 import ApproveRequest from '../../components/ApproveRequest'
 import StakeRequest from '../../components/StakeRequest'
-
+import SubmitSolutionRequest from '../../components/SubmitSolutionRequest'
 import RequestSolution from '../../components/RequestSolution'
 
 import RequestStakeDetails from '../../components/RequestStakeDetails'
@@ -44,6 +44,18 @@ const dialogApproveStyles = {
     backgroundColor: 'white',
     padding: 20
   }
+}
+
+const dialogSubSolStyles = {
+  style: {
+    backgroundColor: 'white',
+    padding: 20,
+    'max-width': '900px'
+  }
+}
+
+const localModalDialogStyle = {
+    'max-width': '900px'
 }
 
 const rootStyles = {
@@ -582,8 +594,8 @@ class RequestListV2 extends Component {
               </div>
           </Dialog>
 
-          <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
-          <div className="modal-dialog" role="document">
+          <Dialog PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
+          <div className={localModalDialogStyle} role="document">
                   <div className="modal-content">
                       <div className="modal-header">
                           <h5 className="modal-title" id="exampleModalLabel">Submit Solution</h5>
@@ -593,25 +605,10 @@ class RequestListV2 extends Component {
                           <div className="clear"></div><br/>
                       </div>
                       <div className="modal-body">
-                        <div className="main-content">
-                            <div > 
-                                <p><strong>Submit Solution to Request Id - {this.state.selectedRequestId} </strong></p>
-                                <form className="pure-form pure-form-stacked">
-                                  <div className="singularity-content">
-                                    <div className="row">
-                                        <div className="col">
-                                            <label>Solution Document URI:</label><div className="clearfix"></div>
-                                            <input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} />
-                                            <div className="spacer"></div>
-                                        </div>
-                                    </div>
-                                    <button type="button" className="blue" onClick={this.handleSubmitSolution2Button}>Submit</button>
-                                  </div>
-                                </form>
-                            </div>
-                        </div>
+                        <SubmitSolutionRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} />                      
+            
+                      </div>
                   </div>
-              </div>
             </div>
           </Dialog>
 
