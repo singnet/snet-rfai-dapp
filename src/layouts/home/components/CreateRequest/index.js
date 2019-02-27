@@ -176,39 +176,56 @@ class CreateRequest extends Component {
       <div>
         {/* <Paper style={styles} elevation={5}> */}
           <form className="pure-form pure-form-stacked create-request-form">
-          <div className="singularity-content">
             <div className="row">
-                <div className="col">
-                    <label>Tokens to stake:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
-                </div>
+              <div className="col-md-12 create-req-header">
+                <span>Create Request </span>
+              </div>
             </div>
             <div className="row">
-                <div className="col">
-                    <div className="spacer"></div>                
-                    <label>Expiration block number:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} /> 
-                </div>
-            </div>
-            <div className="row">            
-                <div className="col">
-                    <div className="spacer"></div>                
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div className="clearfix"></div>
-                </div>
-            </div>    
-            <div className="row">
-                <div className="col">
-                    <div className="spacer"></div>                
-                    <label>Document URI:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
-                </div>
-            </div>    
-            
-            
-
-
-            <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
-            </div>
+              <div className="col-md-3 create-req-tabs">
+                <ul>
+                  <li className="active"><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                  <li><a href="#" title="Lorem">Lorem Ipsum</a></li>
+                </ul>
+              </div>
+              <div className="col-md-9">
+                <div className="singularity-content">
+                  <div className="row">
+                    <div className="col">
+                      <label>Tokens to stake:</label>
+                      <div className="clearfix"></div>
+                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Expiration block number:</label>
+                      <div className="clearfix"></div>
+                      <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} /> 
+                    </div>
+                  </div>
+                  <div className="row">            
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Current Blocknumber: {this.state.blockNumber}</label> 
+                      <div className="clearfix"></div>
+                    </div>
+                  </div>    
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Document URI:</label><div className="clearfix"></div>
+                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
+                    </div>
+                  </div>
+                  <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
+                </div>    
+              </div>
+            </div>          
           </form>
         {/* </Paper> */}
 
