@@ -523,11 +523,44 @@ section.sections.active {
 .admin-table .singularity-table { box-shadow: none; }
 
 .create-request-form {
-  width: 500px;
-  padding: 15px;
+  width: 800px;
+  padding: 15px 15px 0;
   margin: 30px auto;
-  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 0px 8px #bcd7ff;
 }
+
+.create-req-header {
+  border-bottom: 1px solid #adcbfb;
+  padding-bottom: 15px;
+}
+
+.create-req-header span {
+  font-size: 18px; 
+  font-weight: bold; 
+}
+
+.create-req-tabs {
+  border-right: 1px solid #adcbfb;
+  padding: 0;
+}
+
+.create-req-tabs ul {
+  margin: 0;
+  padding: 0;
+}
+
+.create-req-tabs li { list-style: none;  }
+.create-req-tabs li.active { background-color: #4d80f8; }
+.create-req-tabs li.active a { color: #fff; }
+
+.create-req-tabs li a {
+  width: 100%;
+  padding: 10px 15px;
+  display: inline-block;
+  color: #000;
+}
+
+.create-req-tabs li a:hover { text-decoration: none; }
 
 .singularity-input {
   width: 100%;
@@ -537,6 +570,7 @@ section.sections.active {
 }
 
 .create-request-form .singularity-content {
+  padding: 15px 0;
   margin-bottom: 0;
 }
 
