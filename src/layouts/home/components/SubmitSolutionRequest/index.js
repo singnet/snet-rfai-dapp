@@ -98,25 +98,25 @@ console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& 
     if(this.state.selectedLeftNav === 'nav1') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav1</p>
+          <p>Solution submission overview</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav2</p>
+          <p>Request life cycle from creation to completion</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav3') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav3</p>
+          <p>Evaluation crriteria and approach</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav4') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav4</p>
+          <p>Additional Place Holder - Not configued in the menu</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'navNewSolution') {
@@ -150,10 +150,9 @@ console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& 
           <div className="row">
             <div className="col-md-3 create-req-tabs">
               <ul>
-                <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Lorem Ipsum</a></li>
-                <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Lorem Ipsum</a></li>
-                <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Lorem Ipsum</a></li>
-                <li className={this.state.selectedLeftNav === "nav4"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav4')}>Lorem Ipsum</a></li>
+                <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
+                <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a></li>
+                <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Evaluation</a></li>
                 <li className={this.state.selectedLeftNav === "navNewSolution"?'active':''}><a href="#" title="New Solution" onClick={event => this.handleLeftNavClick(event, 'navNewSolution')}>New Solution</a></li>
               </ul>
             </div>

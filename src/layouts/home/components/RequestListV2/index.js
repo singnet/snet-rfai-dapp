@@ -72,6 +72,13 @@ const rowStyles = {
   }
 }
 
+const rowCardStyles = {
+  style: {
+    backgroundColor: 'white',
+    width: '100%',
+  }
+}
+
 const BN = web3.utils.BN
 
 class RequestListV2 extends Component {
@@ -478,7 +485,7 @@ class RequestListV2 extends Component {
             <ExpansionPanel expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 
-                <div className="card" style={rowStyles.style}>
+                <div className="card" style={rowCardStyles.style}>
                     <div className="card-header" style={rowStyles.style}>
                         <div className="row singularity-stake-details">
                             <div className="col-3"><span className="float-left text-left">{r.requestId}</span></div>

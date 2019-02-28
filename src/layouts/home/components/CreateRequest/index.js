@@ -225,25 +225,25 @@ console.log("data - " + data.data.hash);
     if(this.state.selectedLeftNav === 'nav1') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav1</p>
+          <p>Request for AI Overview</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav2</p>
+          <p>Request life cycle from creation to completion</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav3') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav3</p>
+          <p>Templates and Sample Projects</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav4') {
       return (
         <div className="singularity-content">
-          <p>place holder for nav4</p>
+          <p>Additional Place Holder - Not configued in the menu</p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
@@ -319,10 +319,9 @@ console.log("data - " + data.data.hash);
             <div className="row">
               <div className="col-md-3 create-req-tabs">
                 <ul>
-                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Lorem Ipsum</a></li>
-                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Lorem Ipsum</a></li>
-                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Lorem Ipsum</a></li>
-                  <li className={this.state.selectedLeftNav === "nav4"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav4')}>Lorem Ipsum</a></li>
+                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
+                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a></li>
+                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Templates</a></li>
                   <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>New Request</a></li>
                 </ul>
               </div>
