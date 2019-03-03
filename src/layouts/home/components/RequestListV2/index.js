@@ -488,6 +488,30 @@ class RequestListV2 extends Component {
 
   }
 
+
+  getMetaDataFromIPFS(ipfsHash) {
+
+    //http://ipfs.singularitynet.io/api/v0/cat?arg=Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW
+    // var ipfs  = ipfsClient({ host: 'ipfs.singularitynet.io', port: 80, protocol: 'http' });
+    // var dataJSON;
+
+    // ipfs.get(ipfsHash, function (err, files) {
+    //   files.forEach((file) => {
+    //     //console.log(file.path)
+    //     //console.log(file.content.toString('utf8'))
+  
+    //     var resString = file.content.toString('utf8')
+    //     dataJSON = JSON.parse(JSON.parse(resString))
+  
+    //     //console.log("dataJSON - " + dataJSON);
+    //     console.log("dataJSON title - " + dataJSON.title);
+  
+    //   })
+      
+    // })
+
+  }
+
   createRow(req, index) {
     const {expanded} = this.state;
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
@@ -498,8 +522,15 @@ class RequestListV2 extends Component {
         (this.state.compRequestStatus === "1" && r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) ) ||
         (this.state.compRequestStatus === "999" && parseInt(r.expiration,10)<parseInt(this.state.blockNumber,10) ) )
       {
+
+        // Access the IPFS Metadata for the Title, Description and documentURI
+        //var ipfsHash = this.context.drizzle.web3.utils.toAscii(r.documentURI);
+        //var ipfsHash = 'Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW'
+
+        // TODO: Looks like needs to restructure the components as we should not update the state in the render menthod.
+
         return (
-          <ExpansionPanel expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
+          <ExpansionPanel key={r.requestId} expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
             <ExpansionPanelSummary className="expansion-panel-summary" expandIcon={<ExpandMoreIcon />}>
 
               <div className="card" style={rowCardStyles.style}>
