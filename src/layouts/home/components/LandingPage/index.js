@@ -156,10 +156,7 @@ class LandingPage extends Component {
       <React.Fragment>
         <div>
           <div className="top-fold">
-            <nav className="navbar navbar-singularity">
-              <div className="col-4">
-                <a className="navbar-brand" href="https://singularitynet.io/" target="_new"><img src={logo} alt="logo"/></a>
-              </div>
+            <nav className="navbar-singularity">
               <div className="col-8 header-menu">
                 {menuList}
               </div>
