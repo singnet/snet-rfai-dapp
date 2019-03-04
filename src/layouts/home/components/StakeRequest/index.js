@@ -19,10 +19,10 @@ const styles = {
 }
 
 const dialogStyles = {
-style: {
-  backgroundColor: '#F9DBDB',
-  padding: 20
-}
+  style: {
+    backgroundColor: '#F9DBDB',
+    padding: 20
+  }
 }
 
 const BN = web3.utils.BN
@@ -40,7 +40,6 @@ TabContainer.propTypes = {
 };
 
 class StakeRequest extends Component {
-
   constructor(props, context) {
     super(props)
 
@@ -174,29 +173,39 @@ class StakeRequest extends Component {
   }
 
   render() {
-
-    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
-    
+    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)    
     return (
       <div > 
-        <Paper style={styles} elevation={0} className="singularity-content">
-            <p>Stake Token for Request Id - {this.state.requestId} </p>
-            <form className="pure-form pure-form-stacked">
-              <div className="row">
-                <div className="col-6">
-                    <label>Tokens to Stake:</label> <div className="clearfix"></div>
-                    <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to Stake:" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
-                </div>
-                <div className="col-6">
-                    <div className="singularity-token-counter">
-                        <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
-                    </div>
-                </div>
-              </div>
-              <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleStakeButton}>Stake</Button>                        
-            </form>
-        </Paper>
+        <Paper style={styles} elevation={0} className="singularity-content stake-request">
+          <p>Stake Token for Request Id - {this.state.requestId} </p>
+          <form className="pure-form pure-form-stacked">
 
+            <div className="row">
+              <div className="col-md-6">
+                <label>Tokens to Stake:</label>
+              </div>
+              <div className="col-md-6">
+                <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to Stake:" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <span>Balance in Escrow: </span>
+              </div>
+              <div className="col-md-6">
+                <span>{escrowBalance} AGI</span>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12 text-center">
+                <Button className="blue singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleStakeButton}>Stake</Button>
+              </div>
+            </div>
+
+          </form>
+        </Paper>
 
         <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
           <p>{this.state.alertText}</p>

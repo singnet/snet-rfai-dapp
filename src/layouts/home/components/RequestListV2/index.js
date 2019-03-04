@@ -227,7 +227,6 @@ class RequestListV2 extends Component {
   }
 
   handleStakeButton(event, requestId, expiry) {
-
     this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry}, () => {
       this.setState( {dialogOpenStakeRequest: true});
     })
@@ -342,7 +341,7 @@ class RequestListV2 extends Component {
 
       if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
         return (
-            <ExpansionPanelActions>
+            <ExpansionPanelActions className="expansion-panel-actions">
                 <div className="row">
                     <div className="col">
                       <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
@@ -352,7 +351,7 @@ class RequestListV2 extends Component {
         )
       } else if(r.status === "0") {
         return (
-            <ExpansionPanelActions>
+            <ExpansionPanelActions className="expansion-panel-actions">
                 <div className="row">
                     <div className="col">
                         <button className="blue float-right ml-4" disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
@@ -376,7 +375,7 @@ class RequestListV2 extends Component {
         )
       } else if(r.status === "2") {
         return (
-            <ExpansionPanelActions>
+            <ExpansionPanelActions className="expansion-panel-actions">
                 <div className="row">
                     <div className="col">
                     {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
@@ -386,7 +385,7 @@ class RequestListV2 extends Component {
         )
       } else if(r.status === "4") {
         return (
-            <ExpansionPanelActions>
+            <ExpansionPanelActions className="expansion-panel-actions">
                 <div className="row">
                     <div className="col">
                       {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
@@ -399,39 +398,80 @@ class RequestListV2 extends Component {
   }
 
   createDetailsRow(req, index) {
-
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
-
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
       var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
       if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
         return (
-          <ExpansionPanelDetails>
-              <div className="row singularity-stake-details">
-                  <div className="col-8">
-                      <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                      <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                      <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                  </div>                                        
+          <ExpansionPanelDetails className="expansion-panel-details">
+            <div className="row singularity-stake-details expansion-summary">
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Requester:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{r.requester}</span>
+                </div>
               </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">documentURI:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{docURI}</span>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Expiry:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{r.expiration}</span>
+                </div>
+              </div>
+
+            </div>
           </ExpansionPanelDetails>
         )
       } else if(r.status === "0") {
         return (
-            <ExpansionPanelDetails>
-              <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                    </div>                                        
+            <ExpansionPanelDetails className="expansion-panel-details">
+              <div className="row singularity-stake-details expansion-summary">
+                <div className="col-md-12">
+                  <div className="col-md-3">
+                    <span className="singularity-label">Requester:</span>
+                  </div>
+                  <div className="col-md-9">
+                    <span>{r.requester}</span>
+                  </div>
                 </div>
+                <div className="col-md-12">
+                  <div className="col-md-3">
+                    <span className="singularity-label">documentURI:</span>
+                  </div>
+                  <div className="col-md-9">
+                    <span>{docURI}</span>
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <div className="col-md-3">
+                    <span className="singularity-label">Expiry:</span> 
+                  </div>
+                  <div className="col-md-9">
+                    <span>{r.expiration}</span>
+                  </div>
+                </div>
+              </div>
             </ExpansionPanelDetails>
         )
       } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
         return (
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
+
               <div className="col-md-12">
                 <div className="col-md-3">
                   <span className="singularity-label">Requester:</span> 
@@ -440,6 +480,7 @@ class RequestListV2 extends Component {
                   <span>{r.requester}</span>
                 </div>
               </div>
+
               <div className="col-md-12">
                 <div className="col-md-3">
                   <span className="singularity-label">documentURI:</span> 
@@ -448,6 +489,7 @@ class RequestListV2 extends Component {
                   <span>{docURI}</span>
                 </div>
               </div>
+
               <div className="col-md-12">
                 <div className="col-md-3">
                   <span className="singularity-label">Expiry:</span> 
@@ -455,37 +497,83 @@ class RequestListV2 extends Component {
                 <div className="col-md-9">
                   <span>{r.expiration}</span>
                 </div>
-              </div>                                        
+              </div>
+
             </div>
           </ExpansionPanelDetails>
         )
       } else if(r.status === "2") {
         return (
-            <ExpansionPanelDetails>
-                <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span className="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span className="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span className="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                    </div>                                        
+          <ExpansionPanelDetails className="expansion-panel-details">
+            <div className="row singularity-stake-details expansion-summary">
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Requester:</span> 
                 </div>
-            </ExpansionPanelDetails>
+                <div className="col-md-9">
+                  <span>{r.requester}</span>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">documentURI:</span> 
+                </div>
+                <div className="col-md-9">
+                  <span>{docURI}</span>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Expiry:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{r.expiration}</span>
+                </div>
+              </div>
+
+            </div>
+          </ExpansionPanelDetails>
         )
       } else if(r.status === "4") {
         return (
-            <ExpansionPanelDetails>
-                <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span className="singularity-label">Requester:</span>  <span>{r.requester}</span></div>
-                        <div>d<span className="singularity-label">ocumentURI:</span>  <span>{docURI}</span></div>
-                        <div><span className="singularity-label">Expiry:</span>  <span>{r.expiration}</span></div>
-                    </div>                                        
+          <ExpansionPanelDetails className="expansion-panel-details">
+            <div className="row singularity-stake-details expansion-summary">
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Requester:</span>
                 </div>
-            </ExpansionPanelDetails>
+                <div className="col-md-9">
+                  <span>{r.requester}</span>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">ocumentURI:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{docURI}</span>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <span className="singularity-label">Expiry:</span>
+                </div>
+                <div className="col-md-9">
+                  <span>{r.expiration}</span>
+                </div>
+              </div>
+
+            </div>
+          </ExpansionPanelDetails>
         )
       }
     }
-
   }
 
 
@@ -628,7 +716,7 @@ class RequestListV2 extends Component {
         </Dialog>
 
         <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog stake-req-popup" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Stake Request</h5>

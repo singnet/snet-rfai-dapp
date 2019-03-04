@@ -272,73 +272,73 @@ console.log("ipfs hash - " + data.data.hash);
       )
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
       return (
-                <div className="singularity-content">
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Request title:</label><div className="clearfix"></div>
-                      <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Request description:</label><div className="clearfix"></div>
-                      <TextField
-                            name="requestDesc"
-                            id="requestDesc"
-                            multiline={true}
-                            rows={2}
-                            rowsMax={4}
-                            placeholder="Request description" 
-                            className="singularity-input"
-                            defaultValue={this.state.requestDesc}
-                            onChange={this.handleRequestInputChange}
-                          />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <label>Tokens to stake:</label>
-                      <div className="clearfix"></div>
-                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Expiration date:</label>
-                      <div className="clearfix"></div>
-                      <TextField
-                            name="expirationDate"
-                            id="expirationDate"
-                            type="date"
-                            className="singularity-input"
-                            defaultValue={this.state.expirationDate}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            onChange={this.handleRequestInputChange}
-                          />
-                      {/* <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />  */}
-                    </div>
-                  </div>
-                  <div className="row">            
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Current Blocknumber: {this.state.blockNumber}</label> 
-                    </div>
-                  </div>    
-                  <div className="row">
-                    <div className="col">
-                      <div className="spacer"></div>                
-                      <label>Document URI:</label><div className="clearfix"></div>
-                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
-                    </div>
-                  </div>
-                  <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
-                  { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
-                </div>
+        <div className="singularity-content new-request-form">
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Request title:</label><div className="clearfix"></div>
+              <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Request description:</label>
+              <TextField
+                name="requestDesc"
+                id="requestDesc"
+                multiline={true}
+                rows={2}
+                rowsMax={4}
+                placeholder="Request description" 
+                className="singularity-textfield"
+                defaultValue={this.state.requestDesc}
+                onChange={this.handleRequestInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Tokens to stake:</label>
+              <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Expiration date:</label>
+              <TextField
+                name="expirationDate"
+                id="expirationDate"
+                type="date"
+                className="singularity-textfield"
+                defaultValue={this.state.expirationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={this.handleRequestInputChange}
+              />
+              {/* <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />  */}
+            </div>
+          </div>
+
+          <div className="row">            
+            <div className="col-md-12">            
+              <label>Current Blocknumber: {this.state.blockNumber}</label> 
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">               
+              <label>Document URI:</label>
+              <input className="singularity-input" name="documentURI" type="text" placeholder="document URI" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
+            </div>
+          </div>
+
+          <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
+          { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
+        </div>
       )
     }
 

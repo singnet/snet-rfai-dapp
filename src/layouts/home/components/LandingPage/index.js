@@ -52,6 +52,7 @@ class LandingPage extends Component {
       showMenu: false
     }
   }
+
   componentDidMount() {
     const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
     this.setState({dataKeyMemberKeys})
@@ -60,7 +61,6 @@ class LandingPage extends Component {
     const dataKeyOwner  = this.contracts.ServiceRequest.methods.owner.cacheCall();
     this.setState({dataKeyOwner})
     this.setOwner(this.props.ServiceRequest)
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -73,7 +73,6 @@ class LandingPage extends Component {
   }
 
   setFoundationMembers(contract) {
-
     if (contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys] !== undefined && this.state.dataKeyMemberKeys !== null) {
       this.setState({
         foundationMembers: contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].value
@@ -82,11 +81,9 @@ class LandingPage extends Component {
         if(exists) {
           this.setState({isFoundationMember : exists});
           //if(this.state.selectedTab !== 0) this.setState ({selectedTab : 0})  
-        }
-          
+        }          
       });
     }
-
   }
 
   setOwner(contract) {
@@ -157,11 +154,15 @@ class LandingPage extends Component {
         <div>
           <div className="top-fold">
             <nav className="navbar-singularity">
-              <div className="col-8 header-menu">
+              <div className="col-md-12 header-menu">
                 {menuList}
               </div>
-              <div className="col-8 hamburger-menu">
-                
+              <div className="col-md-12 hamburger-menu">
+                <button className="bars" onClick={this.showMenu}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>           
                 {
                   this.state.showMenu ? 
                     <div className="hamburger-header-menu">
