@@ -46,6 +46,7 @@ class CreateRequest extends Component {
     this.state = {
       dialogOpen: false,
       requestTitle: '',
+      requestDesc: '',
       initialStake: 0,
       expiration: 0,
       expirationDate: defExpirtaionDate.toISOString().slice(0,10),
@@ -167,7 +168,8 @@ class CreateRequest extends Component {
       initialStakeBN.lte(tokenBalanceBN) && 
       parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
-        var ipfsInput = { "title" : this.state.requestTitle, "documentURI": this.state.documentURI}
+        var ipfsInput = { "title" : this.state.requestTitle, "description" : this.state.requestDesc,"documentURI": this.state.documentURI}
+
         const body = {
           'mode': 'cors',
           headers: {
@@ -181,7 +183,7 @@ class CreateRequest extends Component {
         .then(response => response.json())
         .then(data => 
           {
-console.log("data - " + data.data.hash);
+console.log("ipfs hash - " + data.data.hash);
             const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(data.data.hash);
             const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
 
@@ -253,14 +255,31 @@ console.log("data - " + data.data.hash);
                     <div className="col">
                       <div className="spacer"></div>                
                       <label>Request title:</label><div className="clearfix"></div>
-                      <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title:" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} /><br/><br/>            
+                      <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <div className="spacer"></div>                
+                      <label>Request description:</label><div className="clearfix"></div>
+                      <TextField
+                            name="requestDesc"
+                            id="requestDesc"
+                            multiline={true}
+                            rows={2}
+                            rowsMax={4}
+                            placeholder="Request description" 
+                            className="singularity-input"
+                            defaultValue={this.state.requestDesc}
+                            onChange={this.handleRequestInputChange}
+                          />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col">
                       <label>Tokens to stake:</label>
                       <div className="clearfix"></div>
-                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+                      <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
                     </div>
                   </div>
                   <div className="row">
@@ -286,14 +305,13 @@ console.log("data - " + data.data.hash);
                     <div className="col">
                       <div className="spacer"></div>                
                       <label>Current Blocknumber: {this.state.blockNumber}</label> 
-                      <div className="clearfix"></div>
                     </div>
                   </div>    
                   <div className="row">
                     <div className="col">
                       <div className="spacer"></div>                
                       <label>Document URI:</label><div className="clearfix"></div>
-                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
+                      <input className="singularity-input" name="documentURI" type="text" placeholder="document URI" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
                     </div>
                   </div>
                   <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
@@ -301,7 +319,6 @@ console.log("data - " + data.data.hash);
                 </div>
       )
     }
-
 
   }
 
