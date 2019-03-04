@@ -465,25 +465,6 @@ section.sections.active { display: block; }
   font-weight: normal;
 }
 
-.singularity-token-counter {
-  background: #7dc7fc;
-  border-radius: 3px;
-  padding: 10px;
-}
-
-.singularity-token-counter p {
-  color: #fff;
-  text-align: center;
-  margin: 0;
-}
-
-.singularity-token-counter p span {
-  display: block;
-  font-size: 18px;
-  font-weight: 700;
-
-}
-
 .account-table .singularity-button-blue,
 .admin-table .singularity-button-blue {
   outline: 0;
@@ -637,6 +618,14 @@ section.sections.active { display: block; }
   margin: 10px 0;
   float: right;
 }
+
+.pure-form-stacked label { margin-bottom: 0 !important; }
+.pure-form-stacked input { padding: 0 !important; }
+.pure-form-stacked .row { margin-bottom: 15px; }
+.pure-form-stacked .row:last-of-type { margin-bottom: 0; }
+.stake-request { padding: 0 !important; }
+.stake-req-popup { margin: 0; }
+.stake-req-popup .modal-content { border: none; }
 
 /* media queries */
 
