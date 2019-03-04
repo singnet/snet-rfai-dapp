@@ -103,6 +103,9 @@ console.log("selectedTab - " + value);
     const selectedTab = this.state.selectedTab;
     return (
       <div className="main-content">
+      <div>
+        Requests for AI Services
+      </div>
       <div className="main singularity-accordion-main">
         <AppBar position="static" color="default" className="singularity-tabs">
           <Tabs value={selectedTab} onChange={this.handleChange} >

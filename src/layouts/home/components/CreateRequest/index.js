@@ -227,25 +227,47 @@ console.log("ipfs hash - " + data.data.hash);
     if(this.state.selectedLeftNav === 'nav1') {
       return (
         <div className="singularity-content">
-          <p>Request for AI Overview</p>
+          <div>
+            You can request for any AI Service that would like to see built on top of the SingularityNet platform. 
+            Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://faucet.ropsten.be/" target="_blank">repo</a>. You can view the template for the request <a href="https://faucet.ropsten.be/" target="_blank">here</a>
+            <br></br>
+            <br></br>
+            We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). 
+            The foundation will review and approve requests which will appear on here
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
       return (
         <div className="singularity-content">
-          <p>Request life cycle from creation to completion</p>
+          <div>
+          The foundation will review all requests and will approve them. In general we look for 
+            <li>Clear problem description</li>
+            <li>Relevant problem which if solved will help the community</li>
+            <li>Quantitative evaluation criteria</li>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav3') {
       return (
         <div className="singularity-content">
-          <p>Templates and Sample Projects</p>
+          <div>
+              <li>Raise a github pull request based on the template to </li>
+              <li>Provide a title and description along with the URL of the github pull request</li>
+              <li>In order to incentivize people to develop solutions we require that you back your requests with AGI tokens. The tokens will be distributed to the accepted solutions. See the Submission Evaluation process for more details</li>
+              <li>Provide an expiry date for the request. Meaning the date post which you can withdraw your funds if no submission has been made</li>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav4') {
       return (
         <div className="singularity-content">
-          <p>Additional Place Holder - Not configued in the menu</p>
+          <div>
+              <li>Raise a github pull request based on the template to </li>
+              <li>Provide a title and description along with the URL of the github pull request</li>
+              <li>In order to incentivize people to develop solutions we require that you back your requests with AGI tokens. The tokens will be distributed to the accepted solutions. See the Submission Evaluation process for more details</li>
+              <li>Provide an expiry date for the request. Meaning the date post which you can withdraw your funds if no submission has been made</li>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
@@ -336,9 +358,9 @@ console.log("ipfs hash - " + data.data.hash);
             <div className="row">
               <div className="col-md-3 create-req-tabs">
                 <ul>
-                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
-                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a></li>
-                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Templates</a></li>
+                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
+                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a></li>
+                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a></li>
                   <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>New Request</a></li>
                 </ul>
               </div>
