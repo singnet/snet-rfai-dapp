@@ -24,7 +24,6 @@ TabContainer.propTypes = {
 };
 
 class RequestsTab extends Component {
-
   constructor(props, context) {
     super(props)
 
@@ -40,18 +39,15 @@ class RequestsTab extends Component {
       isFoundationMember: false,
       alertText: ''
     }
-
   }
 
   componentDidMount() {
     const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
     this.setState({dataKeyMemberKeys})
     this.setFoundationMembers(this.props.ServiceRequest)
-
     const dataKeyOwner  = this.contracts.ServiceRequest.methods.owner.cacheCall();
     this.setState({dataKeyOwner})
     this.setOwner(this.props.ServiceRequest)
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -64,7 +60,6 @@ class RequestsTab extends Component {
   }
 
   setFoundationMembers(contract) {
-
     if (contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys] !== undefined && this.state.dataKeyMemberKeys !== null) {
       this.setState({
         foundationMembers: contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].value
@@ -77,7 +72,6 @@ class RequestsTab extends Component {
           
       });
     }
-
   }
 
   setOwner(contract) {
@@ -95,26 +89,23 @@ class RequestsTab extends Component {
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
-console.log("selectedTab - " + value);
+    console.log("selectedTab - " + value);
   };
 
   render() {
-
     const selectedTab = this.state.selectedTab;
     return (
-      <div className="main-content">
-      <div>
-        Requests for AI Services
-      </div>
-      <div className="main singularity-accordion-main">
-        <AppBar position="static" color="default" className="singularity-tabs">
-          <Tabs value={selectedTab} onChange={this.handleChange} >
-            {this.state.isFoundationMember === true && <Tab label="Open " className="singularity-tab" value={0}/> }
-            <Tab className="singularity-tab" label="Approved " value={1}/>
-            <Tab className="singularity-tab" label="Rejected " value={2} />
-            <Tab className="singularity-tab" label="Closed " value={3} />
-            <Tab className="singularity-tab" label="Expired " value={4} />
-          </Tabs>
+      <div className="main-content view-request">
+        <div className="main singularity-accordion-main">
+          <p className="view-req-header">Requests for AI Services</p>
+          <AppBar position="static" color="default" className="singularity-tabs">
+            <Tabs value={selectedTab} onChange={this.handleChange} >
+              {this.state.isFoundationMember === true && <Tab label="Open " className="singularity-tab" value={0}/> }
+              <Tab className="singularity-tab" label="Approved " value={1}/>
+              <Tab className="singularity-tab" label="Rejected " value={2} />
+              <Tab className="singularity-tab" label="Closed " value={3} />
+              <Tab className="singularity-tab" label="Expired " value={4} />
+            </Tabs>
         </AppBar>
         {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
         {selectedTab === 1 && <Typography component="div" ><RequestListV2  compRequestStatus="1"/> </Typography>}
