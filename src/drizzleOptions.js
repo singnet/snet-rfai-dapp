@@ -1,5 +1,5 @@
-import SingularityNetToken from './../build/contracts/SingularityNetToken.json'
-import ServiceRequest from './../build/contracts/ServiceRequest.json'
+import SingularityNetToken from './build_contracts/SingularityNetToken.json'
+import ServiceRequest from './build_contracts/ServiceRequest.json'
 
 const drizzleOptions = {
   web3: {
@@ -17,8 +17,8 @@ const drizzleOptions = {
     ServiceRequest: ['AddFoundationMember', 'CreateRequest', 'ExtendRequest', 'ApproveRequest', 'FundRequest', 'AddSolutionRequest',  'VoteRequest', 'ClaimRequest', 'CloseRequest', 'RejectRequest']
   },
   polls: {
-    accounts: 1500//,
-    //blocks: 1000
+    accounts: 15000,
+    blocks: 15000
   }//,
   //syncAlways: ture
 }

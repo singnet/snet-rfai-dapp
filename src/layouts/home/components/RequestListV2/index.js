@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
+import ipfsClient from 'ipfs-http-client'
 
 //components
 import Button from '@material-ui/core/Button'
@@ -159,6 +160,11 @@ class RequestListV2 extends Component {
     this.setFoundationMembers(this.props.ServiceRequest)
 
     ReactDOM.findDOMNode(this).scrollIntoView();
+
+    //this.getMetaDataFromIPFS('Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW');
+
+      //http://ipfs.singularitynet.io/api/v0/cat?arg=Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -580,23 +586,24 @@ class RequestListV2 extends Component {
   getMetaDataFromIPFS(ipfsHash) {
 
     //http://ipfs.singularitynet.io/api/v0/cat?arg=Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW
-    // var ipfs  = ipfsClient({ host: 'ipfs.singularitynet.io', port: 80, protocol: 'http' });
-    // var dataJSON;
+    var ipfs  = ipfsClient({ host: 'ipfs.singularitynet.io', port: 80, protocol: 'http' });
+    var dataJSON;
 
-    // ipfs.get(ipfsHash, function (err, files) {
-    //   files.forEach((file) => {
-    //     //console.log(file.path)
-    //     //console.log(file.content.toString('utf8'))
+    ipfs.get(ipfsHash, function (err, files) {
+      console.log("error - " + err)
+      files.forEach((file) => {
+        //console.log(file.path)
+        //console.log(file.content.toString('utf8'))
   
-    //     var resString = file.content.toString('utf8')
-    //     dataJSON = JSON.parse(JSON.parse(resString))
+        var resString = file.content.toString('utf8')
+        dataJSON = JSON.parse(JSON.parse(resString))
   
-    //     //console.log("dataJSON - " + dataJSON);
-    //     console.log("dataJSON title - " + dataJSON.title);
+        //console.log("dataJSON - " + dataJSON);
+        console.log("dataJSON title - " + dataJSON.title);
   
-    //   })
+      })
       
-    // })
+    })
 
   }
 
