@@ -699,7 +699,7 @@ class RequestListV2 extends Component {
         </Dialog>
 
         <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenApproveRequest} >
-          <div className="modal-dialog" role="document">
+          <div className="approve-request-popup modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Approve Request</h5>
@@ -734,7 +734,7 @@ class RequestListV2 extends Component {
 
         <Dialog PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
           <div className={localModalDialogStyle} role="document">
-            <div className="modal-content">
+            <div className="submit-solution-popup modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Submit Solution</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleSubmitSolutionDialogClose}>
@@ -766,28 +766,24 @@ class RequestListV2 extends Component {
             </div>
           </Dialog>
 
-          <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenVoteRequest} >
+          <Dialog className="req-solution-dailog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenVoteRequest} >
            <div role="document"> {/* className="modal-dialog"  */}
-                  <div className="modal-content">
-                      <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Request Solutions and Vote</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleVoteDialogClose}>
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                          <div className="clear"></div><br/>
-                      </div>
-                      <div className="modal-body">
-                        <RequestSolution requestId={this.state.selectedRequestId}/>
-                      </div>
-                  </div>
+              <div className="request-solution-popup modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Request Solutions and Vote</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleVoteDialogClose}>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div className="clear"></div>
+                  <br/>
+                </div>
+                <div className="modal-body">
+                  <RequestSolution requestId={this.state.selectedRequestId}/>
+                </div>
+              </div>
             </div>
           </Dialog>
-
-      </div>
-
-
-
-
+        </div>
     )
   }
 }

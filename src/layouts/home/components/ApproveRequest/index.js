@@ -28,7 +28,7 @@ class ApproveRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleApproveButton = this.handleApproveButton.bind(this)
 
-console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
+    console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
 
     this.state = {
       requestId: this.props.requestId,
@@ -122,34 +122,37 @@ console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + thi
         <form className="pure-form pure-form-stacked">
           <div className="singularity-content">
             <div className="row">
-                <div className="col">
-                    <label>End submission block number:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="endSubmission" type="number" placeholder="End of Submission:" autoComplete='off' value={this.state.endSubmission} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-                </div>
+              <div className="col-md-12">
+                <label>End submission block number:</label>
+                <div className="clearfix"></div>
+                <input className="singularity-input" name="endSubmission" type="number" placeholder="End of Submission:" autoComplete='off' value={this.state.endSubmission} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
+              </div>
             </div>
             <div className="row">
-                <div className="col">
-                    <label>End evaluation block number:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="endEvaluation" type="number" placeholder="End of Evaluation:" autoComplete='off' value={this.state.endEvaluation} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-                </div>
+              <div className="col-md-12">
+                <label>End evaluation block number:</label><div className="clearfix"></div>
+                <input className="singularity-input" name="endEvaluation" type="number" placeholder="End of Evaluation:" autoComplete='off' value={this.state.endEvaluation} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
+              </div>
             </div>
             <div className="row">
-                <div className="col">          
-                    <label>Expiration block number:</label><div className="clearfix"></div>
-                    <input className="singularity-input" name="newExpiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.newExpiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-            
-                </div>
+              <div className="col-md-12">          
+                <label>Expiration block number:</label><div className="clearfix"></div>
+                <input className="singularity-input" name="newExpiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.newExpiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />          
+              </div>
             </div>
             <div className="row">            
-                <div className="col">
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div className="clearfix"></div>
-                    <div className="spacer"></div>
-                </div>
-            </div>    
-
-            <button type="button" className="blue" onClick={this.handleApproveButton}>Submit</button>
+              <div className="col-md-12">
+                <label>Current Blocknumber: {this.state.blockNumber}</label> 
+                <div className="clearfix"></div>
+              </div>
             </div>
-          </form>
+            <div className="row">
+              <div className="col-md-12 text-center">
+                <button type="button" className="blue" onClick={this.handleApproveButton}>Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
 
         <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
           <p>{this.state.alertText}</p>
