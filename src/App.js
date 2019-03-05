@@ -8,7 +8,9 @@ import HomeContainer from './layouts/home/HomeContainer'
 // import './css/open-sans.css'
 // import './css/pure-min.css'
 
-import './css/main.css'
+import './css/main.css';
+import './css/icomoon.css';
+import './css/background.css';
 
 //import './App.css'
 
