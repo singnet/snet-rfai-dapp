@@ -194,18 +194,18 @@ class RequestSolution extends Component {
         return (
           <React.Fragment>
             <TableRow key={index}> 
-                <TableCell style={tableColStyles} component="th" title={this.state.submitters[index]} scope="row">
-                  {s.isShortlisted === true ? <b>*</b>: ""}
-                  {this.helperFunctions.toShortAddress(this.state.submitters[index])}
-                </TableCell>
-                <TableCell style={tableColStyles} align="right">{solDocURI}</TableCell>
-                <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
-                <TableCell style={tableColStyles} align="right">
-                  {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
-                  <button className="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
-                  <button className="blue float-right ml-4" disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
-                </TableCell>                
-              </TableRow>
+              <TableCell style={tableColStyles} component="th" title={this.state.submitters[index]} scope="row">
+                {s.isShortlisted === true ? <b>*</b>: ""}
+                {this.helperFunctions.toShortAddress(this.state.submitters[index])}
+              </TableCell>
+              <TableCell style={tableColStyles} align="right">{solDocURI}</TableCell>
+              <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
+              <TableCell style={tableColStyles} align="right">
+                {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
+                <button className="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
+                <button className="blue float-right ml-4" disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
+              </TableCell>                
+            </TableRow>
           </React.Fragment>
         );
       }
