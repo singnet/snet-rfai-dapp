@@ -397,9 +397,11 @@ section.sections.active { display: block; }
 }
 
 /* changes for page tables */
-.singularity-accordion-main { 
-  width: 97%;
-  margin: 0 auto 20px;
+.singularity-accordion-main,
+.getting-started-your-balance { 
+  width: 95%;
+  margin: 30px auto 20px;
+  padding-left: 0;
  }
 
  .singularity-tabs { 
@@ -634,7 +636,77 @@ section.sections.active { display: block; }
 }
 
 
+/* view requests new changes */
+.getting-started-your-balance .row { margin: 0 auto; }
 
+.getting-started,
+.your-balance {
+  width: 49%;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  border-radius: 5px;
+  border-top: 3px solid #06f;
+  padding: 0;
+}
+
+.getting-started-div,
+.your-balance-div {
+  padding: 10px 15px;
+  background-color: #fcfbfb;
+  font-size: 22px;
+  font-weight: bold;  
+}
+
+.your-balance-data, 
+.getting-started-text { padding: 15px; }
+
+.getting-started-text {
+  color: gray;
+  font-size: 13px;
+}
+
+.documentation-btn,
+.add-more-funds-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.documentation-btn button,
+.add-more-funds-btn button {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #dddddd;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.getting-started-your-balance .fa-info-circle { 
+  color: #858383;
+  font-size: 21px;
+}
+
+.your-balance-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.your-balance { margin-left: 2%; }
+.your-balance-data { padding: 25px 25px 15px; }
+
+.balance {
+  border: 1px solid;
+  padding: 10px;
+  width: 92%;
+  display: inline-block;
+  border-radius: 5px;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+.add-more-funds-btn { margin-top: 36px; }
 
 /* media queries */
 
