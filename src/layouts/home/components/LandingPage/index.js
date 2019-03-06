@@ -228,51 +228,43 @@ class LandingPage extends Component {
                 <div className="modal-body">
                   <CreateRequest />
                 </div>
-                {/* <div className="modal-footer">
-                        <button type="button" className="white" data-dismiss="modal">Close</button>
-                        <button type="button" className="blue">Submit</button>
-                    </div> */}
-                </div>
+              </div>
             </div>
-            {/* <p><Button variant="contained" onClick={this.handleCreateRequestDialogClose} >Close</Button></p> */}
-        </Dialog>
+          </Dialog>
 
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogMyAccount} >
-
+          <Dialog PaperProps={dialogStyles} open={this.state.dialogMyAccount} >
             <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">My Account</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleMyAccountDialogClose}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div className="clear"></div><br/>
-                    </div>
-                    <div className="modal-body">
-                        <MyAccount />
-                    </div>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">My Account</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleMyAccountDialogClose}>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div className="clear"></div><br/>
                 </div>
-            </div>
-        </Dialog>
-
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogAdmin} >
-
-            <div  role="document"> {/* className="modal-dialog" */}
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">RFAI Contract Administration</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleAdminDialogClose}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div className="clear"></div><br/>
-                    </div>
-                    <div className="modal-body">
-                        <Administration />
-                    </div>
+                <div className="modal-body">
+                  <MyAccount />
                 </div>
+              </div>
             </div>
-        </Dialog>
+          </Dialog>
 
+          <Dialog PaperProps={dialogStyles} open={this.state.dialogAdmin} >
+            <div role="document"> {/* className="modal-dialog" */}
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">RFAI Contract Administration</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleAdminDialogClose}>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div className="clear"></div><br/>
+                </div>
+                <div className="modal-body">
+                  <Administration />
+                </div>
+              </div>
+            </div>
+          </Dialog>
 
         </React.Fragment>
 

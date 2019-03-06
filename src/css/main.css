@@ -406,10 +406,10 @@ section.sections.active { display: block; }
  }
 
  .singularity-tabs { 
-  box-shadow: none;
+  box-shadow: none !important;
   background-color: transparent !important;
-  border-radius: 5px;
-  border-top: 3px solid #0066ff;
+  /*border-radius: 5px;*/
+  /*border-top: 3px solid #0066ff;*/
 }
 
  .singularity-tab {
@@ -552,14 +552,7 @@ section.sections.active { display: block; }
 
 .singularity-stake-details { align-items: center !important; }
 .MuiPrivateTabIndicator-colorSecondary-79 { background-color: #3f51b5 !important; }
-.expansion-summary div { display: inline-block; }
 .expansion-summary > div { margin: 10px 0; }
-
-.expansion-panel-details,
-.expansion-panel-actions {
-  background-color: #d3e8fb;
-}
-
 .expansion-panel-summary button.blue { border-radius: 50px; }
 
 .view-req-header { 
@@ -629,12 +622,16 @@ section.sections.active { display: block; }
 .stake-req-popup .modal-body { padding-bottom: 0; }
 .approve-request-popup form .row { margin: 10px 0; }
 
-.logo-nav { 
+.logo-nav {
   height: 198px;
+  width: 100%;
+  margin: 0;
   padding: 10px;
   position: relative;
   z-index: 22;
 }
+
+.logo-nav .col-md-6 { padding: 0; }
 
 
 /* view requests new changes */
@@ -650,7 +647,8 @@ section.sections.active { display: block; }
 }
 
 .getting-started-div,
-.your-balance-div {
+.your-balance-div,
+.req-ai-services-heading {
   padding: 10px 15px;
   background-color: #fcfbfb;
   font-size: 22px;
@@ -713,8 +711,106 @@ section.sections.active { display: block; }
 .network-name span:first-of-type { margin-left: 5px; }
 .network-name span:last-of-type { font-weight: bold; }
 
-/* media queries */
+.req-ai-services-heading  { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 25px;
+}
 
+.req-ai-services-heading button {
+  color: #fff;
+  border: none;
+  background-color: #0066ff;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 0px 16px 3px;
+  border-radius: 5px;
+}
+
+.req-ai-services-heading button span { 
+  font-size: 24px;
+  vertical-align: sub;
+}
+
+.singularity-tabs button { 
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.expansion-panel-ai-services,
+.paper-ai-services { box-shadow: none !important; }
+
+.singularity-tab span { text-align: left; }
+
+.expansion-summary-ai-services .singularity-stake-details span {
+  font-size: 14px;
+  color: #d7d7d7;
+  font-weight: 400;
+}
+
+.expansion-summary-ai-services .card-header { padding: 0 !important; }
+.expansion-summary-ai-services > div { margin-bottom: 0; }
+
+.expansion-panel { 
+  box-shadow: none !important;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.expansion-panel:before { height: 0 !important; }
+.singularity-accordion-main { box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12) }
+
+.information-data p,
+.award-amt-data p:first-of-type,
+.description-title,
+.bold { font-weight: bold; }
+
+.information-data p:first-of-type { font-size: 18px; }
+.information-data p:last-of-type { font-size: 14px; }
+.information-data p:last-of-type span { font-weight: normal; }
+
+.description-txt { 
+  font-size: 14px !important;
+  line-height: 18px !important;
+}
+
+.expansion-summary { align-items: flex-start !important; }
+.expansion-summary .col-md-5:last-of-type div { display: block; }
+.expansion-summary .bold { font-size: 14px; }
+.expansion-summary p { display: inline-block; }
+
+.submission-variable-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right-side-data div { padding-bottom: 20px; }
+.right-side-data div:last-of-type { padding-bottom: 0; }
+.expansion-panel-actions .row { width: 100%; }
+
+.expansion-panel-actions .col-md-10 {
+  display: flex;
+  padding: 0;
+}
+
+.expansion-panel-actions .col-md-10 button:first-of-type { margin-left: 0 !important; } 
+.expansion-panel-details + hr { display: none; }
+
+.expansion-panel-actions button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.close-proj-btn  {
+  background-color: transparent;
+  border: none;
+  color: #4086ff;
+}
+
+/* media queries */
 @media (max-width: 448px) {
   .navbar-singularity .hamburger-menu { display: block; }
   .navbar-singularity .header-menu { display: none; }
