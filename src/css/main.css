@@ -398,7 +398,8 @@ section.sections.active { display: block; }
 
 /* changes for page tables */
 .singularity-accordion-main,
-.getting-started-your-balance { 
+.getting-started-your-balance,
+.network-name { 
   width: 95%;
   margin: 30px auto 20px;
   padding-left: 0;
@@ -683,7 +684,7 @@ section.sections.active { display: block; }
   cursor: pointer;
 }
 
-.getting-started-your-balance .fa-info-circle { 
+.fa-info-circle { 
   color: #858383;
   font-size: 21px;
 }
@@ -707,6 +708,10 @@ section.sections.active { display: block; }
 }
 
 .add-more-funds-btn { margin-top: 36px; }
+.network-name { font-size: 24px; }
+
+.network-name span:first-of-type { margin-left: 5px; }
+.network-name span:last-of-type { font-weight: bold; }
 
 /* media queries */
 

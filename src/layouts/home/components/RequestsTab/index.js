@@ -125,6 +125,12 @@ class RequestsTab extends Component {
           </div>
         </div>
 
+        <div className="network-name">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <span>Current Network: </span>
+          <span>Kovan Test Network</span>
+        </div>
+
         <div className="main singularity-accordion-main">
           <p className="view-req-header">Requests for AI Services</p>
           <AppBar position="static" color="default" className="singularity-tabs">
