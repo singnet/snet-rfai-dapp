@@ -44,7 +44,6 @@ def request_handler(event, context):
         response = get_response(500, err_msg)
         traceback.print_exc()
 
-    print(response)
     return response
 
 def get_response(status_code, message):
