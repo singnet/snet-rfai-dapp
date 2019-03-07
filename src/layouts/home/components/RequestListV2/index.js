@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import web3 from 'web3'
 import ipfsClient from 'ipfs-http-client'
 
+import Vote from '../Vote';
+
 //components
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
@@ -436,8 +438,9 @@ class RequestListV2 extends Component {
                     <p><span className="bold">Submission: </span><span>23</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
-                  <div>
+                  <div className="solution-vote-div">
                     <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
                 <div className="col-md-2"></div>
@@ -462,8 +465,9 @@ class RequestListV2 extends Component {
                     <p><span className="bold">Submission: </span><span>23</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
-                  <div>
+                 <div className="solution-vote-div">
                     <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
                 <div className="col-md-2"></div>
@@ -489,8 +493,9 @@ class RequestListV2 extends Component {
                     <p><span className="bold">Submission: </span><span>23</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
-                  <div>
+                  <div className="solution-vote-div">
                     <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
                 <div className="col-md-2"></div>
@@ -517,8 +522,9 @@ class RequestListV2 extends Component {
                     <p><span className="bold">Submission: </span><span>23</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
-                  <div>
+                  <div className="solution-vote-div">
                     <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
                 <div className="col-md-2"></div>
@@ -545,8 +551,9 @@ class RequestListV2 extends Component {
                     <p><span className="bold">Submission: </span><span>23</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
-                  <div>
+                  <div className="solution-vote-div">
                     <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
                 <div className="col-md-2"></div>
