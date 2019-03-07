@@ -717,11 +717,12 @@ class RequestListV2 extends Component {
           </div>
         </Dialog>
 
-        <Dialog PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
-          <div className={localModalDialogStyle} role="document">
+        {/* submit solution dialog box */ }
+        <Dialog className="submit-solution-dailog" PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
+          <div className={localModalDialogStyle} className="submit-solution-div" role="document">
             <div className="submit-solution-popup modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Submit Solution</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Solution Submission</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleSubmitSolutionDialogClose}>
                   <span aria-hidden="true">&times;</span>
                 </button>
