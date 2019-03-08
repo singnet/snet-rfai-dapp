@@ -700,11 +700,13 @@ class RequestListV2 extends Component {
           </div>
         </Dialog>
 
+
+        { /* Fund this project / stake request */ } 
         <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
           <div className="modal-dialog stake-req-popup" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Stake Request</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Fund This Project</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleStakeRequestDialogClose}>
                   <span aria-hidden="true">&times;</span>
                   </button>

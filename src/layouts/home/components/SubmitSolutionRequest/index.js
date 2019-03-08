@@ -98,7 +98,7 @@ class SubmitSolutionRequest extends Component {
             <div className="col-md-12">
               <span>Your Submission</span>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
               <div className="github-link-div">
                 <span>Github Link</span>
                 <span>https://www.lipsum.com/</span>

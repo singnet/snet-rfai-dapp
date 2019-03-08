@@ -176,31 +176,56 @@ class StakeRequest extends Component {
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)    
     return (
       <div > 
-        <Paper style={styles} elevation={0} className="singularity-content stake-request">
-          <p>Stake Token for Request Id - {this.state.requestId} </p>
+        <Paper style={styles} elevation={0} className="singularity-content fund-this-project">
           <form className="pure-form pure-form-stacked">
 
-            <div className="row">
-              <div className="col-md-6">
-                <label>Tokens to Stake:</label>
+            <div className="row fund-project-sub-header">
+              <div className="col-md-12">
+                <span className="bold">Digit Recognizer</span>
               </div>
-              <div className="col-md-6">
-                <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to Stake:" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
+            </div>
+
+            <div className="row requester-detail">
+              <div className="col-md-12">
+                <div className="col-md-4">
+                  <span className="bold">requested by:</span>
+                  <span>John Doe</span>
+                </div>
+                <div className="col-md-4">
+                  <span className="bold">current amount</span>
+                  <span>15 AGI tokens</span>
+                </div>
+                <div className="col-md-4">
+                  <span className="bold">backers</span>
+                  <span>8</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="row balance-funding-amt-div">
+              <div className="col-md-12">
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="balance-div">
+                  <span>Your Balance in Escrow</span>
+                  <span>16 AGI</span>
+                </div>
+                <div className="funding-amt-div">
+                  <span>Funding Amount</span>
+                  <span>5 AGI</span>
+                </div>
               </div>
             </div>
 
             <div className="row">
-              <div className="col-md-6">
-                <span>Balance in Escrow: </span>
-              </div>
-              <div className="col-md-6">
-                <span>{escrowBalance} AGI</span>
+              <div className="col-md-12">
+                <p className="error-txt">error state message</p>
               </div>
             </div>
 
             <div className="row">
-              <div className="col-md-12 text-center">
-                <Button className="blue singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleStakeButton}>Stake</Button>
+              <div className="col-md-12 buttons">
+                <button className="cncl-btn">cancel</button>
+                <button className="blue fund-project">fund project</button>
               </div>
             </div>
 

@@ -834,19 +834,27 @@ section.sections.active { display: block; }
 }
 
 /* submit solution pop re-design */
-.submit-solution-popup h5 {
+.submit-solution-popup h5,
+.stake-req-popup h5 {
   font-size: 24px;
   color: #000;
 }
 
-.submit-solution-popup form {
-  width: 550px;
+.submit-solution-popup form,
+.stake-req-popup form {
+  max-width: 100%;
+  width: 600px;
   box-shadow: none; 
 }
-.submit-solution-popup .modal-header { padding: 10px 0; }
-.solution-submit-sub-header .col-md-12 { padding: 0; }
 
-.solution-submit-sub-header span { 
+.submit-solution-popup .modal-header,
+.stake-req-popup .modal-header{ padding: 10px 0; }
+
+.solution-submit-sub-header .col-md-12,
+.fund-project-sub-header .col-md-12 { padding: 0; }
+
+.solution-submit-sub-header span,
+.fund-project-sub-header span { 
   padding: 15px 0;
   display: inline-block;
   font-size: 20px; 
@@ -928,9 +936,11 @@ section.sections.active { display: block; }
   margin-top: 20px;
 }
 
-.your-submission-div .buttons { text-align: center; }
+.your-submission-div .buttons,
+.fund-this-project .buttons { text-align: center; }
     
-.your-submission-div .buttons button {
+.your-submission-div .buttons button,
+.fund-this-project .buttons button {
   border: none;
   padding: 10px 35px;
   text-transform: uppercase;
@@ -940,10 +950,58 @@ section.sections.active { display: block; }
   font-weight: bold;
 }
 
-.your-submission-div .cncl-btn { 
+.your-submission-div .cncl-btn,
+.fund-this-project .cncl-btn { 
   background-color: transparent; 
   color: #4086ff;
 }
+
+/* fund this project */
+.fund-this-project { padding: 0 !important; }
+.stake-req-popup .modal-body { padding-top: 0; }
+
+.requester-detail .col-md-12 {
+  display: flex;
+  padding: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 30px;
+}
+
+.requester-detail .col-md-4 { padding: 0; }
+
+.requester-detail .bold {
+  display: block;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.balance-funding-amt-div .balance-div,
+.balance-funding-amt-div .funding-amt-div {
+  width: 200px;
+  border-radius: 5px;
+  padding: 15px;
+  display: inline-block;
+}
+
+.balance-funding-amt-div .balance-div {
+  color: #b9b9b9;
+  border: 1px solid #b9b9b9;
+  margin-left: 10px;
+}
+
+.balance-funding-amt-div .funding-amt-div { 
+  border: 1px solid #000;
+  margin-left: 7.5%;
+}
+
+.balance-funding-amt-div .balance-div span:first-of-type,
+.balance-funding-amt-div .funding-amt-div span:first-of-type { 
+  font-size: 11px;
+  display: block;
+}
+
+.balance-funding-amt-div { margin-top: 30px; }
 
 /* media queries */
 @media (max-width: 448px) {
