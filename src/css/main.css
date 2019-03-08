@@ -693,7 +693,21 @@ section.sections.active { display: block; }
 }
 
 .your-balance { margin-left: 2%; }
-.your-balance-data { padding: 25px 25px 15px; }
+
+.your-balance-data { 
+  padding: 25px 25px 15px; 
+  position: relative;
+}
+
+.your-balance-data span:first-of-type {
+  padding: 0 6px;
+  position: absolute;
+  top: 16px;
+  left: 65px;
+  background-color: #fff;
+  font-weight: bold;
+  font-size: 12px;  
+}
 
 .balance {
   border: 1px solid;
@@ -918,11 +932,21 @@ section.sections.active { display: block; }
   border-radius: 5px;
   padding: 10px 20px;
   vertical-align: middle;
+  position: relative;
 }
 
-.github-link-div span:first-of-type { font-size: 12px; }
+.github-link-div span:first-of-type { 
+  padding: 0 10px;
+  position: absolute;
+  top: -9px;
+  left: 10px;
+  z-index: 7;
+  background-color: #fff;  
+  font-size: 12px; 
+}
 
-.github-link-div span:last-of-type { 
+.github-link-div span:last-of-type {
+  padding: 5px 0 7px;
   display: block;
   font-weight: bold;
 }
@@ -982,6 +1006,7 @@ section.sections.active { display: block; }
   border-radius: 5px;
   padding: 15px;
   display: inline-block;
+  position: relative;
 }
 
 .balance-funding-amt-div .balance-div {
@@ -999,6 +1024,11 @@ section.sections.active { display: block; }
 .balance-funding-amt-div .funding-amt-div span:first-of-type { 
   font-size: 11px;
   display: block;
+  position: absolute;
+  top: -9px;
+  background: #fff;
+  padding: 0 6px;
+  left: 10px;
 }
 
 .balance-funding-amt-div { margin-top: 30px; }

@@ -116,6 +116,7 @@ class RequestsTab extends Component {
               </div>
               <div className="your-balance-data">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span>Amount</span>
                 <span className="balance">0.0000456 AGI</span>
                 <div className="add-more-funds-btn">
                   <button>add more funds</button>
