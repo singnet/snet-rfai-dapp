@@ -23,11 +23,10 @@ class SubmitSolutionRequest extends Component {
 
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleSubmitSolution2Button = this.handleSubmitSolution2Button.bind(this)
-
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
 
-console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
+    console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
 
     this.state = {
       requestId: this.props.requestId,
@@ -38,19 +37,9 @@ console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& 
       selectedLeftNav: 'nav1',
       alertText: ''
     }
-
     //uint256 requestId, uint256 endSubmission, uint256 endEvaluation, uint256 newExpiration
 
     this.setBlockNumber();
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
   }
 
   setBlockNumber() {
@@ -94,11 +83,33 @@ console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& 
   }
 
   renderRightPane() {
-
     if(this.state.selectedLeftNav === 'nav1') {
       return (
-        <div className="singularity-content">
-          <p>Solution submission overview</p>
+        <div className="singularity-content submit-solution-tabs-content">
+          <div className="row top-section">
+            <div className="col-md-12 overview-content">
+              <img src="http://placehold.it/210x210" title="Image" />
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>            
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>            
+            </div>
+          </div>
+          <div className="row your-submission-div">
+            <div className="col-md-12">
+              <span>Your Submission</span>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              <div className="github-link-div">
+                <span>Github Link</span>
+                <span>https://www.lipsum.com/</span>
+              </div>
+              <p className="error-txt">error state message</p>
+              <div className="buttons">
+                <button className="cncl-btn">cancel</button>
+                <button className="blue submit-btn">submit</button>
+              </div>
+            </div>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
@@ -133,31 +144,33 @@ console.log("SubmitSolutionRequest Constructor " + this.props.requestId + " &&& 
         </div>
       )
     }
-
-
   }
 
-  render() {
- 
+  render() { 
     return (
       <div>
         <form className="pure-form pure-form-stacked create-request-form">
-          {/* <div className="row">
-            <div className="col-md-12 create-req-header">
-              <span>Submit Solution </span>
-            </div>
-          </div> */}
-          <div className="row">
+        <div className="row solution-submit-sub-header">
+          <div className="col-md-12">
+            <span className="bold">Digit Recognizer</span>
+          </div>
+        </div>
+          <div className="row  solution-submit-tabs">
             <div className="col-md-3 create-req-tabs">
               <ul>
-                <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
-                <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a></li>
-                <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Evaluation</a></li>
-                <li className={this.state.selectedLeftNav === "navNewSolution"?'active':''}><a href="#" title="New Solution" onClick={event => this.handleLeftNavClick(event, 'navNewSolution')}>New Solution</a></li>
+                <li className={this.state.selectedLeftNav === "nav1"?'active':''}>
+                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a>
+                </li>
+                <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
+                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a>
+                </li>
+                <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
+                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Evaluation</a>
+                </li>
               </ul>
             </div>
             <div className="col-md-9">
-                {this.renderRightPane()}
+              {this.renderRightPane()}
             </div>
           </div>          
         </form>

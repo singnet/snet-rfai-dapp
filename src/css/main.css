@@ -397,16 +397,19 @@ section.sections.active { display: block; }
 }
 
 /* changes for page tables */
-.singularity-accordion-main { 
-  width: 97%;
-  margin: 0 auto 20px;
+.singularity-accordion-main,
+.getting-started-your-balance,
+.network-name { 
+  width: 95%;
+  margin: 30px auto 20px;
+  padding-left: 0;
  }
 
  .singularity-tabs { 
-  box-shadow: none;
+  box-shadow: none !important;
   background-color: transparent !important;
-  border-radius: 5px;
-  border-top: 3px solid #0066ff;
+  /*border-radius: 5px;*/
+  /*border-top: 3px solid #0066ff;*/
 }
 
  .singularity-tab {
@@ -549,14 +552,7 @@ section.sections.active { display: block; }
 
 .singularity-stake-details { align-items: center !important; }
 .MuiPrivateTabIndicator-colorSecondary-79 { background-color: #3f51b5 !important; }
-.expansion-summary div { display: inline-block; }
 .expansion-summary > div { margin: 10px 0; }
-
-.expansion-panel-details,
-.expansion-panel-actions {
-  background-color: #d3e8fb;
-}
-
 .expansion-panel-summary button.blue { border-radius: 50px; }
 
 .view-req-header { 
@@ -626,18 +622,418 @@ section.sections.active { display: block; }
 .stake-req-popup .modal-body { padding-bottom: 0; }
 .approve-request-popup form .row { margin: 10px 0; }
 
-.logo-nav { 
+.logo-nav {
   height: 198px;
+  width: 100%;
+  margin: 0;
   padding: 10px;
   position: relative;
   z-index: 22;
 }
 
+.logo-nav .col-md-6 { padding: 0; }
 
 
+/* view requests new changes */
+.getting-started-your-balance .row { margin: 0 auto; }
+
+.getting-started,
+.your-balance {
+  width: 49%;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  border-radius: 5px;
+  border-top: 3px solid #06f;
+  padding: 0;
+}
+
+.getting-started-div,
+.your-balance-div,
+.req-ai-services-heading {
+  padding: 10px 15px;
+  background-color: #fcfbfb;
+  font-size: 22px;
+  font-weight: bold;  
+}
+
+.your-balance-data, 
+.getting-started-text { padding: 15px; }
+
+.getting-started-text {
+  color: gray;
+  font-size: 13px;
+}
+
+.documentation-btn,
+.add-more-funds-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.documentation-btn button,
+.add-more-funds-btn button {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #dddddd;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fa-info-circle { 
+  color: #858383;
+  font-size: 21px;
+}
+
+.your-balance-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.your-balance { margin-left: 2%; }
+
+.your-balance-data { 
+  padding: 25px 25px 15px; 
+  position: relative;
+}
+
+.your-balance-data span:first-of-type {
+  padding: 0 6px;
+  position: absolute;
+  top: 16px;
+  left: 65px;
+  background-color: #fff;
+  font-weight: bold;
+  font-size: 12px;  
+}
+
+.balance {
+  border: 1px solid;
+  padding: 10px;
+  width: 92%;
+  display: inline-block;
+  border-radius: 5px;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+.add-more-funds-btn { margin-top: 36px; }
+.network-name { font-size: 24px; }
+
+.network-name span:first-of-type { margin-left: 5px; }
+.network-name span:last-of-type { font-weight: bold; }
+
+.req-ai-services-heading  { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 25px;
+}
+
+.req-ai-services-heading button {
+  color: #fff;
+  border: none;
+  background-color: #0066ff;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 0px 16px 3px;
+  border-radius: 5px;
+}
+
+.req-ai-services-heading button span { 
+  font-size: 24px;
+  vertical-align: sub;
+}
+
+.singularity-tabs button { 
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.expansion-panel-ai-services,
+.paper-ai-services { box-shadow: none !important; }
+
+.singularity-tab span { text-align: left; }
+
+.expansion-summary-ai-services .singularity-stake-details span {
+  font-size: 14px;
+  color: #d7d7d7;
+  font-weight: 400;
+}
+
+.expansion-summary-ai-services .card-header { padding: 0 !important; }
+.expansion-summary-ai-services > div { margin-bottom: 0; }
+
+.expansion-panel { 
+  box-shadow: none !important;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.expansion-panel:before { height: 0 !important; }
+.singularity-accordion-main { box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12) }
+
+.information-data p,
+.award-amt-data p:first-of-type,
+.description-title,
+.bold { font-weight: bold; }
+
+.information-data p:first-of-type { font-size: 18px; }
+.information-data p:last-of-type { font-size: 14px; }
+.information-data p:last-of-type span { font-weight: normal; }
+
+.description-txt { 
+  font-size: 14px !important;
+  line-height: 18px !important;
+}
+
+.expansion-summary { align-items: flex-start !important; }
+.expansion-summary .col-md-5:last-of-type div { display: block; }
+.expansion-summary .bold { font-size: 14px; }
+.expansion-summary p { display: inline-block; }
+
+.submission-variable-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right-side-data > div { padding-bottom: 20px; }
+.right-side-data > div:last-of-type { padding-bottom: 0; }
+.expansion-panel-actions .row { width: 100%; }
+
+.expansion-panel-actions .col-md-10 {
+  display: flex;
+  padding: 0;
+}
+
+.expansion-panel-actions .col-md-10 button:first-of-type { margin-left: 0 !important; } 
+.expansion-panel-details + hr { display: none; }
+
+.expansion-panel-actions button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.close-proj-btn  {
+  background-color: transparent;
+  border: none;
+  color: #4086ff;
+}
+
+/* VOTE Styling */
+.solution-vote-div { 
+  display: flex;
+  align-items: baseline;
+}
+
+.vote {
+  display: flex;
+  margin-left: 25px;
+}
+
+.vote .like-count,
+.vote .dislike-count {  display: block; }
+
+.vote .thumbsdown-icon { margin-left: 40px; }
+
+.vote .thumbsup-icon,
+.vote .thumbsdown-icon { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* submit solution pop re-design */
+.submit-solution-popup h5,
+.stake-req-popup h5 {
+  font-size: 24px;
+  color: #000;
+}
+
+.submit-solution-popup form,
+.stake-req-popup form {
+  max-width: 100%;
+  width: 600px;
+  box-shadow: none; 
+}
+
+.submit-solution-popup .modal-header,
+.stake-req-popup .modal-header{ padding: 10px 0; }
+
+.solution-submit-sub-header .col-md-12,
+.fund-project-sub-header .col-md-12 { padding: 0; }
+
+.solution-submit-sub-header span,
+.fund-project-sub-header span { 
+  padding: 15px 0;
+  display: inline-block;
+  font-size: 20px; 
+}
+
+.solution-submit-tabs { flex-direction: column; }
+
+.solution-submit-tabs .create-req-tabs {
+  border-right: 0;
+  min-height: auto;
+  max-width: 100%;
+}
+
+.solution-submit-tabs .create-req-tabs ul li { 
+  padding-right: 25px;
+  display: inline-block; 
+}
+
+.solution-submit-tabs .create-req-tabs ul li.active { background-color: transparent; }
+
+.solution-submit-tabs .create-req-tabs ul li.active a { 
+  border-bottom: 2px solid #4d80f8;
+  color: #4d80f8;
+  font-weight: bold;
+}
+
+.solution-submit-tabs .create-req-tabs ul li a { 
+  padding: 0;
+  color: #969696;
+}
+
+.overview-content img { float: right; }
+.solution-submit-tabs .col-md-9 { max-width: 100%; }
+
+.solution-submit-tabs .top-section {
+  padding: 30px 10px;
+  background-color: #f6f6f6; 
+}
+
+.your-submission-div {
+  border-top: 1px solid #cfcece;
+  margin-top: 20px;
+  padding-top: 15px;
+}
+
+.your-submission-div .col-md-12 > span {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.your-submission-div .col-md-12 > p {
+  font-size: 15px;
+  color: #5a5959;
+}
+
+.github-link-div {
+  width: 94%;
+  display: inline-block;
+  margin-left: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.github-link-div span:first-of-type { 
+  padding: 0 10px;
+  position: absolute;
+  top: -9px;
+  left: 10px;
+  z-index: 7;
+  background-color: #fff;  
+  font-size: 12px; 
+}
+
+.github-link-div span:last-of-type {
+  padding: 5px 0 7px;
+  display: block;
+  font-weight: bold;
+}
+
+.error-txt {
+ color: gray;
+  border: 1px solid red;
+  background: pink;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+.your-submission-div .buttons,
+.fund-this-project .buttons { text-align: center; }
+    
+.your-submission-div .buttons button,
+.fund-this-project .buttons button {
+  border: none;
+  padding: 10px 35px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.your-submission-div .cncl-btn,
+.fund-this-project .cncl-btn { 
+  background-color: transparent; 
+  color: #4086ff;
+}
+
+/* fund this project */
+.fund-this-project { padding: 0 !important; }
+.stake-req-popup .modal-body { padding-top: 0; }
+
+.requester-detail .col-md-12 {
+  display: flex;
+  padding: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 30px;
+}
+
+.requester-detail .col-md-4 { padding: 0; }
+
+.requester-detail .bold {
+  display: block;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.balance-funding-amt-div .balance-div,
+.balance-funding-amt-div .funding-amt-div {
+  width: 200px;
+  border-radius: 5px;
+  padding: 15px;
+  display: inline-block;
+  position: relative;
+}
+
+.balance-funding-amt-div .balance-div {
+  color: #b9b9b9;
+  border: 1px solid #b9b9b9;
+  margin-left: 10px;
+}
+
+.balance-funding-amt-div .funding-amt-div { 
+  border: 1px solid #000;
+  margin-left: 7.5%;
+}
+
+.balance-funding-amt-div .balance-div span:first-of-type,
+.balance-funding-amt-div .funding-amt-div span:first-of-type { 
+  font-size: 11px;
+  display: block;
+  position: absolute;
+  top: -9px;
+  background: #fff;
+  padding: 0 6px;
+  left: 10px;
+}
+
+.balance-funding-amt-div { margin-top: 30px; }
 
 /* media queries */
-
 @media (max-width: 448px) {
   .navbar-singularity .hamburger-menu { display: block; }
   .navbar-singularity .header-menu { display: none; }

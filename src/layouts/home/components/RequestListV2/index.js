@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import web3 from 'web3'
 import ipfsClient from 'ipfs-http-client'
 
+import Vote from '../Vote';
+
 //components
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
@@ -347,57 +349,67 @@ class RequestListV2 extends Component {
 
       if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
         return (
-            <ExpansionPanelActions className="expansion-panel-actions">
-                <div className="row">
-                    <div className="col">
-                      <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+          // expired / pending
+          <ExpansionPanelActions className="expansion-panel-actions"> {}
+            <div className="row">
+            <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
       } else if(r.status === "0") {
         return (
-            <ExpansionPanelActions className="expansion-panel-actions">
-                <div className="row">
-                    <div className="col">
-                        <button className="blue float-right ml-4" disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
-                        <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+          // open / active
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row active-tab-btns">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                  <button className="blue float-right ml-4" disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
+                  <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
       } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
         return (
-            <ExpansionPanelActions className="expansion-panel-actions">
-                <div className="row">
-                    <div className="col">
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Stake Request</button>
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View / Vote Solution</button>
-                        <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Request</button>                                   
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+        // Approved / Completed
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row completed-tab-btns">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>fund this project</button> 
+                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
+                  <button className="close-proj-btn ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
       } else if(r.status === "2") {
         return (
-            <ExpansionPanelActions className="expansion-panel-actions">
-                <div className="row">
-                    <div className="col">
-                    {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
-                    </div>
+        // expired
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
                 </div>
-            </ExpansionPanelActions>
+            </div>
+          </ExpansionPanelActions>
         )
       } else if(r.status === "4") {
         return (
-            <ExpansionPanelActions className="expansion-panel-actions">
-                <div className="row">
-                    <div className="col">
-                      {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+        // rejected
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
       }
     }
@@ -409,36 +421,29 @@ class RequestListV2 extends Component {
       var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
       if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
         return (
+        // pending
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Requester:</span>
+              <div className="col-md-2"></div>
+                <div class="col-md-4">
+                  <span className="description-title">Description:</span>
+                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
                 </div>
-                <div className="col-md-9">
-                  <span>{r.requester}</span>
+                <div class="col-md-4 right-side-data">
+                  <div>
+                    <span className="bold">Project URL: </span>
+                    <span> https://www.lipsum.com/</span>
+                  </div>
+                  <div className="submission-variable-name">
+                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  </div>
+                  <div className="solution-vote-div">
+                    <span className="bold">Solution Vote:</span>
+                    <Vote/>
+                  </div>
                 </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">documentURI:</span>
-                </div>
-                <div className="col-md-9">
-                  <span>{docURI}</span>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Expiry:</span>
-                </div>
-                <div className="col-md-9">
-                  <span>{r.expiration}</span>
-                </div>
-              </div>
-
+                <div className="col-md-2"></div>
             </div>
           </ExpansionPanelDetails>
         )
@@ -446,30 +451,26 @@ class RequestListV2 extends Component {
         return (
             <ExpansionPanelDetails className="expansion-panel-details">
               <div className="row singularity-stake-details expansion-summary">
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <span className="singularity-label">Requester:</span>
+                <div className="col-md-2"></div>
+                <div class="col-md-4">
+                  <span className="description-title">Description:</span>
+                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                </div>
+                <div class="col-md-4 right-side-data">
+                  <div>
+                    <span className="bold">Project URL: </span>
+                    <span> https://www.lipsum.com/</span>
                   </div>
-                  <div className="col-md-9">
-                    <span>{r.requester}</span>
+                  <div className="submission-variable-name">
+                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  </div>
+                 <div className="solution-vote-div">
+                    <span className="bold">Solution Vote:</span>
+                    <Vote/>
                   </div>
                 </div>
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <span className="singularity-label">documentURI:</span>
-                  </div>
-                  <div className="col-md-9">
-                    <span>{docURI}</span>
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <span className="singularity-label">Expiry:</span> 
-                  </div>
-                  <div className="col-md-9">
-                    <span>{r.expiration}</span>
-                  </div>
-                </div>
+                <div className="col-md-2"></div>
               </div>
             </ExpansionPanelDetails>
         )
@@ -478,32 +479,26 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Requester:</span> 
+              <div className="col-md-2"></div>
+                <div class="col-md-4">
+                  <span className="description-title">Description:</span>
+                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
                 </div>
-                <div className="col-md-9">
-                  <span>{r.requester}</span>
+                <div class="col-md-4 right-side-data">
+                  <div>
+                    <span className="bold">Project URL: </span>
+                    <span> https://www.lipsum.com/</span>
+                  </div>
+                  <div className="submission-variable-name">
+                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  </div>
+                  <div className="solution-vote-div">
+                    <span className="bold">Solution Vote:</span>
+                    <Vote/>
+                  </div>
                 </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">documentURI:</span> 
-                </div>
-                <div className="col-md-9">
-                  <span>{docURI}</span>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Expiry:</span> 
-                </div>
-                <div className="col-md-9">
-                  <span>{r.expiration}</span>
-                </div>
-              </div>
+                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
@@ -513,32 +508,26 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Requester:</span> 
+              <div className="col-md-2"></div>
+                <div class="col-md-4">
+                  <span className="description-title">Description:</span>
+                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
                 </div>
-                <div className="col-md-9">
-                  <span>{r.requester}</span>
+                <div class="col-md-4 right-side-data">
+                  <div>
+                    <span className="bold">Project URL: </span>
+                    <span> https://www.lipsum.com/</span>
+                  </div>
+                  <div className="submission-variable-name">
+                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  </div>
+                  <div className="solution-vote-div">
+                    <span className="bold">Solution Vote:</span>
+                    <Vote/>
+                  </div>
                 </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">documentURI:</span> 
-                </div>
-                <div className="col-md-9">
-                  <span>{docURI}</span>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Expiry:</span>
-                </div>
-                <div className="col-md-9">
-                  <span>{r.expiration}</span>
-                </div>
-              </div>
+                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
@@ -548,32 +537,26 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Requester:</span>
+             <div className="col-md-2"></div>
+                <div class="col-md-4">
+                  <span className="description-title">Description:</span>
+                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
                 </div>
-                <div className="col-md-9">
-                  <span>{r.requester}</span>
+                <div class="col-md-4 right-side-data">
+                  <div>
+                    <span className="bold">Project URL: </span>
+                    <span> https://www.lipsum.com/</span>
+                  </div>
+                  <div className="submission-variable-name">
+                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  </div>
+                  <div className="solution-vote-div">
+                    <span className="bold">Solution Vote:</span>
+                    <Vote/>
+                  </div>
                 </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">ocumentURI:</span>
-                </div>
-                <div className="col-md-9">
-                  <span>{docURI}</span>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span className="singularity-label">Expiry:</span>
-                </div>
-                <div className="col-md-9">
-                  <span>{r.expiration}</span>
-                </div>
-              </div>
+                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
@@ -625,29 +608,30 @@ class RequestListV2 extends Component {
         // TODO: Looks like needs to restructure the components as we should not update the state in the render menthod.
 
         return (
-          <ExpansionPanel key={r.requestId} expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
+          <ExpansionPanel className="expansion-panel" key={r.requestId} expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
             <ExpansionPanelSummary className="expansion-panel-summary" expandIcon={<ExpandMoreIcon />}>
 
               <div className="card" style={rowCardStyles.style}>
-                  <div className="card-header" style={rowStyles.style}>
-                      <div className="row singularity-stake-details">
-                          <div className="col-3"><span className="float-left text-left">{r.requestId}</span></div>
-                          <div className="col-5"><span className="float-left text-left">{r.requester}</span></div>
-                          <div className="col-3">
-                            <span className="float-right text-right">
-                              <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleShowStakeButton(event, r.requestId)}>{this.helperFunctions.fromWei(r.totalFund)}</button>
-                            </span>
-                          </div>
-                          <div className="col-1"></div>
-                      </div>
+                <div className="card-header" style={rowStyles.style}>
+                  <div className="row singularity-stake-details">
+                    <div className="col-2">
+                      <img src="http://placehold.it/81x81" alt="Image" />
+                    </div>
+                    <div className="col-3 information-data">
+                      <p>PUBG Finish Placement Prediction</p>
+                      <p>Requested by: <span>John Doe</span></p>
+                    </div>
+                    <div className="col-2 award-amt-data">
+                      <p>15 AGI tokens</p>
+                      <p>8 Backers</p>
+                    </div>
+                    <div className="col-5">
+                      <span>4/25/2019</span>
+                    </div>                    
                   </div>
+                </div>
               </div>
 
-              {/* <Typography color="primary">{r.requestId}</Typography>
-              <Typography color="secondary">{r.requester}</Typography>
-              <Typography >
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleShowStakeButton(event, r.requestId)}>{this.helperFunctions.fromWei(r.totalFund)}</button>
-              </Typography> */}
             </ExpansionPanelSummary>
             {this.createDetailsRow(req, index)}
             <Divider />
@@ -674,30 +658,24 @@ class RequestListV2 extends Component {
   };
 
   render() {
-
     return (
       <div >
-        <Paper styles={rootStyles}>
-          <ExpansionPanel expanded={false}>
-            <ExpansionPanelSummary>
+        <Paper styles={rootStyles} className="paper-ai-services">
+          <ExpansionPanel className="expansion-panel-ai-services" expanded={false}>
+            <ExpansionPanelSummary className="expansion-summary-ai-services">
               <div className="accordion-header card">
                 <div className="card-header">
                   <div className="row singularity-stake-details">
-                    <div className="col-3"><span className="float-left text-left">Request Id</span></div>
-                    <div className="col-5"><span className="float-left text-left">Requester</span></div>
-                    <div className="col-3"><span className="float-right text-right">Total Funds (AGI)</span></div>
-                    <div className="col-md-1"></div>
+                    <div className="col-2"><span className="float-left text-left"></span></div>
+                    <div className="col-3"><span className="float-left text-left">Information</span></div>
+                    <div className="col-2"><span className="float-left text-left">Award Amount</span></div>
+                    <div className="col-5"><span>Expiry Date</span></div>
                   </div>
                 </div>
               </div>
-
-              {/* <Typography className={classes.heading}>Request Id</Typography>
-                <Typography className={classes.secondaryHeading}>Requester</Typography>
-                <Typography className={classes.secondaryHeading}>Total Funds (AGI)</Typography> */}
-
             </ExpansionPanelSummary>
           </ExpansionPanel>
-          {/* this.generateRequests() */ this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) }
+          { this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) }
         </Paper>
 
         <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
@@ -722,11 +700,13 @@ class RequestListV2 extends Component {
           </div>
         </Dialog>
 
+
+        { /* Fund this project / stake request */ } 
         <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
           <div className="modal-dialog stake-req-popup" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Stake Request</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Fund This Project</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleStakeRequestDialogClose}>
                   <span aria-hidden="true">&times;</span>
                   </button>
@@ -739,11 +719,12 @@ class RequestListV2 extends Component {
           </div>
         </Dialog>
 
-        <Dialog PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
-          <div className={localModalDialogStyle} role="document">
+        {/* submit solution dialog box */ }
+        <Dialog className="submit-solution-dailog" PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
+          <div className={localModalDialogStyle} className="submit-solution-div" role="document">
             <div className="submit-solution-popup modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Submit Solution</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Solution Submission</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleSubmitSolutionDialogClose}>
                   <span aria-hidden="true">&times;</span>
                 </button>

@@ -68,8 +68,7 @@ class RequestsTab extends Component {
         if(exists) {
           this.setState({isFoundationMember : exists});
           //if(this.state.selectedTab !== 0) this.setState ({selectedTab : 0})  
-        }
-          
+        }          
       });
     }
   }
@@ -96,23 +95,65 @@ class RequestsTab extends Component {
     const selectedTab = this.state.selectedTab;
     return (
       <div className="main-content view-request">
+
+        <div className="getting-started-your-balance">
+          <div className="row">
+            <div className="getting-started">
+              <div className="getting-started-div">
+                <span>Getting Started</span>                
+              </div>
+              <div className="getting-started-text">
+                <p>Welcome AI Developers. With this community portal, you can make projects requests for AI services that you think the others will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI token rewards.</p>
+                <div className="documentation-btn">
+                  <button>documentation</button>
+                </div>
+              </div>
+            </div>
+            <div className="your-balance">
+              <div className="your-balance-div">
+                <span>Your Balance In Escrow</span>
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+              </div>
+              <div className="your-balance-data">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span>Amount</span>
+                <span className="balance">0.0000456 AGI</span>
+                <div className="add-more-funds-btn">
+                  <button>add more funds</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="network-name">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <span>Current Network: </span>
+          <span>Kovan Test Network</span>
+        </div>
+
         <div className="main singularity-accordion-main">
-          <p className="view-req-header">Requests for AI Services</p>
+          
+        <div className="req-ai-services-heading">
+          <span>Requests for AI  Services</span>
+          <button><span>+</span> create new request</button>
+        </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs value={selectedTab} onChange={this.handleChange} >
-              {this.state.isFoundationMember === true && <Tab label="Open " className="singularity-tab" value={0}/> }
-              <Tab className="singularity-tab" label="Approved " value={1}/>
-              <Tab className="singularity-tab" label="Rejected " value={2} />
-              <Tab className="singularity-tab" label="Closed " value={3} />
-              <Tab className="singularity-tab" label="Expired " value={4} />
+              {this.state.isFoundationMember === true && <Tab label="Active(20) " className="singularity-tab" value={0}/> }
+              <Tab className="singularity-tab" label="Completed(56)" value={1}/>
+              <Tab className="singularity-tab" label="Expired(15)" value={2} />
+              <Tab className="singularity-tab" label="Rejected(0)" value={3} />
+              <Tab className="singularity-tab" label="Pending(5)" value={4} />
             </Tabs>
-        </AppBar>
-        {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
-        {selectedTab === 1 && <Typography component="div" ><RequestListV2  compRequestStatus="1"/> </Typography>}
-        {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
-        {selectedTab === 3 && <Typography component="div" ><RequestListV2  compRequestStatus="4"/> </Typography>}
-        {selectedTab === 4 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
-      </div>
+          </AppBar>
+          {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
+          {selectedTab === 1 && <Typography component="div" ><RequestListV2  compRequestStatus="1"/> </Typography>}
+          {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
+          {selectedTab === 3 && <Typography component="div" ><RequestListV2  compRequestStatus="4"/> </Typography>}
+          {selectedTab === 4 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
+        </div>
+
       </div>
     )
   }
