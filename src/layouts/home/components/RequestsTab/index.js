@@ -119,7 +119,7 @@ class RequestsTab extends Component {
                 <span>Amount</span>
                 <span className="balance">0.0000456 AGI</span>
                 <div className="add-more-funds-btn">
-                  <button>add more funds</button>
+                  <button onClick = {this.props.handleAccount}>add more funds</button>
                 </div>
               </div>
             </div>
@@ -136,7 +136,7 @@ class RequestsTab extends Component {
           
         <div className="req-ai-services-heading">
           <span>Requests for AI  Services</span>
-          <button><span>+</span> create new request</button>
+          <button onClick = {this.props.handleCreateRequest}><span>+</span> create new request</button>
         </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs value={selectedTab} onChange={this.handleChange} >

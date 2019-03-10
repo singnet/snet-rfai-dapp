@@ -72,7 +72,7 @@ class Home extends Component {
     }
     if(this.state.currentViewPage === 'ViewRequests') {
       return(
-        <div className="main-content"><RequestsTab /></div>
+        <div className="main-content"><RequestsTab handleCreateRequest={this.handleCreateRequest} handleAccount={this.handleAccount}/></div>
       )
     }
   }

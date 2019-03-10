@@ -43,5 +43,16 @@ export default class HelperFunctions {
     return blocks>0?blocks:0;
 
   }
+
+  computeDateFromBlockNumber(currentBlockNumber, toBlockNumber) {
+
+    // Considering 15 Secs as block creation time
+    var millSecs = (toBlockNumber - currentBlockNumber) * (1000 * 15)
+
+    // Current blocknumber is considered as current time
+    var toDate = new Date(Date.now() + (1 * millSecs))
+
+    return toDate.toISOString().slice(0,10);
+  }
   
 }

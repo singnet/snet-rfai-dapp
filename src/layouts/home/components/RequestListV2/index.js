@@ -27,6 +27,7 @@ import RequestSolution from '../../components/RequestSolution'
 
 import RequestStakeDetails from '../../components/RequestStakeDetails'
 import HelperFunctions from '../HelperFunctions'
+import RequestIPFSData from '../RequestIPFSData'
 
 
 //inline styles
@@ -162,10 +163,6 @@ class RequestListV2 extends Component {
     this.setFoundationMembers(this.props.ServiceRequest)
 
     ReactDOM.findDOMNode(this).scrollIntoView();
-
-    //this.getMetaDataFromIPFS('Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW');
-
-      //http://ipfs.singularitynet.io/api/v0/cat?arg=Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW
 
   }
 
@@ -427,15 +424,15 @@ class RequestListV2 extends Component {
               <div className="col-md-2"></div>
                 <div class="col-md-4">
                   <span className="description-title">Description:</span>
-                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
                 <div class="col-md-4 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span> https://www.lipsum.com/</span>
+                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
                   </div>
                   <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
                   <div className="solution-vote-div">
@@ -454,15 +451,15 @@ class RequestListV2 extends Component {
                 <div className="col-md-2"></div>
                 <div class="col-md-4">
                   <span className="description-title">Description:</span>
-                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
                 </div>
                 <div class="col-md-4 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span> https://www.lipsum.com/</span>
+                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
                   </div>
                   <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
                  <div className="solution-vote-div">
@@ -482,15 +479,15 @@ class RequestListV2 extends Component {
               <div className="col-md-2"></div>
                 <div class="col-md-4">
                   <span className="description-title">Description:</span>
-                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
                 </div>
                 <div class="col-md-4 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span> https://www.lipsum.com/</span>
+                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
                   </div>
                   <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
                   <div className="solution-vote-div">
@@ -511,15 +508,15 @@ class RequestListV2 extends Component {
               <div className="col-md-2"></div>
                 <div class="col-md-4">
                   <span className="description-title">Description:</span>
-                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
                 <div class="col-md-4 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span> https://www.lipsum.com/</span>
+                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
                   </div>
                   <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
                   <div className="solution-vote-div">
@@ -540,15 +537,15 @@ class RequestListV2 extends Component {
              <div className="col-md-2"></div>
                 <div class="col-md-4">
                   <span className="description-title">Description:</span>
-                  <p className="description-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
                 <div class="col-md-4 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span> https://www.lipsum.com/</span>
+                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
                   </div>
                   <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>23</span></p>
+                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                     <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                   </div>
                   <div className="solution-vote-div">
@@ -566,30 +563,6 @@ class RequestListV2 extends Component {
   }
 
 
-  getMetaDataFromIPFS(ipfsHash) {
-
-    //http://ipfs.singularitynet.io/api/v0/cat?arg=Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW
-    var ipfs  = ipfsClient({ host: 'ipfs.singularitynet.io', port: 80, protocol: 'http' });
-    var dataJSON;
-
-    ipfs.get(ipfsHash, function (err, files) {
-      console.log("error - " + err)
-      files.forEach((file) => {
-        //console.log(file.path)
-        //console.log(file.content.toString('utf8'))
-  
-        var resString = file.content.toString('utf8')
-        dataJSON = JSON.parse(JSON.parse(resString))
-  
-        //console.log("dataJSON - " + dataJSON);
-        console.log("dataJSON title - " + dataJSON.title);
-  
-      })
-      
-    })
-
-  }
-
   createRow(req, index) {
     const {expanded} = this.state;
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
@@ -601,11 +574,7 @@ class RequestListV2 extends Component {
         (this.state.compRequestStatus === "999" && parseInt(r.expiration,10)<parseInt(this.state.blockNumber,10) ) )
       {
 
-        // Access the IPFS Metadata for the Title, Description and documentURI
-        //var ipfsHash = this.context.drizzle.web3.utils.toAscii(r.documentURI);
-        //var ipfsHash = 'Qmf48zywzQThCwuxgDg6xBbtzfxauRVXfbN2H7qjkbF3YW'
-
-        // TODO: Looks like needs to restructure the components as we should not update the state in the render menthod.
+        var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
 
         return (
           <ExpansionPanel className="expansion-panel" key={r.requestId} expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
@@ -618,15 +587,15 @@ class RequestListV2 extends Component {
                       <img src="http://placehold.it/81x81" alt="Image" />
                     </div>
                     <div className="col-3 information-data">
-                      <p>PUBG Finish Placement Prediction</p>
-                      <p>Requested by: <span>John Doe</span></p>
+                      <p><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></p>
+                      <p>Requested by: <span>{this.helperFunctions.toShortAddress(r.requester)}</span></p>
                     </div>
                     <div className="col-2 award-amt-data">
-                      <p>15 AGI tokens</p>
-                      <p>8 Backers</p>
+                      <p>{this.helperFunctions.fromWei(r.totalFund)} AGI tokens</p>
+                      <p>{r.stakeMembers.length} Backers</p>
                     </div>
                     <div className="col-5">
-                      <span>4/25/2019</span>
+                      <span>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</span>
                     </div>                    
                   </div>
                 </div>
