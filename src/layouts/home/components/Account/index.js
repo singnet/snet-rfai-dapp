@@ -57,12 +57,12 @@ class Account extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  fromWei(weiValue) {
-    var factor = Math.pow(10, 10)
-    var balance = this.context.drizzle.web3.utils.fromWei(weiValue)
-    balance = Math.round(balance / factor);
-    return balance
-  }
+  // fromWei(weiValue) {
+  //   var factor = Math.pow(10, 10)
+  //   var balance = this.context.drizzle.web3.utils.fromWei(weiValue)
+  //   balance = Math.round(balance / factor);
+  //   return balance
+  // }
 
   render() {
 

@@ -60,6 +60,7 @@ class StakeRequest extends Component {
       dataKeyMaxStakers: null,
       dataKeyNextRequestId: null,
       dataKeyOwner: null,
+      dataKeyRequestKey: null,
       minStake: null,
       maxStakers: null,
       selectedTab: 0,
@@ -84,6 +85,9 @@ class StakeRequest extends Component {
     this.setState({dataKeyOwner})
     this.setContractConfigurations(this.props.ServiceRequest)
 
+    const dataKeyRequestKey = this.contracts.ServiceRequest.methods.getServiceRequestById.cacheCall(this.state.requestId)
+    this.setState({dataKeyRequestKey})
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -99,7 +103,6 @@ class StakeRequest extends Component {
 
   setEscrowBalance(contract) {
     if (contract.balances[this.state.dataKeyEscrowBalance] !== undefined && this.state.dataKeyEscrowBalance !== null) {
-//console.log("contract.balances[this.state.dataKeyEscrowBalance].value - " + contract.balances[this.state.dataKeyEscrowBalance].value);
       this.setState({
         escrowBalance: contract.balances[this.state.dataKeyEscrowBalance].value
       })
@@ -129,7 +132,6 @@ class StakeRequest extends Component {
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
-  console.log("Stake Request selectedTab - " + value);
   };
 
   handleAmountInputChange(event) {
@@ -173,72 +175,84 @@ class StakeRequest extends Component {
   }
 
   render() {
-    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)    
-    return (
-      <div > 
-        <Paper style={styles} elevation={0} className="singularity-content fund-this-project">
-          <form className="pure-form pure-form-stacked">
+    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
 
-            <div className="row fund-project-sub-header">
-              <div className="col-md-12">
-                <span className="bold">Digit Recognizer</span>
-              </div>
-            </div>
-
-            <div className="row requester-detail">
-              <div className="col-md-12">
-                <div className="col-md-4">
-                  <span className="bold">requested by:</span>
-                  <span>John Doe</span>
-                </div>
-                <div className="col-md-4">
-                  <span className="bold">current amount</span>
-                  <span>15 AGI tokens</span>
-                </div>
-                <div className="col-md-4">
-                  <span className="bold">backers</span>
-                  <span>8</span>
+    if(this.state.dataKeyRequestKey !== null && this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey] !== undefined) {
+      var r = this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey].value;
+      return (
+        <div > 
+          <Paper style={styles} elevation={0} className="singularity-content fund-this-project">
+            <form className="pure-form pure-form-stacked">
+  
+              <div className="row fund-project-sub-header">
+                <div className="col-md-12">
+                  <span className="bold">Digit Recognizer</span>
                 </div>
               </div>
-            </div>
-
-            <div className="row balance-funding-amt-div">
-              <div className="col-md-12">
-                <i className="fa fa-info-circle" aria-hidden="true"></i>
-                <div className="balance-div">
-                  <span>Your Balance in Escrow</span>
-                  <span>16 AGI</span>
+  
+              <div className="row requester-detail">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <span className="bold">requested by:</span>
+                    <span>{this.helperFunctions.toShortAddress(r.requester)}</span>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="bold">current amount</span>
+                    <span>{this.helperFunctions.fromWei(r.totalFund)} AGI</span>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="bold">backers</span>
+                    <span>{r.stakeMembers.length}</span>
+                  </div>
                 </div>
-                <div className="funding-amt-div">
-                  <span>Funding Amount</span>
-                  <span>5 AGI</span>
+              </div>
+  
+              <div className="row balance-funding-amt-div">
+                <div className="col-md-12">
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                  <div className="balance-div">
+                    <span>Your Balance in Escrow</span>
+                    <span>{escrowBalance} AGI</span>
+                  </div>
+                  <div className="funding-amt-div">
+                    <span>Funding Amount</span>
+                    <span><input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to fund" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} /></span>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-12">
-                <p className="error-txt">error state message</p>
+  
+              {/* <div className="row">
+                <div className="col-md-12">
+                  <p className="error-txt">error state message</p>
+                </div>
+              </div> */}
+  
+              <div className="row">
+                <div className="col-md-12 buttons">
+                  {/* <button className="cncl-btn">cancel</button> */}
+                  <Button className="blue fund-project" type="Button" variant="contained" onClick={this.handleStakeButton}>fund project</Button>
+                </div>
               </div>
-            </div>
+  
+            </form>
+          </Paper>
+  
+          <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
+            <p>{this.state.alertText}</p>
+            <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
+          </Dialog>
+  
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>Loading...</div>
+      )
+    }
+    
 
-            <div className="row">
-              <div className="col-md-12 buttons">
-                <button className="cncl-btn">cancel</button>
-                <button className="blue fund-project">fund project</button>
-              </div>
-            </div>
-
-          </form>
-        </Paper>
-
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-          <p>{this.state.alertText}</p>
-          <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog>
-
-      </div>
-    )
+    
   }
 }
 

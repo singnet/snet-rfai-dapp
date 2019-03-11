@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'
+import HelperFunctions from '../HelperFunctions'
 
 function TabContainer(props) {
   return (
@@ -28,12 +29,14 @@ class RequestsTab extends Component {
     super(props)
 
     this.contracts = context.drizzle.contracts;
+    this.helperFunctions = new HelperFunctions();
 
     this.state = {
       dataKeyMemberKeys: null,
       foundationMembers: [],
       dataKeyOwner: null,
       owner: null,
+      dataKeyEscrowBalance: null,
       selectedTab: 1,
       dialogOpen: false,
       isFoundationMember: false,
@@ -45,9 +48,14 @@ class RequestsTab extends Component {
     const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
     this.setState({dataKeyMemberKeys})
     this.setFoundationMembers(this.props.ServiceRequest)
+
     const dataKeyOwner  = this.contracts.ServiceRequest.methods.owner.cacheCall();
     this.setState({dataKeyOwner})
     this.setOwner(this.props.ServiceRequest)
+
+    const dataKeyEscrowBalance = this.contracts.ServiceRequest.methods.balances.cacheCall(this.props.accounts[0]);
+    this.setState({dataKeyEscrowBalance})
+    this.setEscrowBalance(this.props.ServiceRequest)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -56,6 +64,9 @@ class RequestsTab extends Component {
     }
     if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyOwner !== prevState.dataKeyOwner) {
       this.setOwner(this.props.ServiceRequest)
+    }
+    if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyEscrowBalance !== prevState.dataKeyEscrowBalance) {
+      this.setEscrowBalance(this.props.ServiceRequest)
     }
   }
 
@@ -86,6 +97,14 @@ class RequestsTab extends Component {
     }
   }
 
+  setEscrowBalance(contract) {
+    if (contract.balances[this.state.dataKeyEscrowBalance] !== undefined && this.state.dataKeyEscrowBalance !== null) {
+      this.setState({
+        escrowBalance: contract.balances[this.state.dataKeyEscrowBalance].value
+      })
+    }
+  }
+
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
     console.log("selectedTab - " + value);
@@ -93,6 +112,8 @@ class RequestsTab extends Component {
 
   render() {
     const selectedTab = this.state.selectedTab;
+    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
+
     return (
       <div className="main-content view-request">
 
@@ -117,7 +138,7 @@ class RequestsTab extends Component {
               <div className="your-balance-data">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                 <span>Amount</span>
-                <span className="balance">0.0000456 AGI</span>
+                <span className="balance">{escrowBalance} AGI</span>
                 <div className="add-more-funds-btn">
                   <button onClick = {this.props.handleAccount}>add more funds</button>
                 </div>

@@ -101,12 +101,12 @@ class SubmitSolutionRequest extends Component {
               <i className="fa fa-info-circle" aria-hidden="true"></i>
               <div className="github-link-div">
                 <span>Github Link</span>
-                <span>https://www.lipsum.com/</span>
+                <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
               </div>
-              <p className="error-txt">error state message</p>
+              {/* <p className="error-txt">error state message</p> */}
               <div className="buttons">
-                <button className="cncl-btn">cancel</button>
-                <button className="blue submit-btn">submit</button>
+                {/* <button className="cncl-btn">cancel</button> */}
+                <button type="button" className="blue submit-btn" onClick={this.handleSubmitSolution2Button}>submit</button>
               </div>
             </div>
           </div>
@@ -136,11 +136,11 @@ class SubmitSolutionRequest extends Component {
           <div className="row">
               <div className="col">
                   <label>Solution Document URI:</label><div className="clearfix"></div>
-                  <input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} />
+                  {/* <input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /> */}
                   <div className="spacer"></div>
               </div>
           </div>
-          <button type="button" className="blue" onClick={this.handleSubmitSolution2Button}>Submit</button>
+          {/* <button type="button" className="blue" onClick={this.handleSubmitSolution2Button}>Submit</button> */}
         </div>
       )
     }
