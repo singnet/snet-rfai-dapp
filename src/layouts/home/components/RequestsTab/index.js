@@ -119,36 +119,39 @@ class RequestsTab extends Component {
 
         <div className="getting-started-your-balance">
           <div className="row">
+
             <div className="getting-started">
               <div className="getting-started-div">
                 <span>Getting Started</span>                
               </div>
               <div className="getting-started-text">
                 <p>Welcome AI Developers. With this community portal, you can make projects requests for AI services that you think the others will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI token rewards.</p>
-                <div className="documentation-btn">
-                  <button>documentation</button>
-                </div>
+              </div>
+              <div className="documentation-btn">
+                <button>documentation</button>
               </div>
             </div>
+
+
             <div className="your-balance">
               <div className="your-balance-div">
                 <span>Your Balance In Escrow</span>
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
               </div>
               <div className="your-balance-data">
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
                 <span>Amount</span>
                 <span className="balance">{escrowBalance} AGI</span>
-                <div className="add-more-funds-btn">
+              </div>
+              <div className="add-more-funds-btn">
                   <button onClick = {this.props.handleAccount}>add more funds</button>
                 </div>
-              </div>
             </div>
           </div>
         </div>
 
         <div className="network-name">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
           <span>Current Network: </span>
           <span>Kovan Test Network</span>
         </div>

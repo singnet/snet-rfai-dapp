@@ -400,7 +400,7 @@ section.sections.active { display: block; }
 .singularity-accordion-main,
 .getting-started-your-balance,
 .network-name { 
-  width: 95%;
+  width: 85%;
   margin: 30px auto 20px;
   padding-left: 0;
  }
@@ -610,7 +610,11 @@ section.sections.active { display: block; }
 }
 
 .request-solution-popup table th { text-align: center !important; }
-.submit-solution-popup .modal-body { padding: 0; }
+
+.submit-solution-popup .modal-body { 
+  min-height: 430px;
+  padding: 0; 
+}
 
 .submit-solution-popup form { 
   min-height: 320px;
@@ -655,16 +659,18 @@ section.sections.active { display: block; }
   font-weight: bold;  
 }
 
-.your-balance-data, 
-.getting-started-text { padding: 15px; }
-
 .getting-started-text {
+  min-height: 116px;
+  padding: 20px 20px 0;
   color: gray;
-  font-size: 13px;
+  font-size: 14px;
 }
+
+.getting-started-text p { margin-bottom: 0; }
 
 .documentation-btn,
 .add-more-funds-btn {
+  padding-bottom: 35px;
   display: flex;
   justify-content: center;
 }
@@ -694,8 +700,9 @@ section.sections.active { display: block; }
 
 .your-balance { margin-left: 2%; }
 
-.your-balance-data { 
-  padding: 25px 25px 15px; 
+.your-balance-data {
+  min-height: 116px; 
+  padding: 25px 25px 0px; 
   position: relative;
 }
 
@@ -719,7 +726,6 @@ section.sections.active { display: block; }
   font-weight: 600;
 }
 
-.add-more-funds-btn { margin-top: 36px; }
 .network-name { font-size: 24px; }
 
 .network-name span:first-of-type { margin-left: 5px; }
@@ -760,7 +766,6 @@ section.sections.active { display: block; }
 
 .expansion-summary-ai-services .singularity-stake-details span {
   font-size: 14px;
-  color: #d7d7d7;
   font-weight: 400;
 }
 
@@ -790,10 +795,18 @@ section.sections.active { display: block; }
   line-height: 18px !important;
 }
 
-.expansion-summary { align-items: flex-start !important; }
-.expansion-summary .col-md-5:last-of-type div { display: block; }
+.expansion-summary { 
+  width: 100%;
+  align-items: flex-start !important; 
+}
+
 .expansion-summary .bold { font-size: 14px; }
 .expansion-summary p { display: inline-block; }
+
+.expansion-summary .image-container { min-width: 177px; }
+
+.expansion-summary .description-container,
+.expansion-summary .right-side-data { min-width: 444px; }
 
 .submission-variable-name {
   display: flex;
@@ -904,8 +917,10 @@ section.sections.active { display: block; }
 .solution-submit-tabs .col-md-9 { max-width: 100%; }
 
 .solution-submit-tabs .top-section {
+  max-height: 500px;
   padding: 30px 10px;
   background-color: #f6f6f6; 
+  overflow: auto;
 }
 
 .your-submission-div {
@@ -950,6 +965,8 @@ section.sections.active { display: block; }
   display: block;
   font-weight: bold;
 }
+
+.github-link-div input { border-bottom: 0; }
 
 .error-txt {
  color: gray;
@@ -1032,6 +1049,7 @@ section.sections.active { display: block; }
 }
 
 .balance-funding-amt-div { margin-top: 30px; }
+.funding-amt-div input { border-bottom: none; }
 
 /* media queries */
 @media (max-width: 448px) {

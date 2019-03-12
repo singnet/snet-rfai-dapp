@@ -421,15 +421,22 @@ class RequestListV2 extends Component {
         // pending
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
-              <div className="col-md-2"></div>
-                <div class="col-md-4">
+              <div className="col-md-2 image-contianer"></div>
+                <div className="col-md-5 description-container">
                   <span className="description-title">Description:</span>
                   <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
-                <div class="col-md-4 right-side-data">
+                <div class="col-md-5 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
+                    <a href="#" title="">
+                      <RequestIPFSData 
+                        key="doc_{r.requestId}" 
+                        requestId={r.requestId} 
+                        IPFSHash={docURI} 
+                        getField="documentURI" 
+                      />
+                    </a>
                   </div>
                   <div className="submission-variable-name">
                     <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
@@ -440,7 +447,6 @@ class RequestListV2 extends Component {
                     <Vote/>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
             </div>
           </ExpansionPanelDetails>
         )
@@ -448,15 +454,22 @@ class RequestListV2 extends Component {
         return (
             <ExpansionPanelDetails className="expansion-panel-details">
               <div className="row singularity-stake-details expansion-summary">
-                <div className="col-md-2"></div>
-                <div class="col-md-4">
+                <div className="col-md-2 image-cointaner"></div>
+                <div class="col-md-5 description-container">
                   <span className="description-title">Description:</span>
                   <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
                 </div>
-                <div class="col-md-4 right-side-data">
+                <div class="col-md-5 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
+                    <a href="#" title="">
+                      <RequestIPFSData 
+                        key="doc_{r.requestId}" 
+                        requestId={r.requestId} 
+                        IPFSHash={docURI} 
+                        getField="documentURI" 
+                      />
+                    </a>
                   </div>
                   <div className="submission-variable-name">
                     <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
@@ -467,7 +480,6 @@ class RequestListV2 extends Component {
                     <Vote/>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
               </div>
             </ExpansionPanelDetails>
         )
@@ -476,15 +488,22 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-              <div className="col-md-2"></div>
-                <div class="col-md-4">
+              <div className="col-md-2 image-contianer"></div>
+                <div class="col-md-5 description-container">
                   <span className="description-title">Description:</span>
                   <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
                 </div>
-                <div class="col-md-4 right-side-data">
+                <div class="col-md-5 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
+                    <a href="#" title="">
+                      <RequestIPFSData 
+                        key="doc_{r.requestId}" 
+                        requestId={r.requestId} 
+                        IPFSHash={docURI} 
+                        getField="documentURI" 
+                      />
+                    </a>
                   </div>
                   <div className="submission-variable-name">
                     <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
@@ -495,7 +514,6 @@ class RequestListV2 extends Component {
                     <Vote/>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
@@ -505,15 +523,22 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-              <div className="col-md-2"></div>
-                <div class="col-md-4">
+              <div className="col-md-2 image-contianer"></div>
+                <div class="col-md-5 description-container">
                   <span className="description-title">Description:</span>
                   <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
-                <div class="col-md-4 right-side-data">
+                <div class="col-md-5 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
+                    <a href="#" title="">
+                      <RequestIPFSData 
+                        key="doc_{r.requestId}" 
+                        requestId={r.requestId} 
+                        IPFSHash={docURI} 
+                        getField="documentURI" 
+                      />
+                    </a>
                   </div>
                   <div className="submission-variable-name">
                     <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
@@ -524,7 +549,6 @@ class RequestListV2 extends Component {
                     <Vote/>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
@@ -534,15 +558,22 @@ class RequestListV2 extends Component {
           <ExpansionPanelDetails className="expansion-panel-details">
             <div className="row singularity-stake-details expansion-summary">
 
-             <div className="col-md-2"></div>
-                <div class="col-md-4">
+             <div className="col-md-2 image-container"></div>
+                <div class="col-md-5 description-container">
                   <span className="description-title">Description:</span>
                   <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
                 </div>
-                <div class="col-md-4 right-side-data">
+                <div class="col-md-5 right-side-data">
                   <div>
                     <span className="bold">Project URL: </span>
-                    <span><RequestIPFSData key="doc_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="documentURI" /></span>
+                    <a href="#" title="">
+                      <RequestIPFSData 
+                        key="doc_{r.requestId}" 
+                        requestId={r.requestId} 
+                        IPFSHash={docURI} 
+                        getField="documentURI" 
+                      />
+                    </a>
                   </div>
                   <div className="submission-variable-name">
                     <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
@@ -553,7 +584,6 @@ class RequestListV2 extends Component {
                     <Vote/>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
 
             </div>
           </ExpansionPanelDetails>
