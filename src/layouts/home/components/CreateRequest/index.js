@@ -54,7 +54,11 @@ class CreateRequest extends Component {
       dataKeyTokenBalance: null,
       tknBalance: 0,
       blockNumber: 0,
+      requestAuthor: '',
+      requestTrainingDS: '',
+      requestAcptCriteria: '',
       stackId: null,
+      isValidGitHanlde: false,
       showStatus: false,
       selectedLeftNav: 'nav1',
       alertText: ''
@@ -77,6 +81,10 @@ class CreateRequest extends Component {
         this.setBlockNumber();
         this.setTokenBalance(this.props.ServiceRequest)
     }
+
+    if(prevState.requestAuthor !== this.state.requestAuthor && this.state.requestAuthor !== '') {
+      this.validateGitHandle(this.state.requestAuthor)
+    }
   }
 
 
@@ -97,6 +105,34 @@ class CreateRequest extends Component {
   
   handleRequestInputChange(event) {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  validateGitHandle(gitHandle) {
+    const gitURL = "https://api.github.com/users/" + gitHandle
+    const reqOptions = {
+      'mode': 'cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: 'GET'
+    }
+    fetch(gitURL, reqOptions)
+        .then(response => 
+            {
+              if(response.ok) {
+                console.log("Git Handle is Valid")
+                this.setState({isValidGitHanlde: true})
+              }
+              else {
+                console.log("Git Handle is inValid")
+                this.setState({isValidGitHanlde: false})
+              }
+            })
+        .catch(err => 
+            {
+              console.log("Git request error - " + err)
+              this.setState({isValidGitHanlde: false})
+          })
   }
 
   handleBlockNumInputChange(event) {
@@ -165,10 +201,18 @@ class CreateRequest extends Component {
 
     if(this.state.documentURI.length > 0 && this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
-      initialStakeBN.lte(tokenBalanceBN) && 
+      initialStakeBN.lte(tokenBalanceBN) && this.state.isValidGitHanlde === true && 
       parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
-        var ipfsInput = { "title" : this.state.requestTitle, "description" : this.state.requestDesc,"documentURI": this.state.documentURI}
+        var ipfsInput = { 
+          "title" : this.state.requestTitle, 
+          "description" : this.state.requestDesc,
+          "documentURI": this.state.documentURI,
+          "author": this.state.requestAuthor,
+          "training-dataset": this.state.requestTrainingDS,
+          "acceptance-criteria": this.state.requestAcptCriteria,
+          "created": (new Date).toISOString().slice(0,10)
+        }
 
         const body = {
           'mode': 'cors',
@@ -204,6 +248,9 @@ console.log("ipfs hash - " + data.data.hash);
       this.handleDialogOpen()
     } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gte(tokenBalanceBN)) {
       this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow.`})
+      this.handleDialogOpen()
+    } else if (!this.state.isValidGitHanlde) {
+      this.setState({ alertText: `Oops! Invalid Github handle.`})
       this.handleDialogOpen()
     } else if (expiration === '' || parseInt(expiration,10) <= parseInt(this.state.blockNumber,10)) {
       this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
@@ -276,25 +323,32 @@ console.log("ipfs hash - " + data.data.hash);
 
           <div className="row">
             <div className="col-md-12">
-              <label>Request title:</label><div className="clearfix"></div>
-              <input className="singularity-input" name="requestTitle" type="text" placeholder="Request title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
+              <label>Title:</label><div className="clearfix"></div>
+              <input className="singularity-input" name="requestTitle" type="text" placeholder="Title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-12">
-              <label>Request description:</label>
+              <label>Description:</label>
               <TextField
                 name="requestDesc"
                 id="requestDesc"
                 multiline={true}
                 rows={2}
                 rowsMax={4}
-                placeholder="Request description" 
+                placeholder="Description" 
                 className="singularity-textfield"
                 defaultValue={this.state.requestDesc}
                 onChange={this.handleRequestInputChange}
               />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Author (Github Handle):</label><div className="clearfix"></div>
+              <input className="singularity-input" name="requestAuthor" type="text" placeholder="Author" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} />         
             </div>
           </div>
 
@@ -333,6 +387,30 @@ console.log("ipfs hash - " + data.data.hash);
             <div className="col-md-12">               
               <label>Document URI:</label>
               <input className="singularity-input" name="documentURI" type="text" placeholder="document URI" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Training Dataset:</label><div className="clearfix"></div>
+              <input className="singularity-input" name="requestTrainingDS" type="text" placeholder="Training dataset URL" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} />         
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <label>Acceptance criteria:</label>
+              <TextField
+                name="requestAcptCriteria"
+                id="requestAcptCriteria"
+                multiline={true}
+                rows={2}
+                rowsMax={4}
+                placeholder="Acceptance criteria" 
+                className="singularity-textfield"
+                defaultValue={this.state.requestAcptCriteria}
+                onChange={this.handleRequestInputChange}
+              />
             </div>
           </div>
 

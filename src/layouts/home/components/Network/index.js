@@ -17,10 +17,6 @@ class Network extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Commented by Sridhar
-    //if (this.props.TokenShop !== prevProps.TokenShop) {
-    //    this.getNetwork()
-    //}
   }
 
   getNetwork() {
@@ -38,13 +34,13 @@ class Network extends Component {
           this.setState({network: "Mainnet"})
           break
           case 3:
-          this.setState({network: "Ropsten"})
+          this.setState({network: "Ropsten test network"})
           break
           case 4:
-          this.setState({network: "Rinkeby"})
+          this.setState({network: "Rinkeby test network"})
           break
           case 42:
-          this.setState({network: "Kovan"})
+          this.setState({network: "Kovan test network"})
           break
         }
       })
@@ -54,9 +50,7 @@ class Network extends Component {
   render() {
 
     return (
-      <div>
-        {this.state.network} <p>Account: {this.props.accounts[0]} </p>
-      </div>
+      <React.Fragment>{this.state.network}</React.Fragment>
     )
 
   }

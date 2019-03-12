@@ -6,7 +6,7 @@ const BN = web3.utils.BN
 export default class HelperFunctions {
 
   constructor() {
-      
+
   }
 
   fromWei(weiValue) {

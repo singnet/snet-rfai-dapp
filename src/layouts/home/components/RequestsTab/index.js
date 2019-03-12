@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'
+import Network from '../../components/Network'
 import HelperFunctions from '../HelperFunctions'
 
 function TabContainer(props) {
@@ -153,7 +154,7 @@ class RequestsTab extends Component {
         <div className="network-name">
           { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
           <span>Current Network: </span>
-          <span>Kovan Test Network</span>
+          <span><Network /></span>
         </div>
 
         <div className="main singularity-accordion-main">
