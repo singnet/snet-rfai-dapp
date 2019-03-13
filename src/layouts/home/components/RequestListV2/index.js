@@ -54,12 +54,12 @@ const dialogSubSolStyles = {
   style: {
     backgroundColor: 'white',
     padding: 20,
-    'max-width': '900px'
+    maxWidth: '900px'
   }
 }
 
 const localModalDialogStyle = {
-    'max-width': '900px'
+    maxWidth: '900px'
 }
 
 const rootStyles = {
@@ -133,16 +133,13 @@ class RequestListV2 extends Component {
       dialogOpenShowStake: false,
       dialogOpenVoteRequest: false,
       blockNumber: 0,
-
       alertText: '',
       expanded: null,
-
       solutionDocumentURI: '',
       approveRequestId: 0,
       approveRequestExpiry: 0,
       selectedRequestId: 0,
       selectedRequestExpiry: 0,
-
       dataKeyMemberKeys: null,
       foundationMembers: [],
       isFoundationMember: false,
@@ -150,7 +147,6 @@ class RequestListV2 extends Component {
     }
 
     this.setBlockNumber();
-
   }
 
   componentDidMount() {
@@ -187,7 +183,6 @@ class RequestListV2 extends Component {
   }
 
   setRequests(contract) {
-
     if (contract.nextRequestId[this.state.dataKeyNextRequestId] !== undefined && this.state.dataKeyNextRequestId !== null) {
       const nextRequestId = contract.nextRequestId[this.state.dataKeyNextRequestId].value
       this.setState({nextRequestId})
@@ -197,22 +192,17 @@ class RequestListV2 extends Component {
         dataKeyRequestKeys.push(this.contracts.ServiceRequest.methods.getServiceRequestById.cacheCall(i))
       }
       this.setState({dataKeyRequestKeys});
-
     }
   }
 
   setFoundationMembers(contract) {
-
     if (contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys] !== undefined && this.state.dataKeyMemberKeys !== null) {
-
       this.setState({
         foundationMembers: contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].value
       }, () => {
         const exists = this.state.foundationMembers.some(m => m === this.props.accounts[0])
         this.setState({isFoundationMember : exists});
       });
-
-
     }
   }
 
@@ -244,28 +234,26 @@ class RequestListV2 extends Component {
     })
   }
 
-  
   handleSubmitSolutionButton(event, requestId, expiry) {
     this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry}, () => {
       this.setState( {dialogOpenSubmitSolutionRequest: true});
     })
   }
 
-
   handleRejectButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["rejectRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    if (this.props.transactionStack[stackId]) {
+      const txHash = this.props.trasnactionStack[stackId]
+      console.log("txHash - " + txHash);
+    }
   }
 
   handleCloseButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["closeRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    if (this.props.transactionStack[stackId]) {
+      const txHash = this.props.trasnactionStack[stackId]
+      console.log("txHash - " + txHash);
+    }
   }
 
   handleSubmitSolution2Button() {
@@ -282,9 +270,7 @@ class RequestListV2 extends Component {
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
-    }
-
-    
+    }    
   }
 
   handleShowStakeButton(event, requestId) {
@@ -317,9 +303,7 @@ class RequestListV2 extends Component {
     this.setState( {dialogOpenShowStake: false});
   }
 
-
   createActionRow(req, index) {
-
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
 
@@ -719,7 +703,11 @@ class RequestListV2 extends Component {
         </Dialog>
 
         {/* submit solution dialog box */ }
-        <Dialog className="submit-solution-dailog" PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
+        <Dialog 
+          className="submit-solution-dailog" 
+          PaperProps={dialogSubSolStyles} 
+          open={this.state.dialogOpenSubmitSolutionRequest}
+        >
           <div className={localModalDialogStyle} className="submit-solution-div" role="document">
             <div className="submit-solution-popup modal-content">
               <div className="modal-header">

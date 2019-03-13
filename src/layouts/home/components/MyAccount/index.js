@@ -48,19 +48,18 @@ class MyAccount extends Component {
     const selectedTab = this.state.selectedTab;
     return ( 
       <div className="main-content">
-      <div className="singularity-accordion account-table"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
-        <AppBar className="singularity-accordion-header" position="static" color="default">
-          <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange}>
-            <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />
-            <Tab className="singularity-accordion-tab singularity-accordion-tab-deposit" label="Deposit" />
-            <Tab className="singularity-accordion-tab singularity-accordion-tab-withdraw" label="Withdraw" />
-          </Tabs>
-        </AppBar>
-        {selectedTab === 0 && <Typography component="div" ><ApproveToken /> </Typography>}
-        {selectedTab === 1 && <Typography component="div" ><DepositToken /> </Typography>}
-        {selectedTab === 2 && <Typography component="div" ><WithdrawToken /> </Typography>}
-      </div>
-
+        <div className="singularity-accordion account-table"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
+          <AppBar className="singularity-accordion-header" position="static" color="default">
+            <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
+              <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />
+              <Tab className="singularity-accordion-tab singularity-accordion-tab-deposit" label="Deposit" />
+              <Tab className="singularity-accordion-tab singularity-accordion-tab-withdraw" label="Withdraw" />
+            </Tabs>
+          </AppBar>
+          {selectedTab === 0 && <Typography component="div" ><ApproveToken /> </Typography>}
+          {selectedTab === 1 && <Typography component="div" ><DepositToken /> </Typography>}
+          {selectedTab === 2 && <Typography component="div" ><WithdrawToken /> </Typography>}
+        </div>
       </div>
     )
   }
