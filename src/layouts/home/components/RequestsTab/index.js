@@ -166,17 +166,17 @@ class RequestsTab extends Component {
         </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary" >
-              {this.state.isFoundationMember === true && <Tab label="Active(20) " className="singularity-tab" value={0}/> }
-              <Tab className="singularity-tab" label="Completed(56)" value={1} />
-              <Tab className="singularity-tab" label="Expired(15)" value={2} />
-              <Tab className="singularity-tab" label="Rejected(0)" value={3} />
-              <Tab className="singularity-tab" label="Pending(5)" value={4} />
+              {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> }
+              <Tab className="singularity-tab" label="Active" value={1} />
+              <Tab className="singularity-tab" label="Completed" value={2} />
+              <Tab className="singularity-tab" label="Rejected" value={3} />
+              <Tab className="singularity-tab" label="Expired" value={4} />
             </Tabs>
           </AppBar>
           {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
           {selectedTab === 1 && <Typography component="div" ><RequestListV2  compRequestStatus="1"/> </Typography>}
-          {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
-          {selectedTab === 3 && <Typography component="div" ><RequestListV2  compRequestStatus="4"/> </Typography>}
+          {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="888"/> </Typography>}
+          {selectedTab === 3 && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
           {selectedTab === 4 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
         </div>
 

@@ -328,21 +328,33 @@ class RequestListV2 extends Component {
         enableVote = true;
       }
 
-      if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
+      if(r.status === "4") {
         return (
-          // expired / pending
-          <ExpansionPanelActions className="expansion-panel-actions"> {}
+        // closed
+          <ExpansionPanelActions className="expansion-panel-actions">
             <div className="row">
-            <div className="col-md-2"></div>
+              <div className="col-md-2"></div>
               <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
               </div>
             </div>
           </ExpansionPanelActions>
         )
-      } else if(r.status === "0") {
+      } else if(r.status === "2") {
         return (
-          // open / active
+        // rejected
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
+                </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      } else if(r.status === "0" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
+        return (
+          // open / Pending
           <ExpansionPanelActions className="expansion-panel-actions">
             <div className="row active-tab-btns">
               <div className="col-md-2"></div>
@@ -355,7 +367,7 @@ class RequestListV2 extends Component {
         )
       } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
         return (
-        // Approved / Completed
+        // Approved / active
           <ExpansionPanelActions className="expansion-panel-actions">
             <div className="row completed-tab-btns">
               <div className="col-md-2"></div>
@@ -368,31 +380,32 @@ class RequestListV2 extends Component {
             </div>
           </ExpansionPanelActions>
         )
-      } else if(r.status === "2") {
+      } else if(this.state.compRequestStatus === "888" && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) {
         return (
-        // expired
+        // Completed
           <ExpansionPanelActions className="expansion-panel-actions">
-            <div className="row">
+            <div className="row completed-tab-btns">
               <div className="col-md-2"></div>
               <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
-                </div>
-            </div>
-          </ExpansionPanelActions>
-        )
-      } else if(r.status === "4") {
-        return (
-        // rejected
-          <ExpansionPanelActions className="expansion-panel-actions">
-            <div className="row">
-              <div className="col-md-2"></div>
-              <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
+                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
               </div>
             </div>
           </ExpansionPanelActions>
         )
-      }
+      } else if(this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) {
+        return (
+          // expired
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+            <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      } 
+      
     }
   }
 
@@ -400,179 +413,40 @@ class RequestListV2 extends Component {
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
       var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
-      if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
-        return (
-        // pending
-          <ExpansionPanelDetails className="expansion-panel-details">
-            <div className="row singularity-stake-details expansion-summary">
-              <div className="col-md-2 image-contianer"></div>
-                <div className="col-md-5 description-container">
-                  <span className="description-title">Description:</span>
-                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
+      return (
+        // Request details are same irrespective of the status
+        <ExpansionPanelDetails className="expansion-panel-details">
+          <div className="row singularity-stake-details expansion-summary">
+            <div className="col-md-2 image-contianer"></div>
+              <div className="col-md-5 description-container">
+                <span className="description-title">Description:</span>
+                <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
+              </div>
+              <div class="col-md-5 right-side-data">
+                <div>
+                  <span className="bold">Project URL: </span>
+                  <a href="#" title="">
+                    <RequestIPFSData 
+                      key="doc_{r.requestId}" 
+                      requestId={r.requestId} 
+                      IPFSHash={docURI} 
+                      getField="documentURI" 
+                    />
+                  </a>
                 </div>
-                <div class="col-md-5 right-side-data">
-                  <div>
-                    <span className="bold">Project URL: </span>
-                    <a href="#" title="">
-                      <RequestIPFSData 
-                        key="doc_{r.requestId}" 
-                        requestId={r.requestId} 
-                        IPFSHash={docURI} 
-                        getField="documentURI" 
-                      />
-                    </a>
-                  </div>
-                  <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
-                  </div>
-                  <div className="solution-vote-div">
-                    <span className="bold">Solution Vote:</span>
-                    <Vote/>
-                  </div>
+                <div className="submission-variable-name">
+                  <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
+                  <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
                 </div>
-            </div>
-          </ExpansionPanelDetails>
-        )
-      } else if(r.status === "0") {
-        return (
-            <ExpansionPanelDetails className="expansion-panel-details">
-              <div className="row singularity-stake-details expansion-summary">
-                <div className="col-md-2 image-cointaner"></div>
-                <div class="col-md-5 description-container">
-                  <span className="description-title">Description:</span>
-                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
-                </div>
-                <div class="col-md-5 right-side-data">
-                  <div>
-                    <span className="bold">Project URL: </span>
-                    <a href="#" title="">
-                      <RequestIPFSData 
-                        key="doc_{r.requestId}" 
-                        requestId={r.requestId} 
-                        IPFSHash={docURI} 
-                        getField="documentURI" 
-                      />
-                    </a>
-                  </div>
-                  <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
-                  </div>
-                 <div className="solution-vote-div">
-                    <span className="bold">Solution Vote:</span>
-                    <Vote/>
-                  </div>
+                <div className="solution-vote-div">
+                  <span className="bold">Solution Vote:</span>
+                  <Vote/>
                 </div>
               </div>
-            </ExpansionPanelDetails>
-        )
-      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
-        return (
-          <ExpansionPanelDetails className="expansion-panel-details">
-            <div className="row singularity-stake-details expansion-summary">
+          </div>
+        </ExpansionPanelDetails>
+      )
 
-              <div className="col-md-2 image-contianer"></div>
-                <div class="col-md-5 description-container">
-                  <span className="description-title">Description:</span>
-                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /></p>
-                </div>
-                <div class="col-md-5 right-side-data">
-                  <div>
-                    <span className="bold">Project URL: </span>
-                    <a href="#" title="">
-                      <RequestIPFSData 
-                        key="doc_{r.requestId}" 
-                        requestId={r.requestId} 
-                        IPFSHash={docURI} 
-                        getField="documentURI" 
-                      />
-                    </a>
-                  </div>
-                  <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
-                  </div>
-                  <div className="solution-vote-div">
-                    <span className="bold">Solution Vote:</span>
-                    <Vote/>
-                  </div>
-                </div>
-
-            </div>
-          </ExpansionPanelDetails>
-        )
-      } else if(r.status === "2") {
-        return (
-          <ExpansionPanelDetails className="expansion-panel-details">
-            <div className="row singularity-stake-details expansion-summary">
-
-              <div className="col-md-2 image-contianer"></div>
-                <div class="col-md-5 description-container">
-                  <span className="description-title">Description:</span>
-                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
-                </div>
-                <div class="col-md-5 right-side-data">
-                  <div>
-                    <span className="bold">Project URL: </span>
-                    <a href="#" title="">
-                      <RequestIPFSData 
-                        key="doc_{r.requestId}" 
-                        requestId={r.requestId} 
-                        IPFSHash={docURI} 
-                        getField="documentURI" 
-                      />
-                    </a>
-                  </div>
-                  <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
-                  </div>
-                  <div className="solution-vote-div">
-                    <span className="bold">Solution Vote:</span>
-                    <Vote/>
-                  </div>
-                </div>
-
-            </div>
-          </ExpansionPanelDetails>
-        )
-      } else if(r.status === "4") {
-        return (
-          <ExpansionPanelDetails className="expansion-panel-details">
-            <div className="row singularity-stake-details expansion-summary">
-
-             <div className="col-md-2 image-container"></div>
-                <div class="col-md-5 description-container">
-                  <span className="description-title">Description:</span>
-                  <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
-                </div>
-                <div class="col-md-5 right-side-data">
-                  <div>
-                    <span className="bold">Project URL: </span>
-                    <a href="#" title="">
-                      <RequestIPFSData 
-                        key="doc_{r.requestId}" 
-                        requestId={r.requestId} 
-                        IPFSHash={docURI} 
-                        getField="documentURI" 
-                      />
-                    </a>
-                  </div>
-                  <div className="submission-variable-name">
-                    <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                    <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
-                  </div>
-                  <div className="solution-vote-div">
-                    <span className="bold">Solution Vote:</span>
-                    <Vote/>
-                  </div>
-                </div>
-
-            </div>
-          </ExpansionPanelDetails>
-        )
-      }
     }
   }
 
@@ -582,10 +456,14 @@ class RequestListV2 extends Component {
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
 
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
-      // Numbers are hard coded to check for Expiry as we dont manage expiry status for a request explicitly
-      if((r.status === this.state.compRequestStatus && r.status !== "1") || 
-        (this.state.compRequestStatus === "1" && r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) ) ||
-        (this.state.compRequestStatus === "999" && parseInt(r.expiration,10)<parseInt(this.state.blockNumber,10) ) )
+      // Numbers are hard coded to check for Expiry and completed as we dont manage these status for a request explicitly
+
+      if( (r.status === "4" && this.state.compRequestStatus === r.status) || 
+          (r.status === "2" && this.state.compRequestStatus === r.status) ||
+          (r.status === "0" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) ||
+          (this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) )
       {
 
         var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
