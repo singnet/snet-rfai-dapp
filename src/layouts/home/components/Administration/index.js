@@ -56,7 +56,7 @@ class Administration extends Component {
       <div className="main-content">
       <div className="singularity-accordion admin-table" > {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
         <AppBar className="singularity-accordion-header" position="static" color="default">
-          <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange}>
+          <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
             <Tab className="singularity-accordion-tab" label="Configurations" />
             <Tab className="singularity-accordion-tab" label="Foundation Member" />
           </Tabs>

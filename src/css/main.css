@@ -918,12 +918,12 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   color: #969696;
 }
 
-.overview-content img { float: right; }
+.overview-content p { margin-bottom: 0; }
 .solution-submit-tabs .col-md-9 { max-width: 100%; }
 
 .solution-submit-tabs .top-section {
-  max-height: 500px;
-  padding: 30px 10px;
+  max-height: 100px;
+  padding: 20px 10px;
   background-color: #f6f6f6; 
   overflow: auto;
 }

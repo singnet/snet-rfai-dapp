@@ -54,12 +54,12 @@ const dialogSubSolStyles = {
   style: {
     backgroundColor: 'white',
     padding: 20,
-    'max-width': '900px'
+    maxWidth: '900px'
   }
 }
 
 const localModalDialogStyle = {
-    'max-width': '900px'
+    maxWidth: '900px'
 }
 
 const rootStyles = {
@@ -703,7 +703,11 @@ class RequestListV2 extends Component {
         </Dialog>
 
         {/* submit solution dialog box */ }
-        <Dialog className="submit-solution-dailog" PaperProps={dialogSubSolStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
+        <Dialog 
+          className="submit-solution-dailog" 
+          PaperProps={dialogSubSolStyles} 
+          open={this.state.dialogOpenSubmitSolutionRequest}
+        >
           <div className={localModalDialogStyle} className="submit-solution-div" role="document">
             <div className="submit-solution-popup modal-content">
               <div className="modal-header">

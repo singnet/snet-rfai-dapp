@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from "@material-ui/core/styles";  
+import { withStyles } from "@material-ui/core/styles";
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'
@@ -165,13 +165,9 @@ class RequestsTab extends Component {
           <button onClick = {this.props.handleCreateRequest}><span>+</span> create new request</button>
         </div>
           <AppBar position="static" color="default" className="singularity-tabs">
-            <Tabs value={selectedTab} onChange={this.handleChange} >
+            <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary" >
               {this.state.isFoundationMember === true && <Tab label="Active(20) " className="singularity-tab" value={0}/> }
-              <Tab 
-                className="singularity-tab" 
-                label="Completed(56)" 
-                value={1}
-              />
+              <Tab className="singularity-tab" label="Completed(56)" value={1} />
               <Tab className="singularity-tab" label="Expired(15)" value={2} />
               <Tab className="singularity-tab" label="Rejected(0)" value={3} />
               <Tab className="singularity-tab" label="Pending(5)" value={4} />
