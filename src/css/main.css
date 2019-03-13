@@ -425,7 +425,7 @@ section.sections.active { display: block; }
   width: 510px;
   padding: 15px;
   margin: 30px auto;
-  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12);
 }
 
 .account-table .singularity-accordion-header {
@@ -442,20 +442,22 @@ section.sections.active { display: block; }
 .account-table .singularity-button-blue,
 .admin-table .singularity-button-blue {
   outline: 0;
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
-  border-radius: 200px;
+  border-radius: 6px;
   margin-top: 30px;
-  padding: 10px 18px;
+  padding: 6px 14px;
   background: #4cb4fa;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   cursor: pointer;
+  box-shadow: none;
 }
 
 .account-table .singularity-button-blue:hover,
 .admin-table .singularity-button-blue:hover {
-  color: #02304f;
-  background: #c0e4fd;
+  color: #4cb4fa;
+  background: #fff;
+  border: 1px solid #4cb4fa;
 }
 
 .admin-table {
@@ -481,13 +483,14 @@ section.sections.active { display: block; }
 .create-request-form {
   min-height: 380px;
   width: 800px;
-  padding: 15px 15px 0;
+  padding: 0 15px;
   margin: 30px auto;
-  box-shadow: 0px 0px 8px #bcd7ff;
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12);
 }
 
 .create-req-header {
-  border-bottom: 1px solid #adcbfb;
+  padding-top: 15px;
+  background-color: #fcfbfb;
   padding-bottom: 15px;
 }
 
@@ -498,7 +501,7 @@ section.sections.active { display: block; }
 
 .create-req-tabs {
   min-height: 320px;
-  border-right: 1px solid #adcbfb;
+  border-right: 1px solid #ebebeb;
   padding: 0;
 }
 
@@ -551,7 +554,7 @@ section.sections.active { display: block; }
 }
 
 .singularity-stake-details { align-items: center !important; }
-.MuiPrivateTabIndicator-colorSecondary-79 { background-color: #3f51b5 !important; }
+button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-summary > div { margin: 10px 0; }
 .expansion-panel-summary button.blue { border-radius: 50px; }
 
@@ -574,7 +577,7 @@ section.sections.active { display: block; }
 
 .new-request-form .row { 
   border-bottom: 1px solid #e1eaf9;
-  padding: 5px 0;
+  padding: 10px 0;
 }
 
 .singularity-textfield div:before { border: none; }
@@ -636,7 +639,7 @@ section.sections.active { display: block; }
 }
 
 .logo-nav .col-md-6 { padding: 0; }
-
+.logo a:hover { text-decoration: none; }
 
 /* view requests new changes */
 .getting-started-your-balance .row { margin: 0 auto; }
@@ -768,6 +771,8 @@ section.sections.active { display: block; }
   font-size: 14px;
   font-weight: 400;
 }
+
+.singularity-stake-details p { line-height: 30px; }
 
 .expansion-summary-ai-services .card-header { padding: 0 !important; }
 .expansion-summary-ai-services > div { margin-bottom: 0; }
