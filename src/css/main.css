@@ -1160,15 +1160,17 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   position: relative; 
 }
 
-.create-req-submit-req-content .row span:first-child,
-.create-req-submit-req-content .description p,
-.create-req-submit-req-content .acceptance-criteria p {
+.create-req-submit-req-content .row input[type="text"],
+.create-req-submit-req-content .row span:first-child ,
+.create-req-submit-req-content .row .calender {
   width: 100%;
   border: 1px solid;
   border-radius: 5px;
-  padding: 15px 15px;
+  padding: 15px !important;
   margin-bottom: 0;
 }
+
+.create-req-submit-req-content .row .calender > div::before { display: none !important; }
 
 .create-req-submit-req-content .description span,
 .create-req-submit-req-content .acceptance-criteria span {
@@ -1184,6 +1186,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 12px;
   left: 10px;
   padding: 0 10px 0 5px;
+  z-index: 22;
 }
 
 .escrow-bal-init-fund-amt,
@@ -1201,6 +1204,11 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .escrow-bal-init-fund-amt .col-md-6 label,
 .proj-start-date-submission-deadline .col-md-6 label { left: 25px; }
 .create-req-submit-req-content .buttons { text-align: center; }
+
+.create-req-submit-req-content .escrow-bal { 
+  padding-left: 0;
+  color: gray;  
+}
 
 .create-req-submit-req-content .buttons .cncl-btn { 
   margin-right: 10px;

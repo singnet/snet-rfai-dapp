@@ -39,6 +39,7 @@ class CreateRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
+
     var dt = new Date()
     // Default expiration date is set to 100 Days
     var defExpirtaionDate = new Date(Date.parse(dt) + (100*24*60*60*1000))
@@ -318,63 +319,66 @@ console.log("ipfs hash - " + data.data.hash);
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
       return (
         <div className="singularity-content create-req-submit-req-content">
+          <form>
 
           <div className="row">
-            <span>PUBG</span>
+            <input type="text" />
             <label>Request Title</label>
           </div>
 
           <div className="row">
-            <span>John</span>
+            <input type="text" />
             <label>Requestor Name (Github handle)</label>
           </div>
 
           <div className="row description">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
+            <input type="text" onChange={ (e) => {this.handleDescriptionInput(e)}}/>
             <label>Description</label>
-            <span>340 / 500 Characters</span>
+            { /* <span>340 / 500 Characters</span> */ }
           </div>
 
           <div className="row">
-            <span>John</span>
+            <input type="text" />
             <label>Github Link</label>
           </div>
 
           <div className="row">
-            <span>John</span>
+            <input type="text" />
             <label>Training Dataset URL</label>
           </div>
 
           <div className="row acceptance-criteria">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+            <input type="text" onChange={ (e) => {this.handleAcceptanceCriteriaInput(e)}} />
             <label>Acceptance Criteria</label>
-            <span>340 / 500 Characters</span>
+            { /* <span>340 / 500 Characters</span> */ }
           </div>
 
           <div className="row">
             <div className="col-md-12 escrow-bal-init-fund-amt">
-              <div className="col-md-6">
+              <div className="col-md-6 escrow-bal">
                 <span>16 AGI</span>
                 <label>Your Balance in Escrow</label>
               </div>
               <div className="col-md-6">
-                <span>5 AGI</span>
+                <input type="text" />
                 <label>Initial Funding Amount</label>
               </div>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12 proj-start-date-submission-deadline">
-              <div className="col-md-6">
-                <span>ASAP</span>
-                <label>Project Start Date</label>
-              </div>
-              <div className="col-md-6">
-                <span>5/25/2019</span>
-                <label>Submission Deadline</label>
-              </div>
-            </div>
+            <label>Submission Deadline</label>
+            <TextField
+                name="expirationDate"
+                id="expirationDate"
+                type="date"
+                className="singularity-textfield calender"
+                defaultValue={this.state.expirationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={this.handleRequestInputChange}
+              />
           </div>
 
           <div className="row">
@@ -385,6 +389,8 @@ console.log("ipfs hash - " + data.data.hash);
             <Button className="cncl-btn">cancel</Button>
             <Button className="blue">submit</Button>
           </div>
+
+          </form>
           
         </div>
       )
