@@ -483,11 +483,12 @@ class RequestListV2 extends Component {
                       <p>Requested by: <span>{this.helperFunctions.toShortAddress(r.requester)}</span></p>
                     </div>
                     <div className="col-2 award-amt-data">
-                      <p>{this.helperFunctions.fromWei(r.totalFund)} AGI tokens</p>
+                      <p>Award: {this.helperFunctions.fromWei(r.totalFund)} AGI tokens</p>
                       <p>{r.stakeMembers.length} Backers</p>
                     </div>
-                    <div className="col-5">
-                      <span>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</span>
+                    <div className="col-5 award-amt-data">
+                      <p>Expires on:</p> 
+                      <p>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</p>
                     </div>                    
                   </div>
                 </div>
@@ -522,20 +523,7 @@ class RequestListV2 extends Component {
     return (
       <div >
         <Paper styles={rootStyles} className="paper-ai-services">
-          <ExpansionPanel className="expansion-panel-ai-services" expanded={false}>
-            <ExpansionPanelSummary className="expansion-summary-ai-services">
-              <div className="accordion-header card">
-                <div className="card-header">
-                  <div className="row singularity-stake-details">
-                    <div className="col-2"><span className="float-left text-left"></span></div>
-                    <div className="col-3"><span className="float-left text-left">Information</span></div>
-                    <div className="col-2"><span className="float-left text-left">Award Amount</span></div>
-                    <div className="col-5"><span>Expiry Date</span></div>
-                  </div>
-                </div>
-              </div>
-            </ExpansionPanelSummary>
-          </ExpansionPanel>
+
           { this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) }
         </Paper>
 
