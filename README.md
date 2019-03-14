@@ -14,9 +14,7 @@ This DApp is for RFAI Portal where users are request for a AI Service. This proj
 
     ```javascript
     git clone https://github.com/singnet/snet-rfai-dapp
-    ```
-
-    ```javascript
+    cd snet-rfai-dapp
     npm install
     ```
 
