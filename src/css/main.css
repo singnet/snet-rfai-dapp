@@ -489,20 +489,16 @@ section.sections.active { display: block; }
 }
 
 .create-req-header {
-  padding-top: 15px;
-  background-color: #fcfbfb;
-  padding-bottom: 15px;
-}
-
-.create-req-header span {
-  font-size: 18px; 
-  font-weight: bold; 
+  border-bottom: 1px solid #f2f2f2;
+  padding: 10px 20px;
+  background-color: #FAFAFA;
 }
 
 .create-req-tabs {
   min-height: 320px;
   border-right: 1px solid #ebebeb;
   padding: 0;
+  text-align: center;
 }
 
 .create-req-tabs ul {
@@ -511,14 +507,24 @@ section.sections.active { display: block; }
 }
 
 .create-req-tabs li { list-style: none;  }
-.create-req-tabs li.active { background-color: #4d80f8; }
-.create-req-tabs li.active a { color: #fff; }
+.create-req-tabs li.active { border-right: 2px solid #4086FF; }
+
+.create-req-tabs li.active,
+.create-req-tabs li:hover {
+  background-color: #FAFAFA; 
+}
+
+.create-req-tabs li.active a,
+.create-req-tabs li:hover a { 
+  color: #4086FF; 
+  font-weight: bold;
+}
 
 .create-req-tabs li a {
   width: 100%;
   padding: 10px 15px;
   display: inline-block;
-  color: #000;
+  color: #A4A4A4;
 }
 
 .create-req-tabs li a:hover { text-decoration: none; }
@@ -973,9 +979,10 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .github-link-div input { border-bottom: 0; }
 
-.error-txt {
+.error-txt,
+.create-req-submit-req-content .error-message {
  color: gray;
-  border: 1px solid red;
+  border: 1px solid red !important;
   background: pink;
   font-weight: bold;
   padding: 10px 20px;
@@ -1138,6 +1145,75 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   background-color: #fff;
   padding: 0 5px;
   font-size: 12px;
+}
+
+/* Modified create request */
+.create-req-overview-content p {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.create-req-submit-req-content { padding: 18px 20px !important; }
+
+.create-req-submit-req-content .row { 
+  margin-bottom: 25px;
+  position: relative; 
+}
+
+.create-req-submit-req-content .row span:first-child,
+.create-req-submit-req-content .description p,
+.create-req-submit-req-content .acceptance-criteria p {
+  width: 100%;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 15px 15px;
+  margin-bottom: 0;
+}
+
+.create-req-submit-req-content .description span,
+.create-req-submit-req-content .acceptance-criteria span {
+  padding: 10px;
+  color: gray;
+  font-size: 12px;
+}
+
+.create-req-submit-req-content .row label {
+  position: absolute;
+  top: -9px;
+  background: #fff;
+  font-size: 12px;
+  left: 10px;
+  padding: 0 10px 0 5px;
+}
+
+.escrow-bal-init-fund-amt,
+.proj-start-date-submission-deadline { 
+  display: flex; 
+  padding: 0;
+}
+
+.escrow-bal-init-fund-amt .col-md-6,
+.proj-start-date-submission-deadline .col-md-6 { padding-right: 0; }
+
+.escrow-bal-init-fund-amt .col-md-6 span,
+.proj-start-date-submission-deadline .col-md-6 span { display: inline-block; }
+
+.escrow-bal-init-fund-amt .col-md-6 label,
+.proj-start-date-submission-deadline .col-md-6 label { left: 25px; }
+.create-req-submit-req-content .buttons { text-align: center; }
+
+.create-req-submit-req-content .buttons .cncl-btn { 
+  margin-right: 10px;
+  color: #4086ff; 
+  font-weight: bold;
+}
+
+.create-req-submit-req-content .buttons .cncl-btn:hover { background-color: transparent; }
+
+.create-req-submit-req-content .buttons button {
+  letter-spacing: 1px;
+  padding: 6px 30px;
+  font-size: 14px;
 }
 
 /* media queries */
