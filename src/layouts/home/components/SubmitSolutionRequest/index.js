@@ -88,13 +88,13 @@ class SubmitSolutionRequest extends Component {
         <div className="singularity-content submit-solution-tabs-content">
           <div className="row top-section">
             <div className="col-md-12 overview-content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance criteria as specified in the request is met and the problem is solved for.</p>
             </div>
           </div>
           <div className="row your-submission-div">
             <div className="col-md-12">
               <span>Your Submission</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p></p>
               <i className="fa fa-info-circle" aria-hidden="true"></i>
               <div className="github-link-div">
                 <span>Github Link</span>
@@ -111,14 +111,23 @@ class SubmitSolutionRequest extends Component {
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
       return (
-        <div className="singularity-content">
-          <p>Request life cycle from creation to completion</p>
+        <div className="singularity-content submit-solution-tabs-content">
+        <div className="row top-section">
+        <div className="overview-content">
+          <p>TBD</p>
+        </div>
+        </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav3') {
       return (
-        <div className="singularity-content">
-          <p>Evaluation crriteria and approach</p>
+        <div className="singularity-content submit-solution-tabs-content">
+        <div className="row top-section">
+        <div className="overview-content">
+          <li>Provide the github repo of your code</li>
+          <li>Sign your request using the same address used to publish the service. This is an important step to ensure that you are the owner of the service.</li>
+        </div>
+        </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav4') {
@@ -159,10 +168,10 @@ class SubmitSolutionRequest extends Component {
                   <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a>
                 </li>
                 <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
-                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Process flow</a>
+                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a>
                 </li>
                 <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
-                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Evaluation</a>
+                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a>
                 </li>
               </ul>
             </div>
