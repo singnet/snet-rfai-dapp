@@ -46,20 +46,73 @@ class MyAccount extends Component {
 
   render() {
     const selectedTab = this.state.selectedTab;
-    return ( 
-      <div className="main-content">
-        <div className="singularity-accordion account-table"> {/*  className="main" Looks like this style has fixed width for the Tab Control...*/}
+    return (
+      <div className="row account-page">
+
+        <div className="your-account-details-container">
+        <div className=" col-xs-12 col-sm-12 col-md-6 col-lg-6 your-account-details">
+          <h4>Your Account Details</h4>
+
+            <div className="row agent-detail">
+              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+                <label>Account ID</label>
+              </div>
+              {(typeof window.web3 !== 'undefined') ?
+                <React.Fragment>
+                  <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7 word-break">
+                    <label>{this.state.account}</label>
+                  </div>
+                </React.Fragment>
+              : null}
+            </div>
+
+            <div className="row">
+              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+                <label>Token Balance</label>
+              </div>
+              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                <label>{this.state.agiBalance} AGI</label>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+                <label>Escrow Balance</label>
+              </div>
+              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                <label>AGI</label>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+                <label>Authorized Tokens</label>
+              </div>
+              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                <label>AGI</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="manage-escrow-acc-container">
+        <div className=" col-xs-12 col-sm-12 col-md-6 col-lg-6 manage-escrow-acc">
+          <h4>Manage Your RFAI Account</h4>
           <AppBar className="singularity-accordion-header" position="static" color="default">
             <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
               <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />
               <Tab className="singularity-accordion-tab singularity-accordion-tab-deposit" label="Deposit" />
               <Tab className="singularity-accordion-tab singularity-accordion-tab-withdraw" label="Withdraw" />
             </Tabs>
-          </AppBar>
+          </AppBar>          
+          
           {selectedTab === 0 && <Typography component="div" ><ApproveToken /> </Typography>}
           {selectedTab === 1 && <Typography component="div" ><DepositToken /> </Typography>}
           {selectedTab === 2 && <Typography component="div" ><WithdrawToken /> </Typography>}
         </div>
+      </div>
+
       </div>
     )
   }

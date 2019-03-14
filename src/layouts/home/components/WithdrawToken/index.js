@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import RFAITabContent from '../RFAITabContent'; 
 
 //inline styles
 const styles = {
@@ -141,40 +142,9 @@ class WithdrawToken extends Component {
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
 
     return (
-      <div>
-        <Paper style={styles} elevation={0} className="singularity-content">
-          <p>Withdraw Token from RFAI Escrow Contract </p>
-
-          <form className="pure-form pure-form-stacked">
-          <div className="row">
-            <div className="col-6">
-                <div className="singularity-token-counter">
-                    <p>Token Balance: <span>{tknBalance} AGI</span></p>
-                </div>            
-            </div>
-            <div className="col-6">
-                <div className="singularity-token-counter">
-                    <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
-                </div>              
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-                <div className="spacer"></div>
-                <label>Tokens to Withdraw:</label> <div className="clearfix"></div>            
-                <input className="singularity-input" name="withdrawAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
-            </div>
-          </div>
-            
-            <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleWithdrawButton}>Withdraw</Button>
-          </form>
-          {/* <p>Tokens to deposit: {depositGroomed} </p> */}
-      </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
+      <div className="withdraw-tab-details">
+        <RFAITabContent
+          buttonLabel = 'withdraw' />
       </div>
     )
   }

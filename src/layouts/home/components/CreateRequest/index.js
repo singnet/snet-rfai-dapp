@@ -39,6 +39,7 @@ class CreateRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
+
     var dt = new Date()
     // Default expiration date is set to 100 Days
     var defExpirtaionDate = new Date(Date.parse(dt) + (100*24*60*60*1000))
@@ -273,15 +274,13 @@ console.log("ipfs hash - " + data.data.hash);
 
     if(this.state.selectedLeftNav === 'nav1') {
       return (
-        <div className="singularity-content">
-          <div>
-            You can request for any AI Service that would like to see built on top of the SingularityNet platform. 
-            Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://faucet.ropsten.be/" target="_blank">repo</a>. You can view the template for the request <a href="https://faucet.ropsten.be/" target="_blank">here</a>
-            <br></br>
-            <br></br>
-            We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). 
-            The foundation will review and approve requests which will appear on here
-          </div>
+        <div className="singularity-content create-req-overview-content">
+          <p>
+            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://faucet.ropsten.be/" target="_blank">repo</a>. You can view the template for the request <a href="https://faucet.ropsten.be/" target="_blank">here</a>
+          </p>
+          <p>
+            We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). The foundation will review and approve requests which will appear on here
+          </p>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav2') {
@@ -319,103 +318,80 @@ console.log("ipfs hash - " + data.data.hash);
       )
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
       return (
-        <div className="singularity-content new-request-form">
+        <div className="singularity-content create-req-submit-req-content">
+          <form>
 
           <div className="row">
-            <div className="col-md-12">
-              <label>Title:</label><div className="clearfix"></div>
-              <input className="singularity-input" name="requestTitle" type="text" placeholder="Title" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />         
+            <input type="text" />
+            <label>Request Title</label>
+          </div>
+
+          <div className="row">
+            <input type="text" />
+            <label>Requestor Name (Github handle)</label>
+          </div>
+
+          <div className="row description">
+            <input type="text" onChange={ (e) => {this.handleDescriptionInput(e)}}/>
+            <label>Description</label>
+            { /* <span>340 / 500 Characters</span> */ }
+          </div>
+
+          <div className="row">
+            <input type="text" />
+            <label>Github Link</label>
+          </div>
+
+          <div className="row">
+            <input type="text" />
+            <label>Training Dataset URL</label>
+          </div>
+
+          <div className="row acceptance-criteria">
+            <input type="text" onChange={ (e) => {this.handleAcceptanceCriteriaInput(e)}} />
+            <label>Acceptance Criteria</label>
+            { /* <span>340 / 500 Characters</span> */ }
+          </div>
+
+          <div className="row">
+            <div className="col-md-12 escrow-bal-init-fund-amt">
+              <div className="col-md-6 escrow-bal">
+                <span>16 AGI</span>
+                <label>Your Balance in Escrow</label>
+              </div>
+              <div className="col-md-6">
+                <input type="text" />
+                <label>Initial Funding Amount</label>
+              </div>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12">
-              <label>Description:</label>
-              <TextField
-                name="requestDesc"
-                id="requestDesc"
-                multiline={true}
-                rows={2}
-                rowsMax={4}
-                placeholder="Description" 
-                className="singularity-textfield"
-                defaultValue={this.state.requestDesc}
-                onChange={this.handleRequestInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <label>Author (Github Handle):</label><div className="clearfix"></div>
-              <input className="singularity-input" name="requestAuthor" type="text" placeholder="Author" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} />         
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <label>Tokens to stake:</label>
-              <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <label>Expiration date:</label>
-              <TextField
+            <label>Submission Deadline</label>
+            <TextField
                 name="expirationDate"
                 id="expirationDate"
                 type="date"
-                className="singularity-textfield"
+                className="singularity-textfield calender"
                 defaultValue={this.state.expirationDate}
                 InputLabelProps={{
                   shrink: true,
                 }}
                 onChange={this.handleRequestInputChange}
               />
-              {/* <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />  */}
-            </div>
-          </div>
-
-          <div className="row">            
-            <div className="col-md-12">            
-              <label>Current Blocknumber: {this.state.blockNumber}</label> 
-            </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12">               
-              <label>Document URI:</label>
-              <input className="singularity-input" name="documentURI" type="text" placeholder="document URI" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
-            </div>
+            <span className="error-message">error state message</span>
           </div>
 
-          <div className="row">
-            <div className="col-md-12">
-              <label>Training Dataset:</label><div className="clearfix"></div>
-              <input className="singularity-input" name="requestTrainingDS" type="text" placeholder="Training dataset URL" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} />         
-            </div>
+          <div className="buttons">
+            <Button className="cncl-btn">cancel</Button>
+            <Button className="blue">submit</Button>
           </div>
 
-          <div className="row">
-            <div className="col-md-12">
-              <label>Acceptance criteria:</label>
-              <TextField
-                name="requestAcptCriteria"
-                id="requestAcptCriteria"
-                multiline={true}
-                rows={2}
-                rowsMax={4}
-                placeholder="Acceptance criteria" 
-                className="singularity-textfield"
-                defaultValue={this.state.requestAcptCriteria}
-                onChange={this.handleRequestInputChange}
-              />
-            </div>
-          </div>
-
-          <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
-          { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
+          </form>
+          
         </div>
       )
     }
@@ -430,7 +406,7 @@ console.log("ipfs hash - " + data.data.hash);
           <form className="pure-form pure-form-stacked create-request-form">
             <div className="row">
               <div className="col-md-12 create-req-header">
-                <span>Create Request </span>
+                <h4>Create Request </h4>
               </div>
             </div>
             <div className="row">
@@ -439,7 +415,7 @@ console.log("ipfs hash - " + data.data.hash);
                   <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
                   <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a></li>
                   <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a></li>
-                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>New Request</a></li>
+                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a></li>
                 </ul>
               </div>
               <div className="col-md-9">
