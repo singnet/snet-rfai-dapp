@@ -1056,7 +1056,98 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .balance-funding-amt-div { margin-top: 30px; }
 .funding-amt-div input { border-bottom: none; }
 
+/* Modified Account Page */
+.account-page {
+  width: 90%;
+  margin: 50px auto;
+}
+
+.your-account-details,
+.manage-escrow-acc {
+  max-width: 100%;
+  height: 100%;
+  padding: 0;
+  box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.account-page h4 {
+  background-color: #fafafa;
+  padding: 10px 20px;
+  margin-bottom: 0;
+}
+
+.word-break { word-break: break-all; }
+
+.your-account-details div { padding: 10px 20px 0; }
+.your-account-details > div:last-of-type { padding-bottom: 10px; }
+
+.manage-escrow-acc .singularity-accordion-header {
+  box-shadow: none;
+  padding: 0 20px;
+  background-color: #fff;
+}
+
+.singularity-accordion-tabs button span { 
+  font-size: 18px;
+  text-transform: capitalize; 
+}
+
+.deposit-tab-details { text-align: center; }
+
+.deposit-tab-details input,
+.deposit-tab-details .error-msg {
+  display: block;
+  border-radius: 3px;
+  border: 1px solid;
+  padding: 10px 15px;
+  width: 80%;
+  margin: 30px auto 0;
+}
+
+.deposit-tab-details .error-msg {
+  border: 1px solid #d0021b;
+  text-align: left;
+  background-color: #f8d9dd;
+  color: #676767;
+}
+
+.deposit-tab-details button {
+  padding: 5px 25px;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  border: 1px solid transparent;
+}
+
+.deposit-tab-details button.disable {
+  color: #979797;
+  background-color: #e4e4e4;
+}
+
+.your-account-details-container,
+.manage-escrow-acc-container { width: 49%; }
+
+.manage-escrow-acc-container { margin-left: 2%; }
+.token-amt-container { position: relative; }
+
+.token-amt-container label {
+  position: absolute;
+  top: -10px;
+  left: 12%;
+  background-color: #fff;
+  padding: 0 5px;
+  font-size: 12px;
+}
+
 /* media queries */
+@media(max-width: 991px) {
+  .your-account-details-container,
+  .manage-escrow-acc-container { width: 100%; }
+
+  .manage-escrow-acc-container { margin: 25px 0 0; }
+}
+
 @media (max-width: 448px) {
   .navbar-singularity .hamburger-menu { display: block; }
   .navbar-singularity .header-menu { display: none; }
