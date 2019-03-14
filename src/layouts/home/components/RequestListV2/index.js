@@ -487,7 +487,8 @@ class RequestListV2 extends Component {
                       <p>{r.stakeMembers.length} Backers</p>
                     </div>
                     <div className="col-5 award-amt-data">
-                      <p>Expires on: {this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</p>
+                      <p>Expires on:</p> 
+                      <p>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</p>
                     </div>                    
                   </div>
                 </div>
