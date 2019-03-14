@@ -205,6 +205,8 @@ class CreateRequest extends Component {
       initialStakeBN.lte(tokenBalanceBN) && this.state.isValidGitHanlde === true && 
       parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
+        this.handleDialogClose();
+
         var ipfsInput = { 
           "title" : this.state.requestTitle, 
           "description" : this.state.requestDesc,
@@ -319,36 +321,34 @@ console.log("ipfs hash - " + data.data.hash);
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
       return (
         <div className="singularity-content create-req-submit-req-content">
-          <form>
-
           <div className="row">
-            <input type="text" />
+          <input name="requestTitle" type="text" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />
             <label>Request Title</label>
           </div>
 
           <div className="row">
-            <input type="text" />
+          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} />         
             <label>Requestor Name (Github handle)</label>
           </div>
 
           <div className="row description">
-            <input type="text" onChange={ (e) => {this.handleDescriptionInput(e)}}/>
+            <textarea name="requestDesc" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
             <label>Description</label>
             { /* <span>340 / 500 Characters</span> */ }
           </div>
 
           <div className="row">
-            <input type="text" />
+            <input name="documentURI" type="text" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
             <label>Github Link</label>
           </div>
 
           <div className="row">
-            <input type="text" />
+            <input name="requestTrainingDS" type="text" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} />         
             <label>Training Dataset URL</label>
           </div>
 
           <div className="row acceptance-criteria">
-            <input type="text" onChange={ (e) => {this.handleAcceptanceCriteriaInput(e)}} />
+            <textarea name="requestAcptCriteria" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
             <label>Acceptance Criteria</label>
             { /* <span>340 / 500 Characters</span> */ }
           </div>
@@ -356,11 +356,11 @@ console.log("ipfs hash - " + data.data.hash);
           <div className="row">
             <div className="col-md-12 escrow-bal-init-fund-amt">
               <div className="col-md-6 escrow-bal">
-                <span>16 AGI</span>
+                <span>{this.helperFunctions.fromWei(this.state.tokenBalance)} AGI</span>
                 <label>Your Balance in Escrow</label>
               </div>
               <div className="col-md-6">
-                <input type="text" />
+                <input name="initialStake" type="number" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
                 <label>Initial Funding Amount</label>
               </div>
             </div>
@@ -381,16 +381,15 @@ console.log("ipfs hash - " + data.data.hash);
               />
           </div>
 
-          <div className="row">
-            <span className="error-message">error state message</span>
-          </div>
-
+          {
+            this.state.dialogOpen ?
+            <div className="row">
+              <span className="error-message">{this.state.alertText}</span>
+            </div> : null
+          }
           <div className="buttons">
-            <Button className="cncl-btn">cancel</Button>
-            <Button className="blue">submit</Button>
+            <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
           </div>
-
-          </form>
           
         </div>
       )
@@ -425,10 +424,10 @@ console.log("ipfs hash - " + data.data.hash);
           </form>
         {/* </Paper> */}
 
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
+      {/* <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
         <p>{this.state.alertText}</p>
         <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
+      </Dialog> */}
 
       </div>
     )
