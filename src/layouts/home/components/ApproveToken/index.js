@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import RFAITabContent from '../RFAITabContent';
 
 //inline styles
 const styles = {
@@ -125,32 +126,9 @@ console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + co
     const tknAllowance = this.helperFunctions.fromWei(this.state.tknAllowance)
 
     return (
-      <div>
-        <Paper style={styles} elevation={0} className="singularity-content">
-          <p>Approve Tokens to spend by RFAI Escrow Contract </p>
-
-          <form className="pure-form pure-form-stacked">
-          <div className="row">
-            <div className="col-6">
-                <label>Tokens to Approve:</label> <div className="clearfix"></div>
-                <input className="singularity-input" name="approveAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
-            </div>
-            <div className="col-6">
-                <div className="singularity-token-counter">
-                    <p>Approved allowance: <span>{tknAllowance} AGI</span></p>
-                </div>
-                
-            </div>
-          </div>
-            <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleApproveButton}>Approve</Button>
-          </form>
-          {/* <p>Tokens to approve: {approveGroomed} </p> */}
-      </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
+      <div className="approve-token-tab-details">
+        <RFAITabContent
+          buttonLabel = 'approve' />
       </div>
     )
   }

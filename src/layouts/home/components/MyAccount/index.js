@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 // Custom Components
-// import ApproveToken from '../../components/ApproveToken'
+import ApproveToken from '../../components/ApproveToken'
 import DepositToken from '../../components/DepositToken'
 import WithdrawToken from '../../components/WithdrawToken'
 
@@ -98,15 +98,18 @@ class MyAccount extends Component {
 
         <div className="manage-escrow-acc-container">
         <div className=" col-xs-12 col-sm-12 col-md-6 col-lg-6 manage-escrow-acc">
-          <h4>Manage Your Escrow Account</h4>
+          <h4>Manage Your RFAI Account</h4>
           <AppBar className="singularity-accordion-header" position="static" color="default">
             <Tabs className="singularity-accordion-tabs" value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
+              <Tab className="singularity-accordion-tab singularity-accordion-tab-allowance" label="Allowance" />
               <Tab className="singularity-accordion-tab singularity-accordion-tab-deposit" label="Deposit" />
               <Tab className="singularity-accordion-tab singularity-accordion-tab-withdraw" label="Withdraw" />
             </Tabs>
-          </AppBar>
-          {selectedTab === 0 && <Typography component="div" ><DepositToken /> </Typography>}
-          {selectedTab === 1 && <Typography component="div" ><WithdrawToken /> </Typography>}
+          </AppBar>          
+          
+          {selectedTab === 0 && <Typography component="div" ><ApproveToken /> </Typography>}
+          {selectedTab === 1 && <Typography component="div" ><DepositToken /> </Typography>}
+          {selectedTab === 2 && <Typography component="div" ><WithdrawToken /> </Typography>}
         </div>
       </div>
 

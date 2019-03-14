@@ -1094,10 +1094,10 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   text-transform: capitalize; 
 }
 
-.deposit-tab-details { text-align: center; }
+.rfai-tab-content { text-align: center; }
 
-.deposit-tab-details input,
-.deposit-tab-details .error-msg {
+.rfai-tab-content input,
+.rfai-tab-content .error-msg {
   display: block;
   border-radius: 3px;
   border: 1px solid;
@@ -1106,21 +1106,21 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   margin: 30px auto 0;
 }
 
-.deposit-tab-details .error-msg {
+.rfai-tab-content .error-msg {
   border: 1px solid #d0021b;
   text-align: left;
   background-color: #f8d9dd;
   color: #676767;
 }
 
-.deposit-tab-details button {
+.rfai-tab-content button {
   padding: 5px 25px;
   margin: 20px 0;
   letter-spacing: 1px;
   border: 1px solid transparent;
 }
 
-.deposit-tab-details button.disable {
+.rfai-tab-content button.disable {
   color: #979797;
   background-color: #e4e4e4;
 }

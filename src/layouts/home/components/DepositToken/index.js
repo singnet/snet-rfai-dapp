@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
 
+import RFAITabContent from '../RFAITabContent';
+
 //inline styles
 const styles = {
     padding: 20,
@@ -36,7 +38,6 @@ class DepositToken extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleDepositButton = this.handleDepositButton.bind(this)
-    this.handleAGITokenAmt = this.handleAGITokenAmt.bind(this);
 
     //this.setTXParamValue = this.setTXParamValue.bind(this)
 
@@ -51,10 +52,7 @@ class DepositToken extends Component {
       dataKeyEscrowBalance: null,
       escrowBalance: 0,
       dialogOpen: false,
-      alertText: '',
-      showErrorMsg: false,
-      enableButton: false,
-      showAmountLabel: false
+      alertText: ''
     }
   }
 
@@ -163,20 +161,6 @@ class DepositToken extends Component {
   //   }
   // }
 
-  handleAGITokenAmt(e){    
-    if(e.target.value != ''){
-        this.setState({ 
-          enableButton: true ,
-          showAmountLabel: true
-        })
-    } else {
-      this.setState({ 
-        enableButton: false,
-        showAmountLabel: false
-      })
-    }
-  }
-
   render() {
     console.log(this.state.showAmountLabel)
     const tknBalance = this.helperFunctions.fromWei(this.state.tknBalance)
@@ -185,24 +169,8 @@ class DepositToken extends Component {
 
     return (
       <div className="deposit-tab-details">
-        <form>
-          <div className="token-amt-container">
-            <input type="text" placeholder="AGI Token Amount" onChange={ (e) => {this.handleAGITokenAmt(e)}} />
-            {
-              this.state.showAmountLabel ?
-                <label>Amount</label>
-              :
-                null
-            }            
-          </div>
-          {
-            this.state.showErrorMsg ?
-              <label className="error-msg">error state message</label>
-            :
-              null
-          }          
-          <Button className={this.state.enableButton ? 'blue' : 'disable'}>deposit</Button>
-        </form>
+        <RFAITabContent
+          buttonLabel = 'deposit' />
       </div>
     )
   }
