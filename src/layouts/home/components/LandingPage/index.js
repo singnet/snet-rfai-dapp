@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../../../../images/Logo.png'
-import settingimg from '../../../../images/settings.svg'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 
 import Dialog from '@material-ui/core/Dialog'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton'
 
 // import components
 import CreateRequest from '../../components/CreateRequest'
@@ -21,8 +16,6 @@ const dialogStyles = {
       boxShadow:'none',
   }
 }
-
-const buttonStyles = { margin: 2, }
 
 class LandingPage extends Component { 
   constructor(props, context) {

@@ -7,11 +7,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from "@material-ui/core/styles";
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'
-import Network from '../../components/Network'
 import HelperFunctions from '../HelperFunctions'
 
 function TabContainer(props) {

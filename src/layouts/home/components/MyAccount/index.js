@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import ApproveToken from '../../components/ApproveToken'
 import DepositToken from '../../components/DepositToken'
 import WithdrawToken from '../../components/WithdrawToken'
+import HelperFunctions from '../HelperFunctions'
 
 function TabContainer(props) {
   return (
@@ -30,15 +31,75 @@ class MyAccount extends Component {
     super(props)
 
     this.contracts = context.drizzle.contracts;
+    this.helperFunctions = new HelperFunctions();
+
     this.state = {
+      spenderAddress: this.contracts.ServiceRequest.address,
+      dataKeyTokenBalance: null,
+      tknBalance: 0,
+      dataKeyTokenAllowance: null,
+      tknAllowance: 0,
+      dataKeyEscrowBalance: null,
+      escrowBalance: 0,
       selectedTab: 0,
       dialogOpen: false,
       alertText: ''
     }
   }
 
-  componentDidMount() {}
-  componentDidUpdate(prevProps, prevState) {}
+  componentDidMount() {
+
+    const dataKeyTokenAllowance = this.contracts.SingularityNetToken.methods["allowance"].cacheCall(this.props.accounts[0], this.state.spenderAddress);
+    this.setState({dataKeyTokenAllowance})
+    this.setTokenAllowance(this.props.SingularityNetToken)
+
+    const dataKeyTokenBalance = this.contracts.SingularityNetToken.methods.balanceOf.cacheCall(this.props.accounts[0]);
+    this.setState({dataKeyTokenBalance})
+    this.setTokenBalance(this.props.SingularityNetToken)
+
+    const dataKeyEscrowBalance = this.contracts.ServiceRequest.methods.balances.cacheCall(this.props.accounts[0]);
+    this.setState({dataKeyEscrowBalance})
+    this.setEscrowBalance(this.props.ServiceRequest)
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.SingularityNetToken !== prevProps.SingularityNetToken || this.state.dataKeyTokenAllowance !== prevState.dataKeyTokenAllowance) {
+      this.setTokenAllowance(this.props.SingularityNetToken)
+    }
+    if (this.props.SingularityNetToken !== prevProps.SingularityNetToken || this.state.dataKeyTokenBalance !== prevState.dataKeyTokenBalance) {
+      this.setTokenBalance(this.props.SingularityNetToken)
+    }
+    if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyEscrowBalance !== prevState.dataKeyEscrowBalance) {
+      this.setEscrowBalance(this.props.ServiceRequest)
+      this.setTokenAllowance(this.props.SingularityNetToken)
+      this.setTokenBalance(this.props.SingularityNetToken)
+    }
+  }
+
+  setTokenAllowance(contract) {
+    if (contract.allowance[this.state.dataKeyTokenAllowance] !== undefined && this.state.dataKeyTokenAllowance !== null) {
+      this.setState({
+        tknAllowance: contract.allowance[this.state.dataKeyTokenAllowance].value
+      })
+    }
+  }
+
+  setTokenBalance(contract) {
+    if (contract.balanceOf[this.state.dataKeyTokenBalance] !== undefined && this.state.dataKeyTokenBalance !== null) {
+      this.setState({ 
+        tknBalance: contract.balanceOf[this.state.dataKeyTokenBalance].value
+      })
+    }
+  }
+
+  setEscrowBalance(contract) {
+    if (contract.balances[this.state.dataKeyEscrowBalance] !== undefined && this.state.dataKeyEscrowBalance !== null) {
+      this.setState({
+        escrowBalance: contract.balances[this.state.dataKeyEscrowBalance].value
+      })
+    }
+  }
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
@@ -46,6 +107,11 @@ class MyAccount extends Component {
 
   render() {
     const selectedTab = this.state.selectedTab;
+
+    const tknBalance = this.helperFunctions.fromWei(this.state.tknBalance)
+    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
+    const tknAllowance = this.helperFunctions.fromWei(this.state.tknAllowance)
+
     return (
       <div className="row account-page">
 
@@ -60,7 +126,7 @@ class MyAccount extends Component {
               {(typeof window.web3 !== 'undefined') ?
                 <React.Fragment>
                   <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7 word-break">
-                    <label>{this.state.account}</label>
+                    <label>{this.props.accounts[0]}</label>
                   </div>
                 </React.Fragment>
               : null}
@@ -71,7 +137,7 @@ class MyAccount extends Component {
                 <label>Token Balance</label>
               </div>
               <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
-                <label>{this.state.agiBalance} AGI</label>
+                <label>{tknBalance} AGI</label>
               </div>
             </div>
 
@@ -80,7 +146,7 @@ class MyAccount extends Component {
                 <label>Escrow Balance</label>
               </div>
               <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
-                <label>AGI</label>
+                <label>{escrowBalance} AGI</label>
               </div>
             </div>
 
@@ -89,7 +155,7 @@ class MyAccount extends Component {
                 <label>Authorized Tokens</label>
               </div>
               <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
-                <label>AGI</label>
+                <label>{tknAllowance} AGI</label>
               </div>
             </div>
 

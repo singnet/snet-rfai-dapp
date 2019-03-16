@@ -5,10 +5,7 @@ import web3 from 'web3'
 
 //components
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
-import RFAITabContent from '../RFAITabContent'; 
 
 //inline styles
 const styles = {
@@ -124,18 +121,6 @@ class WithdrawToken extends Component {
     }
   }
 
-  // setTXParamValue(_value) {
-  //   if (web3.utils.isBN(_value)) {
-  //     this.setState({
-  //       withdrawAmount: _value.toString()
-  //     })
-  //   } else {
-  //     this.setState({
-  //       withdrawAmount: ''
-  //     })
-  //   }
-  // }
-
   render() {
 
     const tknBalance = this.helperFunctions.fromWei(this.state.tknBalance)
@@ -143,8 +128,21 @@ class WithdrawToken extends Component {
 
     return (
       <div className="withdraw-tab-details">
-        <RFAITabContent
-          buttonLabel = 'withdraw' />
+        <div className="rfai-tab-content">
+          <form>
+            <div className="token-amt-container">
+              <input name="withdrawAmount" type="text" placeholder="AGI Token Amount" value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
+              {
+                this.state.withdrawAmount !== '' ? <label>Amount</label> : null
+              }
+            </div>
+            {
+              this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+            }          
+            <Button className={this.state.withdrawAmount !== '' ? 'blue' : 'disable'} type="Button" onClick={this.handleWithdrawButton}>Withdraw</Button>
+
+          </form>
+        </div>
       </div>
     )
   }

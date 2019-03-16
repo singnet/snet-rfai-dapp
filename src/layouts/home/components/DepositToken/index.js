@@ -5,11 +5,7 @@ import web3 from 'web3'
 
 //components
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
-
-import RFAITabContent from '../RFAITabContent';
 
 //inline styles
 const styles = {
@@ -57,7 +53,6 @@ class DepositToken extends Component {
   }
 
   componentDidMount() {
-    // this.setState({invalidAddress: false})
     const dataKeyTokenAllowance = this.contracts.SingularityNetToken.methods["allowance"].cacheCall(this.props.accounts[0], this.state.spenderAddress);
     this.setState({dataKeyTokenAllowance})
     this.setTokenAllowance(this.props.SingularityNetToken)
@@ -149,28 +144,25 @@ class DepositToken extends Component {
     }
   }
 
-  // setTXParamValue(_value) {
-  //   if (web3.utils.isBN(_value)) {
-  //     this.setState({
-  //       depositAmount: _value.toString()
-  //     })
-  //   } else {
-  //     this.setState({
-  //       depositAmount: ''
-  //     })
-  //   }
-  // }
-
   render() {
-    console.log(this.state.showAmountLabel)
-    const tknBalance = this.helperFunctions.fromWei(this.state.tknBalance)
-    const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
-    const tknAllowance = this.helperFunctions.fromWei(this.state.tknAllowance)
 
     return (
       <div className="deposit-tab-details">
-        <RFAITabContent
-          buttonLabel = 'deposit' />
+        <div className="rfai-tab-content">
+          <form>
+            <div className="token-amt-container">
+              <input name="depositAmount" type="text" placeholder="AGI Token Amount" value={this.state.depositAmount} onChange={this.handleAmountInputChange} />
+              {
+                this.state.depositAmount !== '' ? <label>Amount</label> : null
+              }
+            </div>
+            {
+              this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+            }          
+            <Button className={this.state.depositAmount !== '' ? 'blue' : 'disable'} type="Button" onClick={this.handleDepositButton}>Deposit</Button>
+
+          </form>
+        </div>
       </div>
     )
   }

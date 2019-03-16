@@ -214,7 +214,7 @@ class CreateRequest extends Component {
           "author": this.state.requestAuthor,
           "training-dataset": this.state.requestTrainingDS,
           "acceptance-criteria": this.state.requestAcptCriteria,
-          "created": (new Date).toISOString().slice(0,10)
+          "created": (new Date()).toISOString().slice(0,10)
         }
 
         const body = {

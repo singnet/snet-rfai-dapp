@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
-import ipfsClient from 'ipfs-http-client'
 
 import Vote from '../Vote';
 
@@ -82,8 +81,6 @@ const rowCardStyles = {
     width: '100%',
   }
 }
-
-const BN = web3.utils.BN
 
 class RequestListV2 extends Component {
 

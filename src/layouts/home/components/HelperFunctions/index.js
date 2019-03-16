@@ -1,12 +1,11 @@
 
 import web3 from 'web3'
-import { Z_BUF_ERROR } from 'zlib';
 
 const BN = web3.utils.BN
 export default class HelperFunctions {
 
   constructor() {
-
+    
   }
 
   fromWei(weiValue) {

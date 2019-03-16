@@ -5,10 +5,7 @@ import web3 from 'web3'
 
 //components
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
-import RFAITabContent from '../RFAITabContent';
 
 //inline styles
 const styles = {
@@ -66,7 +63,6 @@ class ApproveToken extends Component {
 
   setTokenAllowance(contract) {
     if (contract.allowance[this.state.dataKeyTokenAllowance] !== undefined && this.state.dataKeyTokenAllowance !== null) {
-console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + contract.allowance[this.state.dataKeyTokenAllowance].value)      
       this.setState({
         tknAllowance: contract.allowance[this.state.dataKeyTokenAllowance].value
       })
@@ -109,26 +105,25 @@ console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + co
     }
   }
 
-  // setTXParamValue(_value) {
-  //   if (web3.utils.isBN(_value)) {
-  //     this.setState({
-  //       approveAmount: _value.toString()
-  //     })
-  //   } else {
-  //     this.setState({
-  //       approveAmount: ''
-  //     })
-  //   }
-  // }
-
   render() {
-
-    const tknAllowance = this.helperFunctions.fromWei(this.state.tknAllowance)
 
     return (
       <div className="approve-token-tab-details">
-        <RFAITabContent
-          buttonLabel = 'approve' />
+        <div className="rfai-tab-content">
+          <form>
+            <div className="token-amt-container">
+              <input name="approveAmount" type="text" placeholder="AGI Token Amount" value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
+              {
+                this.state.approveAmount !== '' ? <label>Amount</label> : null
+              }
+            </div>
+            {
+              this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+            }
+            <Button className={this.state.approveAmount !== '' ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
+
+          </form>
+        </div>
       </div>
     )
   }
