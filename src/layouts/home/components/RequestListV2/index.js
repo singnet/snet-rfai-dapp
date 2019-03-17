@@ -332,7 +332,7 @@ class RequestListV2 extends Component {
             <div className="row">
               <div className="col-md-2"></div>
               <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
               </div>
             </div>
           </ExpansionPanelActions>
@@ -344,8 +344,8 @@ class RequestListV2 extends Component {
             <div className="row">
               <div className="col-md-2"></div>
               <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>Claim Back</button>
-                </div>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+              </div>
             </div>
           </ExpansionPanelActions>
         )
@@ -356,8 +356,8 @@ class RequestListV2 extends Component {
             <div className="row active-tab-btns">
               <div className="col-md-2"></div>
               <div className="col-md-10">
-                  <button className="blue float-right ml-4" disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
-                  <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
+                  <button className={this.state.isFoundationMember ? 'blue float-right ml-4' : 'disable'} disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
+                  <button className={this.state.isFoundationMember ? 'red float-right ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
               </div>
             </div>
           </ExpansionPanelActions>
@@ -369,10 +369,10 @@ class RequestListV2 extends Component {
             <div className="row completed-tab-btns">
               <div className="col-md-2"></div>
               <div className="col-md-10">
-                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
-                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>fund this project</button> 
-                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
-                  <button className="close-proj-btn ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                  <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
+                  <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
+                  <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
               </div>
             </div>
           </ExpansionPanelActions>
@@ -397,6 +397,7 @@ class RequestListV2 extends Component {
             <div className="col-md-2"></div>
               <div className="col-md-10">
                 <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
               </div>
             </div>
           </ExpansionPanelActions>
@@ -433,7 +434,7 @@ class RequestListV2 extends Component {
                 </div>
                 <div className="submission-variable-name">
                   <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                  <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p>
+                  {/* <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p> */}
                 </div>
                 <div className="solution-vote-div">
                   <span className="bold">Solution Vote:</span>
@@ -591,7 +592,7 @@ class RequestListV2 extends Component {
            <div role="document"> {/* className="modal-dialog"  */}
                   <div className="modal-content">
                       <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Request Stake Details</h5>
+                          <h5 className="modal-title" id="exampleModalLabel">Request Backing Details</h5>
                           <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleShowStakeDialogClose}>
                               <span aria-hidden="true">&times;</span>
                           </button>

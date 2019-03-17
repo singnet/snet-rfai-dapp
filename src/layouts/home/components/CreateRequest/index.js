@@ -121,17 +121,14 @@ class CreateRequest extends Component {
         .then(response => 
             {
               if(response.ok) {
-                console.log("Git Handle is Valid")
                 this.setState({isValidGitHanlde: true})
               }
               else {
-                console.log("Git Handle is inValid")
                 this.setState({isValidGitHanlde: false})
               }
             })
         .catch(err => 
             {
-              console.log("Git request error - " + err)
               this.setState({isValidGitHanlde: false})
           })
   }

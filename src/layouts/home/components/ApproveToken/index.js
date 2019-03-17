@@ -94,6 +94,7 @@ class ApproveToken extends Component {
     var allowanceBN = new BN(this.state.tknAllowance)
 
     if(approveAmountBN.gt(zeroBN) && approveAmountBN.gt(allowanceBN)) {
+      this.handleDialogClose();
       this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
     } else if(approveAmountBN.lte(allowanceBN)) {
       this.setState({ alertText: 'Oops! Approval amount should be more than current allowances.'})

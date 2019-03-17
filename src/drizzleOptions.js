@@ -17,8 +17,8 @@ const drizzleOptions = {
     ServiceRequest: ['AddFoundationMember', 'CreateRequest', 'ExtendRequest', 'ApproveRequest', 'FundRequest', 'AddSolutionRequest',  'VoteRequest', 'ClaimRequest', 'CloseRequest', 'RejectRequest']
   },
   polls: {
-    accounts: 15000,
-    blocks: 15000
+    accounts: 3000,
+    blocks: 3000
   }//,
   //syncAlways: ture
 }

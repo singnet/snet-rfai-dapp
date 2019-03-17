@@ -144,7 +144,7 @@ class RequestStakeDetails extends Component {
                 <TableCell component="th" title={this.state.stakeMembers[index]} scope="row">{this.helperFunctions.toShortAddress(this.state.stakeMembers[index])}</TableCell>
                 <TableCell align="right">{this.helperFunctions.fromWei(s.stake)}</TableCell>
                 <TableCell align="right">
-                  <button className="blue float-right ml-4" disabled={!enableClaimBack} onClick={event => this.handleClaimBackButton(event, this.state.requestId)}>Claim Back</button>
+                  <button className={enableClaimBack ? 'blue float-right ml-4' : 'disable'} disabled={!enableClaimBack} onClick={event => this.handleClaimBackButton(event, this.state.requestId)}>Claim Back</button>
                 </TableCell>
               </TableRow>
           </React.Fragment>
@@ -154,24 +154,30 @@ class RequestStakeDetails extends Component {
   }
 
   render() {
- 
     return (
       <div className="singularity-dialog-table-class">
         <Paper styles={rootStyles}>
           <Table style={tableStyles} elevation={0}>
             <TableHead>
-              <TableRow>
-                <TableCell>Staker</TableCell>
+              <TableRow key="headerkey">
+                <TableCell>Backing Account</TableCell>
                 <TableCell align="right">Amount (AGI)</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.dataKeyStakeMembers.map((staker, index) =>  this.createRow(staker, index))}
+              {
+                this.state.totalFund === "0" ?
+                <TableRow key="noDataFound">
+                  <TableCell colSpan={3}>No backing details available.</TableCell>
+                </TableRow>
+                : null
+              }
+
             </TableBody>
           </Table>
         </Paper>
-
       </div>
     )
   }

@@ -93,6 +93,8 @@ class ApproveRequest extends Component {
       parseInt(this.state.endEvaluation,10) > parseInt(this.state.endSubmission,10) && 
       parseInt(this.state.newExpiration,10) > parseInt(this.state.endEvaluation,10))
     {
+      this.handleDialogClose();
+      
       // Call Approve Method to approve the request
       const stackId = this.contracts.ServiceRequest.methods["approveRequest"].cacheSend(this.state.requestId, this.state.endSubmission, this.state.endEvaluation, this.state.newExpiration, {from: this.props.accounts[0]})
       if (this.props.transactionStack[stackId]) {
@@ -146,6 +148,12 @@ class ApproveRequest extends Component {
                 <div className="clearfix"></div>
               </div>
             </div>
+            {
+              this.state.dialogOpen ?
+              <div className="row">
+                <span className="error-message">{this.state.alertText}</span>
+              </div> : null
+            }
             <div className="row">
               <div className="col-md-12 text-center">
                 <button type="button" className="blue" onClick={this.handleApproveButton}>Submit</button>
@@ -154,10 +162,10 @@ class ApproveRequest extends Component {
           </div>
         </form>
 
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
+        {/* <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
           <p>{this.state.alertText}</p>
           <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog>
+        </Dialog> */}
         
       </div>
     )

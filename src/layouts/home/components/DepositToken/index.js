@@ -131,6 +131,7 @@ class DepositToken extends Component {
     var allowanceBN = new BN(this.state.tknAllowance)
 
     if(depositAmountBN.gt(zeroBN) && depositAmountBN.lte(balanceBN) && depositAmountBN.lte(allowanceBN)) {
+      this.handleDialogClose();
       this.contracts.ServiceRequest.methods["deposit"].cacheSend(depositAmountBN.toString(), {from: this.props.accounts[0]})
     } else if (depositAmountBN.gt(balanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to transfer more than you have.'})

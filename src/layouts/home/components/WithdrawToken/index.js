@@ -111,6 +111,7 @@ class WithdrawToken extends Component {
     var escrrowBalanceBN = new BN(this.state.escrowBalance)
 
     if(withdrawAmountBN.gt(zeroBN) && withdrawAmountBN.lte(escrrowBalanceBN)) {
+      this.handleDialogClose();
       this.contracts.ServiceRequest.methods["withdraw"].cacheSend(withdrawAmountBN.toString(), {from: this.props.accounts[0]})
     } else if (withdrawAmountBN.gt(escrrowBalanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to withdraw more than you have in RFAI Escrow.'})

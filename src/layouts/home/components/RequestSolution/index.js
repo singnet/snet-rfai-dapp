@@ -175,7 +175,6 @@ class RequestSolution extends Component {
       var solDocURI = this.context.drizzle.web3.utils.toAscii(s.solutionDocURI);
       if(s.found === true)
       {
-
         var enableClaim = false;
         var enableVote = false;
 
@@ -202,8 +201,8 @@ class RequestSolution extends Component {
               <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
               <TableCell style={tableColStyles} align="right">
                 {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
-                <button className="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
-                <button className="blue float-right ml-4" disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
+                <button className={enableVote ? 'blue float-right ml-4' : 'disable'} disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
+                <button className={enableClaim ? 'blue float-right ml-4' : 'disable'} disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
               </TableCell>                
             </TableRow>
           </React.Fragment>
@@ -219,7 +218,7 @@ class RequestSolution extends Component {
         <Paper styles={rootStyles}>
           <Table styles={tableStyles}>
             <TableHead>
-              <TableRow>
+              <TableRow key="header">
                 <TableCell style={tableColStyles}>Submitter</TableCell>
                 <TableCell style={tableColStyles} align="right">Solution URI</TableCell>
                 <TableCell style={tableColStyles} align="right"># of Votes</TableCell>
@@ -228,6 +227,13 @@ class RequestSolution extends Component {
             </TableHead>
             <TableBody>
               {this.state.dataKeySubmitters.map((submitter, index) =>  this.createRow(submitter, index))}
+              {
+                this.state.dataKeySubmitters.length === 0 ? 
+                <TableRow key="noDataFound">
+                  <TableCell colSpan={4}>No submissions available.</TableCell>
+                </TableRow>
+                : null
+              }
             </TableBody>
           </Table>
         </Paper>
