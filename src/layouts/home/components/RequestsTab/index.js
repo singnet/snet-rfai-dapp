@@ -167,8 +167,7 @@ class RequestsTab extends Component {
               value={selectedTab} 
               onChange={this.handleChange} 
               indicatorColor="primary" 
-              textColor="primary" 
-              tabItemContainerStyle={{width: '40px'}}
+              textColor="primary"
             >
               {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> }
               <Tab className="singularity-tab" label="Active" value={1} />
