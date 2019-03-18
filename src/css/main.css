@@ -559,7 +559,11 @@ section.sections.active { display: block; }
   padding: 0;
 }
 
-.singularity-stake-details { align-items: center !important; }
+.singularity-stake-details { 
+  align-items: center !important; 
+  text-align: center;
+}
+
 button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-summary > div { margin: 10px 0; }
 .expansion-panel-summary button.blue { border-radius: 50px; }
@@ -771,8 +775,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-panel-ai-services,
 .paper-ai-services { box-shadow: none !important; }
 
-.singularity-tab span { text-align: left; }
-
+/*.singularity-tab span { text-align: left; }
+*/
 .expansion-summary-ai-services .singularity-stake-details span {
   font-size: 14px;
   font-weight: 400;
@@ -817,7 +821,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-summary .image-container { min-width: 177px; }
 
 .expansion-summary .description-container,
-.expansion-summary .right-side-data { min-width: 444px; }
+.expansion-summary .right-side-data { padding: 0 10px; }
 
 .submission-variable-name {
   display: flex;
@@ -844,8 +848,16 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .close-proj-btn  {
   background-color: transparent;
+  padding: 5px 15px;
   border: none;
   color: #4086ff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-proj-btn:hover {
+  background-color: #4086ff;
+  color: #fff;
 }
 
 /* VOTE Styling */
@@ -1224,12 +1236,23 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 14px;
 }
 
+.project-url-container,
+.description-container { text-align: left; }
+
 /* media queries */
 @media(max-width: 991px) {
   .your-account-details-container,
-  .manage-escrow-acc-container { width: 100%; }
+  .manage-escrow-acc-container,
+  .getting-started,
+  .your-balance { width: 100%; }
+
+  .your-balance { margin: 20px 0 0 0; }
+
+  .singularity-stake-details p { display: inline-block; }
 
   .manage-escrow-acc-container { margin: 25px 0 0; }
+
+  .completed-tab-btns { justify-content: center; }
 }
 
 @media (max-width: 640px) {
@@ -1238,6 +1261,19 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
     float: right;
   }
   .navbar-singularity .header-menu { display: none; }
+
+  .expansion-panel-actions .col-md-10 { 
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .expansion-panel-actions button {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+
+  .expansion-panel-actions .col-md-10 button:first-of-type { margin-left: 25px !important; }
+  .expansion-summary .right-side-data { text-align: left; }
 }
 
 @media(max-width: 959px) {

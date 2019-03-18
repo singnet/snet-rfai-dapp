@@ -370,9 +370,9 @@ class RequestListV2 extends Component {
               <div className="col-md-2"></div>
               <div className="col-md-10">
                 <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
-                  <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
-                  <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
-                  <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
+                <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
+                <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
+                <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
               </div>
             </div>
           </ExpansionPanelActions>
@@ -415,32 +415,33 @@ class RequestListV2 extends Component {
         // Request details are same irrespective of the status
         <ExpansionPanelDetails className="expansion-panel-details">
           <div className="row singularity-stake-details expansion-summary">
-            <div className="col-md-2 image-contianer"></div>
-              <div className="col-md-5 description-container">
-                <span className="description-title">Description:</span>
-                <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
+
+            <div className="col-md-12 col-lg-2 image-contianer"></div>
+            <div className="col-md-12 col-lg-5 description-container">
+              <span className="description-title">Description:</span>
+              <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
+            </div>
+            <div class="col-md-12 col-lg-5 right-side-data">
+              <div className="project-url-container">
+                <span className="bold">Project URL: </span>
+                <a href="#" title="">
+                  <RequestIPFSData 
+                    key="doc_{r.requestId}" 
+                    requestId={r.requestId} 
+                    IPFSHash={docURI} 
+                    getField="documentURI" 
+                  />
+                </a>
               </div>
-              <div class="col-md-5 right-side-data">
-                <div>
-                  <span className="bold">Project URL: </span>
-                  <a href="#" title="">
-                    <RequestIPFSData 
-                      key="doc_{r.requestId}" 
-                      requestId={r.requestId} 
-                      IPFSHash={docURI} 
-                      getField="documentURI" 
-                    />
-                  </a>
-                </div>
-                <div className="submission-variable-name">
-                  <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                  {/* <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p> */}
-                </div>
-                <div className="solution-vote-div">
-                  <span className="bold">Solution Vote:</span>
-                  <Vote/>
-                </div>
+              <div className="submission-variable-name">
+                <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
+                {/* <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p> */}
               </div>
+              <div className="solution-vote-div">
+                <span className="bold">Solution Vote:</span>
+                <Vote/>
+              </div>
+            </div>
           </div>
         </ExpansionPanelDetails>
       )
@@ -473,18 +474,18 @@ class RequestListV2 extends Component {
               <div className="card" style={rowCardStyles.style}>
                 <div className="card-header" style={rowStyles.style}>
                   <div className="row singularity-stake-details">
-                    <div className="col-2">
+                    <div className="col-sm-12 col-md-12 col-lg-2">
                       <img src="http://placehold.it/81x81" alt="Image" />
                     </div>
-                    <div className="col-3 information-data">
+                    <div className="col-sm-12 col-md-12 col-lg-3 information-data">
                       <p><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></p>
                       <p>Requested by: <span>{this.helperFunctions.toShortAddress(r.requester)}</span></p>
                     </div>
-                    <div className="col-2 award-amt-data">
+                    <div className="col-sm-12 col-md-12 col-lg-4 award-amt-data">
                       <p>Award: {this.helperFunctions.fromWei(r.totalFund)} AGI tokens</p>
                       <p>{r.stakeMembers.length} Backers</p>
                     </div>
-                    <div className="col-5 award-amt-data">
+                    <div className="col-sm-12 col-md-12 col-lg-3 award-amt-data">
                       <p>Expires on:</p> 
                       <p>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</p>
                     </div>                    

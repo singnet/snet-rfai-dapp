@@ -158,12 +158,18 @@ class RequestsTab extends Component {
 
         <div className="main singularity-accordion-main">
           
-        <div className="req-ai-services-heading">
-          <span>Requests for AI  Services</span>
-          <button onClick = {this.props.handleCreateRequest}><span>+</span> create new request</button>
-        </div>
+          <div className="req-ai-services-heading">
+            <span>Requests for AI  Services</span>
+            <button onClick = {this.props.handleCreateRequest}><span>+</span> create new request</button>
+          </div>
           <AppBar position="static" color="default" className="singularity-tabs">
-            <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary" >
+            <Tabs 
+              value={selectedTab} 
+              onChange={this.handleChange} 
+              indicatorColor="primary" 
+              textColor="primary" 
+              tabItemContainerStyle={{width: '40px'}}
+            >
               {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> }
               <Tab className="singularity-tab" label="Active" value={1} />
               <Tab className="singularity-tab" label="Completed" value={2} />
