@@ -550,7 +550,7 @@ class RequestListV2 extends Component {
 
 
         { /* Fund this project / stake request */ } 
-        <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
+        <Dialog className="fund-this-proj-dialog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
           <div className="modal-dialog stake-req-popup" role="document">
             <div className="modal-content">
               <div className="modal-header">

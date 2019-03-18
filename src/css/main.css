@@ -1043,23 +1043,24 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .balance-funding-amt-div .balance-div,
 .balance-funding-amt-div .funding-amt-div {
-  width: 200px;
+  width: 45%;
   border-radius: 5px;
   padding: 15px;
   display: inline-block;
   position: relative;
 }
 
+.balance-funding-amt-div > div { 
+  display: flex; 
+  justify-content: space-between; 
+}
+
 .balance-funding-amt-div .balance-div {
   color: #b9b9b9;
   border: 1px solid #b9b9b9;
-  margin-left: 10px;
 }
 
-.balance-funding-amt-div .funding-amt-div { 
-  border: 1px solid #000;
-  margin-left: 7.5%;
-}
+.balance-funding-amt-div .funding-amt-div { border: 1px solid #000; }
 
 .balance-funding-amt-div .balance-div span:first-of-type,
 .balance-funding-amt-div .funding-amt-div span:first-of-type { 
@@ -1239,6 +1240,13 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .project-url-container,
 .description-container { text-align: left; }
 
+.completed-tab-btns .disable { 
+  border-radius: 5px;
+  border: none;
+  padding: 6px 14px;
+  margin-left: 20px;
+}
+
 /* media queries */
 @media(max-width: 991px) {
   .your-account-details-container,
@@ -1291,6 +1299,24 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 @media(max-width: 575px) {
   .logo { width: 35%; }
   .menu-bar { width: 65%; }
+  .balance-funding-amt-div > div { display: block; }
+  .balance-funding-amt-div .balance-div, .balance-funding-amt-div .funding-amt-div { width: 100%; }
+  .balance-funding-amt-div .funding-amt-div { margin-top: 25px; }
+
+  .requester-detail > div {
+    border-bottom: 1px solid #efefef;
+    padding: 10px 0 !important;
+  }
 }
+
+@media(max-width: 414px) { 
+  .fund-this-proj-dialog > div > div { margin: 20px !important; }
+}
+
+@media(max-width: 375px) {
+  .approve-request-popup .modal-body { padding: 0; }
+}
+
+
 
 /*# sourceMappingURL=main.css.map */
