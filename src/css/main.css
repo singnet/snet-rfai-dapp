@@ -482,7 +482,7 @@ section.sections.active { display: block; }
 
 .create-request-form {
   min-height: 380px;
-  width: 800px;
+  width: 90%;
   padding: 0 15px;
   margin: 30px auto;
   box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12);
@@ -1174,8 +1174,10 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 .create-req-submit-req-content .row input[type="text"],
+.create-req-submit-req-content .row textarea,
 .create-req-submit-req-content .row span:first-child ,
-.create-req-submit-req-content .row .calender {
+.create-req-submit-req-content .row .calender,
+.escrow-bal-init-fund-amt input[type="number"] {
   width: 100%;
   border: 1px solid;
   border-radius: 5px;
@@ -1249,6 +1251,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .req-solution-dailog .disable { margin: 0 5px 5px 0; }
 .request-solution-popup table td.view-sol-popup-buttons { padding: 10px 0 !important; }
+textarea { resize: none; }
 
 /* media queries */
 @media(max-width: 991px) {
@@ -1268,6 +1271,15 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 @media(max-width: 959px) {
   .singularity-tab { width: 20%; }
+}
+
+@media(max-width: 768px) {
+  .create-req-tabs { 
+    min-height: auto; 
+    border-bottom: 1px solid #efefef;
+  }
+
+  .create-new-req .create-req-tabs li.active { border-right: none; }
 }
 
 @media (max-width: 640px) {
@@ -1322,6 +1334,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
     display: inline;
     padding: 0 20px;
   }
+
+  .create-req-submit-req-content .row label { position: static; }
 }
 
 @media(max-width: 414px) { 
