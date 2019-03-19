@@ -199,7 +199,7 @@ class RequestSolution extends Component {
               </TableCell>
               <TableCell style={tableColStyles} align="right">{solDocURI}</TableCell>
               <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
-              <TableCell style={tableColStyles} align="right">
+              <TableCell className="view-sol-popup-buttons" style={tableColStyles} align="right">
                 {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
                 <button className={enableVote ? 'blue float-right ml-4' : 'disable'} disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
                 <button className={enableClaim ? 'blue float-right ml-4' : 'disable'} disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
