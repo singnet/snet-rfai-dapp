@@ -51,13 +51,13 @@ body {
 
 .navbar-singularity .header-menu a:hover { color: #fff; }
 
-.navbar-singularity .hamburger-menu {
+.hamburger-menu {
   display: none;
   position: relative;
   text-align: right;
 }
 
-.navbar-singularity .hamburger-menu .bars {
+.hamburger-menu .bars {
   padding: 5px 10px;
   border: none;
   outline: none;
@@ -65,7 +65,7 @@ body {
   cursor: pointer;
 }
 
-.navbar-singularity .hamburger-menu .bars span {
+.hamburger-menu .bars span {
   width: 15px;
   height: 3px;
   margin-bottom: 3px;
@@ -73,26 +73,26 @@ body {
   background-color: #fff;
 }
 
-.navbar-singularity .hamburger-menu .bars span:last-of-type { margin-bottom: 0; }
+.hamburger-menu .bars span:last-of-type { margin-bottom: 0; }
 
-.navbar-singularity .hamburger-header-menu {
+.hamburger-header-menu {
   position: absolute;
   right: 15px;
 }
 
-.navbar-singularity .hamburger-header-menu ul {
+.hamburger-header-menu ul {
   padding: 0;
   margin-top: 5px;
 }
 
-.navbar-singularity .hamburger-header-menu ul li { list-style: none; }
+.hamburger-header-menu ul li { list-style: none; }
 
-.navbar-singularity .hamburger-header-menu ul li a {
+.hamburger-header-menu ul li a {
   padding-left: 12px;
   color: #fff;
 }
 
-.navbar-singularity .hamburger-header-menu ul li a:hover { text-decoration: underline; }
+.hamburger-header-menu ul li a:hover { text-decoration: underline; }
 .main { padding-left: 12px; }
 .main .row { margin: 0; }
 
@@ -482,7 +482,7 @@ section.sections.active { display: block; }
 
 .create-request-form {
   min-height: 380px;
-  width: 800px;
+  width: 90%;
   padding: 0 15px;
   margin: 30px auto;
   box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 1px 1px 0px rgba(0,0,0,0.12);
@@ -507,7 +507,7 @@ section.sections.active { display: block; }
 }
 
 .create-req-tabs li { list-style: none;  }
-.create-req-tabs li.active { border-right: 2px solid #4086FF; }
+.create-new-req .create-req-tabs li.active { border-right: 2px solid #4086FF; }
 
 .create-req-tabs li.active,
 .create-req-tabs li:hover {
@@ -559,7 +559,11 @@ section.sections.active { display: block; }
   padding: 0;
 }
 
-.singularity-stake-details { align-items: center !important; }
+.singularity-stake-details { 
+  align-items: center !important; 
+  text-align: center;
+}
+
 button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-summary > div { margin: 10px 0; }
 .expansion-panel-summary button.blue { border-radius: 50px; }
@@ -614,11 +618,15 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .request-solution-popup .modal-body > div > div { box-shadow: none; }
 
 .request-solution-popup table td {
-  text-align: center !important;
+  text-align: left !important;
   padding: 0 20px !important;
 }
 
-.request-solution-popup table th { text-align: center !important; }
+.request-solution-popup table th { 
+  text-align: center !important;
+  font-size: 16px;
+  color: #000;
+}
 
 .submit-solution-popup .modal-body { 
   min-height: 430px;
@@ -690,11 +698,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
-  background-color: #dddddd;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .fa-info-circle { 
@@ -748,14 +751,9 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 .req-ai-services-heading button {
-  color: #fff;
-  border: none;
-  background-color: #0066ff;
   text-transform: uppercase;
-  font-size: 12px;
   letter-spacing: 1px;
-  padding: 0px 16px 3px;
-  border-radius: 5px;
+  padding: 0px 14px;
 }
 
 .req-ai-services-heading button span { 
@@ -771,8 +769,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-panel-ai-services,
 .paper-ai-services { box-shadow: none !important; }
 
-.singularity-tab span { text-align: left; }
-
+/*.singularity-tab span { text-align: left; }
+*/
 .expansion-summary-ai-services .singularity-stake-details span {
   font-size: 14px;
   font-weight: 400;
@@ -817,7 +815,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .expansion-summary .image-container { min-width: 177px; }
 
 .expansion-summary .description-container,
-.expansion-summary .right-side-data { min-width: 444px; }
+.expansion-summary .right-side-data { padding: 0 10px; }
 
 .submission-variable-name {
   display: flex;
@@ -844,8 +842,16 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .close-proj-btn  {
   background-color: transparent;
+  padding: 5px 15px;
   border: none;
   color: #4086ff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-proj-btn:hover {
+  background-color: #4086ff;
+  color: #fff;
 }
 
 /* VOTE Styling */
@@ -873,7 +879,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 /* submit solution pop re-design */
 .submit-solution-popup h5,
-.stake-req-popup h5 {
+.stake-req-popup h5,
+.request-solution-popup h5 {
   font-size: 24px;
   color: #000;
 }
@@ -1031,23 +1038,24 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .balance-funding-amt-div .balance-div,
 .balance-funding-amt-div .funding-amt-div {
-  width: 200px;
+  width: 45%;
   border-radius: 5px;
   padding: 15px;
   display: inline-block;
   position: relative;
 }
 
+.balance-funding-amt-div > div { 
+  display: flex; 
+  justify-content: space-between; 
+}
+
 .balance-funding-amt-div .balance-div {
   color: #b9b9b9;
   border: 1px solid #b9b9b9;
-  margin-left: 10px;
 }
 
-.balance-funding-amt-div .funding-amt-div { 
-  border: 1px solid #000;
-  margin-left: 7.5%;
-}
+.balance-funding-amt-div .funding-amt-div { border: 1px solid #000; }
 
 .balance-funding-amt-div .balance-div span:first-of-type,
 .balance-funding-amt-div .funding-amt-div span:first-of-type { 
@@ -1161,8 +1169,10 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 .create-req-submit-req-content .row input[type="text"],
+.create-req-submit-req-content .row textarea,
 .create-req-submit-req-content .row span:first-child ,
-.create-req-submit-req-content .row .calender {
+.create-req-submit-req-content .row .calender,
+.escrow-bal-init-fund-amt input[type="number"] {
   width: 100%;
   border: 1px solid;
   border-radius: 5px;
@@ -1224,20 +1234,118 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 14px;
 }
 
+.project-url-container,
+.description-container { text-align: left; }
+
+button.disable {
+  border-radius: 5px;
+  padding: 6px 14px;
+  border: none; 
+}
+
+.completed-tab-btns .disable { margin-left: 20px; }
+.req-solution-dailog .disable { margin: 0 10px 5px 0; }
+
+.request-solution-popup table td.view-sol-popup-buttons { padding: 10px 0 !important; }
+textarea { resize: none; }
+.request-solution-popup .modal-body { min-height: 320px; }
+
 /* media queries */
 @media(max-width: 991px) {
   .your-account-details-container,
-  .manage-escrow-acc-container { width: 100%; }
+  .manage-escrow-acc-container,
+  .getting-started,
+  .your-balance { width: 100%; }
+
+  .your-balance { margin: 20px 0 0 0; }
+
+  .singularity-stake-details p { display: inline-block; }
 
   .manage-escrow-acc-container { margin: 25px 0 0; }
-}
 
-@media (max-width: 448px) {
-  .navbar-singularity .hamburger-menu { display: block; }
-  .navbar-singularity .header-menu { display: none; }
+  .completed-tab-btns { justify-content: center; }
 }
 
 @media(max-width: 959px) {
-  .singularity-tab { min-width: 160px !important; }
+  .singularity-tab { width: 20%; }
 }
+
+@media(max-width: 768px) {
+  .create-req-tabs { 
+    min-height: auto; 
+    border-bottom: 1px solid #efefef;
+  }
+
+  .create-new-req .create-req-tabs li.active { border-right: none; }
+}
+
+@media (max-width: 640px) {
+  .hamburger-menu { 
+    display: block; 
+    float: right;
+  }
+  .navbar-singularity .header-menu { display: none; }
+
+  .expansion-panel-actions .col-md-10 { 
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .expansion-panel-actions button {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+
+  .expansion-panel-actions .col-md-10 button:first-of-type { margin-left: 25px !important; }
+  .expansion-summary .right-side-data { text-align: left; }
+
+  .singularity-tabs > div > div > div > div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .singularity-tabs > div > div > div > div + span { display: none; }
+  .singularity-tabs .singularity-tab { width: 100%; }
+}
+
+@media(max-width: 575px) {
+  .logo { width: 35%; }
+  .menu-bar { width: 65%; }
+  .balance-funding-amt-div > div { display: block; }
+  .balance-funding-amt-div .balance-div, .balance-funding-amt-div .funding-amt-div { width: 100%; }
+  .balance-funding-amt-div .funding-amt-div { margin-top: 25px; }
+
+  .requester-detail > div {
+    border-bottom: 1px solid #efefef;
+    padding: 10px 0 !important;
+  }
+}
+
+@media(max-width: 449px){
+  .solution-submit-tabs .create-req-tabs ul li {
+    display: block;
+    padding:0 0 10px;
+  }
+
+  .solution-submit-tabs .create-req-tabs ul li.active a {
+    display: inline;
+    padding: 0 20px;
+  }
+
+  .create-req-submit-req-content .row label { position: static; }
+}
+
+@media(max-width: 414px) { 
+  .fund-this-proj-dialog > div > div,
+  .submit-solution-dailog  > div > div,
+  .req-solution-dailog > div > div { margin: 20px !important; }
+}
+
+@media(max-width: 375px) {
+  .approve-request-popup .modal-body { padding: 0; }
+  .singularity-accordion-tabs button span { font-size: 14px; }
+}
+
+
+
 /*# sourceMappingURL=main.css.map */

@@ -128,7 +128,7 @@ class RequestsTab extends Component {
                 <p>Welcome AI Developers. With this community portal, you can make projects requests for AI services that you think the others will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI token rewards.</p>
               </div>
               <div className="documentation-btn">
-                <button>documentation</button>
+                <button className="blue">documentation</button>
               </div>
             </div>
 
@@ -144,7 +144,7 @@ class RequestsTab extends Component {
                 <span className="balance">{escrowBalance} AGI</span>
               </div>
               <div className="add-more-funds-btn">
-                  <button onClick = {this.props.handleAccount}>add more funds</button>
+                  <button onClick = {this.props.handleAccount} className="blue">add more funds</button>
                 </div>
             </div>
           </div>
@@ -158,12 +158,17 @@ class RequestsTab extends Component {
 
         <div className="main singularity-accordion-main">
           
-        <div className="req-ai-services-heading">
-          <span>Requests for AI  Services</span>
-          <button onClick = {this.props.handleCreateRequest}><span>+</span> create new request</button>
-        </div>
+          <div className="req-ai-services-heading">
+            <span>Requests for AI  Services</span>
+            <button onClick = {this.props.handleCreateRequest} className="blue"><span>+</span> create new request</button>
+          </div>
           <AppBar position="static" color="default" className="singularity-tabs">
-            <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary" >
+            <Tabs 
+              value={selectedTab} 
+              onChange={this.handleChange} 
+              indicatorColor="primary" 
+              textColor="primary"
+            >
               {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> }
               <Tab className="singularity-tab" label="Active" value={1} />
               <Tab className="singularity-tab" label="Completed" value={2} />

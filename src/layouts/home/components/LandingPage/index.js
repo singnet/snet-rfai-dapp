@@ -13,7 +13,7 @@ const dialogStyles = {
   style: {
     backgroundColor: 'transparent',
     padding: 5,
-      boxShadow:'none',
+    boxShadow:'none',
   }
 }
 
@@ -163,7 +163,7 @@ class LandingPage extends Component {
                 </svg>
             </div>
           <div className="row logo-nav">
-            <div className="col-md-6 logo">
+            <div className="col-xs-3 col-sm-3 col-md-6 col-lg-6 logo">
             {
               (typeof web3 !== 'undefined') ?
                 <a href="/SampleServices" title="Singularity">
@@ -175,12 +175,12 @@ class LandingPage extends Component {
                 </a>
             }
             </div>
-            <div className="col-md-6">
+            <div className="col-xs-4 col-sm-9 col-md-6 col-lg-6 menu-bar">
               <nav className="navbar-singularity">
                 <div className="col-md-12 header-menu">
                   {menuList}
                 </div>
-                <div className="col-md-12 hamburger-menu">
+                <div className="col-xs-2 col-sm-2 hamburger-menu">
                   <button className="bars" onClick={this.showMenu}>
                     <span></span>
                     <span></span>

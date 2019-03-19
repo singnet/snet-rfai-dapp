@@ -191,25 +191,23 @@ class StakeRequest extends Component {
               </div>
   
               <div className="row requester-detail">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <span className="bold">requested by:</span>
-                    <span>{this.helperFunctions.toShortAddress(r.requester)}</span>
-                  </div>
-                  <div className="col-md-4">
-                    <span className="bold">current amount</span>
-                    <span>{this.helperFunctions.fromWei(r.totalFund)} AGI</span>
-                  </div>
-                  <div className="col-md-4">
-                    <span className="bold">backers</span>
-                    <span>{r.stakeMembers.length}</span>
-                  </div>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">requested by:</span>
+                  <span>{this.helperFunctions.toShortAddress(r.requester)}</span>
+                </div>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">current amount</span>
+                  <span>{this.helperFunctions.fromWei(r.totalFund)} AGI</span>
+                </div>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">backers</span>
+                  <span>{r.stakeMembers.length}</span>
                 </div>
               </div>
   
               <div className="row balance-funding-amt-div">
                 <div className="col-md-12">
-                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                  { /*<i className="fa fa-info-circle" aria-hidden="true"></i> */ }
                   <div className="balance-div">
                     <span>Your Balance in Escrow</span>
                     <span>{escrowBalance} AGI</span>
