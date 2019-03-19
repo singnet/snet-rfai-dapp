@@ -618,11 +618,15 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .request-solution-popup .modal-body > div > div { box-shadow: none; }
 
 .request-solution-popup table td {
-  text-align: center !important;
+  text-align: left !important;
   padding: 0 20px !important;
 }
 
-.request-solution-popup table th { text-align: center !important; }
+.request-solution-popup table th { 
+  text-align: center !important;
+  font-size: 16px;
+  color: #000;
+}
 
 .submit-solution-popup .modal-body { 
   min-height: 430px;
@@ -694,11 +698,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
-  background-color: #dddddd;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .fa-info-circle { 
@@ -752,14 +751,9 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 .req-ai-services-heading button {
-  color: #fff;
-  border: none;
-  background-color: #0066ff;
   text-transform: uppercase;
-  font-size: 12px;
   letter-spacing: 1px;
-  padding: 0px 16px 3px;
-  border-radius: 5px;
+  padding: 0px 14px;
 }
 
 .req-ai-services-heading button span { 
@@ -885,7 +879,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 /* submit solution pop re-design */
 .submit-solution-popup h5,
-.stake-req-popup h5 {
+.stake-req-popup h5,
+.request-solution-popup h5 {
   font-size: 24px;
   color: #000;
 }
@@ -1242,16 +1237,18 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .project-url-container,
 .description-container { text-align: left; }
 
-.completed-tab-btns .disable { 
+button.disable {
   border-radius: 5px;
-  border: none;
   padding: 6px 14px;
-  margin-left: 20px;
+  border: none; 
 }
 
-.req-solution-dailog .disable { margin: 0 5px 5px 0; }
+.completed-tab-btns .disable { margin-left: 20px; }
+.req-solution-dailog .disable { margin: 0 10px 5px 0; }
+
 .request-solution-popup table td.view-sol-popup-buttons { padding: 10px 0 !important; }
 textarea { resize: none; }
+.request-solution-popup .modal-body { min-height: 320px; }
 
 /* media queries */
 @media(max-width: 991px) {
@@ -1340,7 +1337,8 @@ textarea { resize: none; }
 
 @media(max-width: 414px) { 
   .fund-this-proj-dialog > div > div,
-  .submit-solution-dailog  > div > div { margin: 20px !important; }
+  .submit-solution-dailog  > div > div,
+  .req-solution-dailog > div > div { margin: 20px !important; }
 }
 
 @media(max-width: 375px) {
