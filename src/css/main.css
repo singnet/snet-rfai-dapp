@@ -1345,6 +1345,7 @@ textarea { resize: none; }
 
 @media(max-width: 375px) {
   .approve-request-popup .modal-body { padding: 0; }
+  .singularity-accordion-tabs button span { font-size: 14px; }
 }
 
 
