@@ -405,13 +405,21 @@ console.log("ipfs hash - " + data.data.hash);
                 <h4>Create Request </h4>
               </div>
             </div>
-            <div className="row">
+            <div className="row create-new-req">
               <div className="col-md-3 create-req-tabs">
                 <ul>
-                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a></li>
-                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a></li>
-                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}><a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a></li>
-                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}><a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a></li>
+                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}>
+                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
+                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
+                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}>
+                    <a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a>
+                  </li>
                 </ul>
               </div>
               <div className="col-md-9">

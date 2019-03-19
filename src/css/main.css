@@ -507,7 +507,7 @@ section.sections.active { display: block; }
 }
 
 .create-req-tabs li { list-style: none;  }
-.create-req-tabs li.active { border-right: 2px solid #4086FF; }
+.create-new-req .create-req-tabs li.active { border-right: 2px solid #4086FF; }
 
 .create-req-tabs li.active,
 .create-req-tabs li:hover {
@@ -1309,8 +1309,21 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   }
 }
 
+@media(max-width: 449px){
+  .solution-submit-tabs .create-req-tabs ul li {
+    display: block;
+    padding:0 0 10px;
+  }
+
+  .solution-submit-tabs .create-req-tabs ul li.active a {
+    display: inline;
+    padding: 0 20px;
+  }
+}
+
 @media(max-width: 414px) { 
-  .fund-this-proj-dialog > div > div { margin: 20px !important; }
+  .fund-this-proj-dialog > div > div,
+  .submit-solution-dailog  > div > div { margin: 20px !important; }
 }
 
 @media(max-width: 375px) {
