@@ -531,7 +531,7 @@ class RequestListV2 extends Component {
           <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
         </Dialog>
 
-        <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenApproveRequest} >
+        <Dialog className="approve-req-dialog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenApproveRequest} >
           <div className="approve-request-popup modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">

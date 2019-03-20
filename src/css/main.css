@@ -292,12 +292,6 @@ main-content .nav { border-bottom: solid 1px #f1f1f1; }
   margin: -3px 0 0 0;
 }
 
-h5 {
-  font-size: 14px;
-  font-weight: bold;
-  color: #666;
-}
-
 footer {
   display: none;
   height: 200px;
@@ -888,9 +882,11 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 /* submit solution pop re-design */
 .submit-solution-popup h5,
 .stake-req-popup h5,
-.request-solution-popup h5 {
+.request-solution-popup,
+.approve-request-popup h5 {
   font-size: 24px;
   color: #000;
+  font-weight: bold;
 }
 
 .submit-solution-popup form,
@@ -1265,6 +1261,9 @@ textarea { resize: none; }
 .logo,
 .menu-bar { padding: 0; }
 
+.approve-request-popup form { min-height: 320px; }
+.approve-request-popup form button { margin-top: 50px; }
+
 /* media queries */
 @media(max-width: 991px) {
   .your-account-details-container,
@@ -1332,6 +1331,7 @@ textarea { resize: none; }
 }
 
 @media(max-width: 575px) {
+  .modal-dialog { max-width: 100%; }
   .logo { width: 35%; }
   .menu-bar { width: 65%; }
   .balance-funding-amt-div > div { display: block; }
@@ -1361,7 +1361,8 @@ textarea { resize: none; }
 @media(max-width: 414px) { 
   .fund-this-proj-dialog > div > div,
   .submit-solution-dailog  > div > div,
-  .req-solution-dailog > div > div { margin: 20px !important; }
+  .req-solution-dailog > div > div,
+  .approve-req-dialog > div > div { margin: 20px !important; }
 }
 
 @media(max-width: 375px) {
