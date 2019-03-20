@@ -95,33 +95,36 @@ class ContractConfig extends Component {
         <Paper style={styles} elevation={0} className="singularity-content">
           <p>RFAI Contract Configurations</p>
 
-          <form className="pure-form pure-form-stacked">
-          <div className="row">
-            <div className="col-4">
+          <form className="pure-form pure-form-stacked configuration-form">
+            <div className="row">
+              <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div className="singularity-token-counter">
-                    <p>Minimum Stake: <span>{minStake} AGI</span></p>
+                  <span>Minimum Stake: </span>
+                  <span>{minStake} AGI</span>
                 </div>
-            </div>
-            <div className="col-4">
+              </div>
+              <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div className="singularity-token-counter">
-                    <p>Maximum Stakers: <span>{this.state.maxStakers}</span></p>
+                  <span>Maximum Stakers: </span>
+                  <span>{this.state.maxStakers}</span>
                 </div>            
+              </div>
+              <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                  <div className="singularity-token-counter">
+                    <span>Number of Requests: </span>
+                    <span>{this.state.nextRequestId}</span>
+                  </div>                        
+              </div>
             </div>
-            <div className="col-4">
-                <div className="singularity-token-counter">
-                    <p>Number of Requests: <span>{this.state.nextRequestId}</span></p>
-                </div>                        
+            <div className="row contract-owner-container">
+              <div className="col">
+                <label>Contract Owner: </label>
+                <label className="word-break">{this.state.owner}</label>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col">
-                <div className="spacer"></div>
-                <label>Contract Owner:</label> <div className="clearfix"></div>
-                <label>{this.state.owner}</label>
-            </div>
-          </div>            
+
           </form>
-      </Paper>
+        </Paper>
 
       </div>
     )

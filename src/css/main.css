@@ -461,7 +461,7 @@ section.sections.active { display: block; }
 }
 
 .admin-table {
-  width: 500px;
+  width: 50%;
   padding: 15px;
   margin: 30px auto;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
@@ -478,7 +478,11 @@ section.sections.active { display: block; }
   outline: none;
 }
 
-.admin-table .singularity-table { box-shadow: none; }
+.admin-table .singularity-table { 
+  box-shadow: none;
+  overflow: auto;
+  border-radius: 0;
+}
 
 .create-request-form {
   min-height: 380px;
@@ -1245,10 +1249,14 @@ button.disable {
 
 .completed-tab-btns .disable { margin-left: 20px; }
 .req-solution-dailog .disable { margin: 0 10px 5px 0; }
-
 .request-solution-popup table td.view-sol-popup-buttons { padding: 10px 0 !important; }
 textarea { resize: none; }
 .request-solution-popup .modal-body { min-height: 320px; }
+.foundation-member-form .row { padding: 10px 0; }
+.foundation-member-form .row .singularity-button-blue { margin-top: 0; }
+.text-right { text-align: right; }
+.admin-table .singularity-content > p { font-weight: bold; }
+.contract-owner-container { margin-top: 10px; }
 
 /* media queries */
 @media(max-width: 991px) {
@@ -1274,6 +1282,12 @@ textarea { resize: none; }
   .create-req-tabs { 
     min-height: auto; 
     border-bottom: 1px solid #efefef;
+  }
+
+  .admin-table .singularity-token-counter:first-of-type span {
+    width: 50%;
+    margin-bottom: 10px;
+    display: inline-block;
   }
 
   .create-new-req .create-req-tabs li.active { border-right: none; }
@@ -1306,6 +1320,8 @@ textarea { resize: none; }
 
   .singularity-tabs > div > div > div > div + span { display: none; }
   .singularity-tabs .singularity-tab { width: 100%; }
+  .admin-table .singularity-token-counter { margin-bottom: 10px; }
+  .admin-table { width: 90%; }
 }
 
 @media(max-width: 575px) {
