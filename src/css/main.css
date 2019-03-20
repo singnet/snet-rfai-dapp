@@ -328,6 +328,10 @@ button.blue {
   border: solid 2px #fff;
   cursor: pointer;
   border: 1px solid transparent;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
 button.blue:hover {
@@ -1002,17 +1006,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .your-submission-div .buttons,
 .fund-this-project .buttons { text-align: center; }
-    
-.your-submission-div .buttons button,
-.fund-this-project .buttons button {
-  border: none;
-  padding: 10px 35px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
 
 .your-submission-div .cncl-btn,
 .fund-this-project .cncl-btn { 
@@ -1142,6 +1135,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .rfai-tab-content button.disable {
   color: #979797;
   background-color: #e4e4e4;
+  cursor: initial;
 }
 
 .your-account-details-container,
