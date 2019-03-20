@@ -29,7 +29,10 @@ body {
   display: block;
 }
 
-.navbar-singularity .header-menu { text-align: right; }
+.navbar-singularity .header-menu {
+  padding: 0; 
+  text-align: right; 
+}
 
 .navbar-singularity .header-menu ul {
   margin: 0;
@@ -52,13 +55,14 @@ body {
 .navbar-singularity .header-menu a:hover { color: #fff; }
 
 .hamburger-menu {
+  padding: 0;
   display: none;
   position: relative;
   text-align: right;
 }
 
 .hamburger-menu .bars {
-  padding: 5px 10px;
+  padding: 5px 0 5px 10px;
   border: none;
   outline: none;
   background-color: transparent;
@@ -1257,6 +1261,9 @@ textarea { resize: none; }
 .text-right { text-align: right; }
 .admin-table .singularity-content > p { font-weight: bold; }
 .contract-owner-container { margin-top: 10px; }
+
+.logo,
+.menu-bar { padding: 0; }
 
 /* media queries */
 @media(max-width: 991px) {
