@@ -29,7 +29,10 @@ body {
   display: block;
 }
 
-.navbar-singularity .header-menu { text-align: right; }
+.navbar-singularity .header-menu {
+  padding: 0; 
+  text-align: right; 
+}
 
 .navbar-singularity .header-menu ul {
   margin: 0;
@@ -52,13 +55,14 @@ body {
 .navbar-singularity .header-menu a:hover { color: #fff; }
 
 .hamburger-menu {
+  padding: 0;
   display: none;
   position: relative;
   text-align: right;
 }
 
 .hamburger-menu .bars {
-  padding: 5px 10px;
+  padding: 5px 0 5px 10px;
   border: none;
   outline: none;
   background-color: transparent;
@@ -288,12 +292,6 @@ main-content .nav { border-bottom: solid 1px #f1f1f1; }
   margin: -3px 0 0 0;
 }
 
-h5 {
-  font-size: 14px;
-  font-weight: bold;
-  color: #666;
-}
-
 footer {
   display: none;
   height: 200px;
@@ -330,6 +328,10 @@ button.blue {
   border: solid 2px #fff;
   cursor: pointer;
   border: 1px solid transparent;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
 button.blue:hover {
@@ -461,7 +463,7 @@ section.sections.active { display: block; }
 }
 
 .admin-table {
-  width: 500px;
+  width: 50%;
   padding: 15px;
   margin: 30px auto;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
@@ -478,7 +480,11 @@ section.sections.active { display: block; }
   outline: none;
 }
 
-.admin-table .singularity-table { box-shadow: none; }
+.admin-table .singularity-table { 
+  box-shadow: none;
+  overflow: auto;
+  border-radius: 0;
+}
 
 .create-request-form {
   min-height: 380px;
@@ -880,9 +886,11 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 /* submit solution pop re-design */
 .submit-solution-popup h5,
 .stake-req-popup h5,
-.request-solution-popup h5 {
+.request-solution-popup,
+.approve-request-popup h5 {
   font-size: 24px;
   color: #000;
+  font-weight: bold;
 }
 
 .submit-solution-popup form,
@@ -998,17 +1006,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .your-submission-div .buttons,
 .fund-this-project .buttons { text-align: center; }
-    
-.your-submission-div .buttons button,
-.fund-this-project .buttons button {
-  border: none;
-  padding: 10px 35px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
 
 .your-submission-div .cncl-btn,
 .fund-this-project .cncl-btn { 
@@ -1138,6 +1135,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .rfai-tab-content button.disable {
   color: #979797;
   background-color: #e4e4e4;
+  cursor: initial;
 }
 
 .your-account-details-container,
@@ -1245,10 +1243,20 @@ button.disable {
 
 .completed-tab-btns .disable { margin-left: 20px; }
 .req-solution-dailog .disable { margin: 0 10px 5px 0; }
-
 .request-solution-popup table td.view-sol-popup-buttons { padding: 10px 0 !important; }
 textarea { resize: none; }
 .request-solution-popup .modal-body { min-height: 320px; }
+.foundation-member-form .row { padding: 10px 0; }
+.foundation-member-form .row .singularity-button-blue { margin-top: 0; }
+.text-right { text-align: right; }
+.admin-table .singularity-content > p { font-weight: bold; }
+.contract-owner-container { margin-top: 10px; }
+
+.logo,
+.menu-bar { padding: 0; }
+
+.approve-request-popup form { min-height: 320px; }
+.approve-request-popup form button { margin-top: 50px; }
 
 /* media queries */
 @media(max-width: 991px) {
@@ -1274,6 +1282,12 @@ textarea { resize: none; }
   .create-req-tabs { 
     min-height: auto; 
     border-bottom: 1px solid #efefef;
+  }
+
+  .admin-table .singularity-token-counter:first-of-type span {
+    width: 50%;
+    margin-bottom: 10px;
+    display: inline-block;
   }
 
   .create-new-req .create-req-tabs li.active { border-right: none; }
@@ -1306,9 +1320,12 @@ textarea { resize: none; }
 
   .singularity-tabs > div > div > div > div + span { display: none; }
   .singularity-tabs .singularity-tab { width: 100%; }
+  .admin-table .singularity-token-counter { margin-bottom: 10px; }
+  .admin-table { width: 90%; }
 }
 
 @media(max-width: 575px) {
+  .modal-dialog { max-width: 100%; }
   .logo { width: 35%; }
   .menu-bar { width: 65%; }
   .balance-funding-amt-div > div { display: block; }
@@ -1338,7 +1355,8 @@ textarea { resize: none; }
 @media(max-width: 414px) { 
   .fund-this-proj-dialog > div > div,
   .submit-solution-dailog  > div > div,
-  .req-solution-dailog > div > div { margin: 20px !important; }
+  .req-solution-dailog > div > div,
+  .approve-req-dialog > div > div { margin: 20px !important; }
 }
 
 @media(max-width: 375px) {
