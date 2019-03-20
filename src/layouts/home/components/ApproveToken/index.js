@@ -6,6 +6,7 @@ import web3 from 'web3'
 //components
 import Button from '@material-ui/core/Button'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
 
 //inline styles
 const styles = {
@@ -34,6 +35,7 @@ class ApproveToken extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleApproveButton = this.handleApproveButton.bind(this)
+    this.txnCallBack = this.txnCallBack.bind(this);
 
     // this.setTXParamValue = this.setTXParamValue.bind(this)
 
@@ -44,6 +46,9 @@ class ApproveToken extends Component {
       tknAllowance: 0,
       approveAmount: '',
       dialogOpen: false,
+      stackId: null,
+      showStatus: false,
+      txnInProgress: false,
       alertText: ''
     }
 
@@ -95,7 +100,13 @@ class ApproveToken extends Component {
 
     if(approveAmountBN.gt(zeroBN) && approveAmountBN.gt(allowanceBN)) {
       this.handleDialogClose();
-      this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
+
+      const stackId = this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
+
+      this.setState({stackId});
+      this.setState({showStatus: true});
+      this.setState({txnInProgress: true});
+
     } else if(approveAmountBN.lte(allowanceBN)) {
       this.setState({ alertText: 'Oops! Approval amount should be more than current allowances.'})
       this.handleDialogOpen()
@@ -106,6 +117,10 @@ class ApproveToken extends Component {
     }
   }
 
+  txnCallBack() {
+    this.setState({txnInProgress: false});
+  }
+
   render() {
 
     return (
@@ -113,7 +128,7 @@ class ApproveToken extends Component {
         <div className="rfai-tab-content">
           <form>
             <div className="token-amt-container">
-              <input name="approveAmount" type="text" placeholder="AGI Token Amount" value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
+              <input name="approveAmount" type="text" placeholder="AGI Token Amount" autoComplete="off" value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
               {
                 this.state.approveAmount !== '' ? <label>Amount</label> : null
               }
@@ -121,7 +136,9 @@ class ApproveToken extends Component {
             {
               this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
             }
-            <Button className={this.state.approveAmount !== '' ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
+            <Button className={ (this.state.txnInProgress== false && this.state.approveAmount !== '') ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
+
+            { this.state.showStatus ? <TransactionResult callBack={this.txnCallBack} key={this.state.stackId} stackId={this.state.stackId} /> : null }
 
           </form>
         </div>

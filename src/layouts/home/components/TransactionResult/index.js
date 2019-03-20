@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 //components
 import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LaunchIcon from '../../../../images/launch.svg'
 
 //inline styles
 const progressStyles = {
@@ -62,9 +63,13 @@ console.log("txnHash - " + txnHash)
         const txnStatus = this.props.transactions[txnHash].status
         this.setState({txnStatus});
   console.log("txnStatus - " + txnStatus);
-        if(txnStatus !== "pending" )
+        if(txnStatus !== "pending" ) {
           this.setState({loadingIndicator: false});
 
+          if(this.props.callBack) {
+            this.props.callBack();
+          }
+        }
       }
 
     }
@@ -82,22 +87,21 @@ console.log("txnHash - " + txnHash)
 
   render() {
  
+    const txnURL = "http://ropsten.etherscan.io/tx/" + this.state.txnHash;
     return (
-      <div>
-        
-      {/* <Dialog PaperProps={dialogStyles} open={this.state.loadingIndicator} > */}
+      <div>      
+
       <Paper style={styles} elevation={0} className="singularity-dialog">
         <div>
           <div> 
             { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
           </div>
           <div className="singularity-status-text">
-            <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus}</p>
-            <p><label className="singularity-gen-label">Txn Hash:</label><div className="clearfix"></div> {this.state.txnHash}</p>            
+            <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus} <a href={txnURL} target="_new"><img src={LaunchIcon} alt="Txn Hash" /></a></p>
+            {/* <p><label className="singularity-gen-label">Txn Hash:</label> {this.state.txnHash}</p>           */}
           </div>
         </div>
         </Paper>
-      {/* </Dialog> */}
 
       </div>
     )
