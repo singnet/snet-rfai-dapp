@@ -165,7 +165,7 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
   render() {
  
     return (
-      <div>
+      <div className="admin-foundation-member-container">
         <Paper style={styles} elevation={0} className="singularity-content">
           <p>Add Foundation Member: </p>
           <form className="pure-form pure-form-stacked foundation-member-form">

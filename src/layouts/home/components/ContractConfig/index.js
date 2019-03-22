@@ -90,7 +90,7 @@ class ContractConfig extends Component {
     const minStake = this.helperFunctions.fromWei(this.state.minStake)
     
     return (
-      <div>
+      <div className="admin-configuration-container">
 
         <Paper style={styles} elevation={0} className="singularity-content">
           <p>RFAI Contract Configurations</p>

@@ -3,7 +3,7 @@
     Author     : Sujith Varma
 */
 body {
-  font-family: "Muli", sans-serif;
+  font-family: "Muli", sans-serif !important;
   font-synthesis: none;
   -moz-font-feature-settings: "kern";
   -webkit-font-smoothing: antialiased;
@@ -398,7 +398,8 @@ section.sections.active { display: block; }
   font-weight: bold;
 }
 
-/* changes for page tables */
+/*,
+.req-solution-dailog h5 changes for page tables */
 .singularity-accordion-main,
 .getting-started-your-balance,
 .network-name { 
@@ -417,7 +418,8 @@ section.sections.active { display: block; }
  .singularity-tab {
   font-weight: normal; 
   font-size: 14px;
-  outline: none; 
+  outline: none;
+  font-family: "Muli", sans-serif !important;
 }
 
 .singularity-stake-details div { padding: 0; }
@@ -439,6 +441,7 @@ section.sections.active { display: block; }
   outline: none;
   font-size: 14px;
   font-weight: normal;
+  font-family: "Muli", sans-serif !important;
 }
 
 .account-table .singularity-button-blue,
@@ -478,6 +481,7 @@ section.sections.active { display: block; }
   font-size: 14px;
   font-weight: normal;
   outline: none;
+  font-family: "Muli", sans-serif !important;
 }
 
 .admin-table .singularity-table { 
@@ -887,7 +891,9 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .submit-solution-popup h5,
 .stake-req-popup h5,
 .request-solution-popup,
-.approve-request-popup h5 {
+.approve-request-popup h5,
+.create-request-form h5,
+.req-solution-dailog h5 {
   font-size: 24px;
   color: #000;
   font-weight: bold;
@@ -1088,6 +1094,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   background-color: #fafafa;
   padding: 10px 20px;
   margin-bottom: 0;
+  font-family: "Muli", sans-serif !important;
+
 }
 
 .word-break { word-break: break-all; }
@@ -1123,6 +1131,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   text-align: left;
   background-color: #f8d9dd;
   color: #676767;
+  font-family: "Muli", sans-serif
 }
 
 .rfai-tab-content button {
@@ -1249,7 +1258,12 @@ textarea { resize: none; }
 .foundation-member-form .row { padding: 10px 0; }
 .foundation-member-form .row .singularity-button-blue { margin-top: 0; }
 .text-right { text-align: right; }
-.admin-table .singularity-content > p { font-weight: bold; }
+
+.admin-table .singularity-content > p { 
+  font-weight: bold; 
+  font-family: "Muli", sans-serif !important;
+}
+
 .contract-owner-container { margin-top: 10px; }
 
 .logo,
@@ -1257,6 +1271,15 @@ textarea { resize: none; }
 
 .approve-request-popup form { min-height: 320px; }
 .approve-request-popup form button { margin-top: 50px; }
+
+.admin-foundation-member-container,
+.admin-configuration-container,
+.singularity-table table,
+button.singularity-accordion-tab,
+.expansion-panel-summary,
+.expansion-panel-details { 
+  font-family: "Muli", sans-serif !important; 
+}
 
 /* media queries */
 @media(max-width: 991px) {
@@ -1283,6 +1306,7 @@ textarea { resize: none; }
     min-height: auto; 
     border-bottom: 1px solid #efefef;
   }
+
 
   .admin-table .singularity-token-counter:first-of-type span {
     width: 50%;
