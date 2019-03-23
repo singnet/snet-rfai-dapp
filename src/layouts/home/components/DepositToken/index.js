@@ -6,6 +6,8 @@ import web3 from 'web3'
 //components
 import Button from '@material-ui/core/Button'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -47,6 +49,7 @@ class DepositToken extends Component {
       tknAllowance: 0,
       dataKeyEscrowBalance: null,
       escrowBalance: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -132,7 +135,10 @@ class DepositToken extends Component {
 
     if(depositAmountBN.gt(zeroBN) && depositAmountBN.lte(balanceBN) && depositAmountBN.lte(allowanceBN)) {
       this.handleDialogClose();
-      this.contracts.ServiceRequest.methods["deposit"].cacheSend(depositAmountBN.toString(), {from: this.props.accounts[0]})
+      
+      const stackId = this.contracts.ServiceRequest.methods["deposit"].cacheSend(depositAmountBN.toString(), {from: this.props.accounts[0]})
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (depositAmountBN.gt(balanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to transfer more than you have.'})
       this.handleDialogOpen()
@@ -144,6 +150,10 @@ class DepositToken extends Component {
       this.handleDialogOpen()
     }
   }
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("dt")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
 
   render() {
 
@@ -152,7 +162,7 @@ class DepositToken extends Component {
         <div className="rfai-tab-content">
           <form>
             <div className="token-amt-container">
-              <input name="depositAmount" type="text" placeholder="AGI Token Amount" value={this.state.depositAmount} onChange={this.handleAmountInputChange} />
+              <input name="depositAmount" type="text" placeholder="AGI Token Amount" autoComplete="off"  value={this.state.depositAmount} onChange={this.handleAmountInputChange} />
               {
                 this.state.depositAmount !== '' ? <label>Amount</label> : null
               }

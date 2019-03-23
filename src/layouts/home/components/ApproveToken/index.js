@@ -7,6 +7,7 @@ import web3 from 'web3'
 import Button from '@material-ui/core/Button'
 import HelperFunctions from '../HelperFunctions'
 import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -35,9 +36,6 @@ class ApproveToken extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleApproveButton = this.handleApproveButton.bind(this)
-    this.txnCallBack = this.txnCallBack.bind(this);
-
-    // this.setTXParamValue = this.setTXParamValue.bind(this)
 
     // this.props.tknSpender
     this.state = {
@@ -47,8 +45,6 @@ class ApproveToken extends Component {
       approveAmount: '',
       dialogOpen: false,
       stackId: null,
-      showStatus: false,
-      txnInProgress: false,
       alertText: ''
     }
 
@@ -103,9 +99,7 @@ class ApproveToken extends Component {
 
       const stackId = this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
 
-      this.setState({stackId});
-      this.setState({showStatus: true});
-      this.setState({txnInProgress: true});
+      this.setState({stackId}, () => {this.createToast()});
 
     } else if(approveAmountBN.lte(allowanceBN)) {
       this.setState({ alertText: 'Oops! Approval amount should be more than current allowances.'})
@@ -117,8 +111,9 @@ class ApproveToken extends Component {
     }
   }
 
-  txnCallBack() {
-    this.setState({txnInProgress: false});
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   render() {
@@ -136,9 +131,7 @@ class ApproveToken extends Component {
             {
               this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
             }
-            <Button className={ (this.state.txnInProgress== false && this.state.approveAmount !== '') ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
-
-            { this.state.showStatus ? <TransactionResult callBack={this.txnCallBack} key={this.state.stackId} stackId={this.state.stackId} /> : null }
+            <Button className={ (this.state.approveAmount !== '') ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
 
           </form>
         </div>

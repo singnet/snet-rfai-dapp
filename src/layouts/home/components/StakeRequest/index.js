@@ -11,6 +11,8 @@ import Dialog from '@material-ui/core/Dialog'
 
 // Custom Components
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -64,6 +66,7 @@ class StakeRequest extends Component {
       minStake: null,
       maxStakers: null,
       selectedTab: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -160,7 +163,12 @@ class StakeRequest extends Component {
     var escrowBalanceBN = new BN(this.state.escrowBalance)
 
     if(stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(escrowBalanceBN) && stakeAmountBN.gte(minStakeBN)) {
-      this.contracts.ServiceRequest.methods["addFundsToRequest"].cacheSend(this.state.requestId, stakeAmountBN.toString(), {from: this.props.accounts[0]})
+
+      this.handleDialogClose();
+
+      const stackId = this.contracts.ServiceRequest.methods["addFundsToRequest"].cacheSend(this.state.requestId, stakeAmountBN.toString(), {from: this.props.accounts[0]})
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (stakeAmountBN.gt(escrowBalanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to transfer more than you have in Escrow.'})
       this.handleDialogOpen()
@@ -172,6 +180,11 @@ class StakeRequest extends Component {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
     }
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("af")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   render() {
@@ -219,11 +232,15 @@ class StakeRequest extends Component {
                 </div>
               </div>
   
-              {/* <div className="row">
+              <div className="row">
                 <div className="col-md-12">
-                  <p className="error-txt">error state message</p>
+                  <p className="error-txt">
+                    {
+                      this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+                    }
+                  </p>
                 </div>
-              </div> */}
+              </div>
   
               <div className="row">
                 <div className="col-md-12 buttons">
@@ -235,11 +252,6 @@ class StakeRequest extends Component {
             </form>
           </Paper>
   
-          <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-            <p>{this.state.alertText}</p>
-            <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-          </Dialog>
-  
         </div>
       )
     }
@@ -248,8 +260,6 @@ class StakeRequest extends Component {
         <div>Loading...</div>
       )
     }
-    
-
     
   }
 }

@@ -6,6 +6,10 @@ import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
+import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
+
 //inline styles
 const dialogStyles = {
   style: {
@@ -20,6 +24,7 @@ class SubmitSolutionRequest extends Component {
 
     this.contracts = context.drizzle.contracts
     this.context = context
+    this.helperFunctions = new HelperFunctions();
 
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleSubmitSolution2Button = this.handleSubmitSolution2Button.bind(this)
@@ -33,6 +38,7 @@ class SubmitSolutionRequest extends Component {
       expiration: this.props.requestExpiry,
       solutionDocumentURI: '',
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       selectedLeftNav: 'nav1',
       alertText: ''
@@ -64,11 +70,12 @@ class SubmitSolutionRequest extends Component {
   handleSubmitSolution2Button() {
     const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.solutionDocumentURI);
     if(this.state.solutionDocumentURI.length > 0) {
+
+      this.handleDialogClose();
+
       const stackId = this.contracts.ServiceRequest.methods["createOrUpdateSolutionProposal"].cacheSend(this.state.requestId, docURIinBytes, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (this.state.solutionDocumentURI.length === 0) {
       this.setState({ alertText: 'Oops! Invalid solution document URI.'})
       this.handleDialogOpen()
@@ -80,6 +87,11 @@ class SubmitSolutionRequest extends Component {
 
   handleLeftNavClick(event, selectedLeftNav) {
     this.setState({selectedLeftNav});
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   renderRightPane() {
@@ -100,7 +112,11 @@ class SubmitSolutionRequest extends Component {
                 <span>Github Link</span>
                 <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
               </div>
-              {/* <p className="error-txt">error state message</p> */}
+              <p className="error-txt">
+              {
+                this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+              }
+              </p>
               <div className="buttons">
                 {/* <button className="cncl-btn">cancel</button> */}
                 <button type="button" className="blue submit-btn" onClick={this.handleSubmitSolution2Button}>submit</button>
@@ -180,11 +196,6 @@ class SubmitSolutionRequest extends Component {
             </div>
           </div>          
         </form>
-
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-          <p>{this.state.alertText}</p>
-          <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog>
         
       </div>
     )

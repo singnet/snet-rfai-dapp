@@ -10,6 +10,7 @@ import Dialog from '@material-ui/core/Dialog'
 
 import TransactionResult from '../TransactionResult'
 import HelperFunctions from '../HelperFunctions'
+import { toast } from 'react-toastify';
 
 //inline styles
 const dialogStyles = {
@@ -154,19 +155,6 @@ class CreateRequest extends Component {
     }
   }
   
-//   handleAmountInputChange(event) {
-//     if (event.target.value.match(/^[0-9]{1,40}$/)) {
-//       var amount = new BN(event.target.value)
-//       if (amount.gt(0)) {
-//         this.setState({ [event.target.name]: event.target.value })
-//       } else {
-//         this.setState({ [event.target.name]: 0 })
-//       }
-//     } else if(event.target.value === '') {
-//       this.setState({ [event.target.name]: '' })
-//     }
-//   }
-
   handleDialogOpen() {
     this.setState({ dialogOpen: true })
   }
@@ -177,7 +165,6 @@ class CreateRequest extends Component {
 
   handleCreateButton() {
 
-    const sTitle = "Sample Request Title"
     const ipfsURL = "https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
     //"http://ipfs.singularitynet.io/api/v0/cat?arg=QmVqtqGcTM63EktBx4XQgekw9epn8fDED11M7bXpWMPKty"
     //"https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
@@ -189,13 +176,6 @@ class CreateRequest extends Component {
 
     //const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
     const expiration = parseInt(this.state.blockNumber,10) + this.helperFunctions.computeBlocksFromDates(new Date(), this.state.expirationDate)
-
-    // console.log("this.state.expirationDate - " + this.state.expirationDate);
-    // console.log("expiration - this.state.blockNumber " + expiration + " - " + this.state.blockNumber);
-
-    // console.log("this.state.initialStake - " + this.state.initialStake)
-    // console.log("this.helperFunctions.toWei(this.state.initialStake) - " + this.helperFunctions.toWei(this.state.initialStake))
-    // console.log("initialStakeBN - " + initialStakeBN.toString())
 
     if(this.state.documentURI.length > 0 && this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
@@ -231,9 +211,7 @@ console.log("ipfs hash - " + data.data.hash);
             const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(data.data.hash);
             const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
 
-            this.setState({stackId});
-            this.setState({loadingIndicator: true});
-            this.setState({showStatus: true});
+            this.setState({stackId}, () => {this.createToast()});
 
           })
           .catch(err => 
@@ -267,6 +245,11 @@ console.log("ipfs hash - " + data.data.hash);
 
   handleLeftNavClick(event, selectedLeftNav) {
     this.setState({selectedLeftNav});
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   renderRightPane() {
@@ -385,7 +368,7 @@ console.log("ipfs hash - " + data.data.hash);
             </div> : null
           }
           <div className="buttons">
-            <button type="button" className="blue" onClick={this.handleCreateButton} disabled={this.state.showStatus}>Submit</button>
+            <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
           </div>
           
         </div>

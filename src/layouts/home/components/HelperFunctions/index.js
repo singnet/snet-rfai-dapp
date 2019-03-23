@@ -53,5 +53,8 @@ export default class HelperFunctions {
 
     return toDate.toISOString().slice(0,10);
   }
-  
+ 
+  generateRandomKey(prefix) {
+      return `${ prefix }_${ new Date().getTime() }`;
+  }
 }

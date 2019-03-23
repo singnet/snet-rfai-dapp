@@ -15,6 +15,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
+
 
 //inline styles
 const styles = {
@@ -51,6 +55,7 @@ class CreateMember extends Component {
     super(props)
 
     this.contracts = context.drizzle.contracts
+    this.helperFunctions = new HelperFunctions();
 
     this.handleMemberInputChange = this.handleMemberInputChange.bind(this)
     this.handleMemberRoleChange = this.handleMemberRoleChange.bind(this);
@@ -68,6 +73,7 @@ class CreateMember extends Component {
       memberAddress: '',
       memberRole: 0,
       memberStatus: true,
+      stackId: null,
       alertText: ''
     }
 
@@ -129,12 +135,11 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
   handleCreateButton() {
 
     if(this.context.drizzle.web3.utils.isAddress(this.state.memberAddress) ) {
+      this.handleDialogClose();
 
       const stackId = this.contracts.ServiceRequest.methods["addOrUpdateFoundationMembers"].cacheSend(this.state.memberAddress, this.state.memberRole, this.state.memberStatus, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash)
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (!this.context.drizzle.web3.utils.isAddress(this.state.memberAddress)) {
       this.setState({ alertText: `Oops! The member address isn't a correct ethereum address.`})
       this.handleDialogOpen()
@@ -162,6 +167,11 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
     }
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+
   render() {
  
     return (
@@ -186,7 +196,13 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
               <div className="col">         
                 <label> Status: </label><div className="clearfix"></div>
                 <input name="memberStatus" type="checkbox" checked={this.state.memberStatus} onChange={this.handleMemberStatusChange}/> 
-              </div>        
+              </div>
+             
+            </div>
+            <div className="rfai-tab-content">
+              {
+                this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+                }
             </div>
             <div className="row text-right">
               <div className="col">                               
@@ -210,11 +226,6 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
           </TableBody>
         </Table>
       </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
 
       </div>
     )

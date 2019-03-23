@@ -14,6 +14,8 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const dialogStyles = {
@@ -69,6 +71,7 @@ class RequestSolution extends Component {
       stakeMembers: [], 
       submitters: [],
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -149,21 +152,20 @@ class RequestSolution extends Component {
   handleVoteButton(event, votedFor) {
 
     const stackId = this.contracts.ServiceRequest.methods["vote"].cacheSend(this.state.requestId, votedFor, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash)
-    }
+    this.setState({stackId}, () => {this.createToast()});
 
   }
   
   handleClaimButton(event) {
 
     const stackId = this.contracts.ServiceRequest.methods["requestClaim"].cacheSend(this.state.requestId, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash)
-    }
+    this.setState({stackId}, () => {this.createToast()});
 
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("rs")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   createRow(submitter, index) {

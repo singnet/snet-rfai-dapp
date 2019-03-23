@@ -6,6 +6,8 @@ import web3 from 'web3'
 //components
 import Button from '@material-ui/core/Button'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -45,6 +47,7 @@ class WithdrawToken extends Component {
       tknBalance: 0,
       dataKeyEscrowBalance: null,
       escrowBalance: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -112,7 +115,11 @@ class WithdrawToken extends Component {
 
     if(withdrawAmountBN.gt(zeroBN) && withdrawAmountBN.lte(escrrowBalanceBN)) {
       this.handleDialogClose();
-      this.contracts.ServiceRequest.methods["withdraw"].cacheSend(withdrawAmountBN.toString(), {from: this.props.accounts[0]})
+      
+      
+      const stackId = this.contracts.ServiceRequest.methods["withdraw"].cacheSend(withdrawAmountBN.toString(), {from: this.props.accounts[0]})
+      this.setState({stackId}, () => {this.createToast()});
+      
     } else if (withdrawAmountBN.gt(escrrowBalanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to withdraw more than you have in RFAI Escrow.'})
       this.handleDialogOpen()
@@ -120,6 +127,11 @@ class WithdrawToken extends Component {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
     }
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("wt")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   render() {
@@ -132,7 +144,7 @@ class WithdrawToken extends Component {
         <div className="rfai-tab-content">
           <form>
             <div className="token-amt-container">
-              <input name="withdrawAmount" type="text" placeholder="AGI Token Amount" value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
+              <input name="withdrawAmount" type="text" placeholder="AGI Token Amount" autoComplete="off" value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
               {
                 this.state.withdrawAmount !== '' ? <label>Amount</label> : null
               }

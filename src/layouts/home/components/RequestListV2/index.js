@@ -27,7 +27,8 @@ import RequestSolution from '../../components/RequestSolution'
 import RequestStakeDetails from '../../components/RequestStakeDetails'
 import HelperFunctions from '../HelperFunctions'
 import RequestIPFSData from '../RequestIPFSData'
-
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 // const styles = {
@@ -140,7 +141,8 @@ class RequestListV2 extends Component {
       dataKeyMemberKeys: null,
       foundationMembers: [],
       isFoundationMember: false,
-      foundationMemberRole: 0
+      foundationMemberRole: 0,
+      stackId: null,
     }
 
     this.setBlockNumber();
@@ -239,28 +241,21 @@ class RequestListV2 extends Component {
 
   handleRejectButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["rejectRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash);
-    }
+    this.setState({stackId}, () => {this.createToast()});
   }
 
   handleCloseButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["closeRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash);
-    }
+    this.setState({stackId}, () => {this.createToast()});
   }
 
   handleSubmitSolution2Button() {
     const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.solutionDocumentURI);
     if(this.state.solutionDocumentURI.length > 0) {
+
       const stackId = this.contracts.ServiceRequest.methods["createOrUpdateSolutionProposal"].cacheSend(this.state.selectedRequestId, docURIinBytes, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (this.state.solutionDocumentURI.length === 0) {
       this.setState({ alertText: 'Oops! Invalid solution document URI.'})
       this.handleDialogOpen()
@@ -300,6 +295,11 @@ class RequestListV2 extends Component {
     this.setState( {dialogOpenShowStake: false});
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+  
   createActionRow(req, index) {
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;

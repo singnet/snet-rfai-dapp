@@ -6,6 +6,10 @@ import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
+import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
+
 //inline styles
 const dialogStyles = {
   style: {
@@ -20,6 +24,7 @@ class ApproveRequest extends Component {
 
     this.contracts = context.drizzle.contracts
     this.context = context
+    this.helperFunctions = new HelperFunctions();
 
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleBlockNumInputChange = this.handleBlockNumInputChange.bind(this)
@@ -37,22 +42,20 @@ class ApproveRequest extends Component {
       newExpiration: this.props.requestExpiry,
       expiration: this.props.requestExpiry,
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
 
     //uint256 requestId, uint256 endSubmission, uint256 endEvaluation, uint256 newExpiration
-
     this.setBlockNumber();
 
   }
 
   componentDidMount() {
-
   }
 
   componentDidUpdate(prevProps, prevState) {
-
   }
 
   setBlockNumber() {
@@ -97,10 +100,8 @@ class ApproveRequest extends Component {
       
       // Call Approve Method to approve the request
       const stackId = this.contracts.ServiceRequest.methods["approveRequest"].cacheSend(this.state.requestId, this.state.endSubmission, this.state.endEvaluation, this.state.newExpiration, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if(this.state.endSubmission === 0 || parseInt(this.state.endEvaluation,10) <= parseInt(this.state.endSubmission,10) || parseInt(this.state.endSubmission,10) <= parseInt(this.state.blockNumber,10)) {
       this.setState({ alertText: `Oops! Invalid End of Submission block number.`})
       this.handleDialogOpen()
@@ -117,6 +118,11 @@ class ApproveRequest extends Component {
 
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+  
   render() {
  
     return (

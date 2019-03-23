@@ -12,6 +12,8 @@ import TableRow from '@material-ui/core/TableRow';
 //components
 import Paper from '@material-ui/core/Paper'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const rootStyles = {
@@ -51,6 +53,7 @@ class RequestStakeDetails extends Component {
       stakeMembers: [], 
       submitters: [],
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -115,10 +118,13 @@ class RequestStakeDetails extends Component {
   handleClaimBackButton(event, requestId) {
 
     const stackId = this.contracts.ServiceRequest.methods["requestClaimBack"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    this.setState({stackId}, () => {this.createToast()});
+
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("rsd")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   createRow(staker, index) {

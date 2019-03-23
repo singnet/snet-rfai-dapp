@@ -7,6 +7,8 @@ import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LaunchIcon from '../../../../images/launch.svg'
 
+import { toast } from 'react-toastify';
+
 //inline styles
 const progressStyles = {
     margin: 2,
@@ -35,7 +37,8 @@ class TransactionResult extends Component {
       txnReceipt: null,
       txnStatus: null,
       loadingIndicator: true,
-      alertText: ''
+      alertText: '',
+      toastId: this.props.toastId
     }
 
   }
@@ -61,15 +64,16 @@ console.log("txnHash - " + txnHash)
       if(this.props.transactions[txnHash]) {
 
         const txnStatus = this.props.transactions[txnHash].status
-        this.setState({txnStatus});
-  console.log("txnStatus - " + txnStatus);
+
         if(txnStatus !== "pending" ) {
           this.setState({loadingIndicator: false});
 
-          if(this.props.callBack) {
-            this.props.callBack();
-          }
+          // if(this.props.callBack) {
+          //   this.props.callBack();
+          // }
         }
+        this.setState({txnStatus})
+        console.log("txnStatus - " + txnStatus);
       }
 
     }
@@ -84,25 +88,39 @@ console.log("txnHash - " + txnHash)
     this.setState({ dialogOpen: false })
   }
 
+  // updateToast() {
+
+  //   console.log("U Comp Updated..." + this.state.toastId)
+  //   console.log("U this.state.stackId - " + this.state.stackId)
+
+  //   const newContent = "New Content " - this.state.txnStatus
+  //   // toast.update(this.state.toastId, {
+  //   //   render: newContent,
+  //   //   type: toast.TYPE.INFO, 
+  //   //   autoClose: false
+  //   // })
+  // }
+
+
+  getToastContent() {
+    const txnURL = "http://ropsten.etherscan.io/tx/" + this.state.txnHash;
+    return (
+      <div>
+        <div> 
+          { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
+        </div>
+        <div className="singularity-status-text">
+          <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Confirm Txn in Metamask" : this.state.txnStatus} <a href={txnURL} target="_new"><img src={LaunchIcon} alt="Txn Hash" /></a></p>
+        </div>
+      </div>
+    )
+  }
 
   render() {
  
-    const txnURL = "http://ropsten.etherscan.io/tx/" + this.state.txnHash;
     return (
       <div>      
-
-      <Paper style={styles} elevation={0} className="singularity-dialog">
-        <div>
-          <div> 
-            { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
-          </div>
-          <div className="singularity-status-text">
-            <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus} <a href={txnURL} target="_new"><img src={LaunchIcon} alt="Txn Hash" /></a></p>
-            {/* <p><label className="singularity-gen-label">Txn Hash:</label> {this.state.txnHash}</p>           */}
-          </div>
-        </div>
-        </Paper>
-
+      {this.getToastContent()}  
       </div>
     )
   }
