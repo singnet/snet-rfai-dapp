@@ -234,7 +234,7 @@ console.log("ipfs hash - " + data.data.hash);
       this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
       this.handleDialogOpen()  
     } else if (this.state.documentURI.length === 0) {
-      this.setState({ alertText: `Oops! It is invalid document URI.`})
+      this.setState({ alertText: `Oops! It is invalid github link.`})
       this.handleDialogOpen()  
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
