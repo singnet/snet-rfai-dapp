@@ -103,13 +103,13 @@ class ApproveRequest extends Component {
       this.setState({stackId}, () => {this.createToast()});
 
     } else if(this.state.endSubmission === 0 || parseInt(this.state.endEvaluation,10) <= parseInt(this.state.endSubmission,10) || parseInt(this.state.endSubmission,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid End of Submission block number.`})
+      this.setState({ alertText: `Oops! Invalid End of Submission block number, should be greater than End of Evaluation and greater than current block number.`})
       this.handleDialogOpen()
     } else if(this.state.endEvaluation === 0 || parseInt(this.state.newExpiration,10) <= parseInt(this.state.endEvaluation,10) || parseInt(this.state.endEvaluation,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid End of Evaluation block number.`})
+      this.setState({ alertText: `Oops! Invalid End of Evaluation block number, should be less than End of Submission and less than Expiration block number.`})
       this.handleDialogOpen()
     } else if(this.state.newExpiration === 0 || parseInt(this.state.newExpiration,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid Expiration block number.`})
+      this.setState({ alertText: `Oops! Invalid Expiration block number, should be greater than current block number.`})
       this.handleDialogOpen()
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
@@ -167,11 +167,6 @@ class ApproveRequest extends Component {
             </div>
           </div>
         </form>
-
-        {/* <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-          <p>{this.state.alertText}</p>
-          <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog> */}
         
       </div>
     )

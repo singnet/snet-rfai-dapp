@@ -4,7 +4,7 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
 
-import Vote from '../Vote';
+//import Vote from '../Vote';
 
 //components
 import Button from '@material-ui/core/Button'
@@ -437,10 +437,10 @@ class RequestListV2 extends Component {
                 <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
                 {/* <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p> */}
               </div>
-              <div className="solution-vote-div">
+              {/* <div className="solution-vote-div">
                 <span className="bold">Solution Vote:</span>
                 <Vote/>
-              </div>
+              </div> */}
             </div>
           </div>
         </ExpansionPanelDetails>

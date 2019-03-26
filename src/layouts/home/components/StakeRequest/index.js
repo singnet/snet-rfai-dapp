@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 
 // Custom Components
+import RequestIPFSData from '../RequestIPFSData'
 import HelperFunctions from '../HelperFunctions'
 import TransactionResult from '../TransactionResult'
 import { toast } from 'react-toastify';
@@ -192,6 +193,7 @@ class StakeRequest extends Component {
 
     if(this.state.dataKeyRequestKey !== null && this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey] !== undefined) {
       var r = this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey].value;
+      var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
       return (
         <div > 
           <Paper style={styles} elevation={0} className="singularity-content fund-this-project">
@@ -199,7 +201,7 @@ class StakeRequest extends Component {
   
               <div className="row fund-project-sub-header">
                 <div className="col-md-12">
-                  <span className="bold">Digit Recognizer</span>
+                  <span className="bold"><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></span>
                 </div>
               </div>
   
@@ -231,17 +233,18 @@ class StakeRequest extends Component {
                   </div>
                 </div>
               </div>
-  
-              <div className="row">
-                <div className="col-md-12">
-                  <p className="error-txt">
-                    {
-                      this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
-                    }
-                  </p>
+              { (this.state.dialogOpen === true ) ? 
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="error-txt">
+                      {
+                        <label className="error-msg">{this.state.alertText}</label> 
+                      }
+                    </p>
+                  </div>
                 </div>
-              </div>
-  
+                : null
+              }
               <div className="row">
                 <div className="col-md-12 buttons">
                   {/* <button className="cncl-btn">cancel</button> */}
