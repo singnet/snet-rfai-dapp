@@ -502,7 +502,11 @@ section.sections.active { display: block; }
   border-bottom: 1px solid #f2f2f2;
   padding: 10px 20px;
   background-color: #FAFAFA;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top: 3px solid #06f;    
 }
+
 
 .create-req-tabs {
   min-height: 320px;
@@ -672,8 +676,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .your-balance {
   width: 49%;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
-  border-radius: 5px;
-  border-top: 3px solid #06f;
   padding: 0;
 }
 
@@ -684,6 +686,9 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   background-color: #fcfbfb;
   font-size: 22px;
   font-weight: bold;  
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top: 3px solid #06f;
 }
 
 .getting-started-text {
@@ -745,7 +750,6 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   display: inline-block;
   border-radius: 5px;
   margin-left: 12px;
-  font-weight: 600;
 }
 
 .network-name { font-size: 24px; }
@@ -894,7 +898,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .approve-request-popup h5,
 .create-request-form h5,
 .req-solution-dailog h5 {
-  font-size: 24px;
+  font-size: 22px;
   color: #000;
   font-weight: bold;
 }
@@ -1088,6 +1092,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  border-top: 3px solid #06f;
 }
 
 .account-page h4 {
@@ -1095,7 +1100,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   padding: 10px 20px;
   margin-bottom: 0;
   font-family: "Muli", sans-serif !important;
-
+  font-weight: bold;
+  font-size: 22px;
 }
 
 .word-break { word-break: break-all; }
