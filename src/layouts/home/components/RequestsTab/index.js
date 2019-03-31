@@ -160,7 +160,7 @@ class RequestsTab extends Component {
           
           <div className="req-ai-services-heading">
             <span>Requests for AI  Services</span>
-            <button onClick = {this.props.handleCreateRequest} className="blue"><span>+</span> create new request</button>
+            <button onClick = {this.props.handleCreateRequest} className="blue"><span></span> create new request</button>
           </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs 

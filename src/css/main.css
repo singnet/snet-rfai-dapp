@@ -96,6 +96,11 @@ body {
   color: #fff;
 }
 
+.request-icon {
+  width:60px;
+  height:60px;
+}
+
 .hamburger-header-menu ul li a:hover { text-decoration: underline; }
 .main { padding-left: 12px; }
 .main .row { margin: 0; }
@@ -110,13 +115,13 @@ body {
 
 .main p {
   font-size: 16px;
-  line-height: 22px;
+  line-height: 20px;
   margin: 0;
 }
 
 .main p.tagline {
   margin: 0 0 25px 0;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: -0.35px;
 }
@@ -301,7 +306,7 @@ footer {
 
 button.blue-projected {
   outline: 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #fff;
   border-radius: 200px;
   padding: 10px 18px;
@@ -394,7 +399,7 @@ section.sections.active { display: block; }
 }
 
 .singularity-model .modal-content .modal-header h5 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -684,7 +689,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .req-ai-services-heading {
   padding: 10px 15px;
   background-color: #fcfbfb;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;  
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -898,7 +903,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 .approve-request-popup h5,
 .create-request-form h5,
 .req-solution-dailog h5 {
-  font-size: 22px;
+  font-size: 20px;
   color: #000;
   font-weight: bold;
 }
@@ -1101,7 +1106,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   margin-bottom: 0;
   font-family: "Muli", sans-serif !important;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .word-break { word-break: break-all; }
@@ -1209,7 +1214,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 12px;
   left: 10px;
   padding: 0 10px 0 5px;
-  z-index: 22;
+  z-index: 20;
 }
 
 .escrow-bal-init-fund-amt,
