@@ -29,6 +29,7 @@ import HelperFunctions from '../HelperFunctions'
 import RequestIPFSData from '../RequestIPFSData'
 import TransactionResult from '../TransactionResult'
 import { toast } from 'react-toastify';
+import RowIcon from '../../../../images/sneticon.png'
 
 //inline styles
 // const styles = {
@@ -421,7 +422,7 @@ class RequestListV2 extends Component {
               <span className="description-title">Description:</span>
               <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
             </div>
-            <div class="col-md-12 col-lg-5 right-side-data">
+            <div className="col-md-12 col-lg-5 right-side-data">
               <div className="project-url-container">
                 <span className="bold">Project URL: </span>
                 <a href="#" title="">
@@ -475,7 +476,7 @@ class RequestListV2 extends Component {
                 <div className="card-header" style={rowStyles.style}>
                   <div className="row singularity-stake-details">
                     <div className="col-sm-12 col-md-12 col-lg-2">
-                      <img src="http://placehold.it/81x81" alt="Image" />
+                      <img src={RowIcon} alt="Request" className="request-icon"/>
                     </div>
                     <div className="col-sm-12 col-md-12 col-lg-3 information-data">
                       <p><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></p>

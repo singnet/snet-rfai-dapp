@@ -130,7 +130,11 @@ class SubmitSolutionRequest extends Component {
         <div className="singularity-content submit-solution-tabs-content">
         <div className="row top-section">
         <div className="overview-content">
-          <p>TBD</p>
+          <p>
+            <li>The specified acceptance criteria in the request must be met</li>
+            <li>Any performance metrics specified against provided test datasets should be met</li>
+            <li>Submission should pass the curation process for AI services on the platform</li>
+          </p>
         </div>
         </div>
         </div>
