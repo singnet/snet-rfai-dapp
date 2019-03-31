@@ -234,8 +234,8 @@ class RequestListV2 extends Component {
     })
   }
 
-  handleSubmitSolutionButton(event, requestId, expiry) {
-    this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry}, () => {
+  handleSubmitSolutionButton(event, requestId, expiry, docURI) {
+    this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry, selectedRequestDocURI: docURI}, () => {
       this.setState( {dialogOpenSubmitSolutionRequest: true});
     })
   }
@@ -305,6 +305,8 @@ class RequestListV2 extends Component {
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
 
+      var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
+
       var enableStake = false;
       var enableSubmitSol = false;
       var enableVote = false;
@@ -372,7 +374,7 @@ class RequestListV2 extends Component {
               <div className="col-md-10">
                 <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
                 <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
-                <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
+                <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration, docURI)}> Submit Solution</button>
                 <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
               </div>
             </div>
@@ -584,7 +586,7 @@ class RequestListV2 extends Component {
                 <div className="clear"></div><br/>
               </div>
               <div className="modal-body">
-                <SubmitSolutionRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} />      
+                <SubmitSolutionRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} requestDocURI={this.state.selectedRequestDocURI}/>      
               </div>
             </div>
           </div>

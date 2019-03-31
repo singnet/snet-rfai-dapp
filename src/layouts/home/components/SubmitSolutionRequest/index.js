@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
+
+import RequestIPFSData from '../RequestIPFSData'
 import HelperFunctions from '../HelperFunctions'
 import TransactionResult from '../TransactionResult'
 import { toast } from 'react-toastify';
@@ -36,6 +38,7 @@ class SubmitSolutionRequest extends Component {
     this.state = {
       requestId: this.props.requestId,
       expiration: this.props.requestExpiry,
+      requestDocURI: this.props.requestDocURI,
       solutionDocumentURI: '',
       blockNumber: 0,
       stackId: null,
@@ -112,11 +115,9 @@ class SubmitSolutionRequest extends Component {
                 <span>Github Link</span>
                 <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
               </div>
-              <p className="error-txt">
               {
-                this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+                this.state.dialogOpen ? <p className="error-txt"><label className="error-msg">{this.state.alertText}</label></p> : null
               }
-              </p>
               <div className="buttons">
                 {/* <button className="cncl-btn">cancel</button> */}
                 <button type="button" className="blue submit-btn" onClick={this.handleSubmitSolution2Button}>submit</button>
@@ -178,7 +179,7 @@ class SubmitSolutionRequest extends Component {
         <form className="pure-form pure-form-stacked create-request-form">
         <div className="row solution-submit-sub-header">
           <div className="col-md-12">
-            <span className="bold">Digit Recognizer</span>
+            <span className="bold"><RequestIPFSData key="ss_{this.state.requestId}" requestId={this.state.requestId} IPFSHash={this.state.requestDocURI} getField="title" /></span>
           </div>
         </div>
           <div className="row  solution-submit-tabs">
