@@ -177,7 +177,9 @@ class CreateRequest extends Component {
     //const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
     const expiration = parseInt(this.state.blockNumber,10) + this.helperFunctions.computeBlocksFromDates(new Date(), this.state.expirationDate)
 
-    if(this.state.documentURI.length > 0 && this.state.requestTitle.length > 0 && 
+    //this.state.documentURI.length > 0 &&
+
+    if( this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
       initialStakeBN.lte(tokenBalanceBN) && this.state.isValidGitHanlde === true && 
       parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
@@ -233,9 +235,9 @@ console.log("ipfs hash - " + data.data.hash);
     } else if (expiration === '' || parseInt(expiration,10) <= parseInt(this.state.blockNumber,10)) {
       this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
       this.handleDialogOpen()  
-    } else if (this.state.documentURI.length === 0) {
-      this.setState({ alertText: `Oops! It is invalid github link.`})
-      this.handleDialogOpen()  
+    // } else if (this.state.documentURI.length === 0) {
+    //   this.setState({ alertText: `Oops! It is invalid github link.`})
+    //   this.handleDialogOpen()  
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
