@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 //inline styles
 const dialogStyles = {
   style: {
-    backgroundColor: '#F9DBDB',
+    backgroundColor: 'white',
     padding: 20
   }
 }
@@ -63,7 +63,8 @@ class CreateRequest extends Component {
       isValidGitHanlde: false,
       showStatus: false,
       selectedLeftNav: 'nav1',
-      alertText: ''
+      alertText: '',
+      showConfirmation: false,
     }
 
     this.setBlockNumber();
@@ -163,11 +164,9 @@ class CreateRequest extends Component {
     this.setState({ dialogOpen: false })
   }
 
-  handleCreateButton() {
+  handleCreateButton(event, needConfirmation) {
 
     const ipfsURL = "https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
-    //"http://ipfs.singularitynet.io/api/v0/cat?arg=QmVqtqGcTM63EktBx4XQgekw9epn8fDED11M7bXpWMPKty"
-    //"https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
 
     //value, expiration, documentURI 
     var zeroBN = new BN(0)
@@ -185,6 +184,12 @@ class CreateRequest extends Component {
       parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
         this.handleDialogClose();
+
+        if(needConfirmation) {
+          this.setState({showConfirmation: true})
+          return;
+        }
+        this.setState({showConfirmation: false})
 
         var ipfsInput = { 
           "title" : this.state.requestTitle, 
@@ -209,7 +214,7 @@ class CreateRequest extends Component {
         .then(response => response.json())
         .then(data => 
           {
-console.log("ipfs hash - " + data.data.hash);
+//console.log("ipfs hash - " + data.data.hash);
             const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(data.data.hash);
             const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
 
@@ -370,7 +375,7 @@ console.log("ipfs hash - " + data.data.hash);
             </div> : null
           }
           <div className="buttons">
-            <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
+            <button type="button" className="blue" onClick={event => this.handleCreateButton(event, true)}>Submit</button>
           </div>
           
         </div>
@@ -414,10 +419,11 @@ console.log("ipfs hash - " + data.data.hash);
           </form>
         {/* </Paper> */}
 
-      {/* <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog> */}
+      <Dialog PaperProps={dialogStyles} open={this.state.showConfirmation} >
+        <p>Please make sure that the details entered are accurate. <br/> Click Ok to proceed and Cancel to revalidate!</p>
+        <p><Button  className="blue float-right ml-4" onClick={event => this.handleCreateButton(event, false)} >Ok</Button>
+        <Button className="blue float-right ml-4" onClick={() => this.setState({showConfirmation: false})} >Cancel</Button></p>
+      </Dialog>
 
       </div>
     )
