@@ -64,16 +64,24 @@ class MyAccount extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.SingularityNetToken !== prevProps.SingularityNetToken || this.state.dataKeyTokenAllowance !== prevState.dataKeyTokenAllowance) {
+    if (this.props.SingularityNetToken !== prevProps.SingularityNetToken || this.state.dataKeyTokenAllowance !== prevState.dataKeyTokenAllowance || this.state.dataKeyTokenBalance !== prevState.dataKeyTokenBalance) {
       this.setTokenAllowance(this.props.SingularityNetToken)
-    }
-    if (this.props.SingularityNetToken !== prevProps.SingularityNetToken || this.state.dataKeyTokenBalance !== prevState.dataKeyTokenBalance) {
       this.setTokenBalance(this.props.SingularityNetToken)
     }
     if (this.props.ServiceRequest !== prevProps.ServiceRequest || this.state.dataKeyEscrowBalance !== prevState.dataKeyEscrowBalance) {
       this.setEscrowBalance(this.props.ServiceRequest)
-      this.setTokenAllowance(this.props.SingularityNetToken)
-      this.setTokenBalance(this.props.SingularityNetToken)
+      //this.setTokenAllowance(this.props.SingularityNetToken)
+      //this.setTokenBalance(this.props.SingularityNetToken)
+
+      // Looks like there is issue with Token Contract Sync
+      this.contracts.SingularityNetToken.methods.allowance(this.props.accounts[0], this.state.spenderAddress).call().then(val => {
+        this.setState({tknAllowance: val})
+      })
+  
+      this.contracts.SingularityNetToken.methods.balanceOf(this.props.accounts[0]).call().then(val => {
+        this.setState({tknBalance: val})
+      })
+
     }
   }
 
@@ -123,13 +131,9 @@ class MyAccount extends Component {
               <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
                 <label>Account ID</label>
               </div>
-              {(typeof window.web3 !== 'undefined') ?
-                <React.Fragment>
-                  <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7 word-break">
-                    <label>{this.props.accounts[0]}</label>
-                  </div>
-                </React.Fragment>
-              : null}
+                <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7 word-break">
+                  <label>{this.props.accounts[0]}</label>
+                </div>
             </div>
 
             <div className="row">

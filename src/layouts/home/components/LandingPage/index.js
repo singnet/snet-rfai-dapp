@@ -166,7 +166,7 @@ class LandingPage extends Component {
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-6 logo">
             {
               (typeof web3 !== 'undefined') ?
-                <a href="/SampleServices" title="Singularity">
+                <a href="https://singularitynet.io/" target="_new" title="Singularity">
                   <h1><span className="icon-logo"></span></h1>
                 </a>
               :

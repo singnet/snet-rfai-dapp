@@ -37,6 +37,7 @@ class RequestsTab extends Component {
       dataKeyOwner: null,
       owner: null,
       dataKeyEscrowBalance: null,
+      escrowBalance: 0,
       selectedTab: 1,
       dialogOpen: false,
       isFoundationMember: false,

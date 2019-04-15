@@ -40,6 +40,7 @@ class CreateRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
+    this.validateGitHandle = this.validateGitHandle.bind(this)
 
     var dt = new Date()
     // Default expiration date is set to 100 Days
@@ -85,9 +86,9 @@ class CreateRequest extends Component {
         this.setTokenBalance(this.props.ServiceRequest)
     }
 
-    if(prevState.requestAuthor !== this.state.requestAuthor && this.state.requestAuthor !== '') {
-      this.validateGitHandle(this.state.requestAuthor)
-    }
+    // if(prevState.requestAuthor !== this.state.requestAuthor && this.state.requestAuthor !== '') {
+    //   this.validateGitHandle(this.state.requestAuthor)
+    // }
   }
 
 
@@ -110,7 +111,8 @@ class CreateRequest extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  validateGitHandle(gitHandle) {
+  validateGitHandle() {
+    const gitHandle = this.state.requestAuthor
     const gitURL = "https://api.github.com/users/" + gitHandle
     const reqOptions = {
       'mode': 'cors',
@@ -177,7 +179,6 @@ class CreateRequest extends Component {
     const expiration = parseInt(this.state.blockNumber,10) + this.helperFunctions.computeBlocksFromDates(new Date(), this.state.expirationDate)
 
     //this.state.documentURI.length > 0 &&
-
     if( this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
       initialStakeBN.lte(tokenBalanceBN) && this.state.isValidGitHanlde === true && 
@@ -231,8 +232,8 @@ class CreateRequest extends Component {
     } else if (this.state.requestTitle.length === 0) {
       this.setState({ alertText: `Oops! It is invalid request title.`})
       this.handleDialogOpen()
-    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gte(tokenBalanceBN)) {
-      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow.`})
+    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(tokenBalanceBN)) {
+      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow or initial fund should be greater than zero.`})
       this.handleDialogOpen()
     } else if (!this.state.isValidGitHanlde) {
       this.setState({ alertText: `Oops! Invalid Github handle.`})
@@ -314,7 +315,7 @@ class CreateRequest extends Component {
           </div>
 
           <div className="row">
-          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} />         
+          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} onBlur={this.validateGitHandle} />         
             <label>Requestor Name (Github handle)</label>
           </div>
 
