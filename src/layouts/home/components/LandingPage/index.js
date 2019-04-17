@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
-
+import {HashRouter  as Router, Link} from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 
 // import components
@@ -135,13 +135,25 @@ class LandingPage extends Component {
     
   render() {
   //handleCreateRequest={this.handleCreateRequest} handleAdmin={this.handleAdmin} handleAccount={this.handleAccount} handlerViewPage={this.handleViewRequest
+
+  // const menuList = 
+  //   <ul>
+  //     {this.state.isFoundationMember === true && <li><a href="#" onClick = {this.props.handleAdmin} alt="Admin">Admin</a></li> }
+  //     <li><a href="#" onClick = {this.props.handleCreateRequest} alt="Create">Create</a></li>
+  //     <li><a href="#" onClick = {this.props.handleAccount} alt="Account">Account</a></li>
+  //     <li><a href="#" onClick = {this.props.handlerViewPage} alt="Account">View Requests</a></li>
+  //   </ul>
+
   const menuList = 
-    <ul>
-      {this.state.isFoundationMember === true && <li><a href="#" onClick = {this.props.handleAdmin} alt="Admin">Admin</a></li> }
-      <li><a href="#" onClick = {this.props.handleCreateRequest} alt="Create">Create</a></li>
-      <li><a href="#" onClick = {this.props.handleAccount} alt="Account">Account</a></li>
-      <li><a href="#" onClick = {this.props.handlerViewPage} alt="Account">View Requests</a></li>
-    </ul>
+  <Router>
+  <ul>
+    {this.state.isFoundationMember === true && <li><a href="#" onClick = {this.props.handleAdmin} alt="Admin">Admin</a></li> }
+    <li><Link to={"/createrequest"} alt="Create">Create</Link></li>
+    <li><Link to={"/myaccount"}>Account</Link></li>
+    <li><Link to={"/viewrequests"} alt="View Requests">View Requests</Link></li>
+  </ul>
+  </Router>
+
   const { anchorEl } = this.state;
     return (
       <React.Fragment>

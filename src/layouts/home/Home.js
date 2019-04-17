@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import {HashRouter, Route, Switch, Redirect} from 'react-router-dom'
+
 // import components
 import LandingPage from './components/LandingPage'
 import RequestList from './components/RequestList'
@@ -88,7 +90,21 @@ class Home extends Component {
         { this.state.showViewPage === true && <div className="main-content"><RequestsTab /></div>}
         */ }
 
+        {/*
         {this.renderContextComponent()}
+        */}
+
+        <div className="main-content">
+          <HashRouter>
+            <Switch>
+              <Route  path="/viewrequests" name="View Requests" component={RequestsTab} />
+              <Route  path="/myaccount" name="My Account" component={MyAccount} />
+              <Route  path="/admin" name="Administration" component={Administration} />
+              <Route  path="/createrequest" name="CreateRequest" component={CreateRequest} />
+              <Route  name="Default View Requests" component={RequestsTab} />
+            </Switch>
+          </HashRouter>
+        </div>
 
       </main>
     )
