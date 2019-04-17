@@ -101,7 +101,7 @@ class SubmitSolutionRequest extends Component {
     if(this.state.selectedLeftNav === 'nav1') {
       return (
         <div className="singularity-content submit-solution-tabs-content">
-          <div className="row top-section">
+          <div className="row top-section overview">
             <div className="col-md-12 overview-content">
               <p>All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance criteria as specified in the request is met and the problem is solved for.</p>
             </div>
@@ -110,7 +110,7 @@ class SubmitSolutionRequest extends Component {
             <div className="col-md-12">
               <span>Your Submission</span>
               <p></p>
-              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              { /*<i className="fa fa-info-circle" aria-hidden="true"></i> */ }
               <div className="github-link-div">
                 <span>Github Link</span>
                 <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
@@ -129,26 +129,64 @@ class SubmitSolutionRequest extends Component {
     } else if(this.state.selectedLeftNav === 'nav2') {
       return (
         <div className="singularity-content submit-solution-tabs-content">
-        <div className="row top-section">
-        <div className="overview-content">
-          <p>
-            <li>The specified acceptance criteria in the request must be met</li>
-            <li>Any performance metrics specified against provided test datasets should be met</li>
-            <li>Submission should pass the curation process for AI services on the platform</li>
-          </p>
-        </div>
-        </div>
+          <div className="row top-section">
+            <div className="overview-content">
+              <ul>
+                <li>The specified acceptance criteria in the request must be met</li>
+                <li>Any performance metrics specified against provided test datasets should be met</li>
+                <li>Submission should pass the curation process for AI services on the platform</li>
+              </ul>
+            </div>
+          </div>
+          <div className="row your-submission-div">
+            <div className="col-md-12">
+              <span>Your Submission</span>
+              <p></p>
+              { /*<i className="fa fa-info-circle" aria-hidden="true"></i> */ }
+              <div className="github-link-div">
+                <span>Github Link</span>
+                <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
+              </div>
+              {
+                this.state.dialogOpen ? <p className="error-txt"><label className="error-msg">{this.state.alertText}</label></p> : null
+              }
+              <div className="buttons">
+                {/* <button className="cncl-btn">cancel</button> */}
+                <button type="button" className="blue submit-btn" onClick={this.handleSubmitSolution2Button}>submit</button>
+              </div>
+            </div>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav3') {
       return (
         <div className="singularity-content submit-solution-tabs-content">
-        <div className="row top-section">
-        <div className="overview-content">
-          <li>Provide the github repo of your code</li>
-          <li>Sign your request using the same address used to publish the service. This is an important step to ensure that you are the owner of the service.</li>
-        </div>
-        </div>
+          <div className="row top-section">
+            <div className="overview-content">
+              <ul>
+                <li>Provide the github repo of your code</li>
+                <li>Sign your request using the same address used to publish the service. This is an important step to ensure that you are the owner of the service.</li>
+              </ul>
+            </div>
+          </div>
+          <div className="row your-submission-div">
+            <div className="col-md-12">
+              <span>Your Submission</span>
+              <p></p>
+              { /*<i className="fa fa-info-circle" aria-hidden="true"></i> */ }
+              <div className="github-link-div">
+                <span>Github Link</span>
+                <span><input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Solution document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} /></span>
+              </div>
+              {
+                this.state.dialogOpen ? <p className="error-txt"><label className="error-msg">{this.state.alertText}</label></p> : null
+              }
+              <div className="buttons">
+                {/* <button className="cncl-btn">cancel</button> */}
+                <button type="button" className="blue submit-btn" onClick={this.handleSubmitSolution2Button}>submit</button>
+              </div>
+            </div>
+          </div>
         </div>
       )
     } else if(this.state.selectedLeftNav === 'nav4') {
@@ -173,13 +211,20 @@ class SubmitSolutionRequest extends Component {
     }
   }
 
-  render() { 
+  render() {
     return (
       <div>
         <form className="pure-form pure-form-stacked create-request-form">
         <div className="row solution-submit-sub-header">
           <div className="col-md-12">
-            <span className="bold"><RequestIPFSData key="ss_{this.state.requestId}" requestId={this.state.requestId} IPFSHash={this.state.requestDocURI} getField="title" /></span>
+            <span className="bold">
+              <RequestIPFSData 
+                key="ss_{this.state.requestId}" 
+                requestId={this.state.requestId} 
+                IPFSHash={this.state.requestDocURI} 
+                getField="title" 
+              />
+            </span>
           </div>
         </div>
           <div className="row  solution-submit-tabs">

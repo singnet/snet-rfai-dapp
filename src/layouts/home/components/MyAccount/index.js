@@ -128,37 +128,37 @@ class MyAccount extends Component {
           <h4>Your Account Details</h4>
 
             <div className="row agent-detail">
-              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+              <div className=" col-xs-12 col-sm-4 col-md-3 col-lg-3">
                 <label>Account ID</label>
               </div>
-                <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7 word-break">
+                <div className=" col-xs-12 col-sm-8 col-md-9 col-lg-9 word-break">
                   <label>{this.props.accounts[0]}</label>
                 </div>
             </div>
 
             <div className="row">
-              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+              <div className=" col-xs-12 col-sm-4 col-md-4 col-lg-3">
                 <label>Token Balance</label>
               </div>
-              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+              <div className=" col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 <label>{tknBalance} AGI</label>
               </div>
             </div>
 
             <div className="row">
-              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+              <div className=" col-xs-12 col-sm-4 col-md-4 col-lg-3">
                 <label>Escrow Balance</label>
               </div>
-              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+              <div className=" col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 <label>{escrowBalance} AGI</label>
               </div>
             </div>
 
             <div className="row">
-              <div className=" col-xs-12 col-sm-4 col-md-5 col-lg-5">
+              <div className=" col-xs-12 col-sm-4 col-md-4 col-lg-3">
                 <label>Authorized Tokens</label>
               </div>
-              <div className=" col-xs-12 col-sm-8 col-md-7 col-lg-7">
+              <div className=" col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 <label>{tknAllowance} AGI</label>
               </div>
             </div>

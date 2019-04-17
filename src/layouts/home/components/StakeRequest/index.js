@@ -229,7 +229,7 @@ class StakeRequest extends Component {
                   </div>
                   <div className="funding-amt-div">
                     <span>Funding Amount</span>
-                    <span><input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to fund" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} /></span>
+                    <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to fund" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
                   </div>
                 </div>
               </div>

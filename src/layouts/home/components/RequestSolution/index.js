@@ -169,9 +169,7 @@ class RequestSolution extends Component {
   }
 
   createRow(submitter, index) {
-
     if (this.props.ServiceRequest.getSubmittedSolutionById[submitter] !== undefined && submitter !== null) {
-
       var s = this.props.ServiceRequest.getSubmittedSolutionById[submitter].value;
       // bool found, bytes solutionDocURI, uint256 totalVotes, bool isSubmitted, bool isShortlisted, bool isClaimed
       var solDocURI = this.context.drizzle.web3.utils.toAscii(s.solutionDocURI);
@@ -179,7 +177,6 @@ class RequestSolution extends Component {
       {
         var enableClaim = false;
         var enableVote = false;
-
         // if Approved && Solution Submitted and HasVotes either from Foundation Member or Stake Member and should complete evaluation
         if(this.state.submitters[index] === this.props.accounts[0] && s.totalVotes > 0 && s.isClaimed === false
           && (this.state.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(this.state.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(this.state.endEvaluation,10) )
@@ -199,7 +196,8 @@ class RequestSolution extends Component {
                 {s.isShortlisted === true ? <b>*</b>: ""}
                 {this.helperFunctions.toShortAddress(this.state.submitters[index])}
               </TableCell>
-              <TableCell style={tableColStyles} align="right">{solDocURI}</TableCell>
+              <TableCell style={tableColStyles} align="right">
+                <a href="#" title="Github Link">{solDocURI}</a></TableCell>
               <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
               <TableCell className="view-sol-popup-buttons" style={tableColStyles} align="right">
                 {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
