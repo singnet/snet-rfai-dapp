@@ -106,7 +106,7 @@ console.log("Setting Local Storage -- " + JSON.stringify(data.data));
     }
 
     if(this.state.itemField === "documentURI") {
-      ipfsReturnHTML = <span>{this.state.documentURI}</span>;
+      ipfsReturnHTML = <span><a href={this.state.documentURI} target="_new">{this.state.documentURI}</a></span>;
     }
 
     return (

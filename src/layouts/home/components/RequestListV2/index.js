@@ -427,14 +427,12 @@ class RequestListV2 extends Component {
             <div className="col-md-12 col-lg-5 right-side-data">
               <div className="project-url-container">
                 <span className="bold">Project URL: </span>
-                <a href="#" title="">
                   <RequestIPFSData 
                     key="doc_{r.requestId}" 
                     requestId={r.requestId} 
                     IPFSHash={docURI} 
                     getField="documentURI" 
                   />
-                </a>
               </div>
               <div className="submission-variable-name">
                 <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
