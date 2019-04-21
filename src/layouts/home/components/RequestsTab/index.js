@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
-
+import {HashRouter  as Router, Link, Redirect} from 'react-router-dom'
 // Request Tabs Functionality
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'
@@ -31,6 +32,8 @@ class RequestsTab extends Component {
     this.contracts = context.drizzle.contracts;
     this.helperFunctions = new HelperFunctions();
 
+    this.handleRedirect= this.handleRedirect.bind(this)
+
     this.state = {
       dataKeyMemberKeys: null,
       foundationMembers: [],
@@ -41,7 +44,8 @@ class RequestsTab extends Component {
       selectedTab: 1,
       dialogOpen: false,
       isFoundationMember: false,
-      alertText: ''
+      alertText: '',
+      redirectTo: ''
     }
   }
 
@@ -111,9 +115,20 @@ class RequestsTab extends Component {
     console.log("selectedTab - " + value);
   };
 
+  handleRedirect(event, destURLPart) {
+    this.setState({redirectTo: destURLPart})
+  }
+
   render() {
     const selectedTab = this.state.selectedTab;
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
+
+    if(this.state.redirectTo === 'createrequest') {
+      return <Redirect to="/createrequest" />
+    }
+    if(this.state.redirectTo === 'myaccount') {
+      return <Redirect to="/myaccount" />
+    }
 
     return (
       <div className="main-content view-request">
@@ -145,7 +160,11 @@ class RequestsTab extends Component {
                 <span className="balance">{escrowBalance} AGI</span>
               </div>
               <div className="add-more-funds-btn">
-                  <button onClick = {this.props.handleAccount} className="blue">add more funds</button>
+                  {/* <button onClick = {this.props.handleAccount} className="blue">add more funds</button> */}
+                  {/* <Router>
+                  <Button className="blue" component={Link} to="/myaccount">add more funds</Button>
+                  </Router> */}
+                  <button onClick ={event => this.handleRedirect(event, 'myaccount')} className="blue">add more funds</button>
                 </div>
             </div>
           </div>
@@ -161,7 +180,11 @@ class RequestsTab extends Component {
           
           <div className="req-ai-services-heading">
             <span>Requests for AI  Services</span>
-            <button onClick = {this.props.handleCreateRequest} className="blue"><span></span> create new request</button>
+            {/* <button onClick = {this.props.handleCreateRequest} className="blue"><span></span> create new request</button> */}
+            {/* <Router>
+            <Button className="blue" component={Link} to="/createrequest"><span></span> create new request</Button>
+            </Router>  */}
+            <button onClick = {event => this.handleRedirect(event, 'createrequest')} className="blue"><span></span> create new request</button>
           </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs 

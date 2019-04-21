@@ -196,8 +196,7 @@ class RequestSolution extends Component {
                 {s.isShortlisted === true ? <b>*</b>: ""}
                 {this.helperFunctions.toShortAddress(this.state.submitters[index])}
               </TableCell>
-              <TableCell style={tableColStyles} align="right">
-                <a href="#" title="Github Link">{solDocURI}</a></TableCell>
+              <TableCell style={tableColStyles} align="right"><a href={solDocURI} target="_new">{solDocURI}</a></TableCell>
               <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
               <TableCell className="view-sol-popup-buttons" style={tableColStyles} align="right">
                 {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
