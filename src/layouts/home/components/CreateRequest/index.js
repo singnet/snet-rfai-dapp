@@ -400,16 +400,20 @@ class CreateRequest extends Component {
               <div className="col-md-3 create-req-tabs">
                 <ul>
                   <li className={this.state.selectedLeftNav === "nav1"?'active':''}>
-                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a>
+                    {/* <a href={null} onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</Button>
                   </li>
                   <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
-                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a>
+                    {/* <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</Button>
                   </li>
                   <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
-                    <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a>
+                    {/* <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a> */}
+                    <Button  onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</Button>
                   </li>
                   <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}>
-                    <a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a>
+                    {/* <a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</Button>
                   </li>
                 </ul>
               </div>
