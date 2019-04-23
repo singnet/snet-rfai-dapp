@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 
 //components
 import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-
 
 import RequestIPFSData from '../RequestIPFSData'
 import HelperFunctions from '../HelperFunctions'
@@ -231,13 +229,16 @@ class SubmitSolutionRequest extends Component {
             <div className="col-md-3 create-req-tabs">
               <ul>
                 <li className={this.state.selectedLeftNav === "nav1"?'active':''}>
-                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a>
+                  {/* <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a> */}
+                  <Button onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</Button>
                 </li>
                 <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
-                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a>
+                  {/* <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a> */}
+                  <Button onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</Button>
                 </li>
                 <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
-                  <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a>
+                  {/* <a href="#" title="Lorem" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a> */}
+                  <Button onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</Button>
                 </li>
               </ul>
             </div>
