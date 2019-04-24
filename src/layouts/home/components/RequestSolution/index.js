@@ -169,9 +169,7 @@ class RequestSolution extends Component {
   }
 
   createRow(submitter, index) {
-
     if (this.props.ServiceRequest.getSubmittedSolutionById[submitter] !== undefined && submitter !== null) {
-
       var s = this.props.ServiceRequest.getSubmittedSolutionById[submitter].value;
       // bool found, bytes solutionDocURI, uint256 totalVotes, bool isSubmitted, bool isShortlisted, bool isClaimed
       var solDocURI = this.context.drizzle.web3.utils.toAscii(s.solutionDocURI);
@@ -179,7 +177,6 @@ class RequestSolution extends Component {
       {
         var enableClaim = false;
         var enableVote = false;
-
         // if Approved && Solution Submitted and HasVotes either from Foundation Member or Stake Member and should complete evaluation
         if(this.state.submitters[index] === this.props.accounts[0] && s.totalVotes > 0 && s.isClaimed === false
           && (this.state.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(this.state.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(this.state.endEvaluation,10) )

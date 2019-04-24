@@ -151,12 +151,12 @@ class RequestsTab extends Component {
 
             <div className="your-balance">
               <div className="your-balance-div">
-                <span>Your Balance In Escrow</span>
+                <span>Your Balance</span>
                 { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
               </div>
               <div className="your-balance-data">
                 { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
-                <span>Amount</span>
+                <span>Escrow Amount</span>
                 <span className="balance">{escrowBalance} AGI</span>
               </div>
               <div className="add-more-funds-btn">
