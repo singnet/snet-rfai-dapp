@@ -323,6 +323,19 @@ button.blue-projected:hover {
   transition: transform 0.45s cubic-bezier(0.25, 1, 0.33, 1), box-shadow 0.45s cubic-bezier(0.25, 1, 0.33, 1);
 }
 
+button.disablerequest {
+  border: none; 
+  outline: 0;
+  font-size: 13px;
+  color: #4a4a4a;
+  border-radius: 6px;
+  padding: 6px 14px;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;  
+}
+
 button.blue {
   outline: 0;
   font-size: 13px;
@@ -705,6 +718,16 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   border-top-right-radius: 5px;
   border-top: 3px solid #06f;
 }
+
+.no-balance-text {
+  min-height: 116px;
+  padding: 20px 20px 0;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.no-balance-text p { margin-bottom: 0; }
 
 .getting-started-text {
   min-height: 116px;

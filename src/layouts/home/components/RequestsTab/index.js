@@ -121,6 +121,7 @@ class RequestsTab extends Component {
   render() {
     const selectedTab = this.state.selectedTab;
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
+    const hasBalance = (parseInt(this.state.escrowBalance) > 0)
 
     if(this.state.redirectTo === 'createrequest') {
       return <Redirect to="/createrequest" />
@@ -151,39 +152,31 @@ class RequestsTab extends Component {
             <div className="your-balance">
               <div className="your-balance-div">
                 <span>Your Balance</span>
-                { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
-              </div>
-              <div className="your-balance-data">
-                { /*<i class="fa fa-info-circle" aria-hidden="true"></i>*/ }
-                <span>Escrow Amount</span>
-                <span className="balance">{escrowBalance} AGI</span>
-              </div>
+              </div>              
+              { hasBalance ? 
+                <div className="your-balance-data">
+                  <span>Escrow Amount</span>
+                  <span className="balance">{escrowBalance} AGI</span>
+                </div>
+                :                
+                <div className="no-balance-text">
+                  <p>You need tokens in your RFAI escrow account to create or back a request.</p>
+                  <p>Click below to get started</p>
+                </div>
+              }
               <div className="add-more-funds-btn">
-                  {/* <button onClick = {this.props.handleAccount} className="blue">add more funds</button> */}
-                  {/* <Router>
-                  <Button className="blue" component={Link} to="/myaccount">add more funds</Button>
-                  </Router> */}
-                  <button onClick ={event => this.handleRedirect(event, 'myaccount')} className="blue">add more funds</button>
+                  <button onClick ={event => this.handleRedirect(event, 'myaccount')} className="blue">add funds</button>
                 </div>
             </div>
           </div>
         </div>
 
-        { /* <div className="network-name">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
-          <span>Current Network: </span>
-          <span>Kovan Test Network</span>
-        </div> */ }
-
         <div className="main singularity-accordion-main">
-          
           <div className="req-ai-services-heading">
             <span>Requests for AI  Services</span>
-            {/* <button onClick = {this.props.handleCreateRequest} className="blue"><span></span> create new request</button> */}
-            {/* <Router>
-            <Button className="blue" component={Link} to="/createrequest"><span></span> create new request</Button>
-            </Router>  */}
-            <button onClick = {event => this.handleRedirect(event, 'createrequest')} className="blue"><span></span> create new request</button>
+              <button onClick = {event => this.handleRedirect(event, 'createrequest')} className={hasBalance ? 'blue' : 'disablerequest'}>
+                <span></span> create new request
+              </button>
           </div>
           <AppBar position="static" color="default" className="singularity-tabs">
             <Tabs 

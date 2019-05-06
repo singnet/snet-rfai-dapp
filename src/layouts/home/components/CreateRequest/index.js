@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
+import {Redirect} from 'react-router-dom'
 
 //components
 import TextField from '@material-ui/core/TextField'
@@ -41,6 +42,7 @@ class CreateRequest extends Component {
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
     this.validateGitHandle = this.validateGitHandle.bind(this)
+    this.handleRedirect= this.handleRedirect.bind(this)
 
     var dt = new Date()
     // Default expiration date is set to 100 Days
@@ -55,7 +57,6 @@ class CreateRequest extends Component {
       expirationDate: defExpirtaionDate.toISOString().slice(0,10),
       documentURI: '',
       dataKeyTokenBalance: null,
-      tknBalance: 0,
       blockNumber: 0,
       requestAuthor: '',
       requestTrainingDS: '',
@@ -66,6 +67,8 @@ class CreateRequest extends Component {
       selectedLeftNav: 'nav1',
       alertText: '',
       showConfirmation: false,
+      tokenBalance: undefined,
+      redirectTo:''
     }
 
     this.setBlockNumber();
@@ -106,7 +109,11 @@ class CreateRequest extends Component {
       })
     }
   }
-  
+
+  handleRedirect(event, destURLPart) {
+    this.setState({redirectTo: destURLPart})
+  }
+
   handleRequestInputChange(event) {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -230,20 +237,17 @@ class CreateRequest extends Component {
           })
 
     } else if (this.state.requestTitle.length === 0) {
-      this.setState({ alertText: `Oops! It is invalid request title.`})
+      this.setState({ alertText: `Oops! Request title is blank. Please provide a title for te request`})
       this.handleDialogOpen()
     } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(tokenBalanceBN)) {
-      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow or initial fund should be greater than zero.`})
+      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI escrow. Please add tokens to the RFAI escrow from the Account page`})
       this.handleDialogOpen()
     } else if (!this.state.isValidGitHanlde) {
-      this.setState({ alertText: `Oops! Invalid Github handle.`})
+      this.setState({ alertText: `Oops! Invalid github handle provided. A valid github handle has to be provided.`})
       this.handleDialogOpen()
     } else if (expiration === '' || parseInt(expiration,10) <= parseInt(this.state.blockNumber,10)) {
       this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
       this.handleDialogOpen()  
-    // } else if (this.state.documentURI.length === 0) {
-    //   this.setState({ alertText: `Oops! It is invalid github link.`})
-    //   this.handleDialogOpen()  
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
@@ -385,11 +389,22 @@ class CreateRequest extends Component {
 
   }
 
-  render() {
- 
+  render() { 
+    if(this.state.redirectTo === 'myaccount') {
+      return <Redirect to="/myaccount" />
+    }
     return (
       <div>
-        {/* <Paper style={styles} elevation={5}> */}
+          {(typeof this.state.tokenBalance != 'undefined' && parseInt(this.state.tokenBalance) === 0) ? 
+            <div className="no-balance-text">
+              <p>You need tokens in your RFAI escrow account to create or back a request.</p>
+              <p>Click below to get started</p>
+              <div className="add-more-funds-btn">
+                  <button onClick ={event => this.handleRedirect(event, 'myaccount')} className="blue">add funds</button>
+              </div>
+            </div>
+            : null
+          }
           <form className="pure-form pure-form-stacked create-request-form">
             <div className="row">
               <div className="col-md-12 create-req-header">
