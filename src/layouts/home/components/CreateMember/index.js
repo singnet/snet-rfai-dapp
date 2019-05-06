@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 //components
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 
 
 // Member Table Functionality
@@ -24,13 +23,6 @@ import { toast } from 'react-toastify';
 const styles = {
     backgroundColor: '#white',
     padding: 20
-}
-
-const dialogStyles = {
-  style: {
-    backgroundColor: '#F9DBDB',
-    padding: 20
-  }
 }
 
 const rootStyles = {

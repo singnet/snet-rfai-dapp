@@ -3,20 +3,10 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 
 //components
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
 
 import HelperFunctions from '../HelperFunctions'
 import TransactionResult from '../TransactionResult'
 import { toast } from 'react-toastify';
-
-//inline styles
-const dialogStyles = {
-  style: {
-    backgroundColor: '#F9DBDB',
-    padding: 20
-  }
-}
 
 class ApproveRequest extends Component {
   constructor(props, context) {

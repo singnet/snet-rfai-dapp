@@ -3,22 +3,14 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 
 //components
-import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LaunchIcon from '../../../../images/launch.svg'
 
-import { toast } from 'react-toastify';
 
 //inline styles
 const progressStyles = {
     margin: 2,
 }
-
-const styles = {
-  backgroundColor: 'white',
-  padding: 20
-}
-
 
 class TransactionResult extends Component {
   constructor(props, context) {

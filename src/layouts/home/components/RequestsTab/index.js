@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
-import {HashRouter  as Router, Link, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 // Request Tabs Functionality
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button'
 
 // Custom Components
 import RequestListV2 from '../../components/RequestListV2'

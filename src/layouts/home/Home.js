@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {HashRouter, Route, Switch, Redirect} from 'react-router-dom'
+import {HashRouter, Route, Switch} from 'react-router-dom'
 
 // import components
 import LandingPage from './components/LandingPage'
-import RequestList from './components/RequestList'
 import RequestsTab from './components/RequestsTab'
 import CreateRequest from './components/CreateRequest'
 import MyAccount from './components/MyAccount'
