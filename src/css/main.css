@@ -720,11 +720,13 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 .no-balance-text {
-  min-height: 116px;
+  width: 90%;
   padding: 20px 20px 0;
-  color: black;
+  margin: 0 auto;
+  background-color: #efced1;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
 }
 
 .no-balance-text p { margin-bottom: 0; }
@@ -744,6 +746,8 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   display: flex;
   justify-content: center;
 }
+
+.add-more-funds-btn { margin-top: 5px; }
 
 .documentation-btn button,
 .add-more-funds-btn button {
