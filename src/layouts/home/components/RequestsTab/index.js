@@ -144,7 +144,9 @@ class RequestsTab extends Component {
                 <p>Welcome AI Developers. With this community portal, you can make projects requests for AI services that you think the others will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI token rewards.</p>
               </div>
               <div className="documentation-btn">
-                <button className="blue">documentation</button>
+                <a href="https://github.com/singnet/dev-portal/blob/master/docs/concepts/rfai.md" target="_blank">
+                  <button className="blue">documentation</button>
+                </a>
               </div>
             </div>
 
