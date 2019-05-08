@@ -328,7 +328,24 @@ class RequestListV2 extends Component {
         enableVote = true;
       }
 
-      if(r.status === "4") {
+      if(this.state.compRequestStatus === "777") {
+
+        return (
+          // My Requests
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+                <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
+              </div>
+            </div>
+          </ExpansionPanelActions>
+
+        )
+
+      } else if(r.status === "4") {
         return (
         // closed
           <ExpansionPanelActions className="expansion-panel-actions">
@@ -414,6 +431,27 @@ class RequestListV2 extends Component {
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
       var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
+
+      var reqStatus = '';
+      var reqStatusElement = '';
+
+      // Compute Status only for My Requests
+      if(this.state.compRequestStatus === "777") {
+
+        if(r.status === "4") {
+          reqStatus = "Closed"
+        } else if (r.status === "2") {
+          reqStatus = "Rejected"
+        } else if (r.status === "0") {
+          reqStatus = "Pending"
+        } else if (r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
+          reqStatus = "Active"
+        } else {
+          reqStatus = "Expired"
+        }
+        reqStatusElement = <p><span className="bold">Status:</span><span>{reqStatus}</span></p>
+      }
+
       return (
         // Request details are same irrespective of the status
         <ExpansionPanelDetails className="expansion-panel-details">
@@ -436,7 +474,7 @@ class RequestListV2 extends Component {
               </div>
               <div className="submission-variable-name">
                 <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
-                {/* <p><span className="bold">Variable label:</span><span> Lorem Ipsum</span></p> */}
+                {reqStatusElement}
               </div>
               {/* <div className="solution-vote-div">
                 <span className="bold">Solution Vote:</span>
@@ -462,6 +500,7 @@ class RequestListV2 extends Component {
           (r.status === "2" && this.state.compRequestStatus === r.status) ||
           (r.status === "0" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
           (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (this.state.compRequestStatus === "777" && r.requester === this.props.accounts[0]) || 
           (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) ||
           (this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) )
       {

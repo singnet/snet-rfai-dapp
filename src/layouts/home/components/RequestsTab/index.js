@@ -192,6 +192,7 @@ class RequestsTab extends Component {
               <Tab className="singularity-tab" label="Completed" value={2} />
               {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={3}/> }
               <Tab className="singularity-tab" label="Expired" value={4} />
+              <Tab className="singularity-tab" label="My Requests" value={5} />
             </Tabs>
           </AppBar>
           {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
@@ -199,6 +200,7 @@ class RequestsTab extends Component {
           {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="888"/> </Typography>}
           {selectedTab === 3 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
           {selectedTab === 4 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
+          {selectedTab === 5 && <Typography component="div" ><RequestListV2  compRequestStatus="777"/> </Typography>}
         </div>
 
       </div>
