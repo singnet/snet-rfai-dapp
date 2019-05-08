@@ -270,7 +270,7 @@ class CreateRequest extends Component {
       return (
         <div className="singularity-content create-req-overview-content">
           <p>
-            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://faucet.ropsten.be/" target="_blank">repo</a>. You can view the template for the request <a href="https://faucet.ropsten.be/" target="_blank">here</a>
+            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://github.com/singnet/rfai-proposal" target="_blank">repo</a>. You can view the template for the request <a href="https://github.com/singnet/rfai-proposal/blob/master/rfai-proposal-template.md" target="_blank">here</a>
           </p>
           <p>
             We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). The foundation will review and approve requests which will appear on here
