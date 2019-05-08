@@ -394,7 +394,7 @@ class CreateRequest extends Component {
       return <Redirect to="/myaccount" />
     }
     return (
-      <div>
+      <div className="create-req-error-box">
           {(typeof this.state.tokenBalance != 'undefined' && parseInt(this.state.tokenBalance) === 0) ? 
             <div className="no-balance-text">
               <p>You need tokens in your RFAI escrow account to create or back a request.</p>
