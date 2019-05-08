@@ -721,7 +721,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .no-balance-text {
   width: 90%;
-  padding: 20px 20px 0;
+  padding: 20px 20px;
   margin: 0 auto;
   background-color: #efced1;
   font-size: 16px;
@@ -742,12 +742,11 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 
 .documentation-btn,
 .add-more-funds-btn {
+  margin-top: 15px;
   padding-bottom: 35px;
   display: flex;
   justify-content: center;
 }
-
-.add-more-funds-btn { margin-top: 5px; }
 
 .documentation-btn button,
 .add-more-funds-btn button {
@@ -1216,6 +1215,7 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
 }
 
 /* Modified create request */
+.create-req-error-box .add-more-funds-btn { padding-bottom: 0; }
 .create-req-overview-content p {
   font-size: 14px;
   line-height: 20px;
