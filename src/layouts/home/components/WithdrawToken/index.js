@@ -5,9 +5,9 @@ import web3 from 'web3'
 
 //components
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -47,6 +47,7 @@ class WithdrawToken extends Component {
       tknBalance: 0,
       dataKeyEscrowBalance: null,
       escrowBalance: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -113,7 +114,12 @@ class WithdrawToken extends Component {
     var escrrowBalanceBN = new BN(this.state.escrowBalance)
 
     if(withdrawAmountBN.gt(zeroBN) && withdrawAmountBN.lte(escrrowBalanceBN)) {
-      this.contracts.ServiceRequest.methods["withdraw"].cacheSend(withdrawAmountBN.toString(), {from: this.props.accounts[0]})
+      this.handleDialogClose();
+      
+      
+      const stackId = this.contracts.ServiceRequest.methods["withdraw"].cacheSend(withdrawAmountBN.toString(), {from: this.props.accounts[0]})
+      this.setState({stackId}, () => {this.createToast()});
+      
     } else if (withdrawAmountBN.gt(escrrowBalanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to withdraw more than you have in RFAI Escrow.'})
       this.handleDialogOpen()
@@ -123,17 +129,10 @@ class WithdrawToken extends Component {
     }
   }
 
-  // setTXParamValue(_value) {
-  //   if (web3.utils.isBN(_value)) {
-  //     this.setState({
-  //       withdrawAmount: _value.toString()
-  //     })
-  //   } else {
-  //     this.setState({
-  //       withdrawAmount: ''
-  //     })
-  //   }
-  // }
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("wt")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
 
   render() {
 
@@ -141,40 +140,22 @@ class WithdrawToken extends Component {
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
 
     return (
-      <div>
-        <Paper style={styles} elevation={0} className="singularity-content">
-          <p>Withdraw Token from RFAI Escrow Contract </p>
+      <div className="withdraw-tab-details">
+        <div className="rfai-tab-content">
+          <form>
+            <div className="token-amt-container">
+              <input name="withdrawAmount" type="text" placeholder="AGI Token Amount" autoComplete="off" value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
+              {
+                this.state.withdrawAmount !== '' ? <label>Amount</label> : null
+              }
+            </div>
+            {
+              this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+            }          
+            <Button className={this.state.withdrawAmount !== '' ? 'blue' : 'disable'} type="Button" onClick={this.handleWithdrawButton}>Withdraw</Button>
 
-          <form className="pure-form pure-form-stacked">
-          <div class="row">
-            <div class="col-6">
-                <div class="singularity-token-counter">
-                    <p>Token Balance: <span>{tknBalance} AGI</span></p>
-                </div>            
-            </div>
-            <div class="col-6">
-                <div class="singularity-token-counter">
-                    <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
-                </div>              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-                <div class="spacer"></div>
-                <label>Tokens to Withdraw:</label> <div class="clearfix"></div>            
-                <input className="singularity-input" name="withdrawAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.withdrawAmount} onChange={this.handleAmountInputChange} />            
-            </div>
-          </div>
-            
-            <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleWithdrawButton}>Withdraw</Button>
           </form>
-          {/* <p>Tokens to deposit: {depositGroomed} </p> */}
-      </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
+        </div>
       </div>
     )
   }

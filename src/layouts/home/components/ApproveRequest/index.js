@@ -3,16 +3,10 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 
 //components
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
 
-//inline styles
-const dialogStyles = {
-  style: {
-    backgroundColor: '#F9DBDB',
-    padding: 20
-  }
-}
+import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 class ApproveRequest extends Component {
   constructor(props, context) {
@@ -20,6 +14,7 @@ class ApproveRequest extends Component {
 
     this.contracts = context.drizzle.contracts
     this.context = context
+    this.helperFunctions = new HelperFunctions();
 
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleBlockNumInputChange = this.handleBlockNumInputChange.bind(this)
@@ -28,7 +23,7 @@ class ApproveRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleApproveButton = this.handleApproveButton.bind(this)
 
-console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
+    console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + this.props.requestExpiry);
 
     this.state = {
       requestId: this.props.requestId,
@@ -37,22 +32,20 @@ console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + thi
       newExpiration: this.props.requestExpiry,
       expiration: this.props.requestExpiry,
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
 
     //uint256 requestId, uint256 endSubmission, uint256 endEvaluation, uint256 newExpiration
-
     this.setBlockNumber();
 
   }
 
   componentDidMount() {
-
   }
 
   componentDidUpdate(prevProps, prevState) {
-
   }
 
   setBlockNumber() {
@@ -93,20 +86,20 @@ console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + thi
       parseInt(this.state.endEvaluation,10) > parseInt(this.state.endSubmission,10) && 
       parseInt(this.state.newExpiration,10) > parseInt(this.state.endEvaluation,10))
     {
+      this.handleDialogClose();
+      
       // Call Approve Method to approve the request
       const stackId = this.contracts.ServiceRequest.methods["approveRequest"].cacheSend(this.state.requestId, this.state.endSubmission, this.state.endEvaluation, this.state.newExpiration, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if(this.state.endSubmission === 0 || parseInt(this.state.endEvaluation,10) <= parseInt(this.state.endSubmission,10) || parseInt(this.state.endSubmission,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid End of Submission block number.`})
+      this.setState({ alertText: `Oops! Invalid End of Submission block number, should be greater than End of Evaluation and greater than current block number.`})
       this.handleDialogOpen()
     } else if(this.state.endEvaluation === 0 || parseInt(this.state.newExpiration,10) <= parseInt(this.state.endEvaluation,10) || parseInt(this.state.endEvaluation,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid End of Evaluation block number.`})
+      this.setState({ alertText: `Oops! Invalid End of Evaluation block number, should be less than End of Submission and less than Expiration block number.`})
       this.handleDialogOpen()
     } else if(this.state.newExpiration === 0 || parseInt(this.state.newExpiration,10) <= parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Invalid Expiration block number.`})
+      this.setState({ alertText: `Oops! Invalid Expiration block number, should be greater than current block number.`})
       this.handleDialogOpen()
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
@@ -115,46 +108,55 @@ console.log("ApproveRequest Constructor " + this.props.requestId + " &&& " + thi
 
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+  
   render() {
  
     return (
       <div>
         <form className="pure-form pure-form-stacked">
-          <div class="singularity-content">
-            <div class="row">
-                <div class="col">
-                    <label>End submission block number:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="endSubmission" type="number" placeholder="End of Submission:" autoComplete='off' value={this.state.endSubmission} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-                </div>
+          <div className="singularity-content">
+            <div className="row">
+              <div className="col-md-12">
+                <label>End submission block number:</label>
+                <div className="clearfix"></div>
+                <input className="singularity-input" name="endSubmission" type="number" placeholder="End of Submission:" autoComplete='off' value={this.state.endSubmission} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
+              </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label>End evaluation block number:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="endEvaluation" type="number" placeholder="End of Evaluation:" autoComplete='off' value={this.state.endEvaluation} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-                </div>
+            <div className="row">
+              <div className="col-md-12">
+                <label>End evaluation block number:</label><div className="clearfix"></div>
+                <input className="singularity-input" name="endEvaluation" type="number" placeholder="End of Evaluation:" autoComplete='off' value={this.state.endEvaluation} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
+              </div>
             </div>
-            <div class="row">
-                <div class="col">          
-                    <label>Expiration block number:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="newExpiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.newExpiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />
-            
-                </div>
+            <div className="row">
+              <div className="col-md-12">          
+                <label>Expiration block number:</label><div className="clearfix"></div>
+                <input className="singularity-input" name="newExpiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.newExpiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} />          
+              </div>
             </div>
-            <div class="row">            
-                <div class="col">
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div class="clearfix"></div>
-                    <div class="spacer"></div>
-                </div>
-            </div>    
-
-            <button type="button" class="blue" onClick={this.handleApproveButton}>Submit</button>
+            <div className="row">            
+              <div className="col-md-12">
+                <label>Current Blocknumber: {this.state.blockNumber}</label> 
+                <div className="clearfix"></div>
+              </div>
             </div>
-          </form>
-
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-          <p>{this.state.alertText}</p>
-          <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog>
+            {
+              this.state.dialogOpen ?
+              <div className="row">
+                <span className="error-message">{this.state.alertText}</span>
+              </div> : null
+            }
+            <div className="row">
+              <div className="col-md-12 text-center">
+                <button type="button" className="blue" onClick={this.handleApproveButton}>Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
         
       </div>
     )

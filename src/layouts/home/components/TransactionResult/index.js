@@ -3,19 +3,14 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 
 //components
-import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LaunchIcon from '../../../../images/launch.svg'
+
 
 //inline styles
 const progressStyles = {
     margin: 2,
 }
-
-const styles = {
-  backgroundColor: 'white',
-  padding: 20
-}
-
 
 class TransactionResult extends Component {
   constructor(props, context) {
@@ -34,7 +29,8 @@ class TransactionResult extends Component {
       txnReceipt: null,
       txnStatus: null,
       loadingIndicator: true,
-      alertText: ''
+      alertText: '',
+      toastId: this.props.toastId
     }
 
   }
@@ -57,11 +53,21 @@ console.log(" this.props.transactionStack[this.state.stackId] - " + this.props.t
 console.log("txnHash - " + txnHash)
       this.setState({txnHash});
       // Status Will Changes from Pending to Success - Logic can be implemented accordingly
-      const txnStatus = this.props.transactions[txnHash].status
-      this.setState({txnStatus});
-console.log("txnStatus - " + txnStatus);
-      if(txnStatus !== "Pending")
-        this.setState({loadingIndicator: false});
+      if(this.props.transactions[txnHash]) {
+
+        const txnStatus = this.props.transactions[txnHash].status
+
+        if(txnStatus !== "pending" ) {
+          this.setState({loadingIndicator: false});
+
+          // if(this.props.callBack) {
+          //   this.props.callBack();
+          // }
+        }
+        this.setState({txnStatus})
+        console.log("txnStatus - " + txnStatus);
+      }
+
     }
   }
 
@@ -74,26 +80,39 @@ console.log("txnStatus - " + txnStatus);
     this.setState({ dialogOpen: false })
   }
 
+  // updateToast() {
+
+  //   console.log("U Comp Updated..." + this.state.toastId)
+  //   console.log("U this.state.stackId - " + this.state.stackId)
+
+  //   const newContent = "New Content " - this.state.txnStatus
+  //   // toast.update(this.state.toastId, {
+  //   //   render: newContent,
+  //   //   type: toast.TYPE.INFO, 
+  //   //   autoClose: false
+  //   // })
+  // }
+
+
+  getToastContent() {
+    const txnURL = "http://ropsten.etherscan.io/tx/" + this.state.txnHash;
+    return (
+      <div>
+        <div> 
+          { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
+        </div>
+        <div className="singularity-status-text">
+          <p><label className="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Confirm Txn in Metamask" : this.state.txnStatus} <a href={txnURL} target="_new"><img src={LaunchIcon} alt="Txn Hash" /></a></p>
+        </div>
+      </div>
+    )
+  }
 
   render() {
  
     return (
-      <div>
-        
-      {/* <Dialog PaperProps={dialogStyles} open={this.state.loadingIndicator} > */}
-      <Paper style={styles} elevation={0} className="singularity-dialog">
-        <div>
-          <div> 
-            { this.state.loadingIndicator && <CircularProgress style={progressStyles} /> } 
-          </div>
-          <div class="singularity-status-text">
-            <p><label class="singularity-gen-label">Txn Status:</label> {this.state.txnStatus === null ? "Approve Txn in Metamask" : this.state.txnStatus}</p>
-            <p><label class="singularity-gen-label">Txn Hash:</label><div class="clearfix"></div> {this.state.txnHash}</p>            
-          </div>
-        </div>
-        </Paper>
-      {/* </Dialog> */}
-
+      <div>      
+      {this.getToastContent()}  
       </div>
     )
   }

@@ -14,6 +14,8 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const dialogStyles = {
@@ -69,6 +71,7 @@ class RequestSolution extends Component {
       stakeMembers: [], 
       submitters: [],
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -149,36 +152,31 @@ class RequestSolution extends Component {
   handleVoteButton(event, votedFor) {
 
     const stackId = this.contracts.ServiceRequest.methods["vote"].cacheSend(this.state.requestId, votedFor, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash)
-    }
+    this.setState({stackId}, () => {this.createToast()});
 
   }
   
   handleClaimButton(event) {
 
     const stackId = this.contracts.ServiceRequest.methods["requestClaim"].cacheSend(this.state.requestId, {from: this.props.accounts[0]})
-    if (this.props.transactionStack[stackId]) {
-      const txHash = this.props.trasnactionStack[stackId]
-      console.log("txHash - " + txHash)
-    }
+    this.setState({stackId}, () => {this.createToast()});
 
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("rs")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+
   createRow(submitter, index) {
-
     if (this.props.ServiceRequest.getSubmittedSolutionById[submitter] !== undefined && submitter !== null) {
-
       var s = this.props.ServiceRequest.getSubmittedSolutionById[submitter].value;
       // bool found, bytes solutionDocURI, uint256 totalVotes, bool isSubmitted, bool isShortlisted, bool isClaimed
       var solDocURI = this.context.drizzle.web3.utils.toAscii(s.solutionDocURI);
       if(s.found === true)
       {
-
         var enableClaim = false;
         var enableVote = false;
-
         // if Approved && Solution Submitted and HasVotes either from Foundation Member or Stake Member and should complete evaluation
         if(this.state.submitters[index] === this.props.accounts[0] && s.totalVotes > 0 && s.isClaimed === false
           && (this.state.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(this.state.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(this.state.endEvaluation,10) )
@@ -194,18 +192,18 @@ class RequestSolution extends Component {
         return (
           <React.Fragment>
             <TableRow key={index}> 
-                <TableCell style={tableColStyles} component="th" title={this.state.submitters[index]} scope="row">
-                  {s.isShortlisted === true ? <b>*</b>: ""}
-                  {this.helperFunctions.toShortAddress(this.state.submitters[index])}
-                </TableCell>
-                <TableCell style={tableColStyles} align="right">{solDocURI}</TableCell>
-                <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
-                <TableCell style={tableColStyles} align="right">
-                  {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
-                  <button class="blue float-right ml-4" disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
-                  <button className="blue float-right ml-4" disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
-                </TableCell>                
-              </TableRow>
+              <TableCell style={tableColStyles} component="th" title={this.state.submitters[index]} scope="row">
+                {s.isShortlisted === true ? <b>*</b>: ""}
+                {this.helperFunctions.toShortAddress(this.state.submitters[index])}
+              </TableCell>
+              <TableCell style={tableColStyles} align="right"><a href={solDocURI} target="_new">{solDocURI}</a></TableCell>
+              <TableCell style={tableColStyles} align="right">{s.totalVotes}</TableCell>
+              <TableCell className="view-sol-popup-buttons" style={tableColStyles} align="right">
+                {/* {s.totalVotes} - {s.isSubmitted} - {s.isShortlisted} - {s.isClaimed} <br/> */}                 
+                <button className={enableVote ? 'blue float-right ml-4' : 'disable'} disabled={!enableVote} onClick={event => this.handleVoteButton(event, this.state.submitters[index])}>Vote</button>
+                <button className={enableClaim ? 'blue float-right ml-4' : 'disable'} disabled={!enableClaim} onClick={event => this.handleClaimButton(event, this.state.requestId)}>Claim</button>
+              </TableCell>                
+            </TableRow>
           </React.Fragment>
         );
       }
@@ -219,7 +217,7 @@ class RequestSolution extends Component {
         <Paper styles={rootStyles}>
           <Table styles={tableStyles}>
             <TableHead>
-              <TableRow>
+              <TableRow key="header">
                 <TableCell style={tableColStyles}>Submitter</TableCell>
                 <TableCell style={tableColStyles} align="right">Solution URI</TableCell>
                 <TableCell style={tableColStyles} align="right"># of Votes</TableCell>
@@ -228,6 +226,13 @@ class RequestSolution extends Component {
             </TableHead>
             <TableBody>
               {this.state.dataKeySubmitters.map((submitter, index) =>  this.createRow(submitter, index))}
+              {
+                this.state.dataKeySubmitters.length === 0 ? 
+                <TableRow key="noDataFound">
+                  <TableCell colSpan={4}>No submissions available.</TableCell>
+                </TableRow>
+                : null
+              }
             </TableBody>
           </Table>
         </Paper>

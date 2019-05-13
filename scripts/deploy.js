@@ -14,12 +14,14 @@ AWS.config.update({ region })
 const s3 = new AWS.S3({ "apiVersion": "2006-03-01" })
 
 const getFilePath = file =>
-  relative(cwd(), file).split("/").slice(1).join("/")
+  relative(cwd(), file).split("\\").slice(1).join("/")
 
 readdir(appBuild)
   .then(files => Promise.all(files.map(Key => {
     const fileRelativePath = getFilePath(Key)
-    console.log(fileRelativePath)
+    //console.log("Key - " + Key);
+    //console.log("appBuild - " + appBuild);
+    console.log("fileRelativePath - " + fileRelativePath)
     return s3.upload({
         Bucket,
         "Key": fileRelativePath,

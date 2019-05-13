@@ -4,6 +4,8 @@ import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
 
+//import Vote from '../Vote';
+
 //components
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
@@ -19,12 +21,15 @@ import Divider from '@material-ui/core/Divider';
 
 import ApproveRequest from '../../components/ApproveRequest'
 import StakeRequest from '../../components/StakeRequest'
-
+import SubmitSolutionRequest from '../../components/SubmitSolutionRequest'
 import RequestSolution from '../../components/RequestSolution'
 
 import RequestStakeDetails from '../../components/RequestStakeDetails'
 import HelperFunctions from '../HelperFunctions'
-
+import RequestIPFSData from '../RequestIPFSData'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
+import RowIcon from '../../../../images/sneticon.png'
 
 //inline styles
 // const styles = {
@@ -46,6 +51,18 @@ const dialogApproveStyles = {
   }
 }
 
+const dialogSubSolStyles = {
+  style: {
+    backgroundColor: 'white',
+    padding: 20,
+    maxWidth: '900px'
+  }
+}
+
+const localModalDialogStyle = {
+    maxWidth: '900px'
+}
+
 const rootStyles = {
   style: {
     width: '100%',
@@ -60,7 +77,12 @@ const rowStyles = {
   }
 }
 
-const BN = web3.utils.BN
+const rowCardStyles = {
+  style: {
+    backgroundColor: 'white',
+    width: '100%',
+  }
+}
 
 class RequestListV2 extends Component {
 
@@ -110,24 +132,21 @@ class RequestListV2 extends Component {
       dialogOpenShowStake: false,
       dialogOpenVoteRequest: false,
       blockNumber: 0,
-
       alertText: '',
       expanded: null,
-
       solutionDocumentURI: '',
       approveRequestId: 0,
       approveRequestExpiry: 0,
       selectedRequestId: 0,
       selectedRequestExpiry: 0,
-
       dataKeyMemberKeys: null,
       foundationMembers: [],
       isFoundationMember: false,
-      foundationMemberRole: 0
+      foundationMemberRole: 0,
+      stackId: null,
     }
 
     this.setBlockNumber();
-
   }
 
   componentDidMount() {
@@ -140,6 +159,7 @@ class RequestListV2 extends Component {
     this.setFoundationMembers(this.props.ServiceRequest)
 
     ReactDOM.findDOMNode(this).scrollIntoView();
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -163,7 +183,6 @@ class RequestListV2 extends Component {
   }
 
   setRequests(contract) {
-
     if (contract.nextRequestId[this.state.dataKeyNextRequestId] !== undefined && this.state.dataKeyNextRequestId !== null) {
       const nextRequestId = contract.nextRequestId[this.state.dataKeyNextRequestId].value
       this.setState({nextRequestId})
@@ -173,22 +192,17 @@ class RequestListV2 extends Component {
         dataKeyRequestKeys.push(this.contracts.ServiceRequest.methods.getServiceRequestById.cacheCall(i))
       }
       this.setState({dataKeyRequestKeys});
-
     }
   }
 
   setFoundationMembers(contract) {
-
     if (contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys] !== undefined && this.state.dataKeyMemberKeys !== null) {
-
       this.setState({
         foundationMembers: contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].value
       }, () => {
         const exists = this.state.foundationMembers.some(m => m === this.props.accounts[0])
         this.setState({isFoundationMember : exists});
       });
-
-
     }
   }
 
@@ -208,7 +222,6 @@ class RequestListV2 extends Component {
   }
 
   handleStakeButton(event, requestId, expiry) {
-
     this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry}, () => {
       this.setState( {dialogOpenStakeRequest: true});
     })
@@ -221,47 +234,36 @@ class RequestListV2 extends Component {
     })
   }
 
-  
-  handleSubmitSolutionButton(event, requestId, expiry) {
-    this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry}, () => {
+  handleSubmitSolutionButton(event, requestId, expiry, docURI) {
+    this.setState({selectedRequestId: requestId, selectedRequestExpiry: expiry, selectedRequestDocURI: docURI}, () => {
       this.setState( {dialogOpenSubmitSolutionRequest: true});
     })
   }
 
-
   handleRejectButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["rejectRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    this.setState({stackId}, () => {this.createToast()});
   }
 
   handleCloseButton(event, requestId) {
     const stackId = this.contracts.ServiceRequest.methods["closeRequest"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    this.setState({stackId}, () => {this.createToast()});
   }
 
   handleSubmitSolution2Button() {
     const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.solutionDocumentURI);
     if(this.state.solutionDocumentURI.length > 0) {
+
       const stackId = this.contracts.ServiceRequest.methods["createOrUpdateSolutionProposal"].cacheSend(this.state.selectedRequestId, docURIinBytes, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (this.state.solutionDocumentURI.length === 0) {
       this.setState({ alertText: 'Oops! Invalid solution document URI.'})
       this.handleDialogOpen()
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
       this.handleDialogOpen()
-    }
-
-    
+    }    
   }
 
   handleShowStakeButton(event, requestId) {
@@ -294,11 +296,16 @@ class RequestListV2 extends Component {
     this.setState( {dialogOpenShowStake: false});
   }
 
-
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+  
   createActionRow(req, index) {
-
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
+
+      var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
 
       var enableStake = false;
       var enableSubmitSol = false;
@@ -321,177 +328,216 @@ class RequestListV2 extends Component {
         enableVote = true;
       }
 
-      if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
+      if(this.state.compRequestStatus === "777") {
+
         return (
-            <ExpansionPanelActions>
-                <div className="row">
-                    <div className="col">
-                      <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+          // My Requests
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+                <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
+              </div>
+            </div>
+          </ExpansionPanelActions>
+
         )
-      } else if(r.status === "0") {
+
+      } else if(r.status === "4") {
         return (
-            <ExpansionPanelActions>
-                <div className="row">
-                    <div className="col">
-                        <button className="blue float-right ml-4" disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
-                        <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
-                    </div>
-                </div>
-            </ExpansionPanelActions>
-        )
-      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
-        return (
-            <ExpansionPanelActions>
-                <div className="row">
-                    <div className="col">
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration)}> Submit Solution</button>
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Stake Request</button>
-                        <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View / Vote Solution</button>
-                        <button className="red float-right ml-4" disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Request</button>                                   
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+        // closed
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
       } else if(r.status === "2") {
         return (
-            <ExpansionPanelActions>
-                <div className="row">
-                    <div className="col">
-                    {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+        // rejected
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
-      } else if(r.status === "4") {
+      } else if(r.status === "0" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
         return (
-            <ExpansionPanelActions>
-                <div className="row">
-                    <div className="col">
-                      {/* <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button> */}
-                    </div>
-                </div>
-            </ExpansionPanelActions>
+          // open / Pending
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row active-tab-btns">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                  <button className={this.state.isFoundationMember ? 'blue float-right ml-4' : 'disable'} disabled={!this.state.isFoundationMember} data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleApproveButton(event, r.requestId, r.expiration)}>Approve Request</button>
+                  <button className={this.state.isFoundationMember ? 'red float-right ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleRejectButton(event, r.requestId)}>Reject Request</button>                                   
+              </div>
+            </div>
+          </ExpansionPanelActions>
         )
-      }
+      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
+        return (
+        // Approved / active
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row completed-tab-btns">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className={enableStake ? 'blue float-right ml-4' : 'disable'} disabled={!enableStake} onClick={event => this.handleStakeButton(event, r.requestId, r.expiration)}>Fund This Project</button> 
+                <button className={enableSubmitSol ? 'blue float-right ml-4' : 'disable'} disabled={!enableSubmitSol} onClick={event => this.handleSubmitSolutionButton(event, r.requestId, r.expiration, docURI)}> Submit Solution</button>
+                <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      } else if(this.state.compRequestStatus === "888" && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) {
+        return (
+        // Completed
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row completed-tab-btns">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      } else if(this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) {
+        return (
+          // expired
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+            <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className="blue float-right ml-4" onClick={event => this.handleShowStakeButton(event, r.requestId)}>Claim Back</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      } 
+      
     }
   }
 
   createDetailsRow(req, index) {
-
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
-
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
       var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
-      if(this.state.compRequestStatus === "999" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) {
-        return (
-          <ExpansionPanelDetails>
-              <div className="row singularity-stake-details">
-                  <div className="col-8">
-                      <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                      <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                      <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                  </div>                                        
-              </div>
-          </ExpansionPanelDetails>
-        )
-      } else if(r.status === "0") {
-        return (
-            <ExpansionPanelDetails>
-              <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                    </div>                                        
-                </div>
-            </ExpansionPanelDetails>
-        )
-      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
-        return (
-            <ExpansionPanelDetails>
-              <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                    </div>                                        
-                </div>
-            </ExpansionPanelDetails>
-        )
-      } else if(r.status === "2") {
-        return (
-            <ExpansionPanelDetails>
-                <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span> <span>{r.requester}</span></div>
-                        <div><span class="singularity-label">documentURI:</span> <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span> <span>{r.expiration}</span></div>
-                    </div>                                        
-                </div>
-            </ExpansionPanelDetails>
-        )
-      } else if(r.status === "4") {
-        return (
-            <ExpansionPanelDetails>
-                <div className="row singularity-stake-details">
-                    <div className="col-8">
-                        <div><span class="singularity-label">Requester:</span>  <span>{r.requester}</span></div>
-                        <div>d<span class="singularity-label">ocumentURI:</span>  <span>{docURI}</span></div>
-                        <div><span class="singularity-label">Expiry:</span>  <span>{r.expiration}</span></div>
-                    </div>                                        
-                </div>
-            </ExpansionPanelDetails>
-        )
-      }
-    }
 
+      var reqStatus = '';
+      var reqStatusElement = '';
+
+      // Compute Status only for My Requests
+      if(this.state.compRequestStatus === "777") {
+
+        if(r.status === "4") {
+          reqStatus = "Closed"
+        } else if (r.status === "2") {
+          reqStatus = "Rejected"
+        } else if (r.status === "0") {
+          reqStatus = "Pending"
+        } else if (r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
+          reqStatus = "Active"
+        } else {
+          reqStatus = "Expired"
+        }
+        reqStatusElement = <p><span className="bold">Status:</span><span>{reqStatus}</span></p>
+      }
+
+      return (
+        // Request details are same irrespective of the status
+        <ExpansionPanelDetails className="expansion-panel-details">
+          <div className="row singularity-stake-details expansion-summary">
+
+            <div className="col-md-12 col-lg-2 image-contianer"></div>
+            <div className="col-md-12 col-lg-5 description-container">
+              <span className="description-title">Description:</span>
+              <p className="description-txt"><RequestIPFSData key="des_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="description" /> </p>
+            </div>
+            <div className="col-md-12 col-lg-5 right-side-data">
+              <div className="project-url-container">
+                <span className="bold">Project URL: </span>
+                  <RequestIPFSData 
+                    key="doc_{r.requestId}" 
+                    requestId={r.requestId} 
+                    IPFSHash={docURI} 
+                    getField="documentURI" 
+                  />
+              </div>
+              <div className="submission-variable-name">
+                <p><span className="bold">Submission: </span><span>{r.submitters.length}</span></p>
+                {reqStatusElement}
+              </div>
+              {/* <div className="solution-vote-div">
+                <span className="bold">Solution Vote:</span>
+                <Vote/>
+              </div> */}
+            </div>
+          </div>
+        </ExpansionPanelDetails>
+      )
+
+    }
   }
 
+
   createRow(req, index) {
-
     const {expanded} = this.state;
-
     if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
 
       var r = this.props.ServiceRequest.getServiceRequestById[req].value;
-      // Numbers are hard coded to check for Expiry as we dont manage expiry status for a request explicitly
-      if((r.status === this.state.compRequestStatus && r.status !== "1") || 
-        (this.state.compRequestStatus === "1" && r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) ) ||
-        (this.state.compRequestStatus === "999" && parseInt(r.expiration,10)<parseInt(this.state.blockNumber,10) ) )
+      // Numbers are hard coded to check for Expiry and completed as we dont manage these status for a request explicitly
+
+      if( (r.status === "4" && this.state.compRequestStatus === r.status) || 
+          (r.status === "2" && this.state.compRequestStatus === r.status) ||
+          (r.status === "0" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (this.state.compRequestStatus === "777" && r.requester === this.props.accounts[0]) || 
+          (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) ||
+          (this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) )
       {
+
+        var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
+
         return (
-            <ExpansionPanel expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanel className="expansion-panel" key={r.requestId} expanded={expanded === r.requestId} onChange={this.handleChange(r.requestId)}>
+            <ExpansionPanelSummary className="expansion-panel-summary" expandIcon={<ExpandMoreIcon />}>
 
-                <div className="card" style={rowStyles.style}>
-                    <div className="card-header" style={rowStyles.style}>
-                        <div className="row singularity-stake-details">
-                            <div className="col-3"><span className="float-left text-left">{r.requestId}</span></div>
-                            <div className="col-5"><span className="float-left text-left">{r.requester}</span></div>
-                            <div className="col-3">
-                              <span className="float-right text-right">
-                                <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleShowStakeButton(event, r.requestId)}>{this.helperFunctions.fromWei(r.totalFund)}</button>
-                              </span>
-                            </div>
-                            <div className="col-1">
-                            </div>
-                        </div>
+              <div className="card" style={rowCardStyles.style}>
+                <div className="card-header" style={rowStyles.style}>
+                  <div className="row singularity-stake-details">
+                    <div className="col-sm-12 col-md-12 col-lg-2">
+                      <img src={RowIcon} alt="Request" className="request-icon"/>
                     </div>
+                    <div className="col-sm-12 col-md-12 col-lg-3 information-data">
+                      <p><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></p>
+                      <p>Requested by: <span>{this.helperFunctions.toShortAddress(r.requester)}</span></p>
+                    </div>
+                    <div className="col-sm-12 col-md-12 col-lg-4 award-amt-data">
+                      <p>Award: {this.helperFunctions.fromWei(r.totalFund)} AGI tokens</p>
+                      <p>{r.stakeMembers.length} Backers</p>
+                    </div>
+                    <div className="col-sm-12 col-md-12 col-lg-3 award-amt-data">
+                      <p>Expires on:</p> 
+                      <p>{this.helperFunctions.computeDateFromBlockNumber(this.state.blockNumber, r.expiration)}</p>
+                    </div>                    
+                  </div>
                 </div>
+              </div>
 
-                {/* <Typography color="primary">{r.requestId}</Typography>
-                <Typography color="secondary">{r.requester}</Typography>
-                <Typography >
-                  <button className="blue float-right ml-4" data-toggle="modal" data-target="#exampleModal" onClick={event => this.handleShowStakeButton(event, r.requestId)}>{this.helperFunctions.fromWei(r.totalFund)}</button>
-                </Typography> */}
-              </ExpansionPanelSummary>
-              {this.createDetailsRow(req, index)}
-              <Divider />
-              {this.createActionRow(req, index)}
-            </ExpansionPanel>
+            </ExpansionPanelSummary>
+            {this.createDetailsRow(req, index)}
+            <Divider />
+            {this.createActionRow(req, index)}
+          </ExpansionPanel>
         );
       }
     }
@@ -513,34 +559,11 @@ class RequestListV2 extends Component {
   };
 
   render() {
-
     return (
       <div >
-        <Paper styles={rootStyles}>
+        <Paper styles={rootStyles} className="paper-ai-services">
 
-          <ExpansionPanel expanded={false}>
-            <ExpansionPanelSummary>
-
-              <div className="accordion-header card">
-                  <div className="card-header">
-                        <div className="row singularity-stake-details">
-                          <div className="col-3"><span className="float-left text-left">Request Id</span></div>
-                          <div className="col-5"><span className="float-left text-left">Requester</span></div>
-                          <div className="col-3"><span className="float-right text-right">Total Funds (AGI)</span></div>
-                          <div className="col-1">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              {/* <Typography className={classes.heading}>Request Id</Typography>
-                <Typography className={classes.secondaryHeading}>Requester</Typography>
-                <Typography className={classes.secondaryHeading}>Total Funds (AGI)</Typography> */}
-
-            </ExpansionPanelSummary>
-          </ExpansionPanel>
-          {/* this.generateRequests() */ this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) } 
-
+          { this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) }
         </Paper>
 
         <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
@@ -548,80 +571,69 @@ class RequestListV2 extends Component {
           <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
         </Dialog>
 
-        <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenApproveRequest} >
-
-          <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                      <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Approve Request</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleApproveRequestDialogClose}>
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                          <div className="clear"></div><br/>
-                      </div>
-                      <div className="modal-body">
-                      <ApproveRequest requestId={this.state.approveRequestId} requestExpiry={this.state.approveRequestExpiry} />
-                      </div>
-                  </div>
+        <Dialog className="approve-req-dialog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenApproveRequest} >
+          <div className="approve-request-popup modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Approve Request</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleApproveRequestDialogClose}>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div className="clear"></div><br/>
               </div>
+              <div className="modal-body">
+              <ApproveRequest requestId={this.state.approveRequestId} requestExpiry={this.state.approveRequestExpiry} />
+              </div>
+            </div>
+          </div>
         </Dialog>
 
 
-        <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
-          <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                      <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Stake Request</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleStakeRequestDialogClose}>
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                          <div className="clear"></div><br/>
-                      </div>
-                      <div className="modal-body">
-                      <StakeRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} />
-                      </div>
-                  </div>
+        { /* Fund this project / stake request */ } 
+        <Dialog className="fund-this-proj-dialog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenStakeRequest} >
+          <div className="modal-dialog stake-req-popup" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Fund This Project</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleStakeRequestDialogClose}>
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                <div className="clear"></div><br/>
               </div>
-          </Dialog>
-
-          <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenSubmitSolutionRequest} >
-          <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                      <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Submit Solution</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleSubmitSolutionDialogClose}>
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                          <div className="clear"></div><br/>
-                      </div>
-                      <div className="modal-body">
-                        <div className="main-content">
-                            <div > 
-                                <p><strong>Submit Solution to Request Id - {this.state.selectedRequestId} </strong></p>
-                                <form className="pure-form pure-form-stacked">
-                                  <div class="singularity-content">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label>Solution Document URI:</label><div class="clearfix"></div>
-                                            <input className="singularity-input" name="solutionDocumentURI" type="text" placeholder="Document URI:" autoComplete='off' value={this.state.solutionDocumentURI} onChange={this.handleRequestInputChange} />
-                                            <div class="spacer"></div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="blue" onClick={this.handleSubmitSolution2Button}>Submit</button>
-                                  </div>
-                                </form>
-                            </div>
-                        </div>
-                  </div>
+              <div className="modal-body">
+                <StakeRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} />
               </div>
             </div>
-          </Dialog>
+          </div>
+        </Dialog>
 
-          <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenShowStake} >
+        {/* submit solution dialog box */ }
+        <Dialog 
+          className="submit-solution-dailog" 
+          PaperProps={dialogSubSolStyles} 
+          open={this.state.dialogOpenSubmitSolutionRequest}
+        >
+          <div className={localModalDialogStyle} className="submit-solution-div" role="document">
+            <div className="submit-solution-popup modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Solution Submission</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleSubmitSolutionDialogClose}>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div className="clear"></div><br/>
+              </div>
+              <div className="modal-body">
+                <SubmitSolutionRequest requestId={this.state.selectedRequestId} requestExpiry={this.state.selectedRequestExpiry} requestDocURI={this.state.selectedRequestDocURI}/>      
+              </div>
+            </div>
+          </div>
+        </Dialog>
+
+        <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenShowStake} >
            <div role="document"> {/* className="modal-dialog"  */}
                   <div className="modal-content">
                       <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Request Stake Details</h5>
+                          <h5 className="modal-title" id="exampleModalLabel">Request Backing Details</h5>
                           <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleShowStakeDialogClose}>
                               <span aria-hidden="true">&times;</span>
                           </button>
@@ -634,28 +646,24 @@ class RequestListV2 extends Component {
             </div>
           </Dialog>
 
-          <Dialog PaperProps={dialogApproveStyles} open={this.state.dialogOpenVoteRequest} >
+          <Dialog className="req-solution-dailog" PaperProps={dialogApproveStyles} open={this.state.dialogOpenVoteRequest} >
            <div role="document"> {/* className="modal-dialog"  */}
-                  <div className="modal-content">
-                      <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Request Solutions and Vote</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleVoteDialogClose}>
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                          <div className="clear"></div><br/>
-                      </div>
-                      <div className="modal-body">
-                        <RequestSolution requestId={this.state.selectedRequestId}/>
-                      </div>
-                  </div>
+              <div className="request-solution-popup modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Request Solutions and Vote</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleVoteDialogClose}>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div className="clear"></div>
+                  <br/>
+                </div>
+                <div className="modal-body">
+                  <RequestSolution requestId={this.state.selectedRequestId}/>
+                </div>
+              </div>
             </div>
           </Dialog>
-
-      </div>
-
-
-
-
+        </div>
     )
   }
 }

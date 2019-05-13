@@ -12,6 +12,8 @@ import TableRow from '@material-ui/core/TableRow';
 //components
 import Paper from '@material-ui/core/Paper'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const rootStyles = {
@@ -51,6 +53,7 @@ class RequestStakeDetails extends Component {
       stakeMembers: [], 
       submitters: [],
       blockNumber: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -115,10 +118,13 @@ class RequestStakeDetails extends Component {
   handleClaimBackButton(event, requestId) {
 
     const stackId = this.contracts.ServiceRequest.methods["requestClaimBack"].cacheSend(requestId, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash);
-      }
+    this.setState({stackId}, () => {this.createToast()});
+
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("rsd")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
   }
 
   createRow(staker, index) {
@@ -144,7 +150,7 @@ class RequestStakeDetails extends Component {
                 <TableCell component="th" title={this.state.stakeMembers[index]} scope="row">{this.helperFunctions.toShortAddress(this.state.stakeMembers[index])}</TableCell>
                 <TableCell align="right">{this.helperFunctions.fromWei(s.stake)}</TableCell>
                 <TableCell align="right">
-                  <button className="blue float-right ml-4" disabled={!enableClaimBack} onClick={event => this.handleClaimBackButton(event, this.state.requestId)}>Claim Back</button>
+                  <button className={enableClaimBack ? 'blue float-right ml-4' : 'disable'} disabled={!enableClaimBack} onClick={event => this.handleClaimBackButton(event, this.state.requestId)}>Claim Back</button>
                 </TableCell>
               </TableRow>
           </React.Fragment>
@@ -154,24 +160,30 @@ class RequestStakeDetails extends Component {
   }
 
   render() {
- 
     return (
-      <div class="singularity-dialog-table-class">
+      <div className="singularity-dialog-table-class">
         <Paper styles={rootStyles}>
           <Table style={tableStyles} elevation={0}>
             <TableHead>
-              <TableRow>
-                <TableCell>Staker</TableCell>
+              <TableRow key="headerkey">
+                <TableCell>Backing Account</TableCell>
                 <TableCell align="right">Amount (AGI)</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.dataKeyStakeMembers.map((staker, index) =>  this.createRow(staker, index))}
+              {
+                this.state.totalFund === "0" ?
+                <TableRow key="noDataFound">
+                  <TableCell colSpan={3}>No backing details available.</TableCell>
+                </TableRow>
+                : null
+              }
+
             </TableBody>
           </Table>
         </Paper>
-
       </div>
     )
   }

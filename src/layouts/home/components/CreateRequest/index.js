@@ -2,18 +2,21 @@ import React, { Component } from 'react'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
 import web3 from 'web3'
+import {Redirect} from 'react-router-dom'
 
 //components
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
 import TransactionResult from '../TransactionResult'
 import HelperFunctions from '../HelperFunctions'
+import { toast } from 'react-toastify';
 
 //inline styles
 const dialogStyles = {
   style: {
-    backgroundColor: '#F9DBDB',
+    backgroundColor: 'white',
     padding: 20
   }
 }
@@ -28,6 +31,8 @@ class CreateRequest extends Component {
     this.context = context
     this.helperFunctions = new HelperFunctions();
 
+    this.handleLeftNavClick = this.handleLeftNavClick.bind(this)
+
     this.handleRequestInputChange = this.handleRequestInputChange.bind(this)
     this.handleAmountInputChange = this.handleAmountInputChange.bind(this)
     this.handleBlockNumInputChange = this.handleBlockNumInputChange.bind(this)
@@ -36,17 +41,34 @@ class CreateRequest extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
 
+    this.validateGitHandle = this.validateGitHandle.bind(this)
+    this.handleRedirect= this.handleRedirect.bind(this)
+
+    var dt = new Date()
+    // Default expiration date is set to 100 Days
+    var defExpirtaionDate = new Date(Date.parse(dt) + (100*24*60*60*1000))
+
     this.state = {
       dialogOpen: false,
+      requestTitle: '',
+      requestDesc: '',
       initialStake: 0,
       expiration: 0,
+      expirationDate: defExpirtaionDate.toISOString().slice(0,10),
       documentURI: '',
       dataKeyTokenBalance: null,
-      tknBalance: 0,
       blockNumber: 0,
+      requestAuthor: '',
+      requestTrainingDS: '',
+      requestAcptCriteria: '',
       stackId: null,
+      isValidGitHanlde: false,
       showStatus: false,
-      alertText: ''
+      selectedLeftNav: 'nav1',
+      alertText: '',
+      showConfirmation: false,
+      tokenBalance: undefined,
+      redirectTo:''
     }
 
     this.setBlockNumber();
@@ -66,6 +88,10 @@ class CreateRequest extends Component {
         this.setBlockNumber();
         this.setTokenBalance(this.props.ServiceRequest)
     }
+
+    // if(prevState.requestAuthor !== this.state.requestAuthor && this.state.requestAuthor !== '') {
+    //   this.validateGitHandle(this.state.requestAuthor)
+    // }
   }
 
 
@@ -83,9 +109,39 @@ class CreateRequest extends Component {
       })
     }
   }
-  
+
+  handleRedirect(event, destURLPart) {
+    this.setState({redirectTo: destURLPart})
+  }
+
   handleRequestInputChange(event) {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  validateGitHandle() {
+    const gitHandle = this.state.requestAuthor
+    const gitURL = "https://api.github.com/users/" + gitHandle
+    const reqOptions = {
+      'mode': 'cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: 'GET'
+    }
+    fetch(gitURL, reqOptions)
+        .then(response => 
+            {
+              if(response.ok) {
+                this.setState({isValidGitHanlde: true})
+              }
+              else {
+                this.setState({isValidGitHanlde: false})
+              }
+            })
+        .catch(err => 
+            {
+              this.setState({isValidGitHanlde: false})
+          })
   }
 
   handleBlockNumInputChange(event) {
@@ -109,19 +165,6 @@ class CreateRequest extends Component {
     }
   }
   
-//   handleAmountInputChange(event) {
-//     if (event.target.value.match(/^[0-9]{1,40}$/)) {
-//       var amount = new BN(event.target.value)
-//       if (amount.gt(0)) {
-//         this.setState({ [event.target.name]: event.target.value })
-//       } else {
-//         this.setState({ [event.target.name]: 0 })
-//       }
-//     } else if(event.target.value === '') {
-//       this.setState({ [event.target.name]: '' })
-//     }
-//   }
-
   handleDialogOpen() {
     this.setState({ dialogOpen: true })
   }
@@ -130,38 +173,80 @@ class CreateRequest extends Component {
     this.setState({ dialogOpen: false })
   }
 
-  handleCreateButton() {
+  handleCreateButton(event, needConfirmation) {
+
+    const ipfsURL = "https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/ipfs"
 
     //value, expiration, documentURI 
     var zeroBN = new BN(0)
     var initialStakeBN = new BN(this.helperFunctions.toWei(this.state.initialStake))
     var tokenBalanceBN = new BN(this.state.tokenBalance)
 
-    const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
+    //const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
+    const expiration = parseInt(this.state.blockNumber,10) + this.helperFunctions.computeBlocksFromDates(new Date(), this.state.expirationDate)
 
-
-    console.log("this.state.initialStake - " + this.state.initialStake)
-    console.log("this.helperFunctions.toWei(this.state.initialStake) - " + this.helperFunctions.toWei(this.state.initialStake))
-    console.log("initialStakeBN - " + initialStakeBN.toString())
-
-    if(this.state.documentURI.length > 0 && 
+    //this.state.documentURI.length > 0 &&
+    if( this.state.requestTitle.length > 0 && 
       initialStakeBN.gt(zeroBN) && 
-      initialStakeBN.lte(tokenBalanceBN) && 
-      parseInt(this.state.expiration,10) > parseInt(this.state.blockNumber,10)) {
-      const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), this.state.expiration, docURIinBytes, {from: this.props.accounts[0]})
+      initialStakeBN.lte(tokenBalanceBN) && this.state.isValidGitHanlde === true && 
+      parseInt(expiration,10) > parseInt(this.state.blockNumber,10)) {
 
-      this.setState({stackId});
-      this.setState({loadingIndicator: true});
-      this.setState({showStatus: true});
+        this.handleDialogClose();
 
-    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gte(tokenBalanceBN)) {
-      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI Escrow.`})
+        if(needConfirmation) {
+          this.setState({showConfirmation: true})
+          return;
+        }
+        this.setState({showConfirmation: false})
+
+        var ipfsInput = { 
+          "title" : this.state.requestTitle, 
+          "description" : this.state.requestDesc,
+          "documentURI": this.state.documentURI,
+          "author": this.state.requestAuthor,
+          "training-dataset": this.state.requestTrainingDS,
+          "acceptance-criteria": this.state.requestAcptCriteria,
+          "created": (new Date()).toISOString().slice(0,10)
+        }
+
+        const body = {
+          'mode': 'cors',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST',
+          body: JSON.stringify(ipfsInput)
+        }
+
+        fetch(ipfsURL, body)
+        .then(response => response.json())
+        .then(data => 
+          {
+//console.log("ipfs hash - " + data.data.hash);
+            const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(data.data.hash);
+            const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
+
+            this.setState({stackId}, () => {this.createToast()});
+
+          })
+          .catch(err => 
+            {
+              console.log("err - " + err)
+              this.setState({ alertText: `Oops! Something went wrong while creating the request.`})
+              this.handleDialogOpen()
+          })
+
+    } else if (this.state.requestTitle.length === 0) {
+      this.setState({ alertText: `Oops! Request title is blank. Please provide a title for te request`})
       this.handleDialogOpen()
-    } else if (this.state.expiration === '' || parseInt(this.state.expiration,10) < parseInt(this.state.blockNumber,10)) {
-      this.setState({ alertText: `Oops! Expiration should be great than current blocknumber.`})
-      this.handleDialogOpen()  
-    }else if (this.state.documentURI.length === 0) {
-      this.setState({ alertText: `Oops! It is invalid document URI.`})
+    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(tokenBalanceBN)) {
+      this.setState({ alertText: `Oops! You dont have enough token balance in RFAI escrow. Please add tokens to the RFAI escrow from the Account page`})
+      this.handleDialogOpen()
+    } else if (!this.state.isValidGitHanlde) {
+      this.setState({ alertText: `Oops! Invalid github handle provided. A valid github handle has to be provided.`})
+      this.handleDialogOpen()
+    } else if (expiration === '' || parseInt(expiration,10) <= parseInt(this.state.blockNumber,10)) {
+      this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.`})
       this.handleDialogOpen()  
     } else {
       this.setState({ alertText: 'Oops! Something went wrong. Try checking your transaction details.'})
@@ -170,53 +255,194 @@ class CreateRequest extends Component {
 
   }
 
-  render() {
- 
+  handleLeftNavClick(event, selectedLeftNav) {
+    this.setState({selectedLeftNav});
+  }
+
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+
+  renderRightPane() {
+
+    if(this.state.selectedLeftNav === 'nav1') {
+      return (
+        <div className="singularity-content create-req-overview-content">
+          <p>
+            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://github.com/singnet/rfai-proposal" target="_blank">repo</a>. You can view the template for the request <a href="https://github.com/singnet/rfai-proposal/blob/master/rfai-proposal-template.md" target="_blank">here</a>
+          </p>
+          <p>
+            We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). The foundation will review and approve requests which will appear on here
+          </p>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav2') {
+      return (
+        <div className="singularity-content">
+          <div>
+          The foundation will review all requests and will approve them. In general we look for 
+            <li>Clear problem description</li>
+            <li>Relevant problem which if solved will help the community</li>
+            <li>Quantitative evaluation criteria</li>
+          </div>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav3') {
+      return (
+        <div className="singularity-content">
+          <div>
+              <li>Raise a github pull request based on the template to </li>
+              <li>Provide a title and description along with the URL of the github pull request</li>
+              <li>In order to incentivize people to develop solutions we require that you back your requests with AGI tokens. The tokens will be distributed to the accepted solutions. See the Submission Evaluation process for more details</li>
+              <li>Provide an expiry date for the request. Meaning the date post which you can withdraw your funds if no submission has been made</li>
+          </div>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'nav4') {
+      return (
+        <div className="singularity-content">
+          <div>
+              <li>Raise a github pull request based on the template to </li>
+              <li>Provide a title and description along with the URL of the github pull request</li>
+              <li>In order to incentivize people to develop solutions we require that you back your requests with AGI tokens. The tokens will be distributed to the accepted solutions. See the Submission Evaluation process for more details</li>
+              <li>Provide an expiry date for the request. Meaning the date post which you can withdraw your funds if no submission has been made</li>
+          </div>
+        </div>
+      )
+    } else if(this.state.selectedLeftNav === 'navCreateRequest') {
+      return (
+        <div className="singularity-content create-req-submit-req-content">
+          <div className="row">
+          <input name="requestTitle" type="text" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />
+            <label>Request Title</label>
+          </div>
+
+          <div className="row">
+          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} onBlur={this.validateGitHandle} />         
+            <label>Requestor Name (Github handle)</label>
+          </div>
+
+          <div className="row description">
+            <textarea name="requestDesc" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
+            <label>Description</label>
+            { /* <span>340 / 500 Characters</span> */ }
+          </div>
+
+          <div className="row">
+            <input name="documentURI" type="text" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
+            <label>Github Link</label>
+          </div>
+
+          <div className="row">
+            <input name="requestTrainingDS" type="text" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} />         
+            <label>Training Dataset URL</label>
+          </div>
+
+          <div className="row acceptance-criteria">
+            <textarea name="requestAcptCriteria" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
+            <label>Acceptance Criteria</label>
+            { /* <span>340 / 500 Characters</span> */ }
+          </div>
+
+          <div className="row">
+            <div className="col-md-12 escrow-bal-init-fund-amt">
+              <div className="col-md-6 escrow-bal">
+                <span>{this.helperFunctions.fromWei(this.state.tokenBalance)} AGI</span>
+                <label>Your Balance in Escrow</label>
+              </div>
+              <div className="col-md-6">
+                <input name="initialStake" type="number" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+                <label>Initial Funding Amount</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <label>Submission Deadline</label>
+            <TextField
+                name="expirationDate"
+                id="expirationDate"
+                type="date"
+                className="singularity-textfield calender"
+                defaultValue={this.state.expirationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={this.handleRequestInputChange}
+              />
+          </div>
+
+          {
+            this.state.dialogOpen ?
+            <div className="row">
+              <span className="error-message">{this.state.alertText}</span>
+            </div> : null
+          }
+          <div className="buttons">
+            <button type="button" className="blue" onClick={event => this.handleCreateButton(event, true)}>Submit</button>
+          </div>
+          
+        </div>
+      )
+    }
+
+  }
+
+  render() { 
+    if(this.state.redirectTo === 'myaccount') {
+      return <Redirect to="/myaccount" />
+    }
     return (
-      <div>
-        {/* <Paper style={styles} elevation={5}> */}
-          <form className="pure-form pure-form-stacked">
-          <div class="singularity-content">
-            <div class="row">
-                <div class="col">
-                    <label>Tokens to stake:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="initialStake" type="number" placeholder="Tokens to stake:" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
-                </div>
+      <div className="create-req-error-box">
+          {(typeof this.state.tokenBalance != 'undefined' && parseInt(this.state.tokenBalance) === 0) ? 
+            <div className="no-balance-text">
+              <p>You need tokens in your RFAI escrow account to create or back a request.</p>
+              <p>Click below to get started</p>
+              <div className="add-more-funds-btn">
+                  <button onClick ={event => this.handleRedirect(event, 'myaccount')} className="blue">add funds</button>
+              </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Expiration block number:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="expiration" type="number" placeholder="Expiration block number:" autoComplete='off' value={this.state.expiration} min={this.state.blockNumber} onChange={this.handleBlockNumInputChange} /> 
-                </div>
+            : null
+          }
+          <form className="pure-form pure-form-stacked create-request-form">
+            <div className="row">
+              <div className="col-md-12 create-req-header">
+                <h5>Create Request </h5>
+              </div>
             </div>
-            <div class="row">            
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Current Blocknumber: {this.state.blockNumber}</label> <div class="clearfix"></div>
-                </div>
-            </div>    
-            <div class="row">
-                <div class="col">
-                    <div class="spacer"></div>                
-                    <label>Document URI:</label><div class="clearfix"></div>
-                    <input className="singularity-input" name="documentURI" type="text" placeholder="document URI:" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} /><br/><br/>            
-                </div>
-            </div>    
-            
-            
-
-
-            <button type="button" className="blue" onClick={this.handleCreateButton}>Submit</button>
-            </div>
+            <div className="row create-new-req">
+              <div className="col-md-3 create-req-tabs">
+                <ul>
+                  <li className={this.state.selectedLeftNav === "nav1"?'active':''}>
+                    {/* <a href={null} onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'nav1')}>Overview</Button>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "nav2"?'active':''}>
+                    {/* <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'nav2')}>Evaluation</Button>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "nav3"?'active':''}>
+                    {/* <a href="#" onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</a> */}
+                    <Button  onClick={event => this.handleLeftNavClick(event, 'nav3')}>Process</Button>
+                  </li>
+                  <li className={this.state.selectedLeftNav === "navCreateRequest"?'active':''}>
+                    {/* <a href="#" title="New Request" onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</a> */}
+                    <Button onClick={event => this.handleLeftNavClick(event, 'navCreateRequest')}>Submit Request</Button>
+                  </li>
+                </ul>
+              </div>
+              <div className="col-md-9">
+                  {this.renderRightPane()}
+              </div>
+            </div>          
           </form>
         {/* </Paper> */}
 
-        { this.state.showStatus ? <TransactionResult key={this.state.stackId} stackId={this.state.stackId} /> : null }
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
+      <Dialog PaperProps={dialogStyles} open={this.state.showConfirmation} >
+        <p>Please make sure that the details entered are accurate. <br/> Click Ok to proceed and Cancel to revalidate!</p>
+        <p><Button  className="blue float-right ml-4" onClick={event => this.handleCreateButton(event, false)} >Ok</Button>
+        <Button className="blue float-right ml-4" onClick={() => this.setState({showConfirmation: false})} >Cancel</Button></p>
       </Dialog>
 
       </div>

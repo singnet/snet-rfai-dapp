@@ -5,9 +5,9 @@ import web3 from 'web3'
 
 //components
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -37,8 +37,6 @@ class ApproveToken extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleApproveButton = this.handleApproveButton.bind(this)
 
-    // this.setTXParamValue = this.setTXParamValue.bind(this)
-
     // this.props.tknSpender
     this.state = {
       spenderAddress: this.contracts.ServiceRequest.address,
@@ -46,6 +44,7 @@ class ApproveToken extends Component {
       tknAllowance: 0,
       approveAmount: '',
       dialogOpen: false,
+      stackId: null,
       alertText: ''
     }
 
@@ -65,7 +64,6 @@ class ApproveToken extends Component {
 
   setTokenAllowance(contract) {
     if (contract.allowance[this.state.dataKeyTokenAllowance] !== undefined && this.state.dataKeyTokenAllowance !== null) {
-console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + contract.allowance[this.state.dataKeyTokenAllowance].value)      
       this.setState({
         tknAllowance: contract.allowance[this.state.dataKeyTokenAllowance].value
       })
@@ -97,7 +95,12 @@ console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + co
     var allowanceBN = new BN(this.state.tknAllowance)
 
     if(approveAmountBN.gt(zeroBN) && approveAmountBN.gt(allowanceBN)) {
-      this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
+      this.handleDialogClose();
+
+      const stackId = this.contracts.SingularityNetToken.methods["approve"].cacheSend(this.state.spenderAddress, approveAmountBN.toString(), {from: this.props.accounts[0]})
+
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if(approveAmountBN.lte(allowanceBN)) {
       this.setState({ alertText: 'Oops! Approval amount should be more than current allowances.'})
       this.handleDialogOpen()
@@ -108,49 +111,30 @@ console.log("contract.allowance[this.state.dataKeyTokenAllowance].value - " + co
     }
   }
 
-  // setTXParamValue(_value) {
-  //   if (web3.utils.isBN(_value)) {
-  //     this.setState({
-  //       approveAmount: _value.toString()
-  //     })
-  //   } else {
-  //     this.setState({
-  //       approveAmount: ''
-  //     })
-  //   }
-  // }
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
 
   render() {
 
-    const tknAllowance = this.helperFunctions.fromWei(this.state.tknAllowance)
-
     return (
-      <div>
-        <Paper style={styles} elevation={0} className="singularity-content">
-          <p>Approve Tokens to spend by RFAI Escrow Contract </p>
+      <div className="approve-token-tab-details">
+        <div className="rfai-tab-content">
+          <form>
+            <div className="token-amt-container">
+              <input name="approveAmount" type="text" placeholder="AGI Token Amount" autoComplete="off" value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
+              {
+                this.state.approveAmount !== '' ? <label>Amount</label> : null
+              }
+            </div>
+            {
+              this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+            }
+            <Button className={ (this.state.approveAmount !== '') ? 'blue' : 'disable'} type="Button" onClick={this.handleApproveButton}>Approve</Button>
 
-          <form className="pure-form pure-form-stacked">
-          <div class="row">
-            <div class="col-6">
-                <label>Tokens to Approve:</label> <div class="clearfix"></div>
-                <input className="singularity-input" name="approveAmount" type="number" placeholder="tokens" autoComplete='off' min={0} value={this.state.approveAmount} onChange={this.handleAmountInputChange} /> 
-            </div>
-            <div class="col-6">
-                <div class="singularity-token-counter">
-                    <p>Approved allowance: <span>{tknAllowance} AGI</span></p>
-                </div>
-                
-            </div>
-          </div>
-            <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleApproveButton}>Approve</Button>
           </form>
-          {/* <p>Tokens to approve: {approveGroomed} </p> */}
-      </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
+        </div>
       </div>
     )
   }

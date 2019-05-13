@@ -10,7 +10,10 @@ import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 
 // Custom Components
+import RequestIPFSData from '../RequestIPFSData'
 import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
 
 //inline styles
 const styles = {
@@ -19,10 +22,10 @@ const styles = {
 }
 
 const dialogStyles = {
-style: {
-  backgroundColor: '#F9DBDB',
-  padding: 20
-}
+  style: {
+    backgroundColor: '#F9DBDB',
+    padding: 20
+  }
 }
 
 const BN = web3.utils.BN
@@ -40,7 +43,6 @@ TabContainer.propTypes = {
 };
 
 class StakeRequest extends Component {
-
   constructor(props, context) {
     super(props)
 
@@ -61,9 +63,11 @@ class StakeRequest extends Component {
       dataKeyMaxStakers: null,
       dataKeyNextRequestId: null,
       dataKeyOwner: null,
+      dataKeyRequestKey: null,
       minStake: null,
       maxStakers: null,
       selectedTab: 0,
+      stackId: null,
       dialogOpen: false,
       alertText: ''
     }
@@ -85,6 +89,9 @@ class StakeRequest extends Component {
     this.setState({dataKeyOwner})
     this.setContractConfigurations(this.props.ServiceRequest)
 
+    const dataKeyRequestKey = this.contracts.ServiceRequest.methods.getServiceRequestById.cacheCall(this.state.requestId)
+    this.setState({dataKeyRequestKey})
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -100,7 +107,6 @@ class StakeRequest extends Component {
 
   setEscrowBalance(contract) {
     if (contract.balances[this.state.dataKeyEscrowBalance] !== undefined && this.state.dataKeyEscrowBalance !== null) {
-//console.log("contract.balances[this.state.dataKeyEscrowBalance].value - " + contract.balances[this.state.dataKeyEscrowBalance].value);
       this.setState({
         escrowBalance: contract.balances[this.state.dataKeyEscrowBalance].value
       })
@@ -130,7 +136,6 @@ class StakeRequest extends Component {
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
-  console.log("Stake Request selectedTab - " + value);
   };
 
   handleAmountInputChange(event) {
@@ -159,7 +164,12 @@ class StakeRequest extends Component {
     var escrowBalanceBN = new BN(this.state.escrowBalance)
 
     if(stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(escrowBalanceBN) && stakeAmountBN.gte(minStakeBN)) {
-      this.contracts.ServiceRequest.methods["addFundsToRequest"].cacheSend(this.state.requestId, stakeAmountBN.toString(), {from: this.props.accounts[0]})
+
+      this.handleDialogClose();
+
+      const stackId = this.contracts.ServiceRequest.methods["addFundsToRequest"].cacheSend(this.state.requestId, stakeAmountBN.toString(), {from: this.props.accounts[0]})
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (stakeAmountBN.gt(escrowBalanceBN)) {
       this.setState({ alertText: 'Oops! You are trying to transfer more than you have in Escrow.'})
       this.handleDialogOpen()
@@ -173,38 +183,87 @@ class StakeRequest extends Component {
     }
   }
 
-  render() {
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("af")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
 
+  render() {
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
-    
-    return (
-      <div > 
-        <Paper style={styles} elevation={0} className="singularity-content">
-            <p>Stake Token for Request Id - {this.state.requestId} </p>
+
+    if(this.state.dataKeyRequestKey !== null && this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey] !== undefined) {
+      var r = this.props.ServiceRequest.getServiceRequestById[this.state.dataKeyRequestKey].value;
+      var docURI = this.context.drizzle.web3.utils.toAscii(r.documentURI);
+      return (
+        <div > 
+          <Paper style={styles} elevation={0} className="singularity-content fund-this-project">
             <form className="pure-form pure-form-stacked">
-              <div class="row">
-                <div class="col-6">
-                    <label>Tokens to Stake:</label> <div class="clearfix"></div>
-                    <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to Stake:" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
-                </div>
-                <div class="col-6">
-                    <div class="singularity-token-counter">
-                        <p>Balance in Escrow: <span>{escrowBalance} AGI</span></p>
-                    </div>
+  
+              <div className="row fund-project-sub-header">
+                <div className="col-md-12">
+                  <span className="bold"><RequestIPFSData key="t_{r.requestId}" requestId={r.requestId} IPFSHash={docURI} getField="title" /></span>
                 </div>
               </div>
-              <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleStakeButton}>Stake</Button>                        
+  
+              <div className="row requester-detail">
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">requested by:</span>
+                  <span>{this.helperFunctions.toShortAddress(r.requester)}</span>
+                </div>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">current amount</span>
+                  <span>{this.helperFunctions.fromWei(r.totalFund)} AGI</span>
+                </div>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                  <span className="bold">backers</span>
+                  <span>{r.stakeMembers.length}</span>
+                </div>
+              </div>
+  
+              <div className="row balance-funding-amt-div">
+                <div className="col-md-12">
+                  { /*<i className="fa fa-info-circle" aria-hidden="true"></i> */ }
+                  <div className="balance-div">
+                    <span>Your Balance in Escrow</span>
+                    <span>{escrowBalance} AGI</span>
+                  </div>
+                  <div className="funding-amt-div">
+                    <span>Funding Amount</span>
+                    <input className="singularity-input" name="stakeAmount" type="text" autoComplete='off' placeholder="Tokens to fund" value={this.state.stakeAmount} onChange={this.handleAmountInputChange} />
+                  </div>
+                </div>
+              </div>
+              { (this.state.dialogOpen === true ) ? 
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="error-txt">
+                      {
+                        <label className="error-msg">{this.state.alertText}</label> 
+                      }
+                    </p>
+                  </div>
+                </div>
+                : null
+              }
+              <div className="row">
+                <div className="col-md-12 buttons">
+                  {/* <button className="cncl-btn">cancel</button> */}
+                  <Button className="blue fund-project" type="Button" variant="contained" onClick={this.handleStakeButton}>fund project</Button>
+                </div>
+              </div>
+  
             </form>
-        </Paper>
-
-
-        <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-          <p>{this.state.alertText}</p>
-          <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-        </Dialog>
-
-      </div>
-    )
+          </Paper>
+  
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>Loading...</div>
+      )
+    }
+    
   }
 }
 

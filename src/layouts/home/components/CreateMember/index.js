@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 //components
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import Dialog from '@material-ui/core/Dialog'
 
 
 // Member Table Functionality
@@ -15,18 +14,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import HelperFunctions from '../HelperFunctions'
+import TransactionResult from '../TransactionResult'
+import { toast } from 'react-toastify';
+
 
 //inline styles
 const styles = {
     backgroundColor: '#white',
     padding: 20
-}
-
-const dialogStyles = {
-  style: {
-    backgroundColor: '#F9DBDB',
-    padding: 20
-  }
 }
 
 const rootStyles = {
@@ -51,6 +47,7 @@ class CreateMember extends Component {
     super(props)
 
     this.contracts = context.drizzle.contracts
+    this.helperFunctions = new HelperFunctions();
 
     this.handleMemberInputChange = this.handleMemberInputChange.bind(this)
     this.handleMemberRoleChange = this.handleMemberRoleChange.bind(this);
@@ -68,6 +65,7 @@ class CreateMember extends Component {
       memberAddress: '',
       memberRole: 0,
       memberStatus: true,
+      stackId: null,
       alertText: ''
     }
 
@@ -129,12 +127,11 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
   handleCreateButton() {
 
     if(this.context.drizzle.web3.utils.isAddress(this.state.memberAddress) ) {
+      this.handleDialogClose();
 
       const stackId = this.contracts.ServiceRequest.methods["addOrUpdateFoundationMembers"].cacheSend(this.state.memberAddress, this.state.memberRole, this.state.memberStatus, {from: this.props.accounts[0]})
-      if (this.props.transactionStack[stackId]) {
-        const txHash = this.props.trasnactionStack[stackId]
-        console.log("txHash - " + txHash)
-      }
+      this.setState({stackId}, () => {this.createToast()});
+
     } else if (!this.context.drizzle.web3.utils.isAddress(this.state.memberAddress)) {
       this.setState({ alertText: `Oops! The member address isn't a correct ethereum address.`})
       this.handleDialogOpen()
@@ -162,45 +159,53 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
     }
   }
 
+  createToast() {
+    const tId = this.helperFunctions.generateRandomKey("at")
+    toast.info(<TransactionResult toastId={tId} key={this.state.stackId} stackId={this.state.stackId} />, { toastId: tId, autoClose: false });
+  }
+
   render() {
  
     return (
-      <div>
+      <div className="admin-foundation-member-container">
         <Paper style={styles} elevation={0} className="singularity-content">
           <p>Add Foundation Member: </p>
-          <form className="pure-form pure-form-stacked">
-            <div class="row">
-                <div class="col">
-                    <label>Member address:</label> <div class="clearfix"></div>
-                    <input className="singularity-input" name="memberAddress" type="text" placeholder="Member address:" autoComplete='off' value={this.state.memberAddress} onChange={this.handleMemberInputChange} /> 
-                </div>
+          <form className="pure-form pure-form-stacked foundation-member-form">
+            <div className="row">
+              <div className="col">
+                <label>Member address:</label>
+                <input className="singularity-input" name="memberAddress" type="text" placeholder="Member address:" autoComplete='off' value={this.state.memberAddress} onChange={this.handleMemberInputChange} /> 
+              </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer-small"></div>                
-                    <label> Role: </label><div class="clearfix"></div>
-                    <select name="memberRole" defaultValue="0" onChange={this.handleMemberRoleChange}>
-                        <option value="1">Admin</option>
-                        <option value="0">Normal</option>
-                    </select> 
-                </div>
-                <div class="col">
-                    <div class="spacer-small"></div>                
-                    <label> Status: </label><div class="clearfix"></div>
-                    <input name="memberStatus" type="checkbox" checked={this.state.memberStatus} onChange={this.handleMemberStatusChange}/> 
-                </div>        
+            <div className="row">
+              <div className="col">              
+                <label> Role: </label>
+                <select name="memberRole" defaultValue="0" onChange={this.handleMemberRoleChange}>
+                  <option value="1">Admin</option>
+                  <option value="0">Normal</option>
+                </select> 
+              </div>
+              <div className="col">         
+                <label> Status: </label><div className="clearfix"></div>
+                <input name="memberStatus" type="checkbox" checked={this.state.memberStatus} onChange={this.handleMemberStatusChange}/> 
+              </div>
+             
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="spacer-small"></div>                                
-                    <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleCreateButton}>Create</Button>                
-                </div>
+            <div className="rfai-tab-content">
+              {
+                this.state.dialogOpen ? <label className="error-msg">{this.state.alertText}</label> : null
+                }
+            </div>
+            <div className="row text-right">
+              <div className="col">                               
+                <Button className="singularity-button high-margin singularity-button-blue" type="Button" variant="contained" onClick={this.handleCreateButton}>Create</Button>                
+              </div>
             </div>            
           </form>
       </Paper>
 
       <Paper styles={rootStyles} className="singularity-table">
-        <Table style={tableStyles} className="">
+        <Table style={tableStyles}>
           <TableHead>
             <TableRow>
               <TableCell style={tableColStyles}>Member</TableCell>
@@ -213,11 +218,6 @@ console.log("contract.getFoundationMemberKeys[this.state.dataKeyMemberKeys].valu
           </TableBody>
         </Table>
       </Paper>
-
-      <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
-        <p>{this.state.alertText}</p>
-        <p><Button variant="contained" onClick={this.handleDialogClose} >Close</Button></p>
-      </Dialog>
 
       </div>
     )
