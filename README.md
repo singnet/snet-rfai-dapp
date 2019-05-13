@@ -10,13 +10,11 @@ This DApp is for RFAI Portal where users are request for a AI Service. This proj
     npm install -g ganache-cli
     ```
 
-2. Clone the code from Github @ https://github.com/singnet/RFAI-DApp . Install the dependencies by running npm install Command. 
+2. Clone the code from Github @ https://github.com/singnet/snet-rfai-dapp. Install the dependencies by running npm install Command. 
 
     ```javascript
-    git clone https://github.com/singnet/RFAI-DApp 
-    ```
-
-    ```javascript
+    git clone https://github.com/singnet/snet-rfai-dapp
+    cd snet-rfai-dapp
     npm install
     ```
 
