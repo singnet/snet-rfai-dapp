@@ -440,7 +440,8 @@ class CreateRequest extends Component {
         {/* </Paper> */}
 
       <Dialog PaperProps={dialogStyles} open={this.state.showConfirmation} >
-        <p>Please make sure that the details entered are accurate. <br/> Click Ok to proceed and Cancel to revalidate!</p>
+        <p>Please make sure that the details entered are accurate. <br/> Click Ok to proceed and Cancel to revalidate!</p><br/>
+        <p>Once the requested submitted successfully, will be sent for approval. You can check the status in my requests tab.</p>
         <p><Button  className="blue float-right ml-4" onClick={event => this.handleCreateButton(event, false)} >Ok</Button>
         <Button className="blue float-right ml-4" onClick={() => this.setState({showConfirmation: false})} >Cancel</Button></p>
       </Dialog>
