@@ -49,6 +49,13 @@ class RequestsTab extends Component {
   }
 
   componentDidMount() {
+
+    const { tabHandle } = this.props.match.params
+
+    if(tabHandle && tabHandle === "5") {
+      this.setState ({selectedTab : 5})
+    }
+
     const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
     this.setState({dataKeyMemberKeys})
     this.setFoundationMembers(this.props.ServiceRequest)
@@ -120,6 +127,7 @@ class RequestsTab extends Component {
 
   render() {
     const selectedTab = this.state.selectedTab;
+    
     const escrowBalance = this.helperFunctions.fromWei(this.state.escrowBalance)
     const hasBalance = (parseInt(this.state.escrowBalance) > 0)
 

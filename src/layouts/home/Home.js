@@ -96,7 +96,7 @@ class Home extends Component {
         <div className="main-content">
           <HashRouter>
             <Switch>
-              <Route  path="/viewrequests" name="View Requests" component={RequestsTab} />
+              <Route  path="/viewrequests/:tabHandle?" name="View Requests" component={RequestsTab} />
               <Route  path="/myaccount" name="My Account" component={MyAccount} />
               <Route  path="/admin" name="Administration" component={Administration} />
               <Route  path="/createrequest" name="CreateRequest" component={CreateRequest} />
