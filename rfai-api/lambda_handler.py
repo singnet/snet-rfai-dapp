@@ -30,6 +30,8 @@ def request_handler(event, context):
             data = obj.write_json_to_ipfs(json_data=payload_dict)
         elif "/read-ipfs" == path:
             data = json.loads(obj.read_from_ipfs(ipfs_hash=payload_dict['hash']))
+        elif "/git-user-data" == path:
+            data = obj.get_git_user_from_code(code=payload_dict['code'])
             
         if data is None:
             err_msg = {'status': 'failed', 'error': 'Bad Request', 'api': event['path']}
@@ -39,11 +41,12 @@ def request_handler(event, context):
             response = get_response("200", {"status": "success", "data": data})
             
     except Exception as e:
-        err_msg = {"status": "failed", "error": repr(e)}
+        err_msg = {"status": "failed", "error": repr(e), "type": "rfai"}
         obj_util.report_slack(1, str(err_msg))
         response = get_response(500, err_msg)
         traceback.print_exc()
 
+    print(response)
     return response
 
 def get_response(status_code, message):

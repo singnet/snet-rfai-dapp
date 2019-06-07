@@ -2,9 +2,9 @@ import json
 import os
 
 import ipfsapi
-
+import requests
 from common.constant import IPFS_URL
-
+from requests_oauth2 import OAuth2BearerToken
 
 class UtilIPFS:
     def __init__(self):
@@ -39,3 +39,26 @@ class UtilIPFS:
             return json.loads(ipfs_data.decode('utf8'))
         except Exception as err:
             print("read_from_ipfs::err: ", err)
+            raise err
+    
+    def get_git_user_from_code(self, code):
+        try:
+            raw_response = requests.post('https://github.com/login/oauth/access_token',
+                                         data={'client_id': os.environ['client_id'],
+                                               'client_secret': os.environ['client_secret'],
+                                               'code': code})
+            access_token = None
+            response = raw_response.text.split('&')[0].split('=')
+            if response[0] == 'access_token':
+                access_token = response[1]
+            elif response[0] == 'error':
+                raise Exception(response[1])
+            if access_token is not None:
+                auth = OAuth2BearerToken(access_token)
+                user_details = requests.get('https://api.github.com/user', auth=auth)
+                if user_details.status_code == 200:
+                    return user_details.json()
+                else:
+                    raise Exception(user_details.text)
+        except Exception as e:
+            raise e
