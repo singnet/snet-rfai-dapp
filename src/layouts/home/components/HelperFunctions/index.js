@@ -57,4 +57,13 @@ export default class HelperFunctions {
   generateRandomKey(prefix) {
       return `${ prefix }_${ new Date().getTime() }`;
   }
+
+  getGitClientCode() {
+
+    if(window.location.hostname === "localhost")
+      return "a049b0b611f0a5496a51" //"4a78044427d95f6d2f58"
+    return "a049b0b611f0a5496a51" //"b8aa53b8becf28c9827d";
+
+  }
+
 }

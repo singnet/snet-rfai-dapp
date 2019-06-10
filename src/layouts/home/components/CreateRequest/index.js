@@ -37,6 +37,8 @@ class CreateRequest extends Component {
     this.handleAmountInputChange = this.handleAmountInputChange.bind(this)
     this.handleBlockNumInputChange = this.handleBlockNumInputChange.bind(this)
 
+    this.handleLoginButton = this.handleLoginButton.bind(this)
+
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleCreateButton = this.handleCreateButton.bind(this)
@@ -79,6 +81,14 @@ class CreateRequest extends Component {
     // Get the Data Key
     const dataKeyTokenBalance = this.contracts.ServiceRequest.methods.balances.cacheCall(this.props.accounts[0]);
 
+    // Will have the code on success of Git Hub Login
+    const gitCode = window.location.href.split('#')[0].split('=')[1]
+
+    if(gitCode) {
+
+      this.setState({selectedLeftNav: 'navCreateRequest'})
+      this.getGitHubAccessToken();
+    }
     this.setState({dataKeyTokenBalance})
     this.setTokenBalance(this.props.ServiceRequest)
   }
@@ -88,12 +98,57 @@ class CreateRequest extends Component {
         this.setBlockNumber();
         this.setTokenBalance(this.props.ServiceRequest)
     }
-
-    // if(prevState.requestAuthor !== this.state.requestAuthor && this.state.requestAuthor !== '') {
-    //   this.validateGitHandle(this.state.requestAuthor)
-    // }
   }
 
+  getGitHubAccessToken() {
+
+    const gitURL = "https://96igw2u1hb.execute-api.us-east-1.amazonaws.com/gateway/git-user-data?code="
+
+    const gitCode = window.location.href.split('#')[0].split('=')[1]
+    if(gitCode) {
+      const reqOptions = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'GET'
+        }
+
+      const gitTokenURL = gitURL + gitCode
+
+      fetch(gitTokenURL, reqOptions)
+      .then(response => response.json())
+      .then(data => {
+        if(data.status === "success") {
+          this.setState({isValidGitHanlde: true});
+          this.setState({requestAuthor: data.data.html_url})
+          this.handleDialogClose()
+        }
+        else {
+            this.setState({ alertText: `Oops! Unable to fetch git handle. Try after some time.`}) 
+            this.handleDialogOpen()
+            this.setState({isValidGitHanlde: false})
+        }
+
+      })
+      .catch(err => 
+          {
+            this.setState({ alertText: `Oops! Unable to fetch git handle. Try after some time.`})
+            this.handleDialogOpen()
+            this.setState({isValidGitHanlde: false})
+        })
+
+    }
+
+  }
+
+  handleLoginButton(){
+
+    const gitClientId =  this.helperFunctions.getGitClientCode();
+    const gitOAuthURL = "https://github.com/login/oauth/authorize?client_id=" + gitClientId;
+
+    window.location.href = gitOAuthURL;
+  
+  }
 
   setBlockNumber() {
     // Update the Block Number
@@ -311,36 +366,38 @@ class CreateRequest extends Component {
         </div>
       )
     } else if(this.state.selectedLeftNav === 'navCreateRequest') {
+      const ctrlsToDisable = !this.state.isValidGitHanlde;
       return (
         <div className="singularity-content create-req-submit-req-content">
           <div className="row">
-          <input name="requestTitle" type="text" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} />
+          <input name="requestTitle" type="text" autoComplete='off' value={this.state.requestTitle} onChange={this.handleRequestInputChange} disabled={ctrlsToDisable?"disabled":""} />
             <label>Request Title</label>
           </div>
 
           <div className="row">
-          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} onChange={this.handleRequestInputChange} onBlur={this.validateGitHandle} />         
+          {/* onChange={this.handleRequestInputChange} onBlur={this.validateGitHandle} */}
+          <input name="requestAuthor" type="text" autoComplete='off' value={this.state.requestAuthor} readOnly="true" disabled={ctrlsToDisable?"disabled":""}/>         
             <label>Requestor Name (Github handle)</label>
           </div>
 
           <div className="row description">
-            <textarea name="requestDesc" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
+            <textarea name="requestDesc" rows={2} cols={60} onChange={this.handleRequestInputChange} disabled={ctrlsToDisable?"disabled":""}/>
             <label>Description</label>
             { /* <span>340 / 500 Characters</span> */ }
           </div>
 
           <div className="row">
-            <input name="documentURI" type="text" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} />            
+            <input name="documentURI" type="text" autoComplete='off' value={this.state.documentURI} onChange={this.handleRequestInputChange} disabled={ctrlsToDisable?"disabled":""}/>            
             <label>Github Link</label>
           </div>
 
           <div className="row">
-            <input name="requestTrainingDS" type="text" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} />         
+            <input name="requestTrainingDS" type="text" autoComplete='off' value={this.state.requestTrainingDS} onChange={this.handleRequestInputChange} disabled={ctrlsToDisable?"disabled":""}/>         
             <label>Training Dataset URL</label>
           </div>
 
           <div className="row acceptance-criteria">
-            <textarea name="requestAcptCriteria" rows={2} cols={60} onChange={this.handleRequestInputChange}/>
+            <textarea name="requestAcptCriteria" rows={2} cols={60} onChange={this.handleRequestInputChange} disabled={ctrlsToDisable?"disabled":""}/>
             <label>Acceptance Criteria</label>
             { /* <span>340 / 500 Characters</span> */ }
           </div>
@@ -352,7 +409,7 @@ class CreateRequest extends Component {
                 <label>Your Balance in Escrow</label>
               </div>
               <div className="col-md-6">
-                <input name="initialStake" type="number" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} />            
+                <input name="initialStake" type="number" autoComplete='off' min={0} value={this.state.initialStake} onChange={this.handleAmountInputChange} disabled={ctrlsToDisable?"disabled":""}/>            
                 <label>Initial Funding Amount</label>
               </div>
             </div>
@@ -370,6 +427,7 @@ class CreateRequest extends Component {
                   shrink: true,
                 }}
                 onChange={this.handleRequestInputChange}
+                disabled={ctrlsToDisable?"disabled":""}
               />
           </div>
 
@@ -380,7 +438,12 @@ class CreateRequest extends Component {
             </div> : null
           }
           <div className="buttons">
-            <button type="button" className="blue" onClick={event => this.handleCreateButton(event, true)}>Submit</button>
+            {
+                this.state.isValidGitHanlde ?
+                <button type="button" className="blue" onClick={event => this.handleCreateButton(event, true)}>Submit</button>
+                : <button className='blue' type="Button" onClick={this.handleLoginButton}>Login</button>
+            }
+            
           </div>
           
         </div>
