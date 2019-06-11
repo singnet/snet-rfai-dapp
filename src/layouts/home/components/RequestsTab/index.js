@@ -52,8 +52,8 @@ class RequestsTab extends Component {
 
     const { tabHandle } = this.props.match.params
 
-    if(tabHandle && tabHandle === "5") {
-      this.setState ({selectedTab : 5})
+    if(tabHandle && tabHandle === "6") {
+      this.setState ({selectedTab : 6})
     }
 
     const dataKeyMemberKeys = this.contracts.ServiceRequest.methods.getFoundationMemberKeys.cacheCall();
@@ -197,18 +197,20 @@ class RequestsTab extends Component {
             >
               {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> }
               <Tab className="singularity-tab" label="Active" value={1} />
-              <Tab className="singularity-tab" label="Completed" value={2} />
-              {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={3}/> }
-              <Tab className="singularity-tab" label="Expired" value={4} />
-              <Tab className="singularity-tab" label="My Requests" value={5} />
+              <Tab className="singularity-tab" label="Evaluation" value={2} />
+              <Tab className="singularity-tab" label="Completed" value={3} />
+              {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> }
+              <Tab className="singularity-tab" label="Expired" value={5} />
+              <Tab className="singularity-tab" label="My Requests" value={6} />
             </Tabs>
           </AppBar>
           {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}        
           {selectedTab === 1 && <Typography component="div" ><RequestListV2  compRequestStatus="1"/> </Typography>}
-          {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="888"/> </Typography>}
-          {selectedTab === 3 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
-          {selectedTab === 4 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
-          {selectedTab === 5 && <Typography component="div" ><RequestListV2  compRequestStatus="777"/> </Typography>}
+          {selectedTab === 2 && <Typography component="div" ><RequestListV2  compRequestStatus="555"/> </Typography>}
+          {selectedTab === 3 && <Typography component="div" ><RequestListV2  compRequestStatus="888"/> </Typography>}
+          {selectedTab === 4 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>}
+          {selectedTab === 5 && <Typography component="div" ><RequestListV2  compRequestStatus="999"/> </Typography>}
+          {selectedTab === 6 && <Typography component="div" ><RequestListV2  compRequestStatus="777"/> </Typography>}
         </div>
 
       </div>

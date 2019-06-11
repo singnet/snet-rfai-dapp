@@ -314,17 +314,17 @@ class RequestListV2 extends Component {
       // TODO: Add condition check for Stake Members cannot Submit Solution and vice versa
 
       //block.number < req.expiration && block.number <= req.endSubmission
-      if(parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endSubmission,10)) {
+      if(r.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endSubmission,10)) {
         enableSubmitSol = true;
       }
 
       //block.number < req.expiration && block.number < req.endEvaluation
-      if(parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) &&  parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) {
+      if(r.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) &&  parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) {
         enableStake = true;
       }
 
       //block.number < req.expiration && block.number > req.endSubmission && block.number <= req.endEvaluation
-      if(parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endSubmission,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) {
+      if(r.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endSubmission,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) {
         enableVote = true;
       }
 
@@ -345,7 +345,20 @@ class RequestListV2 extends Component {
 
         )
 
-      } else if(r.status === "4") {
+      } else if(this.state.compRequestStatus === "555" && r.status === "1" && enableVote === true) {
+        return (
+        // Evaluation
+          <ExpansionPanelActions className="expansion-panel-actions">
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-10">
+                <button className="blue float-right ml-4" onClick={event => this.handleVoteButton(event, r.requestId, r.expiration)}>View Solution</button>
+                <button className={this.state.isFoundationMember ? 'close-proj-btn ml-4' : 'disable'} disabled={!this.state.isFoundationMember} onClick={event => this.handleCloseButton(event, r.requestId)}>Close Project</button>
+              </div>
+            </div>
+          </ExpansionPanelActions>
+        )
+      }else if(r.status === "4") {
         return (
         // closed
           <ExpansionPanelActions className="expansion-panel-actions">
@@ -382,7 +395,7 @@ class RequestListV2 extends Component {
             </div>
           </ExpansionPanelActions>
         )
-      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) {
+      } else if(r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endSubmission,10)) {
         return (
         // Approved / active
           <ExpansionPanelActions className="expansion-panel-actions">
@@ -397,7 +410,7 @@ class RequestListV2 extends Component {
             </div>
           </ExpansionPanelActions>
         )
-      } else if(this.state.compRequestStatus === "888" && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) {
+      } else if(this.state.compRequestStatus === "888" && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endEvaluation,10) && r.submitters.length > 0) {
         return (
         // Completed
           <ExpansionPanelActions className="expansion-panel-actions">
@@ -499,9 +512,10 @@ class RequestListV2 extends Component {
       if( (r.status === "4" && this.state.compRequestStatus === r.status) || 
           (r.status === "2" && this.state.compRequestStatus === r.status) ||
           (r.status === "0" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
-          (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endSubmission,10)) ||
           (this.state.compRequestStatus === "777" && r.requester === this.props.accounts[0]) || 
-          (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10) && r.submitters.length > 0) ||
+          (this.state.compRequestStatus === "555"  && r.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endSubmission,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) ||
+          (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endEvaluation,10) && r.submitters.length > 0) ||
           (this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) )
       {
 
