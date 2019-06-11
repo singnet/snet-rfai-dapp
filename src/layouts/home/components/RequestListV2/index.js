@@ -572,12 +572,43 @@ class RequestListV2 extends Component {
     });
   };
 
+  noRecordsCheck() {
+    var noRecords = true;
+    for(var i=0;i<this.state.dataKeyRequestKeys.length;i++) {
+
+      var req = this.state.dataKeyRequestKeys[i]
+      if (this.props.ServiceRequest.getServiceRequestById[req] !== undefined && req !== null) {
+
+        var r = this.props.ServiceRequest.getServiceRequestById[req].value;
+        if( (r.status === "4" && this.state.compRequestStatus === r.status) || 
+          (r.status === "2" && this.state.compRequestStatus === r.status) ||
+          (r.status === "0" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10)) ||
+          (r.status === "1" && this.state.compRequestStatus === r.status && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endSubmission,10)) ||
+          (this.state.compRequestStatus === "777" && r.requester === this.props.accounts[0]) || 
+          (this.state.compRequestStatus === "555"  && r.status === "1" && parseInt(this.state.blockNumber,10) < parseInt(r.expiration,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endSubmission,10) && parseInt(this.state.blockNumber,10) <= parseInt(r.endEvaluation,10)) ||
+          (this.state.compRequestStatus === "888"  && r.status === "1" && parseInt(r.expiration,10) > parseInt(this.state.blockNumber,10) && parseInt(this.state.blockNumber,10) > parseInt(r.endEvaluation,10) && r.submitters.length > 0) ||
+          (this.state.compRequestStatus === "999" && ((r.status === "0" || r.status === "1") && parseInt(r.expiration,10) < parseInt(this.state.blockNumber,10)) && (r.status === 1 && r.submitters.length === 0) ) )
+        {
+          noRecords = false;
+          break;
+        } // End If
+      } // End If
+    } // End For
+
+    if(noRecords === true)
+      return(<label>No requests found</label>)
+    return("")
+
+  }
+
   render() {
     return (
       <div >
         <Paper styles={rootStyles} className="paper-ai-services">
 
           { this.state.dataKeyRequestKeys.map((req, index) =>  this.createRow(req, index)) }
+          { this.noRecordsCheck() }
+
         </Paper>
 
         <Dialog PaperProps={dialogStyles} open={this.state.dialogOpen} >
