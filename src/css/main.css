@@ -738,12 +738,12 @@ button.singularity-tab + span {background-color:  #3f51b5 !important; }
   font-size: 14px;
 }
 
-.getting-started-text p { margin-bottom: 0; }
+.getting-started-text p { margin-bottom: 0; font-size: 16px;}
 
 .documentation-btn,
 .add-more-funds-btn {
-  margin-top: 15px;
-  padding-bottom: 35px;
+  margin-top: 1px;
+  padding-bottom: 15px;
   display: flex;
   justify-content: center;
 }
