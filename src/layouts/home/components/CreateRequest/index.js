@@ -323,9 +323,9 @@ class CreateRequest extends Component {
 
     if(this.state.selectedLeftNav === 'nav1') {
       return (
-        <div className="singularity-content create-req-overview-content">
+        <div className="singularity-content">
           <p>
-            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development and should be in the form of a github pull requests to <a href="https://github.com/singnet/rfai-proposal" target="_blank">repo</a>. You can view the template for the request <a href="https://github.com/singnet/rfai-proposal/blob/master/rfai-proposal-template.md" target="_blank">here</a>
+            You can request for any AI Service that would like to see built on top of the SingularityNet platform. Requests should be detailed enough to allow discussion and development. Requests accepted by the foundation will be raised as a github pull request to the <a href="https://github.com/singnet/rfai-proposal" target="_blank">RFAI</a> repository.
           </p>
           <p>
             We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this data, etc). The foundation will review and approve requests which will appear on here
@@ -347,8 +347,7 @@ class CreateRequest extends Component {
       return (
         <div className="singularity-content">
           <div>
-              <li>Raise a github pull request based on the template to </li>
-              <li>Provide a title and description along with the URL of the github pull request</li>
+              <li>Provide a title and description along with acceptance criteria</li>
               <li>In order to incentivize people to develop solutions we require that you back your requests with AGI tokens. The tokens will be distributed to the accepted solutions. See the Submission Evaluation process for more details</li>
               <li>Provide an expiry date for the request. Meaning the date post which you can withdraw your funds if no submission has been made</li>
           </div>
