@@ -18,14 +18,8 @@ export const UPDATE_NICKNAME = "UPDATE_NICKNAME";
 export const UPDATE_EMAIL = "UPDATE_EMAIL";
 export const UPDATE_EMAIL_VERIFIED = "UPDATE_EMAIL_VERIFIED";
 export const UPDATE_EMAIL_ALERTS_SUBSCRIPTION = "UPDATE_EMAIL_ALERTS_SUBSCRIPTION";
-export const UPDATE_WALLET = "UPDATE_WALLET";
 export const APP_INITIALIZATION_SUCCESS = "APP_INITIALIZATION_SUCCESS";
 export const UPDATE_IS_TERMS_ACCEPTED = "UPDATE_IS_TERMS_ACCEPTED";
-
-export const walletTypes = {
-  // SNET: "SNET",
-  METAMASK: "METAMASK",
-};
 
 export const fetchAuthenticatedUser = async () => {
   const currentUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
@@ -74,14 +68,6 @@ const fetchUserProfile = token => dispatch => {
     dispatch(updateEmailAlertsSubscription(Boolean(res.data.data[0].email_alerts)));
     dispatch(updateIsTermsAccepted(Boolean(res.data.data[0].is_terms_accepted)));
   });
-};
-
-export const updateWallet = ({ type, address }) => dispatch => {
-  if (address) {
-    dispatch({ type: UPDATE_WALLET, payload: { type, address } });
-    return;
-  }
-  dispatch({ type: UPDATE_WALLET, payload: { type } });
 };
 
 const noAuthenticatedUser = dispatch => {

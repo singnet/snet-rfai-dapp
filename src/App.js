@@ -15,10 +15,7 @@ import withInAppWrapper from "./components/HOC/WithInAppHeader";
 import { userActions } from "./Redux/actionCreators";
 import PrivateRoute from "./components/common/PrivateRoute";
 import AppLoader from "./components/common/AppLoader";
-// import { initSdk } from "./utility/sdk";
 import { CircularProgress } from "@material-ui/core";
-import NetworkChangeOverlay from "./components/common/NetworkChangeOverlay";
-// import { walletTypes } from "./Redux/actionCreators/UserActions";
 import initHotjar from "./assets/externalScripts/hotjar";
 import initGDPRNotification from "./assets/externalScripts/gdpr";
 
@@ -30,7 +27,6 @@ const RFAILanding = lazy(() => import("./components/RFAILanding"));
 const CreateRequest = lazy(() => import("./components/CreateRequest"));
 const SignUp = lazy(() => import("./components/Login/Signup"));
 const Login = lazy(() => import("./components/Login"));
-// const ServiceDetails = lazy(() => import("./components/ServiceDetails"));
 const UserProfile = lazy(() => import("./components/UserProfile"));
 const GetStarted = lazy(() => import("./components/GetStarted"));
 
@@ -52,12 +48,6 @@ initGDPRNotification();
 class App extends Component {
   componentDidMount = () => {
     this.props.fetchUserDetails();
-  };
-
-  componentDidUpdate = () => {
-    // if (this.props.wallet.type === walletTypes.METAMASK) {
-    //   initSdk();
-    // }
   };
 
   render() {
@@ -108,13 +98,6 @@ class App extends Component {
                   {...this.props}
                   component={withInAppWrapper(CreateRequest)}
                 />
-                {/* <PrivateRoute
-                  isAllowed={isTermsAccepted}
-                  redirectTo={`/${Routes.ONBOARDING}`}
-                  path={`/${Routes.SERVICE_DETAILS}/org/:orgId/service/:serviceId`}
-                  {...this.props}
-                  component={withInAppWrapper(ServiceDetails)}
-                /> */}
                 <PrivateRoute
                   isAllowed={isLoggedIn && isTermsAccepted}
                   redirectTo={isLoggedIn ? `/${Routes.ONBOARDING}` : `/${Routes.LOGIN}`}
@@ -137,7 +120,6 @@ class App extends Component {
           </Router>
         </div>
         <AppLoader />
-        <NetworkChangeOverlay />
       </ThemeProvider>
     );
   }
@@ -148,7 +130,6 @@ const mapStateToProps = state => ({
   isTermsAccepted: state.userReducer.isTermsAccepted,
   isInitialized: state.userReducer.isInitialized,
   hamburgerMenu: state.stylesReducer.hamburgerMenu,
-  wallet: state.userReducer.wallet,
 });
 
 const mapDispatchToProps = dispatch => ({
