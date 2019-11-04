@@ -8,7 +8,6 @@ import StyledButton from "../common/StyledButton";
 import MainSection from "./MainSection";
 import { useStyles } from "./styles";
 import Routes from "../../utility/constants/Routes";
-//import { Button } from "@material-ui/core";
 
 const RFAILanding = ({ classes, isLoggedIn }) => {
   return (

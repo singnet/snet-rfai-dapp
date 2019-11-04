@@ -58,7 +58,6 @@ export const fetchFoundationMembersData = () => async dispatch => {
     const response = await fetchFoundationMemberAPI(token);
     dispatch(fetchFoundationMemberSuccess(response));
   } catch (exp) {
-    //console.log("exception, ", exp);
     throw exp;
   }
 };

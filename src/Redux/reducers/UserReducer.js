@@ -1,5 +1,5 @@
 import { userActions } from "../actionCreators";
-import { walletTypes, RESET_LOGIN_ERROR } from "../actionCreators/UserActions";
+import { RESET_LOGIN_ERROR } from "../actionCreators/UserActions";
 
 const InitialUserDetails = {
   login: {
@@ -9,7 +9,6 @@ const InitialUserDetails = {
   },
   isInitialized: false,
   isEmailVerified: false,
-  wallet: {},
   email: "",
   nickname: "",
   emailAlerts: false,
@@ -77,11 +76,7 @@ const userReducer = (state = InitialUserDetails, action) => {
           ...state.login,
           ...action.payload.login,
         },
-        wallet: { type: walletTypes.SNET },
       };
-    }
-    case userActions.UPDATE_WALLET: {
-      return { ...state, wallet: action.payload };
     }
     case userActions.UPDATE_NICKNAME: {
       return { ...state, ...action.payload };
