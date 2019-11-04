@@ -20,6 +20,7 @@ import Divider from "@material-ui/core/Divider";
 import SolutionList from "../SolutionList";
 import StakeList from "../StakeList";
 import VoteList from "../VoteList";
+import ApproveRejectRequest from "../ApproveRejectRequest";
 
 const RequestList = ({
   requestListData,
@@ -40,6 +41,7 @@ const RequestList = ({
     SOLUTION: "SolutionList",
     VOTE: "VoteList",
     STAKE: "StakeList",
+    APPROVEREJECT: "ApproveReject",
     NONE: "None",
   };
 
@@ -56,6 +58,7 @@ const RequestList = ({
     setSelectedRequestId(requestId);
     setSelectedRequestTitle(requestTitle);
 
+    // To Initiate the respective API Calls
     switch (modal) {
       case modals.SOLUTION:
         await fetchRequestSolutionData(requestId);
@@ -150,6 +153,9 @@ const RequestList = ({
                 <button onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}>
                   View Votes
                 </button>
+                <button onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}>
+                  Approve/Reject
+                </button>
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>
@@ -176,6 +182,13 @@ const RequestList = ({
           requestTitle={selectedRequestTitle}
           requestVotes={requestVotes}
         />
+
+        <ApproveRejectRequest
+          open={openModel === modals.APPROVEREJECT ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+          actionType="Approve"
+        />
       </div>
     );
   }
@@ -186,10 +199,6 @@ const RequestList = ({
 RequestList.defaultProps = {
   requestListData: [],
 };
-
-// const mapStateToProps = state => ({
-//   loading: state.loaderReducer.RequestCallStatus,
-// });
 
 const mapStateToProps = state => ({
   loading: state.loaderReducer.RequestCallStatus,
