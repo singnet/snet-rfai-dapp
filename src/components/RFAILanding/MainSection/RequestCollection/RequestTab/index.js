@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-//import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
-//import { useStyles } from "./styles";
 
 // Request Tabs Functionality
 import AppBar from "@material-ui/core/AppBar";
@@ -32,7 +30,6 @@ class RequestTab extends Component {
   handleChange = async (event, value) => {
     const { fetchRequestData } = this.props;
     this.setState({ selectedTab: value });
-    //setSelectedTab(value);
     const requestStatus = 1;
     await fetchRequestData(requestStatus);
   };
