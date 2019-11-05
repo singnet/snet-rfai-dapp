@@ -7,6 +7,8 @@ import { metamaskActions } from "../../Redux/actionCreators";
 import NotificationBar, { notificationBarTypes } from "../common/NotificationBar";
 import NotificationIcon from "@material-ui/icons/Warning";
 
+import { NetworkNames } from "../../utility/constants/NetworkNames";
+
 class Notification extends Component {
   connectMetamask = async () => {
     const { updateMetamaskDetails } = this.props;
@@ -78,6 +80,9 @@ class Notification extends Component {
 
     var message = "";
 
+    const networkName = NetworkNames.find(nw => nw.networkId.toString() === process.env.REACT_APP_ETH_NETWORK)
+      .networkName;
+
     if (window.ethereum) {
       //console.log("metamaskDetails.isConnected - ", metamaskDetails.isConnected);
       //console.log("metamaskDetails.networkId - ", metamaskDetails.networkId);
@@ -88,12 +93,12 @@ class Notification extends Component {
             Click to connect with Metamask <button onClick={this.connectMetamask}>Connect</button>
           </span>
         );
-      } else if (metamaskDetails.networkId !== "3") {
-        message = "Metamask needs to be connected to network Id 3";
+      } else if (metamaskDetails.networkId !== process.env.REACT_APP_ETH_NETWORK) {
+        message = "Metamask needs to be connected to network " + networkName;
       } else if (metamaskDetails.account === null || metamaskDetails.account === "0x0") {
         message = "Click to connect with Metamask";
       } else {
-        message = "Metamask connected successfully";
+        message = "Metamask connected successfully " + networkName;
       }
     } else {
       message = "Need to have Metamask enabled browser";
@@ -114,7 +119,7 @@ class Notification extends Component {
     // TODO: Line to be deleted added for Debugg only
     const showNotificationBar = true;
     // Actual Code
-    //const showNotificationBar = (metamaskDetails.isConnected && metamaskDetails.networkId === "3")
+    //const showNotificationBar = (metamaskDetails.isConnected && metamaskDetails.networkId === process.env.REACT_APP_ETH_NETWORK)
 
     return (
       <NotificationBar
