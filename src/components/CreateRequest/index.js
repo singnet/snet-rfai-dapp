@@ -7,18 +7,20 @@ import { useStyles } from "./styles";
 //components
 import ProgressBar from "../common/ProgressBar";
 import StyledButton from "../common/StyledButton";
+import AccountBalance from "./AccountBalance";
 
 class CreateRequest extends Component {
   constructor(props) {
     super(props);
     this.state = {
       progressText: ["Overview", "Details", "Summary"],
+      accountBalance: true,
     };
   }
 
   render() {
     const { classes, isComplete } = this.props;
-    const { progressText } = this.state;
+    const { progressText, accountBalance } = this.state;
     return (
       <Grid container spacing={24} className={classes.createRequestMainContainer}>
         <Grid item xs={12} sm={12} md={8} lg={8} className={classes.createRequestContainer}>
@@ -46,16 +48,20 @@ class CreateRequest extends Component {
         </Grid>
         <Grid item xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
           <h3>Account Balance</h3>
-          <div className={classes.warningBox}>
-            <span>You need Metamask wallet to create requests.</span>
-            <Typography>
-              Please Login or Install to your Metamask wallet account and connect to SingularityNet.{" "}
-            </Typography>
-            <Typography>
-              <a href="#">Click here </a>to install and learn more about how to use Metamask and your AGI credits with
-              SinguarlityNet AI Marketplace.
-            </Typography>
-          </div>
+          {accountBalance ? (
+            <AccountBalance />
+          ) : (
+            <div className={classes.warningBox}>
+              <span>You need Metamask wallet to create requests.</span>
+              <Typography>
+                Please Login or Install to your Metamask wallet account and connect to SingularityNet.{" "}
+              </Typography>
+              <Typography>
+                <a href="#">Click here </a>to install and learn more about how to use Metamask and your AGI credits with
+                SinguarlityNet AI Marketplace.
+              </Typography>
+            </div>
+          )}
         </Grid>
       </Grid>
     );

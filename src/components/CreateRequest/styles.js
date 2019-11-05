@@ -29,9 +29,14 @@ export const useStyles = theme => ({
         paddingTop: 49,
         paddingBottom: 40,
         "& ul": {
+          width: 555,
+          margin: "0 auto",
+          "@media(max-width:760px)": { width: 390 },
           "@media(max-width:470px)": { alignItems: "flex-start" },
           "& li": {
             "&::before": {
+              "@media(max-width:1150px)": { width: 90 },
+              "@media(max-width:760px)": { width: 30 },
               "@media(max-width:470px)": {
                 width: 0,
                 marginRight: 0,
