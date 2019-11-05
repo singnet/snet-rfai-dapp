@@ -1,0 +1,126 @@
+export const useStyles = theme => ({
+  metamaskAccBalanceContainer: { padding: "21px 19px 40px" },
+  description: {
+    color: theme.palette.text.mediumShadeGray,
+    fontFamily: theme.typography.primary.main,
+    fontSize: 16,
+    letterSpacing: 0.29,
+    lineHeight: "21px",
+  },
+  accountDetails: {
+    marginTop: 32,
+    "& div": {
+      display: "flex",
+      margin: "7px 0 13px",
+      "@media(max-width:600px)": {
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      },
+      "& div": {
+        width: "56%",
+        marginTop: 0,
+        display: "inline-block",
+        "& span": {
+          width: "auto",
+          display: "inline-block",
+          color: theme.palette.text.mediumShadeGray,
+          fontSize: 16,
+          lineHeight: "22px",
+          "@media(max-width: 1122px)": { fontSize: 13 },
+          "@media(max-width: 960px)": { fontSize: 16 },
+        },
+      },
+      "& span": {
+        width: "44%",
+        display: "inline-block",
+        color: theme.palette.text.darkShadedGray,
+        fontSize: 16,
+        "@media(max-width:600px)": { width: "100%" },
+      },
+    },
+    "& > div": {
+      "@media(max-width:1280px)": {
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 15,
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid",
+        borderBottomColor: theme.palette.text.lightShadedGray,
+      },
+      "@media(max-width:960px)": {
+        flexDirection: "row",
+        borderBottom: 0,
+      },
+      "@media(max-width:600px)": {
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid",
+        borderBottomColor: theme.palette.text.disabledBtnBg,
+      },
+    },
+  },
+  infoIcon: {
+    color: theme.palette.text.lightShadedGray,
+    fontSize: 20,
+    marginRight: 11,
+    verticalAlign: "middle",
+    "@media(max-width: 1122px)": { marginRight: 5 },
+    "@media(max-width: 960px)": { marginRight: 11 },
+  },
+  walletId: {
+    fontSize: "14px !important",
+    wordBreak: "break-all",
+  },
+  bgBox: {
+    alignItems: "center",
+    "& > div": { marginTop: "7px !important" },
+    "& > span": {
+      padding: "14px 20px",
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: theme.palette.text.verticalTabLeftBorder,
+      borderRadius: 4,
+      backgroundColor: theme.palette.text.cardBackground,
+      textAlign: "center",
+      "@media(max-width:600px)": { width: "90% !important" },
+    },
+  },
+  tabsHeader: {
+    backgroundColor: "transparent",
+    color: theme.palette.text.lightShadedGray,
+    boxShadow: "none",
+    "& button": {
+      minWidth: "auto",
+      padding: 0,
+      marginRight: 40,
+      fontSize: 18,
+      textTransform: "none",
+      color: theme.palette.text.lightShadedGray,
+      fontFamily: theme.typography.primary.main,
+    },
+    "& .Mui-selected": {
+      color: theme.palette.text.primary,
+      fontWeight: 600,
+    },
+    "& .MuiTabs-indicator": {
+      backgroundColor: theme.palette.text.primary,
+      "@media(max-width: 1122px)": { display: "none" },
+      "@media(max-width: 960px)": { display: "block" },
+    },
+    "& .MuiTabs-flexContainer": {
+      "@media(max-width: 1122px)": { flexDirection: "column" },
+      "@media(max-width: 960px)": { flexDirection: "row" },
+    },
+  },
+  tabsContainer: {
+    "& > div": {
+      width: "100%",
+      marginBottom: 28,
+      "& label": { color: theme.palette.text.alertBoxColor },
+      "& fieldset": { borderColor: "rgba(0, 0, 0, 0.87) !important" },
+    },
+  },
+  btnContainer: { textAlign: "center" },
+});
