@@ -5,6 +5,7 @@ import loaderReducer from "./LoaderReducer";
 import stylesReducer from "./StylesReducer";
 
 import requestReducer from "./RequestReducer";
+import metamaskReducer from "./MetamaskReducer";
 
 const rootReducer = combineReducers({
   userReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   loaderReducer,
   stylesReducer,
   requestReducer,
+  metamaskReducer,
 });
 
 export default rootReducer;

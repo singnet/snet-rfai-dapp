@@ -21,6 +21,15 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
     handleClose();
   };
 
+  const handleApprove = () => {
+    // Place holder to integrate with Blockchian
+    handleClose();
+  };
+
+  const handleReject = () => {
+    // Place holder to integrate with Blockchian
+    handleClose();
+  };
   const currentBlockNumber = "123456789";
 
   // eslint-disable-next-line no-unused-vars
@@ -51,7 +60,7 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={"Approve/Reject Request"}
+            title={actionType + "Request"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -102,8 +111,8 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Approve" />
-            <StyledButton btnText="Reject" />
+            {actionType === "Approve" && <StyledButton btnText="Approve" onClick={handleApprove} />}
+            {actionType === "Reject" && <StyledButton btnText="Reject" onClick={handleReject} />}
           </CardActions>
         </Card>
       </Modal>
