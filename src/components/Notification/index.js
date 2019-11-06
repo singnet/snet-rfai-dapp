@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 
 import { useStyles } from "./styles";
 import { metamaskActions } from "../../Redux/actionCreators";
+import { tokenActions } from "../../Redux/actionCreators";
+import { rfaiContractActions } from "../../Redux/actionCreators";
+
 import NotificationBar, { notificationBarTypes } from "../common/NotificationBar";
 import NotificationIcon from "@material-ui/icons/Warning";
 
@@ -25,14 +28,22 @@ class Notification extends Component {
         window.web3.version.getNetwork(async (err, netId) => {
           //console.log("connectMetamask getNetwork1 account - ", window.web3.eth.defaultAccount);
           //console.log("connectMetamask accounts - ", accounts[0]);
-          await updateMetamaskDetails(Boolean(window.web3.eth.defaultAccount), window.web3.eth.defaultAccount, netId);
+
+          const isTxnsAllowed =
+            Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
+          await updateMetamaskDetails(
+            Boolean(window.web3.eth.defaultAccount),
+            window.web3.eth.defaultAccount,
+            netId,
+            isTxnsAllowed
+          );
         });
 
         // Subscribe to Metamask after connection
         this.subscribeToMetamask();
       } catch (error) {
         // User denied account access...
-        updateMetamaskDetails(false, "0x0", 0);
+        updateMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
@@ -47,18 +58,31 @@ class Notification extends Component {
         window.web3.currentProvider.publicConfigStore.on("update", () => {
           window.web3.version.getNetwork(async (err, netId) => {
             //console.log("subscribeToMetamask account - ", window.web3.eth.defaultAccount);
-            await updateMetamaskDetails(Boolean(window.web3.eth.defaultAccount), window.web3.eth.defaultAccount, netId);
+            const isTxnsAllowed =
+              Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
+            await updateMetamaskDetails(
+              Boolean(window.web3.eth.defaultAccount),
+              window.web3.eth.defaultAccount,
+              netId,
+              isTxnsAllowed
+            );
           });
         });
       } catch (error) {
         // User denied account access...
-        updateMetamaskDetails(false, "0x0", 0);
+        updateMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
 
   loadMetamaskDetails = () => {
-    const { updateMetamaskDetails } = this.props;
+    const {
+      metamaskDetails,
+      updateMetamaskDetails,
+      updateTokenBalance,
+      updateTokenAllowance,
+      updateRFAITokenBalance,
+    } = this.props;
     if (window.ethereum) {
       const ethereum = window.ethereum;
       window.web3 = new window.Web3(ethereum);
@@ -66,17 +90,33 @@ class Notification extends Component {
       try {
         window.web3.version.getNetwork(async (err, netId) => {
           //console.log("loadMetamaskDetails account - ", window.web3.eth.defaultAccount);
-          await updateMetamaskDetails(Boolean(window.web3.eth.defaultAccount), window.web3.eth.defaultAccount, netId);
+          const isTxnsAllowed =
+            Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
+          await updateMetamaskDetails(
+            Boolean(window.web3.eth.defaultAccount),
+            window.web3.eth.defaultAccount,
+            netId,
+            isTxnsAllowed
+          );
+
+          await updateTokenBalance(metamaskDetails);
+          await updateTokenAllowance(metamaskDetails);
+          await updateRFAITokenBalance(metamaskDetails);
         });
       } catch (error) {
         // User denied account access...
-        updateMetamaskDetails(false, "0x0", 0);
+        updateMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
 
   generateNotificationMessage = () => {
-    const { metamaskDetails } = this.props;
+    const { metamaskDetails, updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+
+    // TODO : To be Deleted from Here...
+    updateTokenBalance(metamaskDetails);
+    updateTokenAllowance(metamaskDetails);
+    updateRFAITokenBalance(metamaskDetails);
 
     var message = "";
 
@@ -138,8 +178,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateMetamaskDetails: (isConnected, account, networkId) =>
-    dispatch(metamaskActions.updateMetamaskDetails(isConnected, account, networkId)),
+  updateMetamaskDetails: (isConnected, account, networkId, isTxnsAllowed) =>
+    dispatch(metamaskActions.updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed)),
+  updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
+  updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
+  updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
 });
 
 export default connect(

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
@@ -13,15 +14,25 @@ import StyledButton from "../../common/StyledButton";
 import StyledTextField from "../../common/StyledTextField";
 import AlertBox from "../../common/AlertBox";
 
+import { tokenActions } from "../../../Redux/actionCreators";
+import { rfaiContractActions } from "../../../Redux/actionCreators";
+import { NetworkNames } from "../../../utility/constants/NetworkNames";
+
 class AccountBalance extends Component {
   constructor(props) {
     super(props);
     this.state = { activeTab: 0 };
+
+    const { metamaskDetails, updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+
+    updateTokenBalance(metamaskDetails);
+    updateTokenAllowance(metamaskDetails);
+    updateRFAITokenBalance(metamaskDetails);
   }
 
   render() {
-    const { classes } = this.props;
-    const { activeTab, currentNetwork, tokenBalance, escrowBalance, authorizedTokens } = this.state;
+    const { classes, metamaskDetails, tokenBalance, tokenAllowance, rfaiTokenBalance } = this.props;
+    const { activeTab } = this.state;
 
     const tabs = [
       {
@@ -51,6 +62,8 @@ class AccountBalance extends Component {
     ];
     const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0];
 
+    const networkNames = NetworkNames.filter(nw => nw.networkId.toString() === metamaskDetails.networkId.toString());
+
     return (
       <div className={classes.metamaskAccBalanceContainer}>
         <Typography className={classes.description}>
@@ -71,7 +84,9 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Current Network</span>
             </div>
-            <span>{currentNetwork}</span>
+            <span>
+              {metamaskDetails.networkId} - {networkNames.length > 0 ? networkNames[0].networkName : ""}
+            </span>
           </div>
 
           <div>
@@ -79,7 +94,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Wallet ID</span>
             </div>
-            <span className={classes.walletId}>{}</span>
+            <span className={classes.walletId}>{metamaskDetails.account}</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -95,7 +110,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Escrow Balance</span>
             </div>
-            <span>{escrowBalance} AGI</span>
+            <span>{rfaiTokenBalance} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -103,7 +118,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Authorized Tokens</span>
             </div>
-            <span>{authorizedTokens} AGI</span>
+            <span>{tokenAllowance} AGI</span>
           </div>
         </div>
         <div className={classes.tabsContainer}>
@@ -127,4 +142,21 @@ class AccountBalance extends Component {
     );
   }
 }
-export default withStyles(useStyles)(AccountBalance);
+
+const mapStateToProps = state => ({
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  tokenBalance: state.tokenReducer.tokenBalance,
+  tokenAllowance: state.tokenReducer.tokenAllowance,
+  rfaiTokenBalance: state.rfaiContractReducer.rfaiTokenBalance,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
+  updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
+  updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(AccountBalance));

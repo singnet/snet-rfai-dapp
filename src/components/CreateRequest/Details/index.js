@@ -4,6 +4,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles";
 
 //components
+import TextField from "@material-ui/core/TextField";
 import StyledButton from "../../common/StyledButton";
 import AlertBox from "../../common/AlertBox";
 
@@ -15,6 +16,21 @@ class Details extends Component {
     };
   }
 
+  handleRequestInputChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleAmountInputChange = event => {
+    //  Fixed to two decimal places
+    if (event.target.value.match(/^\d+(\.\d{1,2})?$/)) {
+      this.setState({ [event.target.name]: event.target.value });
+    } else if (event.target.value === "") {
+      this.setState({ [event.target.name]: "" });
+    } else {
+      // Just Ignore the value
+    }
+  };
+
   handleContinueButton = () => {
     this.props.showSummaryContent();
   };
@@ -23,6 +39,7 @@ class Details extends Component {
     const ctrlsToDisable = false;
     const { classes } = this.props;
     const { dialogOpen } = this.state;
+
     return (
       <div className={classes.detailsMainContainer}>
         <div className={classes.reqTitleContainer}>
@@ -99,6 +116,22 @@ class Details extends Component {
             min={0}
             value={this.state.initialStake}
             onChange={this.handleAmountInputChange}
+            disabled={ctrlsToDisable ? "disabled" : ""}
+          />
+        </div>
+
+        <div>
+          <InfoIcon className={classes.infoIcon} />
+          <label>Expiry Date</label>
+          <TextField
+            name="expirationDate"
+            id="expirationDate"
+            type="date"
+            defaultValue={this.state.expirationDate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={this.handleRequestInputChange}
             disabled={ctrlsToDisable ? "disabled" : ""}
           />
         </div>
