@@ -28,6 +28,8 @@ const grayTitleText = "#4a4a4a";
 const succesBoxBg = "#E7FFF8";
 const successBoxBorder = "#00C48C";
 
+const inputBorder = "rgba(25,25,25,0.32)";
+
 const lightGray = "#D6D6D6";
 const disabledBtnBg = "#ccc";
 
@@ -90,6 +92,7 @@ const theme = createMuiTheme({
       darkShadedGray,
       mediumShadeGray,
       lightShadedGray,
+      inputBorder,
       offWhiteColor,
       offWhite,
       green,
