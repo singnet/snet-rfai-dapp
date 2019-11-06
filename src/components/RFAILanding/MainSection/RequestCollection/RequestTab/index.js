@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/styles";
 
 // Request Tabs Functionality
 import AppBar from "@material-ui/core/AppBar";
@@ -8,6 +9,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
+import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
 
@@ -35,13 +37,13 @@ class RequestTab extends Component {
   };
 
   render() {
-    const { requestDetails, requestSummary } = this.props;
+    const { requestDetails, requestSummary, classes } = this.props;
     const { selectedTab } = this.state;
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={24} className={classes.requestTabMainContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <AppBar position="static" color="default" className="singularity-tabs">
+          <AppBar position="static" color="default" className={classes.header}>
             <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
               {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> } */}
               <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />
@@ -99,4 +101,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RequestTab);
+)(withStyles(useStyles)(RequestTab));
