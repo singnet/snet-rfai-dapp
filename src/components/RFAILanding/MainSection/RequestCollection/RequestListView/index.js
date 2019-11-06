@@ -21,6 +21,7 @@ import SolutionList from "../SolutionList";
 import StakeList from "../StakeList";
 import VoteList from "../VoteList";
 import ApproveRejectRequest from "../ApproveRejectRequest";
+import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
   requestListData,
@@ -142,20 +143,28 @@ const RequestList = ({
             </ExpansionPanelDetails>
             <Divider />
             {/* {this.createActionRow(req, index)} */}
-            <ExpansionPanelActions className="expansion-panel-actions">
+            <ExpansionPanelActions className={classes.expansionPanelAction}>
               <div>
-                <button onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id, r.request_title)}>
-                  View Solution
-                </button>
-                <button onClick={event => handleOpenModel(event, modals.STAKE, r.request_id, r.request_title)}>
-                  View Backers
-                </button>
-                <button onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}>
-                  View Votes
-                </button>
-                <button onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}>
-                  Approve/Reject
-                </button>
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id, r.request_title)}
+                  btnText="View Solution"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.STAKE, r.request_id, r.request_title)}
+                  btnText="View Backers"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}
+                  btnText="View Votes"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}
+                  btnText="Approve/Reject"
+                />
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>

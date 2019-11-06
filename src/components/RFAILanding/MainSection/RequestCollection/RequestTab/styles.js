@@ -21,4 +21,7 @@ export const useStyles = theme => ({
       backgroundColor: theme.palette.text.primary,
     },
   },
+  requestTabDetailContainer: {
+    "& .MuiPaper-elevation1": { boxShadow: "none" },
+  },
 });

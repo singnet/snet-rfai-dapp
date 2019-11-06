@@ -59,28 +59,28 @@ class RequestTab extends Component {
 
           {/* {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}         */}
           {selectedTab === 1 && (
-            <Typography component="div">
+            <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} loading={true} />
             </Typography>
           )}
           {selectedTab === 2 && (
-            <Typography component="div">
+            <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
           {selectedTab === 3 && (
-            <Typography component="div">
+            <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
-          {/* {selectedTab === 4 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="2"/> </Typography>} */}
+          {/* {selectedTab === 4 && this.state.isFoundationMember === true && <Typography component="div" className={classes.requestTabDetailContainer} ><RequestListV2  compRequestStatus="2"/> </Typography>} */}
           {selectedTab === 5 && (
-            <Typography component="div">
+            <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
           {selectedTab === 6 && (
-            <Typography component="div">
+            <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
