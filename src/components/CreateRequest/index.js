@@ -9,6 +9,7 @@ import ProgressBar from "../common/ProgressBar";
 import StyledButton from "../common/StyledButton";
 import AccountBalance from "./AccountBalance";
 // import Details from "./Details";
+// import Summary from "./Summary";
 
 class CreateRequest extends Component {
   constructor(props) {
