@@ -23,25 +23,9 @@ export const LoaderContent = {
     loaderHeader: "Forgot Password Submit",
     loaderText: "Resetting your password",
   },
-  FETCH_SERVICE_DETAILS: {
-    loaderHeader: "Fetching Service Details",
-    loaderText: "Please wait while we fetch the service details",
-  },
-  FETCH_METERING_DATA: {
-    loaderHeader: "Fetching usage data",
-    loaderText: "Please wait,we're checking your usage data",
-  },
-  SERVICE_INVOKATION: displayName => ({
-    loaderHeader: `Invoking ${displayName}`,
-    loaderText: "Please wait, the AI service is computing the result",
-  }),
   SIGN_OUT: {
     loaderHeader: "Signing Out",
     loaderText: "You will be signed out of the portal",
-  },
-  FILTER: {
-    loaderHeader: "Filter",
-    loaderText: "Filtering the services",
   },
   UPDATE_PROFILE: { loaderHeader: "Updating", loaderText: "Filtering the services" },
   FETCH_MM_ACC_DETAILS: {
@@ -59,9 +43,5 @@ export const LoaderContent = {
   CONNECT_METAMASK: {
     loaderHeader: "Connecting Metask",
     loaderText: "Please sign in using Metamask to proceed",
-  },
-  SETUP_CHANNEL_FOR_SERV_EXEC: {
-    loaderHeader: "Setting up the Channel",
-    loaderText: "Settting up the channel for service execution",
   },
 };

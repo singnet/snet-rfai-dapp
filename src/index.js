@@ -5,13 +5,13 @@ import { Provider as ReduxProvider } from "react-redux";
 import "./index.css";
 import "./assets/icomoon.css";
 import configureStore from "./Redux/Store";
-import SnetApp from "./SnetApp";
+import App from "./App";
 
 const store = configureStore();
 
 ReactDOM.render(
   <ReduxProvider store={store}>
-    <SnetApp />
+    <App />
   </ReduxProvider>,
   document.getElementById("root")
 );

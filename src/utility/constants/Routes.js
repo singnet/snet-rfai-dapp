@@ -6,12 +6,8 @@ const Routes = {
   ONBOARDING: "onboarding",
   RFAI_LANDING: "rfailanding",
   CREATE_REQUEST: "createrequest",
-  SERVICE_DETAILS: "servicedetails",
   USER_PROFILE: "userprofile",
   GET_STARTED: "getstarted",
-  hash: {
-    SERVICE_DEMO: "#demo",
-  },
 };
 
 export default Routes;

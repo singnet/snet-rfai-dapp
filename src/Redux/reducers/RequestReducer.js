@@ -35,4 +35,10 @@ const requestReducer = (state = InitialRequestDetails, action) => {
   }
 };
 
+// Get the Request Details for a Given Request Id
+export const requestDetailsById = (state, requestId) => {
+  const selectedRequestDetails = state.requestReducer.requestDetails.find(req => req.request_id === requestId);
+  return selectedRequestDetails;
+};
+
 export default requestReducer;

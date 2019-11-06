@@ -9,6 +9,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
+
 // Table dependencies
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -20,20 +22,23 @@ import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const SolutionList = ({ open, handleClose, requestId, requestTitle, requestSolutions, loading }) => {
+const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestSolutions, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
     handleClose();
   };
 
+  if (!requestDetails) {
+    return <div />;
+  }
   return (
     <div>
       <Modal open={open} onClose={handleCancel} className={classes.Modal}>
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={requestTitle + "- Solutions"}
+            title={requestDetails.request_title + "- Solutions"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -93,8 +98,13 @@ SolutionList.defaultProps = {
   requestSolutions: [],
 };
 
-const mapStateToProps = state => ({
-  loading: state.loaderReducer.RequestModalCallStatus,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { requestId } = ownProps;
+
+  return {
+    loading: state.loaderReducer.RequestModalCallStatus,
+    requestDetails: requestDetailsById(state, requestId),
+  };
+};
 
 export default connect(mapStateToProps)(SolutionList);
