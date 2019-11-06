@@ -15,6 +15,10 @@ class Details extends Component {
     };
   }
 
+  handleContinueButton = () => {
+    this.props.showSummaryContent();
+  };
+
   render() {
     const ctrlsToDisable = false;
     const { classes } = this.props;
