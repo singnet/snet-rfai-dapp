@@ -8,6 +8,7 @@ import { useStyles } from "./styles";
 import ProgressBar from "../common/ProgressBar";
 import StyledButton from "../common/StyledButton";
 import AccountBalance from "./AccountBalance";
+// import Details from "./Details";
 
 class CreateRequest extends Component {
   constructor(props) {
