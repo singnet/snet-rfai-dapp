@@ -85,4 +85,8 @@ export const useStyles = theme => ({
     display: "flex",
     justifyContent: "center",
   },
+  dialogStyles: {
+    backgroundColor: "white",
+    padding: 20,
+  },
 });
