@@ -17,10 +17,10 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
+    "@media(max-width:650px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
-    backgroundColor: theme.palette.text.offWhiteColor,
     "& span": {
       color: theme.palette.text.black1,
       fontFamily: theme.typography.primary.main,
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: "16px 32px 0",
+    padding: "16px 22px 0",
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -45,16 +45,44 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardActions: {
-    marginTop: 23,
+    marginTop: 40,
     justifyContent: "center",
   },
   root: {
     width: "100%",
-    overflowX: "auto",
+    boxShadow: "none",
   },
   table: {
-    minWidth: 650,
+    tableLayout: "fixed",
+    "& thead": {
+      "& th": {
+        paddingBottom: 8,
+        border: "none",
+        color: theme.palette.text.darkShadedGray,
+        fontFamily: theme.typography.primary.main,
+        fontSize: 16,
+        lineHeight: "20px",
+      },
+    },
+    "& tbody": {
+      "& tr": {
+        borderTopWidth: 1,
+        borderTopStyle: "solid",
+        borderTopColor: theme.palette.text.lightGray,
+      },
+      "& th, & td": {
+        padding: "7px 40px 8px 16px",
+        border: "none",
+        color: theme.palette.text.mediumShadeGray,
+        fontFamily: theme.typography.primary.main,
+        fontSize: 14,
+        lineHeight: "18px",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      },
+    },
   },
+  solutionsURLData: { color: `${theme.palette.text.primary} !important` },
   circularProgressContainer: {
     paddingTop: 20,
     textAlign: "center",

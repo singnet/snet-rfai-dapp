@@ -30,4 +30,11 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     letterSpacing: 0.25,
   },
+  expansionPanelAction: {
+    justifyContent: "flex-start",
+    "& button": {
+      marginLeft: 35,
+      marginBottom: 15,
+    },
+  },
 }));
