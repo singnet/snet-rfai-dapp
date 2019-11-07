@@ -3,7 +3,7 @@ import rfai from "../config/ServiceRequest.json";
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
 
-export const _waitForTransaction = async hash => {
+export const waitForTransaction = async hash => {
   let receipt;
 
   const ethereum = window.ethereum;
@@ -83,6 +83,46 @@ export const withdrawTokenFromEscrow = (metamaskDetails, amount) => {
         reject(hash);
       }
       resolve(hash);
+    });
+  });
+};
+
+export const createRequest = (metamaskDetails, initialStakeBN, expiration, docURIinBytes) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+
+  return new Promise(async (resolve, reject) => {
+    await rfaiInstance.createRequest(
+      initialStakeBN.toString(),
+      expiration,
+      docURIinBytes,
+      { from: accountAddress },
+      (err, hash) => {
+        if (err) {
+          reject(hash);
+        }
+        resolve(hash);
+      }
+    );
+  });
+};
+
+export const getBlockNumber = () => {
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  // Return the Block Number
+  return new Promise(async (reject, resolve) => {
+    await window.web3.eth.getBlockNumber((err, blockNumber) => {
+      if (err) {
+        resolve(err);
+      }
+      resolve(blockNumber);
     });
   });
 };

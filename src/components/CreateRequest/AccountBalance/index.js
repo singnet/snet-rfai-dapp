@@ -21,7 +21,7 @@ import { loaderActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
 
 import {
-  _waitForTransaction,
+  waitForTransaction,
   approveToken,
   depositTokenToEscrow,
   withdrawTokenFromEscrow,
@@ -84,14 +84,14 @@ class AccountBalance extends Component {
         this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
         startLoader();
         bAllowanceCalled = true;
-        await _waitForTransaction(txHash);
+        await waitForTransaction(txHash);
       }
 
       // Initiate the Deposit Token to RFAI Escrow
       txHash = await depositTokenToEscrow(metamaskDetails, amount);
       if (!bAllowanceCalled) startLoader();
 
-      await _waitForTransaction(txHash);
+      await waitForTransaction(txHash);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
 
@@ -121,7 +121,7 @@ class AccountBalance extends Component {
       // Initiate the Deposit Token to RFAI Escrow
       txHash = await withdrawTokenFromEscrow(metamaskDetails, amount);
       startLoader();
-      await _waitForTransaction(txHash);
+      await waitForTransaction(txHash);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
       stopLoader();

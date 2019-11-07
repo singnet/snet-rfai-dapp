@@ -9,9 +9,15 @@ import web3 from "web3";
 //components
 import TextField from "@material-ui/core/TextField";
 import StyledButton from "../../common/StyledButton";
-import AlertBox from "../../common/AlertBox";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+
+import AlertBox, { alertTypes } from "../../common/AlertBox";
+import { rfaiContractActions, loaderActions } from "../../../Redux/actionCreators";
+import { LoaderContent } from "../../../utility/constants/LoaderContent";
+
+import { saveIPFSDocument } from "../../../utility/IPFSHelper";
+import { waitForTransaction, createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
 
 const BN = web3.utils.BN;
 
@@ -35,12 +41,26 @@ class Details extends Component {
       blockNumber: 0,
       requestTrainingDS: "",
       requestAcptCriteria: "",
-      isValidGitHanlde: false,
       showStatus: false,
-      alertText: "",
       showConfirmation: false,
+      alert: {
+        type: alertTypes.ERROR,
+        message: undefined,
+      },
     };
+
+    this.setBlockNumber();
   }
+
+  // TODO: Need to check why we are getting Block NUmber in Reject
+  setBlockNumber = async () => {
+    try {
+      let blockNumber = await getBlockNumber();
+      this.setState({ blockNumber });
+    } catch (err) {
+      this.setState({ blockNumber: err });
+    }
+  };
 
   handleRequestInputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -88,35 +108,72 @@ class Details extends Component {
     return weiValBN.toString();
   }
 
-  handleCreateButton(event, needConfirmation) {
+  initiateCreateRequest = async () => {
+    const { metamaskDetails, startLoader, stopLoader, updateRFAITokenBalance } = this.props;
+
+    const expiration =
+      parseInt(this.state.blockNumber, 10) + this.computeBlocksFromDates(new Date(), this.state.expirationDate);
+
+    var initialStakeBN = new BN(this.toWei(this.state.initialStake));
+
+    // TODO: Check if we need to add Nick name or email as the Requester?
+    //"author": this.state.requestAuthor,
+    var ipfsInput = {
+      title: this.state.requestTitle,
+      description: this.state.requestDesc,
+      documentURI: this.state.documentURI,
+      "training-dataset": this.state.requestTrainingDS,
+      "acceptance-criteria": this.state.requestAcptCriteria,
+      created: new Date().toISOString().slice(0, 10),
+    };
+
+    try {
+      // Get the bytes of IPFS hash - Will be an input to request creation
+      let docURIinBytes = await saveIPFSDocument(ipfsInput);
+      // console.log("IPFS loaded successfully - ", docURIinBytes);
+      let txHash = await createRequest(metamaskDetails, initialStakeBN, expiration, docURIinBytes);
+      this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
+      startLoader();
+
+      await waitForTransaction(txHash);
+
+      this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
+
+      stopLoader();
+
+      // Dispatch the RFAI Escrow Balance Update
+      updateRFAITokenBalance(metamaskDetails);
+    } catch (err) {
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Transaction has failed." } });
+      stopLoader();
+    }
+  };
+
+  handleCreateButton = async (event, needConfirmation) => {
     //tokenBalance, tokenAllowance,
     const { metamaskDetails, rfaiTokenBalance } = this.props;
 
     if (!metamaskDetails.isTxnsAllowed) {
-      this.setState({ alertText: `Needs connection to Metamask` });
+      this.setState({ alert: { type: alertTypes.ERROR, message: `Needs connection to Metamask` } });
       this.handleDialogOpen();
       return;
     }
 
-    //const ipfsURL = process.env.REACT_APP_IPFS_ENDPOINT;
-
     //value, expiration, documentURI
-    var zeroBN = new BN(0);
-    var initialStakeBN = new BN(this.toWei(this.state.initialStake));
-    var tokenBalanceBN = new BN(rfaiTokenBalance);
+    const zeroBN = new BN(0);
+    const initialStakeBN = new BN(this.toWei(this.state.initialStake));
+    const rfaiTokenBalanceBN = new BN(rfaiTokenBalance);
 
-    //const docURIinBytes = this.context.drizzle.web3.utils.fromAscii(this.state.documentURI);
     const expiration =
       parseInt(this.state.blockNumber, 10) + this.computeBlocksFromDates(new Date(), this.state.expirationDate);
 
-    //this.state.documentURI.length > 0 &&
     if (
       this.state.requestTitle.length > 0 &&
       initialStakeBN.gt(zeroBN) &&
-      initialStakeBN.lte(tokenBalanceBN) &&
+      initialStakeBN.lte(rfaiTokenBalanceBN) &&
       parseInt(expiration, 10) > parseInt(this.state.blockNumber, 10)
     ) {
-      //this.handleDialogClose();
+      this.handleDialogClose();
 
       if (needConfirmation) {
         this.setState({ showConfirmation: true });
@@ -124,67 +181,44 @@ class Details extends Component {
       }
       this.setState({ showConfirmation: false });
 
-      // TODO: See if we can get the login User Name or Email as the Request Author
-      //"author": this.state.requestAuthor,
-      // var ipfsInput = {
-      //   title: this.state.requestTitle,
-      //   description: this.state.requestDesc,
-      //   documentURI: this.state.documentURI,
-      //   "training-dataset": this.state.requestTrainingDS,
-      //   "acceptance-criteria": this.state.requestAcptCriteria,
-      //   created: new Date().toISOString().slice(0, 10),
-      // };
-
-      // const body = {
-      //   mode: "cors",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   method: "POST",
-      //   body: JSON.stringify(ipfsInput),
-      // };
-
-      // fetch(ipfsURL, body)
-      // .then(response => response.json())
-      // .then(data =>
-      //   {
-      //     //console.log("ipfs hash - " + data.data.hash);
-      //     const docURIinBytes = web3.utils.fromAscii(data.data.hash);
-      //     const stackId = this.contracts.ServiceRequest.methods["createRequest"].cacheSend(initialStakeBN.toString(), expiration, docURIinBytes, {from: this.props.accounts[0]})
-
-      //     //this.setState({stackId}, () => {this.createToast()});
-
-      //   })
-      //   .catch(err =>
-      //     {
-      //       console.log("err - " + err)
-      //       this.setState({ alertText: `Oops! Something went wrong while creating the request.`})
-      //       this.handleDialogOpen()
-      //   })
-
-      this.setState({ alertText: `All are okay to proceed...` });
-      this.handleDialogOpen();
+      // Initiate the createRequest
+      await this.initiateCreateRequest();
     } else if (this.state.requestTitle.length === 0) {
-      this.setState({ alertText: `Oops! Request title is blank. Please provide a title for the request` });
-      this.handleDialogOpen();
-    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(tokenBalanceBN)) {
       this.setState({
-        alertText: `Oops! You dont have enough token balance in RFAI escrow. Please add tokens to the RFAI escrow from the Account page`,
+        alert: {
+          type: alertTypes.ERROR,
+          message: `Oops! Request title is blank. Please provide a title for the request`,
+        },
+      });
+      this.handleDialogOpen();
+    } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(rfaiTokenBalanceBN)) {
+      this.setState({
+        alert: {
+          type: alertTypes.ERROR,
+          message: `Oops! You dont have enough token balance in RFAI escrow. Please add tokens to the RFAI escrow from the Account page`,
+        },
       });
       this.handleDialogOpen();
     } else if (expiration === "" || parseInt(expiration, 10) <= parseInt(this.state.blockNumber, 10)) {
-      this.setState({ alertText: `Oops! Expiration seems to be too short, increase the expiry date.` });
+      this.setState({
+        alert: { type: alertTypes.ERROR, message: `Oops! Expiration seems to be too short, increase the expiry date.` },
+      });
       this.handleDialogOpen();
     } else {
-      this.setState({ alertText: "Oops! Something went wrong. Try checking your transaction details." });
+      this.setState({
+        alert: {
+          type: alertTypes.ERROR,
+          message: "Oops! Something went wrong. Try checking your transaction details.",
+        },
+      });
       this.handleDialogOpen();
     }
-  }
+  };
 
   render() {
     const ctrlsToDisable = false;
     const { classes } = this.props;
-    const { dialogOpen } = this.state;
+    const { alert } = this.state;
 
     return (
       <div className={classes.detailsMainContainer}>
@@ -281,7 +315,7 @@ class Details extends Component {
             disabled={ctrlsToDisable ? "disabled" : ""}
           />
         </div>
-        {dialogOpen ? <AlertBox type="error" message={this.state.alertText} /> : null}
+        <AlertBox type={alert.type} message={alert.message} />
 
         <div className={classes.btnContainer}>
           <StyledButton type="transparent" onClick={event => this.handleBackButton(event, true)} btnText="back" />
@@ -318,4 +352,13 @@ const mapStateToProps = state => ({
   rfaiTokenBalance: state.rfaiContractReducer.rfaiTokenBalance,
 });
 
-export default connect(mapStateToProps)(withStyles(useStyles)(Details));
+const mapDispatchToProps = dispatch => ({
+  updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
+  startLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.DEPOSIT)),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(Details));
