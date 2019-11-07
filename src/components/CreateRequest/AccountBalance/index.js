@@ -14,11 +14,10 @@ import StyledTextField from "../../common/StyledTextField";
 import AlertBox, { alertTypes } from "../../common/AlertBox";
 
 import { tokenActions } from "../../../Redux/actionCreators";
-
 import { rfaiContractActions } from "../../../Redux/actionCreators";
-import { loaderActions } from "../../../Redux/actionCreators";
 import { NetworkNames } from "../../../utility/constants/NetworkNames";
 
+import { loaderActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
 
 import {
@@ -31,10 +30,6 @@ import {
 import web3 from "web3";
 
 const BN = web3.utils.BN;
-
-import { tokenActions } from "../../../Redux/actionCreators";
-import { rfaiContractActions } from "../../../Redux/actionCreators";
-import { NetworkNames } from "../../../utility/constants/NetworkNames";
 
 class AccountBalance extends Component {
   constructor(props) {
