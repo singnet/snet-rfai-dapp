@@ -34,6 +34,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "flex-start",
     "& button": {
       marginLeft: 35,
+      marginBottom: 15,
     },
   },
 }));

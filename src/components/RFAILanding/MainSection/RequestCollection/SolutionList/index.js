@@ -66,7 +66,7 @@ const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetai
                     <TableRow>
                       <TableCell>Submitted by</TableCell>
                       <TableCell>Submitted on</TableCell>
-                      <TableCell align="right">Solution URI</TableCell>
+                      <TableCell>Solution URI</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -77,7 +77,7 @@ const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetai
                           {sol.solution_submitter_name}
                         </TableCell>
                         <TableCell>{sol.created}</TableCell>
-                        <TableCell align="right">{sol.solution_docURI}</TableCell>
+                        <TableCell className={classes.solutionsURLData}>{sol.solution_docURI}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
