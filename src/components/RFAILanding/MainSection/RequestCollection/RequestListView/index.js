@@ -185,7 +185,12 @@ const RequestList = ({
                 <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}
-                  btnText="Approve/Reject"
+                  btnText="Approve Request"
+                />
+                <StyledButton
+                  type="red"
+                  onClick={event => handleOpenModel(event, modals.REJECT, r.request_id)}
+                  btnText="Reject Request"
                 />
               </div>
             </ExpansionPanelActions>

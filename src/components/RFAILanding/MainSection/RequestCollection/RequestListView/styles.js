@@ -87,6 +87,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "flex-start",
     "& button": {
       margin: "16px 0 15px 35px",
+      "&:last-of-type": { fontWeight: "bold" },
     },
   },
   title: {

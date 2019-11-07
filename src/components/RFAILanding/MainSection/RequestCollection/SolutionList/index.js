@@ -38,7 +38,7 @@ const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetai
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={requestDetails.request_title + "- Solutions"}
+            title={"View Solutions"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -47,6 +47,10 @@ const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetai
           />
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
+              <div className={classes.requestTitleContainer}>
+                <span className={classes.requestTitle}>Request Title</span>
+                <span className={classes.titleName}>A very long service provider request</span>
+              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
