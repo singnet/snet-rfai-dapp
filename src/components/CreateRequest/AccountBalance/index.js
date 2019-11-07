@@ -9,10 +9,28 @@ import Tab from "@material-ui/core/Tab";
 import { useStyles } from "./styles";
 
 //components
-import { txnTypes } from "../../../utility/PricingStrategy";
 import StyledButton from "../../common/StyledButton";
 import StyledTextField from "../../common/StyledTextField";
-import AlertBox from "../../common/AlertBox";
+import AlertBox, { alertTypes } from "../../common/AlertBox";
+
+import { tokenActions } from "../../../Redux/actionCreators";
+
+import { rfaiContractActions } from "../../../Redux/actionCreators";
+import { loaderActions } from "../../../Redux/actionCreators";
+import { NetworkNames } from "../../../utility/constants/NetworkNames";
+
+import { LoaderContent } from "../../../utility/constants/LoaderContent";
+
+import {
+  _waitForTransaction,
+  approveToken,
+  depositTokenToEscrow,
+  withdrawTokenFromEscrow,
+} from "../../../utility/BlockchainHelper";
+
+import web3 from "web3";
+
+const BN = web3.utils.BN;
 
 import { tokenActions } from "../../../Redux/actionCreators";
 import { rfaiContractActions } from "../../../Redux/actionCreators";
@@ -21,7 +39,15 @@ import { NetworkNames } from "../../../utility/constants/NetworkNames";
 class AccountBalance extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeTab: 0 };
+
+    this.state = {
+      activeTab: 0,
+      amount: 0,
+      alert: {
+        type: alertTypes.ERROR,
+        message: undefined,
+      },
+    };
 
     const { metamaskDetails, updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
 
@@ -30,32 +56,156 @@ class AccountBalance extends Component {
     updateRFAITokenBalance(metamaskDetails);
   }
 
+  handleAmountInputChange(event) {
+    //  Fixed to two decimal places
+    if (event.target.value.match(/^\d+(\.\d{1,2})?$/)) {
+      this.setState({ [event.target.name]: event.target.value });
+    } else if (event.target.value === "") {
+      this.setState({ [event.target.name]: "" });
+    } else {
+      // Just Ignore the value
+    }
+  }
+
+  handleTabChange = (event, value) => {
+    this.setState({ activeTab: value });
+  };
+
+  depositToken = async () => {
+    const { metamaskDetails, tokenAllowance, startLoader, stopLoader } = this.props;
+    const { updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+
+    const amount = this.state.amount;
+    // BigNumber Equivalents
+    const amountBN = new BN(amount);
+    const tokenAllowanceBN = new BN(tokenAllowance);
+
+    let txHash;
+    let bAllowanceCalled = false;
+    try {
+      // Need to have an Token Approval before Deposit
+      if (tokenAllowanceBN.lt(amountBN)) {
+        txHash = await approveToken(metamaskDetails, amount);
+        this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
+        startLoader();
+        bAllowanceCalled = true;
+        await _waitForTransaction(txHash);
+      }
+
+      // Initiate the Deposit Token to RFAI Escrow
+      txHash = await depositTokenToEscrow(metamaskDetails, amount);
+      if (!bAllowanceCalled) startLoader();
+
+      await _waitForTransaction(txHash);
+
+      this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
+
+      stopLoader();
+
+      // Initiate the Redux Actions
+      updateTokenBalance(metamaskDetails);
+      updateTokenAllowance(metamaskDetails);
+      updateRFAITokenBalance(metamaskDetails);
+    } catch (err) {
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Transaction has failed." } });
+      stopLoader();
+    }
+  };
+
+  withdrawToken = async () => {
+    const { metamaskDetails, startLoader, stopLoader } = this.props;
+    const { updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+
+    const amount = this.state.amount;
+    // BigNumber Equivalents
+    //const amountBN = new BN(amount)
+    //const tokenAllowanceBN = new BN(tokenAllowance)
+
+    let txHash;
+    try {
+      // Initiate the Deposit Token to RFAI Escrow
+      txHash = await withdrawTokenFromEscrow(metamaskDetails, amount);
+      startLoader();
+      await _waitForTransaction(txHash);
+
+      this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
+      stopLoader();
+
+      // Initiate the Redux Actions
+      updateTokenBalance(metamaskDetails);
+      updateTokenAllowance(metamaskDetails);
+      updateRFAITokenBalance(metamaskDetails);
+    } catch (err) {
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Transaction has failed." } });
+      stopLoader();
+    }
+  };
+
+  handleDepositWithdraw = async (event, actionType) => {
+    const { metamaskDetails, tokenBalance, rfaiTokenBalance } = this.props;
+
+    if (!metamaskDetails.isTxnsAllowed) {
+      return;
+    }
+    const amount = this.state.amount;
+
+    // BigNumber Equivalents
+    const amountBN = new BN(amount);
+    const zeroBN = new BN(0);
+    const tokenBalanceBN = new BN(tokenBalance);
+    const rfaiTokenBalanceBN = new BN(rfaiTokenBalance);
+
+    if (amountBN.lte(zeroBN)) {
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Invalid amount." } });
+      return;
+    }
+
+    if (actionType === "Deposit") {
+      if (amountBN.gt(tokenBalanceBN)) {
+        this.setState({ alert: { type: alertTypes.ERROR, message: "Not enough balance in wallet" } });
+        return;
+      }
+
+      await this.depositToken();
+    } else if (actionType === "Withdraw") {
+      if (amountBN.gt(rfaiTokenBalanceBN)) {
+        this.setState({ alert: { type: alertTypes.ERROR, message: "Not enough balance in RFAI escrow" } });
+        return;
+      }
+
+      await this.withdrawToken();
+    } else {
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Invalid operation" } });
+      return;
+    }
+  };
+
   render() {
     const { classes, metamaskDetails, tokenBalance, tokenAllowance, rfaiTokenBalance } = this.props;
-    const { activeTab } = this.state;
+    const { activeTab, alert } = this.state;
 
     const tabs = [
       {
         name: "Deposit",
         activeIndex: 0,
-        submitAction: this.handleDeposit,
         component: (
           <StyledTextField
+            name="amount"
             label="AGI Token Amount"
-            // value={amount[txnTypes.DEPOSIT] || ""}
-            onChange={event => this.handleAmountChange(event, txnTypes.DEPOSIT)}
+            value={this.state.amount}
+            onChange={event => this.handleAmountInputChange(event)}
           />
         ),
       },
       {
         name: "Withdraw",
         activeIndex: 1,
-        submitAction: this.handleWithDraw,
         component: (
           <StyledTextField
+            name="amount"
             label="Amount to be withdrawn in AGI"
-            // value={amount[txnTypes.WITHDRAW] || ""}
-            onChange={event => this.handleAmountChange(event, txnTypes.WITHDRAW)}
+            value={this.state.amount}
+            onChange={event => this.handleAmountInputChange(event)}
           />
         ),
       },
@@ -123,12 +273,9 @@ class AccountBalance extends Component {
         </div>
         <div className={classes.tabsContainer}>
           <AppBar position="static" className={classes.tabsHeader}>
-            <Tabs value={activeTab} onChange={this.onTabChange}>
+            <Tabs value={activeTab} onChange={this.handleTabChange}>
               {tabs.map(value => (
-                <div key={value}>
-                  <InfoIcon className={classes.infoIcon} />
-                  <Tab key={value.name} label={value.name} />
-                </div>
+                <Tab key={value.activeIndex} label={value.name} value={value.activeIndex} />
               ))}
             </Tabs>
           </AppBar>
@@ -136,7 +283,11 @@ class AccountBalance extends Component {
           <AlertBox type={alert.type} message={alert.message} />
         </div>
         <div className={classes.btnContainer}>
-          <StyledButton type="blue" btnText={activeComponent.name} disabled onClick={activeComponent.submitAction} />
+          <StyledButton
+            type="blue"
+            btnText={activeComponent.name}
+            onClick={event => this.handleDepositWithdraw(event, activeComponent.name)}
+          />
         </div>
       </div>
     );
@@ -154,6 +305,8 @@ const mapDispatchToProps = dispatch => ({
   updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
   updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
+  startLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.DEPOSIT)),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
 export default connect(
