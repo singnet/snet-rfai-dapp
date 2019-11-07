@@ -81,6 +81,8 @@ const infoBg = "#DEEAFF";
 const warningBg = "#FDF3E5";
 const warningBorder = "#F18D5A";
 
+const expansionPanelBg = "#f5f5f5";
+
 const theme = createMuiTheme({
   palette: {
     text: {
@@ -89,6 +91,7 @@ const theme = createMuiTheme({
       customHoverBlue,
       disabledBtnBg,
       black1,
+      expansionPanelBg,
       darkShadedGray,
       mediumShadeGray,
       lightShadedGray,
