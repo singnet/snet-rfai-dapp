@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: "16px 22px 0",
+    padding: 0,
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -45,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardActions: {
-    marginTop: 40,
+    marginTop: 30,
     justifyContent: "center",
   },
   root: {
@@ -53,6 +53,7 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: "none",
   },
   table: {
+    padding: "0 22px",
     tableLayout: "fixed",
     "& thead": {
       "& th": {
@@ -109,4 +110,12 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     letterSpacing: 0.25,
   },
+  requestTitleContainer: {
+    padding: "16px 22px",
+    backgroundColor: theme.palette.text.offWhiteColor,
+    fontSize: 16,
+    lineHeight: "20px",
+  },
+  requestTitle: { color: theme.palette.text.mediumShadeGray },
+  titleName: { color: theme.palette.text.darkShadedGray },
 }));

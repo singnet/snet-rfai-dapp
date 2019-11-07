@@ -281,7 +281,6 @@ class Details extends Component {
             disabled={ctrlsToDisable ? "disabled" : ""}
           />
         </div>
-
         {dialogOpen ? <AlertBox type="error" message={this.state.alertText} /> : null}
 
         <div className={classes.btnContainer}>

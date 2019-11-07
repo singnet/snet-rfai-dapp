@@ -32,9 +32,14 @@ import web3 from "web3";
 
 const BN = web3.utils.BN;
 
+import { tokenActions } from "../../../Redux/actionCreators";
+import { rfaiContractActions } from "../../../Redux/actionCreators";
+import { NetworkNames } from "../../../utility/constants/NetworkNames";
+
 class AccountBalance extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       activeTab: 0,
       amount: 0,

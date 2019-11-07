@@ -22,6 +22,7 @@ export const useStyles = theme => ({
     },
   },
   requestTabDetailContainer: {
+    "& .MuiExpansionPanel-root": { marginBottom: 10 },
     "& .MuiPaper-elevation1": { boxShadow: "none" },
   },
 });

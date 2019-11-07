@@ -108,40 +108,62 @@ const RequestList = ({
             expanded={expanded === r.request_id}
             onChange={handleChange(r.request_id)}
           >
-            <ExpansionPanelSummary className="expansion-panel-summary" expandIcon={<ExpandMoreIcon />}>
-              <div>{r.request_title} </div>
-              <div>
-                <span>
-                  <b>Tokens Awarded:</b>
-                </span>
-                <br />
-                <span>{r.total_fund} </span>
+            <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon />}>
+              <div className={classes.serviceProviderRequestByContainer}>
+                <p className={classes.serviceProviderName}>{r.request_title} </p>
               </div>
-              <div>
-                <span>
-                  <b>Backers</b>
-                </span>
-                <br />
-                <span>{r.num_stackers} </span>
+              <div className={classes.tokenAwardedContainer}>
+                <span className={classes.title}>Tokens Awarded:</span>
+                <p className={classes.data}>
+                  {r.total_fund} <span>AGI</span>
+                </p>
               </div>
-              <div>
-                <span>
-                  <b>Solutions</b>
-                </span>
-                <br />
-                <span>{r.num_solutions} </span>
+              <div className={classes.backersContainer}>
+                <span className={classes.title}>Backers</span>
+                <p className={classes.data}>
+                  {r.num_stackers} <span>users</span>{" "}
+                </p>
+              </div>
+              <div className={classes.solutionsContainer}>
+                <span className={classes.title}>Solutions</span>
+                <p className={classes.data}>{r.num_solutions} </p>
+              </div>
+              <div className={classes.votesContainer}>
+                <span className={classes.title}>Votes</span>
+                <p className={classes.data}> - </p>
+              </div>
+              <div className={classes.expiryContainer}>
+                <span className={classes.title}>Expiry</span>
+                <p className={classes.data}>29 Dec 2019 </p>
               </div>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div>
-                <p>Description: {r.description} </p>
-                <p>Acceptance Criteria: {r.acceptance_criteria} </p>
-                <p>Submission Deadline: {r.end_submission} </p>
-                <p>project URL: {r.document_uri} </p>
-                <p>Training Dataset: {r.training_data_set_uri} </p>
+            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+              <div className={classes.exPanelLeftSection}>
+                <div className={classes.exPanelDescription}>
+                  <span>Description: </span>
+                  <p>{r.description} </p>
+                </div>
+                <div className={classes.exPanelAcceptanceCriteria}>
+                  <span>Acceptance Criteria: </span>
+                  <p>{r.acceptance_criteria} </p>
+                </div>
+              </div>
+              <div className={classes.exPanelRightSection}>
+                <div className={classes.exPanelSubDeadline}>
+                  <span>Submission Deadline: </span>
+                  <p>{r.end_submission} </p>
+                </div>
+                <div className={classes.exPanelProjURL}>
+                  <span>project URL: </span>
+                  <p className={classes.urlLink}>{r.document_uri} </p>
+                </div>
+                <div className={classes.exPanelTrainingDataset}>
+                  <span>Training Dataset: </span>
+                  <p className={classes.urlLink}>{r.training_data_set_uri} </p>
+                </div>
               </div>
             </ExpansionPanelDetails>
-            <Divider />
+            <Divider className={classes.divider} />
             {/* {this.createActionRow(req, index)} */}
             <ExpansionPanelActions className={classes.expansionPanelAction}>
               <div>
@@ -163,7 +185,12 @@ const RequestList = ({
                 <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}
-                  btnText="Approve/Reject"
+                  btnText="Approve Request"
+                />
+                <StyledButton
+                  type="red"
+                  onClick={event => handleOpenModel(event, modals.REJECT, r.request_id)}
+                  btnText="Reject Request"
                 />
               </div>
             </ExpansionPanelActions>
