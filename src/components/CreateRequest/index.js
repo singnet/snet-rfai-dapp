@@ -20,9 +20,7 @@ class CreateRequest extends Component {
     this.state = {
       activeSection: 1,
       progressText: ["Overview", "Details", "Summary"],
-      accountBalance: false,
-      overViewCompleted: false,
-      detailsCompleted: false,
+      progressState: "Overview",
     };
 
     this.showDetailsContent = this.showDetailsContent.bind(this);
@@ -30,21 +28,22 @@ class CreateRequest extends Component {
 
   showDetailsContent = () => {
     this.setState({
-      overViewCompleted: true,
+      progressState: "Details",
       activeSection: 2,
     });
   };
 
-  showSummaryContent = () => {
+  showSummary = requestSummary => {
     this.setState({
-      detailsCompleted: true,
+      progressState: "Summary",
       activeSection: 3,
+      requestSummary,
     });
   };
 
   render() {
     const { classes, metamaskDetails } = this.props;
-    const { progressText, overViewCompleted, detailsCompleted, activeSection } = this.state;
+    const { requestSummary, progressText, progressState, activeSection } = this.state;
 
     const isTxnsAllowed = metamaskDetails.isTxnsAllowed;
 
@@ -55,10 +54,10 @@ class CreateRequest extends Component {
           <Grid item xs={12} sm={12} md={8} lg={8} className={classes.createRequestContainer}>
             <h3>Create Request</h3>
             <ProgressBar activeSection={activeSection} progressText={progressText} />
-            {overViewCompleted ? (
-              <Details showSummaryContent={this.showSummaryContent} />
-            ) : detailsCompleted ? (
-              <Summary />
+            {progressState === "Details" ? (
+              <Details showSummary={this.showSummary} />
+            ) : progressState === "Summary" ? (
+              <Summary requestSummary={requestSummary} />
             ) : (
               <div className={classes.createRequestContent}>
                 <Typography>

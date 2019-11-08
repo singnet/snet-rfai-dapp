@@ -82,14 +82,14 @@ class AccountBalance extends Component {
       if (tokenAllowanceBN.lt(amountBN)) {
         txHash = await approveToken(metamaskDetails, amount);
         this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
-        startLoader();
+        startLoader(LoaderContent.DEPOSIT);
         bAllowanceCalled = true;
         await waitForTransaction(txHash);
       }
 
       // Initiate the Deposit Token to RFAI Escrow
       txHash = await depositTokenToEscrow(metamaskDetails, amount);
-      if (!bAllowanceCalled) startLoader();
+      if (!bAllowanceCalled) startLoader(LoaderContent.DEPOSIT);
 
       await waitForTransaction(txHash);
 
@@ -120,7 +120,7 @@ class AccountBalance extends Component {
     try {
       // Initiate the Deposit Token to RFAI Escrow
       txHash = await withdrawTokenFromEscrow(metamaskDetails, amount);
-      startLoader();
+      startLoader(LoaderContent.WITHDRAW);
       await waitForTransaction(txHash);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
@@ -300,7 +300,7 @@ const mapDispatchToProps = dispatch => ({
   updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
   updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
-  startLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.DEPOSIT)),
+  startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 

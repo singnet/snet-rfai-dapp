@@ -34,14 +34,18 @@ export const LoaderContent = {
   },
   DEPOSIT: {
     loaderHeader: "Deposit",
-    loaderText: "Depositing AGI tokens to Multi-party Escrow account",
+    loaderText: "Depositing AGI tokens to RFAI Escrow account",
   },
   WITHDRAW: {
     loaderHeader: "Withdraw",
-    loaderText: "Withdrawing AGI tokens from Multi-party Escrow account",
+    loaderText: "Withdrawing AGI tokens from RFAI Escrow account",
   },
   CONNECT_METAMASK: {
     loaderHeader: "Connecting Metask",
     loaderText: "Please sign in using Metamask to proceed",
+  },
+  CREATE_REQUEST: {
+    loaderHeader: "Create Request",
+    loaderText: "Creating a new AI Request, Please wait for transaction to confirm",
   },
 };

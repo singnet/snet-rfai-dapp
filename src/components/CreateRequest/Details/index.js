@@ -30,7 +30,6 @@ class Details extends Component {
     var defExpirtaionDate = new Date(Date.parse(dt) + 100 * 24 * 60 * 60 * 1000);
 
     this.state = {
-      dialogOpen: false,
       requestTitle: "",
       requestDesc: "",
       initialStake: 0,
@@ -81,14 +80,6 @@ class Details extends Component {
     this.props.showSummaryContent();
   };
 
-  handleDialogOpen() {
-    this.setState({ dialogOpen: true });
-  }
-
-  handleDialogClose() {
-    this.setState({ dialogOpen: false });
-  }
-
   computeBlocksFromDates(fromDate, toDate) {
     // Considering 15 Secs as block creation time
     var blocks = 0;
@@ -132,8 +123,9 @@ class Details extends Component {
       let docURIinBytes = await saveIPFSDocument(ipfsInput);
       // console.log("IPFS loaded successfully - ", docURIinBytes);
       let txHash = await createRequest(metamaskDetails, initialStakeBN, expiration, docURIinBytes);
+
       this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
-      startLoader();
+      startLoader(LoaderContent.CREATE_REQUEST);
 
       await waitForTransaction(txHash);
 
@@ -143,10 +135,26 @@ class Details extends Component {
 
       // Dispatch the RFAI Escrow Balance Update
       updateRFAITokenBalance(metamaskDetails);
+
+      this.showSummaryComponent(txHash);
     } catch (err) {
       this.setState({ alert: { type: alertTypes.ERROR, message: "Transaction has failed." } });
       stopLoader();
     }
+  };
+
+  showSummaryComponent = txHash => {
+    const { metamaskDetails, showSummary } = this.props;
+
+    const summaryData = {
+      request_title: this.state.requestTitle,
+      request_by: metamaskDetails.account,
+      request_expiry: this.state.expirationDate,
+      request_stake: this.state.initialStake,
+    };
+
+    // Call the Parent Create Request Event
+    showSummary(summaryData);
   };
 
   handleCreateButton = async (event, needConfirmation) => {
@@ -155,7 +163,6 @@ class Details extends Component {
 
     if (!metamaskDetails.isTxnsAllowed) {
       this.setState({ alert: { type: alertTypes.ERROR, message: `Needs connection to Metamask` } });
-      this.handleDialogOpen();
       return;
     }
 
@@ -173,8 +180,6 @@ class Details extends Component {
       initialStakeBN.lte(rfaiTokenBalanceBN) &&
       parseInt(expiration, 10) > parseInt(this.state.blockNumber, 10)
     ) {
-      this.handleDialogClose();
-
       if (needConfirmation) {
         this.setState({ showConfirmation: true });
         return;
@@ -190,7 +195,6 @@ class Details extends Component {
           message: `Oops! Request title is blank. Please provide a title for the request`,
         },
       });
-      this.handleDialogOpen();
     } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(rfaiTokenBalanceBN)) {
       this.setState({
         alert: {
@@ -198,12 +202,10 @@ class Details extends Component {
           message: `Oops! You dont have enough token balance in RFAI escrow. Please add tokens to the RFAI escrow from the Account page`,
         },
       });
-      this.handleDialogOpen();
     } else if (expiration === "" || parseInt(expiration, 10) <= parseInt(this.state.blockNumber, 10)) {
       this.setState({
         alert: { type: alertTypes.ERROR, message: `Oops! Expiration seems to be too short, increase the expiry date.` },
       });
-      this.handleDialogOpen();
     } else {
       this.setState({
         alert: {
@@ -211,7 +213,6 @@ class Details extends Component {
           message: "Oops! Something went wrong. Try checking your transaction details.",
         },
       });
-      this.handleDialogOpen();
     }
   };
 
@@ -354,7 +355,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
-  startLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.DEPOSIT)),
+  startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
