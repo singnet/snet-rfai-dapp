@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import AccountBalance from "../../common/AccountBalance";
 import StyledButton from "../../common/StyledButton";
+import TransactionReceipt from "./TransactionReceipt";
 
 const UserProfileClaims = ({ classes }) => {
   return (
@@ -117,6 +118,12 @@ const UserProfileClaims = ({ classes }) => {
           </Grid>
         </div>
       </Grid>
+
+      <TransactionReceipt
+        succesMsg="Claim for Request Succesfully Processed"
+        receiptHeader="Claim"
+        requestTitle="A very long service provider request"
+      />
     </Grid>
   );
 };
