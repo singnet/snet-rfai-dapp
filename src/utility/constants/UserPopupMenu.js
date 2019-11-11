@@ -16,6 +16,11 @@ export const UserMenuList = [
     menuTitle: "Settings",
     menuLink: `${Routes.USER_PROFILE}/settings`,
   },
+  {
+    menuIcon: SettingIcon,
+    menuTitle: "Claims",
+    menuLink: `${Routes.USER_PROFILE}/claims`,
+  },
 ];
 
 export const UserMenuActionList = [

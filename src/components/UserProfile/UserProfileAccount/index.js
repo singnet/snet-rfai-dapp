@@ -9,7 +9,7 @@ import AlertBox from "../../common/AlertBox";
 const UserProfileAccount = ({ classes }) => {
   const [alert] = useState({});
   return (
-    <Grid container spacing={10} className={classes.accountMainContainer}>
+    <Grid container className={classes.accountMainContainer}>
       <Grid xs={12} sm={12} md={4} lg={4} className={classes.accountContainer}>
         <h3>Payment / Transfer Method</h3>
         <div className={classes.accountWrapper}>

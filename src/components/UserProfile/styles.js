@@ -5,6 +5,7 @@ export const useStyles = theme => ({
     "@media(max-width:660px)": { padding: "0 25px" },
   },
   tabsHeader: {
+    marginBottom: 13,
     backgroundColor: "transparent",
     color: theme.palette.text.lightShadedGray,
     boxShadow: "none",

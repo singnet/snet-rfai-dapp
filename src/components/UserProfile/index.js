@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
+import UserProfileClaims from "./UserProfileClaims";
 import { useStyles } from "./styles";
 import UserProfileAccount from "./UserProfileAccount";
 
@@ -38,6 +39,7 @@ class UserProfile extends Component {
     const tabs = [
       { name: "Account", activeIndex: 0, component: <UserProfileAccount /> },
       { name: "Settings", activeIndex: 1, component: <UserProfileSettings history={history} /> },
+      { name: "Claims", activeIndex: 2, component: <UserProfileClaims /> },
     ];
     const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0].component;
     return (

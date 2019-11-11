@@ -23,6 +23,7 @@ export const useStyles = theme => ({
     maxWidth: 845,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
     borderRadius: 4,
+    marginRight: 25,
     backgroundColor: theme.palette.text.white,
     "& h3": {
       "& + div": {
@@ -70,42 +71,6 @@ export const useStyles = theme => ({
     "& button": {
       display: "flex",
       margin: "40px auto",
-    },
-  },
-  accountBalanceContainer: {
-    maxWidth: 411,
-    boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
-    borderRadius: 4,
-    marginLeft: 25,
-    backgroundColor: theme.palette.text.white,
-    flexBasis: "30%",
-    "@media(max-width:960px)": {
-      maxWidth: "100%",
-      marginTop: 25,
-      marginLeft: 0,
-      flexBasis: "100%",
-    },
-  },
-  warningBox: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: theme.palette.text.warningBoxBorder,
-    borderRadius: 4,
-    padding: "13px 20px",
-    margin: "32px 20px 27px",
-    backgroundColor: theme.palette.text.warningBoxBg,
-    "& p, & span": {
-      color: theme.palette.text.alertBoxColor,
-      fontFamily: theme.typography.primary.main,
-      fontSize: 14,
-      lineHeight: "20px",
-      letterSpacing: 0.25,
-      textAlign: "left",
-    },
-    "& p": { paddingTop: 20 },
-    "& a": {
-      color: theme.palette.text.primary,
-      fontWeight: "bold",
     },
   },
 });
