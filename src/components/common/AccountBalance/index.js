@@ -9,7 +9,7 @@ import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 
 const AccountBalance = (classes, showMetaMaskAccBal, button) => {
   return (
-    <div className={classes.accountBalanceContainer}>
+    <div className={classes.test}>
       <h3>Account Balance</h3>
       {showMetaMaskAccBal ? (
         <MetaMaskAccountBalance />
