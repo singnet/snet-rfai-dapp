@@ -25,60 +25,60 @@ const UserProfileClaims = ({ classes }) => {
             consectetuer an.{" "}
           </Typography>
           <Grid container className={classes.tableHeader}>
-            <Grid xs={12} sm={12} md={4} lg={4}>
+            <Grid xs={12} sm={4} md={4} lg={4}>
               <span>Request Title</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>Votes</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <span>Completed on</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>Days left to claim</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2} className={classes.centerAlign}>
+            <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
               <span>Tokens</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2} />
+            <Grid xs={12} sm={2} md={2} lg={2} />
           </Grid>
           <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={12} md={4} lg={4}>
+            <Grid xs={12} sm={4} md={4} lg={4}>
               <span>A very long Request name</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>12</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <span>20 Oct 2019</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>28 days</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2} className={classes.centerAlign}>
+            <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
               <span>999 AGI</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
             </Grid>
           </Grid>
           <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={12} md={4} lg={4}>
+            <Grid xs={12} sm={4} md={4} lg={4}>
               <span>A very long Request name</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>12</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <span>20 Oct 2019</span>
             </Grid>
-            <Grid xs={12} sm={12} md={1} lg={1}>
+            <Grid xs={12} sm={1} md={1} lg={1}>
               <span>28 days</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2} className={classes.centerAlign}>
+            <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
               <span>999 AGI</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
             </Grid>
           </Grid>
@@ -91,28 +91,28 @@ const UserProfileClaims = ({ classes }) => {
             consectetuer an.{" "}
           </Typography>
           <Grid container className={classes.tableHeader}>
-            <Grid xs={12} sm={12} md={4} lg={4}>
+            <Grid xs={12} sm={4} md={4} lg={4}>
               <span>Request Title</span>
             </Grid>
-            <Grid xs={12} sm={12} md={3} lg={3}>
+            <Grid xs={12} sm={3} md={3} lg={3}>
               <span>Reason for claim</span>
             </Grid>
-            <Grid xs={12} sm={12} md={3} lg={3}>
+            <Grid xs={12} sm={3} md={3} lg={3}>
               <span>tokens backed</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2} />
+            <Grid xs={12} sm={2} md={2} lg={2} />
           </Grid>
           <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={12} md={4} lg={4}>
+            <Grid xs={12} sm={4} md={4} lg={4}>
               <span>A very long Request name</span>
             </Grid>
-            <Grid xs={12} sm={12} md={3} lg={3}>
+            <Grid xs={12} sm={3} md={3} lg={3}>
               <span>Request Rejected</span>
             </Grid>
-            <Grid xs={12} sm={12} md={3} lg={3}>
+            <Grid xs={12} sm={3} md={3} lg={3}>
               <span>999 AGI</span>
             </Grid>
-            <Grid xs={12} sm={12} md={2} lg={2}>
+            <Grid xs={12} sm={2} md={2} lg={2}>
               <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
             </Grid>
           </Grid>
