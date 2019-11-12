@@ -1,10 +1,10 @@
 export const useStyles = theme => ({
-  metamaskAccBalanceContainer: { padding: "21px 19px 40px" },
+  metamaskAccBalanceContainer: { padding: "32px 19px 0" },
   description: {
     color: theme.palette.text.mediumShadeGray,
     fontFamily: theme.typography.primary.main,
-    fontSize: 16,
-    letterSpacing: 0.29,
+    fontSize: 14,
+    letterSpacing: 0.25,
     lineHeight: "21px",
   },
   accountDetails: {
@@ -26,7 +26,7 @@ export const useStyles = theme => ({
           display: "inline-block",
           color: theme.palette.text.mediumShadeGray,
           fontSize: 16,
-          lineHeight: "22px",
+          lineHeight: "20px",
           "@media(max-width: 1122px)": { fontSize: 13 },
           "@media(max-width: 960px)": { fontSize: 16 },
         },
@@ -77,7 +77,7 @@ export const useStyles = theme => ({
     alignItems: "center",
     "& > div": { marginTop: "7px !important" },
     "& > span": {
-      padding: "14px 20px",
+      padding: "14px 6px",
       borderWidth: 1,
       borderStyle: "solid",
       borderColor: theme.palette.text.verticalTabLeftBorder,
@@ -115,9 +115,10 @@ export const useStyles = theme => ({
     },
   },
   tabsContainer: {
+    marginTop: 35,
     "& > div": {
       width: "100%",
-      marginBottom: 28,
+      margin: "24px 0",
       "& label": { color: theme.palette.text.alertBoxColor },
       "& fieldset": { borderColor: "rgba(0, 0, 0, 0.87) !important" },
     },

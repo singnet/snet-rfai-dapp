@@ -1,7 +1,5 @@
 export const useStyles = theme => ({
-  settingMainContainer: {
-    margin: "13px 0 50px",
-  },
+  settingMainContainer: { marginBottom: 50 },
   settingsContainer: {
     maxWidth: 845,
     flexBasis: "100%",

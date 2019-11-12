@@ -1,7 +1,7 @@
 export const useStyles = theme => ({
   accountMainContainer: {
     width: "100%",
-    margin: "13px 0 50px",
+    marginBottom: 50,
   },
   accountContainer: {
     maxWidth: 412,
