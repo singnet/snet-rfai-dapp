@@ -60,7 +60,7 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={actionType + "Request"}
+            title={actionType + " Request"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -69,49 +69,64 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
           />
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
-              <div>Request Title: {requestDetails.request_title}</div>
-              <div>Request By: {requestDetails.requester}</div>
-              <div>Expiry Set By Requester: {requestDetails.expiration}</div>
-              <div>Current Block Number: {currentBlockNumber}</div>
+              <div className={classes.requestTitle}>
+                <span>Request Title: </span>
+                <p>{requestDetails.request_title}</p>
+              </div>
+              <div className={classes.requestedByAndExpiryContainer}>
+                <div className={classes.requestedBy}>
+                  <span>Request By</span>
+                  <p>{requestDetails.requester}</p>
+                </div>
+                <div className={classes.expirySet}>
+                  <span>Expiry Set By Requester</span>
+                  <p>{requestDetails.expiration}</p>
+                </div>
+              </div>
+              <div className={classes.currentBlockNumber}>
+                <span>Current Block Number: </span>
+                <p>{currentBlockNumber}</p>
+              </div>
 
-              <div>
-                <label>End Submission Block:</label>
-                <input
-                  name="endSubmission"
-                  type="number"
-                  placeholder="End of Submission:"
-                  autoComplete="off"
-                  min={currentBlockNumber}
-                  onChange={(event, value) => setEndSubmission(value)}
-                />
-              </div>
-              <div>
-                <label>End Evaluation Block:</label>
-                <input
-                  name="endEvaluation"
-                  type="number"
-                  placeholder="End of Evaluation:"
-                  autoComplete="off"
-                  min={currentBlockNumber}
-                  onChange={(event, value) => setEndEvaluation(value)}
-                />
-              </div>
-              <div>
-                <label>Expiration Block:</label>
-                <input
-                  name="newExpiration"
-                  type="number"
-                  placeholder="Expiration block number:"
-                  autoComplete="off"
-                  min={currentBlockNumber}
-                  onChange={(event, value) => setNewExpiration(value)}
-                />
+              <div className={classes.inputFieldContainer}>
+                <div>
+                  <label>End Submission Block:</label>
+                  <input
+                    name="endSubmission"
+                    type="number"
+                    autoComplete="off"
+                    min={currentBlockNumber}
+                    onChange={(event, value) => setEndSubmission(value)}
+                  />
+                </div>
+
+                <div>
+                  <label>End Evaluation Block:</label>
+                  <input
+                    name="endEvaluation"
+                    type="number"
+                    autoComplete="off"
+                    min={currentBlockNumber}
+                    onChange={(event, value) => setEndEvaluation(value)}
+                  />
+                </div>
+
+                <div>
+                  <label>Expiration Block:</label>
+                  <input
+                    name="newExpiration"
+                    type="number"
+                    autoComplete="off"
+                    min={currentBlockNumber}
+                    onChange={(event, value) => setNewExpiration(value)}
+                  />
+                </div>
               </div>
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            {actionType === "Approve" && <StyledButton btnText="Approve" onClick={handleApprove} />}
+            <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
+            {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} />}
             {actionType === "Reject" && <StyledButton btnText="Reject" onClick={handleReject} />}
           </CardActions>
         </Card>

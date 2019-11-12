@@ -189,7 +189,7 @@ const RequestList = ({
                 />
                 <StyledButton
                   type="red"
-                  onClick={event => handleOpenModel(event, modals.REJECT, r.request_id)}
+                  onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
                   btnText="Reject Request"
                 />
               </div>
@@ -218,7 +218,6 @@ const RequestList = ({
           requestTitle={selectedRequestTitle}
           requestVotes={requestVotes}
         />
-
         <ApproveRejectRequest
           open={openModel === modals.APPROVEREJECT ? true : false}
           handleClose={handleCloseModel}
