@@ -1,26 +1,13 @@
 export const useStyles = theme => ({
   RFAILandingContainer: {
     backgroundColor: theme.palette.text.offWhiteColor,
-    "@media(min-width: 1281px)": {
-      width: 1281,
-      margin: "0 auto",
-    },
-    "@media(min-width: 1024px) and (max-width: 1280px)": {
-      width: 1024,
-      margin: "0 auto",
-    },
-    "@media(min-width: 768px) and (max-width: 1024px)": {
-      width: 768,
-      margin: "0 auto",
-    },
   },
   mainWrapper: {
     width: "92%",
     margin: "0 auto",
-    "@media(max-width: 1280px)": { width: "98%" },
-    "@media(min-width: 1281px)": { width: "100%" },
   },
   topSectionCotainer: {
+    marginTop: 24,
     "@media(max-width: 1024px)": {
       flexDirection: "column",
       alignItems: "center",
@@ -30,11 +17,12 @@ export const useStyles = theme => ({
     "@media(max-width: 1024px)": { maxWidth: "100%" },
   },
   title: {
-    margin: "33px 0 0 0",
+    margin: 0,
     color: theme.palette.text.darkShadedGray,
     fontSize: 32,
-    lineHeight: "57px",
-    "@media(min-width: 1281px)": { padding: "0 35px" },
+    fontWeight: 600,
+    letterSpacing: -0.5,
+    lineHeight: "48px",
     "@media(max-width: 1280px)": { marginTop: 16 },
     "@media(max-width: 1024px)": { fontSize: 28 },
     "@media(max-width: 768px)": { marginTop: 0 },
@@ -46,15 +34,15 @@ export const useStyles = theme => ({
     },
   },
   description: {
-    padding: "41px 40px 20px 0",
     margin: 0,
     color: theme.palette.text.darkShadedGray,
     fontSize: 22,
-    lineHeight: "30px",
-    "& span": { fontWeight: 600 },
+    fontWeight: 600,
+    lineHeight: "32px",
     "& p": {
       margin: "5px 0 0",
       fontWeight: 200,
+      lineHeight: "28px",
     },
     "@media(max-width: 1280px)": {
       paddingRight: 0,
@@ -62,7 +50,6 @@ export const useStyles = theme => ({
     },
     "@media(max-width: 1024px)": { paddingTop: 0 },
   },
-  signupLink: {
-    textDecoration: "none",
-  },
+  btnContainer: { marginTop: 33 },
+  signupLink: { textDecoration: "none" },
 });

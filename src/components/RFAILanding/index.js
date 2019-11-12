@@ -29,6 +29,8 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
                   will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI
                   token rewards.
                 </p>
+              </div>
+              <div className={classes.btnContainer}>
                 <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
                   <StyledButton type="blue" btnText="Create Request" />
                 </Link>
