@@ -53,11 +53,11 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: "none",
   },
   table: {
-    padding: "0 22px",
+    margin: "16px 22px 0",
     tableLayout: "fixed",
     "& thead": {
       "& th": {
-        paddingBottom: 8,
+        padding: "0 0 8px",
         border: "none",
         color: theme.palette.text.darkShadedGray,
         fontFamily: theme.typography.primary.main,
@@ -72,7 +72,7 @@ export const useStyles = makeStyles(theme => ({
         borderTopColor: theme.palette.text.lightGray,
       },
       "& th, & td": {
-        padding: "7px 40px 8px 16px",
+        padding: "7px 40px 8px 0",
         border: "none",
         color: theme.palette.text.mediumShadeGray,
         fontFamily: theme.typography.primary.main,
@@ -80,6 +80,9 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "18px",
         overflow: "hidden",
         textOverflow: "ellipsis",
+      },
+      "& td": {
+        "&:last-of-type": { paddingRight: 40 },
       },
     },
   },

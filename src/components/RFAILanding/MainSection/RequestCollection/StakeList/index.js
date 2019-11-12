@@ -60,7 +60,7 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestStakes, 
                   <TableHead>
                     <TableRow>
                       <TableCell>Backed by</TableCell>
-                      <TableCell>Backed on</TableCell>
+                      <TableCell align="right">Backed on</TableCell>
                       <TableCell align="right">Tokens Awarded</TableCell>
                     </TableRow>
                   </TableHead>
@@ -71,7 +71,7 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestStakes, 
                           {stake.stake_member} <br />
                           {stake.stake_member_name}
                         </TableCell>
-                        <TableCell>{stake.created}</TableCell>
+                        <TableCell align="right">{stake.created}</TableCell>
                         <TableCell align="right">{stake.stake_amount}</TableCell>
                       </TableRow>
                     ))}
@@ -82,6 +82,7 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestStakes, 
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="back the request" type="blue" />
           </CardActions>
         </Card>
       </Modal>

@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
   },
   Modal: { overflow: "auto" },
   card: {
-    width: 650,
+    width: 640,
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: "16px 32px 0",
+    padding: "16px 21px 0",
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -50,10 +50,38 @@ export const useStyles = makeStyles(theme => ({
   },
   root: {
     width: "100%",
-    overflowX: "auto",
+    boxShadow: "none",
   },
   table: {
-    minWidth: 650,
+    padding: "0 22px",
+    tableLayout: "fixed",
+    "& thead": {
+      "& th": {
+        padding: "0 0 8px",
+        border: "none",
+        color: theme.palette.text.darkShadedGray,
+        fontFamily: theme.typography.primary.main,
+        fontSize: 16,
+        lineHeight: "20px",
+      },
+    },
+    "& tbody": {
+      "& tr": {
+        borderTopWidth: 1,
+        borderTopStyle: "solid",
+        borderTopColor: theme.palette.text.lightGray,
+      },
+      "& th, & td": {
+        padding: "7px 0 8px 0",
+        border: "none",
+        color: theme.palette.text.mediumShadeGray,
+        fontFamily: theme.typography.primary.main,
+        fontSize: 14,
+        lineHeight: "18px",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      },
+    },
   },
   circularProgressContainer: {
     paddingTop: 20,
