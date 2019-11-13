@@ -1,34 +1,46 @@
 export const useStyles = theme => ({
   CategoryWrapper: {
-    marginBottom: 60,
+    width: "80%",
+    padding: "33px 0",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    borderTopColor: theme.palette.text.lightShadedGray,
+    margin: "0 auto",
     justifyContent: "space-between",
-    "@media(max-width:1024px)": { marginBottom: 0 },
-    "@media(max-width:768px)": {
-      marginBottom: 30,
-      flexDirection: "column",
-    },
+    "@media(max-width:1280px)": { width: "95%" },
+    "@media(max-width:960px)": { flexDirection: "column" },
   },
   CategoryContent: {
-    maxWidth: "45%",
-    paddingTop: 25,
+    paddingLeft: 24,
     "& p": {
-      margin: "10px 0 27px",
-      color: theme.palette.text.mediumShadeGray,
-      fontSize: 16,
-      lineHeight: "24px",
+      margin: "22px 0 0",
+      color: "#616166",
+      fontSize: 18,
+      lineHeight: "28px",
       "& span": { fontWeight: 600 },
+      "@media(max-width:960px)": { marginTop: 10 },
     },
     "@media(max-width:960px)": {
       maxWidth: "100%",
-      marginBottom: 25,
+      paddingLeft: 0,
+      marginTop: 15,
     },
   },
   reverseDirection: {
     flexDirection: "row-reverse",
     "& div": {
-      "&:last-of-type": { justifyContent: "flex-start" },
+      "&:last-of-type": {
+        padding: "0 24px 0 0",
+        "@media(max-width:960px)": {
+          marginTop: 0,
+          paddingRight: 0,
+        },
+      },
+      "@media(max-width:960px)": { padding: "25px 0 0" },
     },
-    "@media(max-width:768px)": { flexDirection: "column" },
+    "@media(max-width:960px)": {
+      flexDirection: "column-reverse",
+    },
   },
   Title: {
     "& svg": {
@@ -40,7 +52,7 @@ export const useStyles = theme => ({
     "& h3": {
       margin: 0,
       display: "inline-block",
-      color: theme.palette.text.darkShadedGray,
+      color: theme.palette.text.black1,
       fontSize: 24,
       fontWeight: 600,
       lineHeight: "30px",
@@ -48,11 +60,12 @@ export const useStyles = theme => ({
   },
   CategoryMedia: {
     display: "flex",
-    justifyContent: "flex-end",
-    "@media(max-width:1024px)": {
-      padding: " 0 10px",
-      alignItems: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    "& img": { width: "100%" },
+    "@media(max-width:960px)": {
+      width: 411,
+      margin: "0 auto",
     },
-    "@media(max-width:768px)": { maxWidth: "100%" },
   },
 });
