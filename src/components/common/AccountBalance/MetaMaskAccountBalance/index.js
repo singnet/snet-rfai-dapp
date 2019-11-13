@@ -9,23 +9,23 @@ import Tab from "@material-ui/core/Tab";
 import { useStyles } from "./styles";
 
 //components
-import StyledButton from "../../common/StyledButton";
-import StyledTextField from "../../common/StyledTextField";
-import AlertBox, { alertTypes } from "../../common/AlertBox";
+import StyledButton from "../../StyledButton";
+import StyledTextField from "../../StyledTextField";
+import AlertBox, { alertTypes } from "../../AlertBox";
 
-import { tokenActions } from "../../../Redux/actionCreators";
-import { rfaiContractActions } from "../../../Redux/actionCreators";
-import { NetworkNames } from "../../../utility/constants/NetworkNames";
+import { tokenActions } from "../../../../Redux/actionCreators";
+import { rfaiContractActions } from "../../../../Redux/actionCreators";
+import { NetworkNames } from "../../../../utility/constants/NetworkNames";
 
-import { loaderActions } from "../../../Redux/actionCreators";
-import { LoaderContent } from "../../../utility/constants/LoaderContent";
+import { loaderActions } from "../../../../Redux/actionCreators";
+import { LoaderContent } from "../../../../utility/constants/LoaderContent";
 
 import {
   waitForTransaction,
   approveToken,
   depositTokenToEscrow,
   withdrawTokenFromEscrow,
-} from "../../../utility/BlockchainHelper";
+} from "../../../../utility/BlockchainHelper";
 
 import web3 from "web3";
 

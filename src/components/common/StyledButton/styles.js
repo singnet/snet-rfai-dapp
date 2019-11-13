@@ -62,13 +62,30 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   transparentBlueBorder: {
+    borderWidth: 2,
     borderColor: theme.palette.text.primary,
     backgroundColor: "transparent !important",
     color: theme.palette.text.primary,
+    "&:disabled": {
+      borderWidth: 1,
+      color: theme.palette.text.disabledBtnBg,
+      borderColor: theme.palette.text.disabledBtnBg,
+    },
     "&:hover": {
       borderColor: theme.palette.text.transBlueBorderTextHover,
       backgroundColor: "rgba(0,90,203,0.05) !important",
       color: theme.palette.text.transBlueBorderTextHover,
+    },
+  },
+  blueText: {
+    borderColor: "transparent",
+    backgroundColor: "transparent",
+    color: theme.palette.text.primary,
+    "&:hover": {
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: theme.palette.text.primary,
+      backgroundColor: "transparent",
     },
   },
 }));

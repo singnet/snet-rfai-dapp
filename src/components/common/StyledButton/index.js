@@ -14,6 +14,7 @@ const buttonColor = {
   transparentBlueBorder: "transparentBlueBorder",
   red: "red",
   redBg: "redBg",
+  blueText: "blueText",
 };
 
 const StyledButton = ({ disabled, onClick, type, btnType, iconClass, btnText, ...rest }) => {
@@ -34,7 +35,16 @@ const StyledButton = ({ disabled, onClick, type, btnType, iconClass, btnText, ..
 };
 
 StyledButton.propTypes = {
-  type: PropTypes.oneOf(["blue", "gradient", "black", "transparent", "red", "redBg", "transparentBlueBorder"]),
+  type: PropTypes.oneOf([
+    "blue",
+    "gradient",
+    "black",
+    "transparent",
+    "red",
+    "redBg",
+    "transparentBlueBorder",
+    "blueText",
+  ]),
   btnType: PropTypes.oneOf(["submit", "reset", "button"]),
 };
 

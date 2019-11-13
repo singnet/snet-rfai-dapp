@@ -8,7 +8,7 @@ import { useStyles } from "./styles";
 //components
 import ProgressBar from "../common/ProgressBar";
 import StyledButton from "../common/StyledButton";
-import AccountBalance from "./AccountBalance";
+import AccountBalance from "../common/AccountBalance";
 import Details from "./Details";
 import Summary from "./Summary";
 import Notification from "../Notification";
@@ -86,24 +86,7 @@ class CreateRequest extends Component {
             )}
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
-            <h3>Account Balance</h3>
-            {isTxnsAllowed ? (
-              <AccountBalance />
-            ) : (
-              <div className={classes.warningBox}>
-                <span>You need Metamask wallet to create requests.</span>
-                <Typography>
-                  Please Login or Install to your Metamask wallet account and connect to SingularityNet.{" "}
-                </Typography>
-                <Typography>
-                  <a href="https://metamask.io/" target="_new">
-                    Click here{" "}
-                  </a>
-                  to install and learn more about how to use Metamask and your AGI credits with SinguarlityNet AI
-                  Marketplace.
-                </Typography>
-              </div>
-            )}
+            <AccountBalance showMetaMaskAccBal={isTxnsAllowed} />
           </Grid>
         </Grid>
       </Fragment>
