@@ -224,6 +224,12 @@ const RequestList = ({
           requestId={selectedRequestId}
           actionType="Approve"
         />
+        <ApproveRejectRequest
+          open={openModel === modals.REJECTREQUEST ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+          actionType="Reject"
+        />
       </div>
     );
   }

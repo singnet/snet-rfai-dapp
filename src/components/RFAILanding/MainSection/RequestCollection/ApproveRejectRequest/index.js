@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import StyledDropdown from "../../../../common/StyledDropdown";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
 
 const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, requestDetails }) => {
@@ -79,7 +80,7 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
                   <p>{requestDetails.requester}</p>
                 </div>
                 <div className={classes.expirySet}>
-                  <span>Expiry Set By Requester</span>
+                  <span>{actionType === "Approve" ? "Expiry Set By Requester" : "Tokens Awarded"}</span>
                   <p>{requestDetails.expiration}</p>
                 </div>
               </div>
@@ -88,46 +89,53 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
                 <p>{currentBlockNumber}</p>
               </div>
 
-              <div className={classes.inputFieldContainer}>
-                <div>
-                  <label>End Submission Block:</label>
-                  <input
-                    name="endSubmission"
-                    type="number"
-                    autoComplete="off"
-                    min={currentBlockNumber}
-                    onChange={(event, value) => setEndSubmission(value)}
-                  />
-                </div>
+              {actionType === "Approve" ? (
+                <div className={classes.inputFieldContainer}>
+                  <div>
+                    <label>End Submission Block:</label>
+                    <input
+                      name="endSubmission"
+                      type="number"
+                      autoComplete="off"
+                      min={currentBlockNumber}
+                      onChange={(event, value) => setEndSubmission(value)}
+                    />
+                  </div>
 
-                <div>
-                  <label>End Evaluation Block:</label>
-                  <input
-                    name="endEvaluation"
-                    type="number"
-                    autoComplete="off"
-                    min={currentBlockNumber}
-                    onChange={(event, value) => setEndEvaluation(value)}
-                  />
-                </div>
+                  <div>
+                    <label>End Evaluation Block:</label>
+                    <input
+                      name="endEvaluation"
+                      type="number"
+                      autoComplete="off"
+                      min={currentBlockNumber}
+                      onChange={(event, value) => setEndEvaluation(value)}
+                    />
+                  </div>
 
-                <div>
-                  <label>Expiration Block:</label>
-                  <input
-                    name="newExpiration"
-                    type="number"
-                    autoComplete="off"
-                    min={currentBlockNumber}
-                    onChange={(event, value) => setNewExpiration(value)}
-                  />
+                  <div>
+                    <label>Expiration Block:</label>
+                    <input
+                      name="newExpiration"
+                      type="number"
+                      autoComplete="off"
+                      min={currentBlockNumber}
+                      onChange={(event, value) => setNewExpiration(value)}
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className={classes.rejectionInput}>
+                  <span>Reason for Rejection</span>
+                  <StyledDropdown />
+                </div>
+              )}
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
             {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} />}
-            {actionType === "Reject" && <StyledButton btnText="Reject" onClick={handleReject} />}
+            {actionType === "Reject" && <StyledButton btnText="Reject Request" type="redBg" onClick={handleReject} />}
           </CardActions>
         </Card>
       </Modal>
