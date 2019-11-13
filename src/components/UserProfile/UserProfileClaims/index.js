@@ -120,6 +120,7 @@ const UserProfileClaims = ({ classes }) => {
       </Grid>
 
       <TransactionReceipt
+        open={false}
         succesMsg="Claim for Request Succesfully Processed"
         receiptHeader="Claim"
         requestTitle="A very long service provider request"
