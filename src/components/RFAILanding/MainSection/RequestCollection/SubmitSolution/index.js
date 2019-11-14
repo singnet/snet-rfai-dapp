@@ -55,29 +55,33 @@ const SubmitSolution = ({ open, handleClose, requestId, requestDetails, loading 
                 </div>
               )}
               {!loading && (
-                <div>
-                  <div>
+                <div className={classes.submitSolutionContent}>
+                  <div className="overview-content">
                     <p>
                       All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance
                       criteria as specified in the request is met and the problem is solved for. Please keep in mind the
                       mentioned points:
                     </p>
-                  </div>
-                  <div className="overview-content">
                     <ul>
-                      <li>The specified acceptance criteria in the request must be met</li>
-                      <li>Any performance metrics specified against provided test datasets should be met</li>
-                      <li>Submission should pass the curation process for AI services on the platform</li>
-                      <li>Provide the github repo of your code</li>
+                      <li>* The specified acceptance criteria in the request must be met</li>
+                      <li>* Any performance metrics specified against provided test datasets should be met</li>
+                      <li>* Submission should pass the curation process for AI services on the platform</li>
+                      <li>* Provide the github repo of your code</li>
                       <li>
-                        Sign your request using the same address used to publish the service. This is an important step
-                        to ensure that you are the owner of the service.
+                        * Sign your request using the same address used to publish the service. This is an important
+                        step to ensure that you are the owner of the service.
                       </li>
                     </ul>
                   </div>
-                  <div>
-                    <label>Solution URL</label>
-                    <input type="text" name="SolURI" />
+                  <div className={classes.solutionUrlContainer}>
+                    <div>
+                      <label>Solution URL</label>
+                      <input type="text" name="SolURI" />
+                    </div>
+                    <p>
+                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentaion for more
+                      info.
+                    </p>
                   </div>
                 </div>
               )}

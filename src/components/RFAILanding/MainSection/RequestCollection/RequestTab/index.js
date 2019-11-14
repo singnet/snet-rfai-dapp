@@ -43,7 +43,7 @@ class RequestTab extends Component {
     // eslint-disable-next-line no-unused-vars
     var isFoundationMember = false;
 
-    if (metamaskDetails.isTxnsAllowed) {
+    if (metamaskDetails.isTxnsAllowed && foundationMembers) {
       const mems = foundationMembers.filter(
         mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
       );

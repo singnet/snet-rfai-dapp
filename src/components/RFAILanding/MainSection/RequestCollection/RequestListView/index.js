@@ -247,6 +247,12 @@ const RequestList = ({
           requestId={selectedRequestId}
           actionType={openModel === modals.APPROVEREQUEST ? "Approve" : "Reject"}
         />
+        <ApproveRejectRequest
+          open={openModel === modals.REJECTREQUEST ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+          actionType="Reject"
+        />
         <StakeRequest
           open={openModel === modals.STAKEREQUEST ? true : false}
           handleClose={handleCloseModel}

@@ -65,6 +65,12 @@ const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSol
                 </div>
               )}
               {!loading && requestSolutions.length > 0 && (
+                // <Grid container className={classes.backRequestContainer}>
+                //   <Gird item xs={12} sm={12} md={12} lg={12} className={classes.backRequestHeader}>
+                //     <Gird item xs={12} sm={12} md={12} lg={12}></div>
+                //   </Grid>
+                //   <Gird item xs={12} sm={12} md={12} lg={12} className={classes.backRequestDetails}></Grid>
+                // </Grid>
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>

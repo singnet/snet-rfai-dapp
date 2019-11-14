@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import StyledDropdown from "../../../../common/StyledDropdown";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
 
 const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, requestDetails }) => {
@@ -156,7 +157,7 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
             {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} />}
-            {actionType === "Reject" && <StyledButton btnText="Reject" onClick={handleReject} />}
+            {actionType === "Reject" && <StyledButton btnText="Reject Request" type="redBg" onClick={handleReject} />}
           </CardActions>
         </Card>
       </Modal>

@@ -13,14 +13,13 @@ export const useStyles = makeStyles(theme => ({
   },
   Modal: { overflow: "auto" },
   card: {
-    width: 640,
+    width: 844,
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
   },
   CardHeader: {
     padding: "5px 22px",
-    backgroundColor: theme.palette.text.offWhiteColor,
     "& span": {
       color: theme.palette.text.black1,
       fontFamily: theme.typography.primary.main,
@@ -29,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: "16px 21px 0",
+    padding: 0,
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -45,7 +44,6 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardActions: {
-    marginTop: 23,
     justifyContent: "center",
   },
   root: {
@@ -110,11 +108,62 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: 0.25,
   },
   requestTitleContainer: {
-    padding: "16px 22px",
-    backgroundColor: theme.palette.text.offWhiteColor,
+    padding: "14px 22px",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopStyle: "solid",
+    borderBottomStyle: "solid",
+    borderTopColor: "rgba(155, 155, 155, 0.25)",
+    borderBottomColor: "rgba(155, 155, 155, 0.25)",
     fontSize: 16,
     lineHeight: "20px",
   },
   requestTitle: { color: theme.palette.text.mediumShadeGray },
   titleName: { color: theme.palette.text.darkShadedGray },
+  submitSolutionContent: {
+    padding: "18px 22px 24px",
+    "& p": {
+      margin: 0,
+      fontSize: 16,
+    },
+    "& ul": {
+      padding: "24px 15px",
+      margin: "24px 0 0",
+      backgroundColor: "#f5f5f5",
+      "& li": {
+        listStyle: "none",
+        lineHeight: "30px",
+      },
+    },
+  },
+  solutionUrlContainer: {
+    width: 424,
+    margin: "32px auto 0",
+    "& div": {
+      position: "relative",
+    },
+    "& p": {
+      margin: "4px 0 0",
+      color: theme.palette.text.alertBoxColor,
+      fontSize: 12,
+      letterSpacing: 0.4,
+      lineHeight: "16px",
+    },
+    "& label": {
+      padding: "0 5px",
+      marginLeft: 10,
+      position: "absolute",
+      top: -7,
+      letterSpacing: 0.4,
+      backgroundColor: theme.palette.text.white,
+      color: theme.palette.text.dialogTitle,
+      fontSize: 12,
+    },
+    "& input": {
+      width: "100%",
+      padding: "18px 10px",
+      border: "1px solid rgba(25,25,25,0.32)",
+      borderRadius: 4,
+    },
+  },
 }));
