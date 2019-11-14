@@ -18,6 +18,7 @@ import { LoaderContent } from "../../../utility/constants/LoaderContent";
 
 import { saveIPFSDocument } from "../../../utility/IPFSHelper";
 import { waitForTransaction, createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
+import { toWei, computeBlocksFromDates } from "../../../utility/GenHelperFunctions";
 
 const BN = web3.utils.BN;
 
@@ -80,32 +81,13 @@ class Details extends Component {
     this.props.showSummaryContent();
   };
 
-  computeBlocksFromDates(fromDate, toDate) {
-    // Considering 15 Secs as block creation time
-    var blocks = 0;
-    if (isNaN(Date.parse(fromDate)) || isNaN(Date.parse(toDate))) {
-      return blocks;
-    } else {
-      var dateInMillSecs = 0;
-      dateInMillSecs = Date.parse(toDate) - Date.parse(fromDate);
-      blocks = Math.floor(dateInMillSecs / (1000 * 15));
-    }
-    return blocks > 0 ? blocks : 0;
-  }
-
-  toWei(val) {
-    var factor = Math.pow(10, 8);
-    var weiValBN = new BN(Math.round(val * factor));
-    return weiValBN.toString();
-  }
-
   initiateCreateRequest = async () => {
     const { metamaskDetails, startLoader, stopLoader, updateRFAITokenBalance } = this.props;
 
     const expiration =
-      parseInt(this.state.blockNumber, 10) + this.computeBlocksFromDates(new Date(), this.state.expirationDate);
+      parseInt(this.state.blockNumber, 10) + computeBlocksFromDates(new Date(), this.state.expirationDate);
 
-    var initialStakeBN = new BN(this.toWei(this.state.initialStake));
+    var initialStakeBN = new BN(toWei(this.state.initialStake));
 
     // TODO: Check if we need to add Nick name or email as the Requester?
     //"author": this.state.requestAuthor,
@@ -168,11 +150,11 @@ class Details extends Component {
 
     //value, expiration, documentURI
     const zeroBN = new BN(0);
-    const initialStakeBN = new BN(this.toWei(this.state.initialStake));
+    const initialStakeBN = new BN(toWei(this.state.initialStake));
     const rfaiTokenBalanceBN = new BN(rfaiTokenBalance);
 
     const expiration =
-      parseInt(this.state.blockNumber, 10) + this.computeBlocksFromDates(new Date(), this.state.expirationDate);
+      parseInt(this.state.blockNumber, 10) + computeBlocksFromDates(new Date(), this.state.expirationDate);
 
     if (
       this.state.requestTitle.length > 0 &&
