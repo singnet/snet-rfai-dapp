@@ -21,6 +21,8 @@ import SolutionList from "../SolutionList";
 import StakeList from "../StakeList";
 import VoteList from "../VoteList";
 import ApproveRejectRequest from "../ApproveRejectRequest";
+import StakeRequest from "../StakeRequest";
+import SubmitSolution from "../SubmitSolution";
 import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
@@ -43,6 +45,8 @@ const RequestList = ({
     VOTE: "VoteList",
     STAKE: "StakeList",
     APPROVEREJECT: "ApproveReject",
+    STAKEREQUEST: "StakeRequest",
+    SUBMITSOLUTION: "SubmitSolution",
     NONE: "None",
   };
 
@@ -177,12 +181,12 @@ const RequestList = ({
               <div>
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id, r.request_title)}
+                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
                   btnText="View Solution"
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.STAKE, r.request_id, r.request_title)}
+                  onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
                   btnText="View Backers"
                 />
                 <StyledButton
@@ -199,6 +203,16 @@ const RequestList = ({
                   type="red"
                   onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
                   btnText="Reject Request"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
+                  btnText="Back the Request"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
+                  btnText="Submit Solution"
                 />
               </div>
             </ExpansionPanelActions>
@@ -237,6 +251,16 @@ const RequestList = ({
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
           actionType="Reject"
+        />
+        <StakeRequest
+          open={openModel === modals.STAKEREQUEST ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+        />
+        <SubmitSolution
+          open={openModel === modals.SUBMITSOLUTION ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
         />
       </div>
     );

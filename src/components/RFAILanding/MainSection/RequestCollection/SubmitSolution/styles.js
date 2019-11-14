@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
-  stakeList: {
+  submitSolution: {
     paddingLeft: 25,
     "@media(max-width: 1024px)": {
       paddingTop: 30,

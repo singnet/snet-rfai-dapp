@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
-  stakeList: {
+  stakeRequest: {
     paddingLeft: 25,
     "@media(max-width: 1024px)": {
       paddingTop: 30,
@@ -51,37 +51,6 @@ export const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     boxShadow: "none",
-  },
-  table: {
-    padding: "0 22px",
-    tableLayout: "fixed",
-    "& thead": {
-      "& th": {
-        padding: "0 0 8px",
-        border: "none",
-        color: theme.palette.text.darkShadedGray,
-        fontFamily: theme.typography.primary.main,
-        fontSize: 16,
-        lineHeight: "20px",
-      },
-    },
-    "& tbody": {
-      "& tr": {
-        borderTopWidth: 1,
-        borderTopStyle: "solid",
-        borderTopColor: theme.palette.text.lightGray,
-      },
-      "& th, & td": {
-        padding: "7px 0 8px 0",
-        border: "none",
-        color: theme.palette.text.mediumShadeGray,
-        fontFamily: theme.typography.primary.main,
-        fontSize: 14,
-        lineHeight: "18px",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-      },
-    },
   },
   circularProgressContainer: {
     paddingTop: 20,

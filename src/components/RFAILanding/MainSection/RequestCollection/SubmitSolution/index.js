@@ -11,18 +11,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
 
-// Table dependencies
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestStakes, loading }) => {
+const SubmitSolution = ({ open, handleClose, requestId, requestDetails, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -39,7 +33,7 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={"View Backers"}
+            title={"Submit Solution"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -56,52 +50,47 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
                     <CircularProgress className={classes.circularProgress} />
-                    <p className={classes.loaderText}>LOADING BACKERS..</p>
+                    <p className={classes.loaderText}>LOADING SOLUTION..</p>
                   </div>
                 </div>
               )}
-              {requestStakes.length === 0 && (
+              {!loading && (
                 <div>
-                  <span>No solutions found.</span>
+                  <div>
+                    <p>
+                      All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance
+                      criteria as specified in the request is met and the problem is solved for. Please keep in mind the
+                      mentioned points:
+                    </p>
+                  </div>
+                  <div className="overview-content">
+                    <ul>
+                      <li>The specified acceptance criteria in the request must be met</li>
+                      <li>Any performance metrics specified against provided test datasets should be met</li>
+                      <li>Submission should pass the curation process for AI services on the platform</li>
+                      <li>Provide the github repo of your code</li>
+                      <li>
+                        Sign your request using the same address used to publish the service. This is an important step
+                        to ensure that you are the owner of the service.
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <label>Solution URL</label>
+                    <input type="text" name="SolURI" />
+                  </div>
                 </div>
-              )}
-              {!loading && requestStakes.length > 0 && (
-                <Table className={classes.table} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Backed by</TableCell>
-                      <TableCell align="right">Backed on</TableCell>
-                      <TableCell align="right">Tokens Awarded</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {requestStakes.map(stake => (
-                      <TableRow key={stake.stake_member}>
-                        <TableCell component="th" scope="row">
-                          {stake.stake_member} <br />
-                          {stake.stake_member_name}
-                        </TableCell>
-                        <TableCell align="right">{stake.created}</TableCell>
-                        <TableCell align="right">{stake.stake_amount}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
               )}
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="back the request" type="blue" />
+            <StyledButton btnText="Submit Solution" type="blue" />
           </CardActions>
         </Card>
       </Modal>
     </div>
   );
-};
-
-StakeList.defaultProps = {
-  requestStakes: [],
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -113,4 +102,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(StakeList);
+export default connect(mapStateToProps)(SubmitSolution);
