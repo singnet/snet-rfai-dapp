@@ -19,6 +19,8 @@ import { CircularProgress } from "@material-ui/core";
 import initHotjar from "./assets/externalScripts/hotjar";
 import initGDPRNotification from "./assets/externalScripts/gdpr";
 
+import { requestActions } from "./Redux/actionCreators";
+
 const ForgotPassword = lazy(() => import("./components/Login/ForgotPassword"));
 const ForgotPasswordSubmit = lazy(() => import("./components/Login/ForgotPasswordSubmit"));
 const Onboarding = lazy(() => import("./components/Onboarding"));
@@ -48,6 +50,7 @@ initGDPRNotification();
 class App extends Component {
   componentDidMount = () => {
     this.props.fetchUserDetails();
+    this.props.fetchFoundationMembers();
   };
 
   render() {
@@ -134,6 +137,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: () => dispatch(userActions.fetchUserDetails),
+  fetchFoundationMembers: () => dispatch(requestActions.fetchFoundationMembersData()),
 });
 
 export default connect(

@@ -29,7 +29,7 @@ export const waitForTransaction = async hash => {
   });
 };
 
-export const approveToken = (metamaskDetails, amount) => {
+export const approveToken = (metamaskDetails, amountBN) => {
   const tokenContractAddress = getTokenContractAddress();
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
@@ -40,7 +40,7 @@ export const approveToken = (metamaskDetails, amount) => {
   const tokenInstance = window.web3.eth.contract(tokenABI).at(tokenContractAddress);
 
   return new Promise(async (resolve, reject) => {
-    await tokenInstance.approve(rfaiContractAddress, amount, { from: accountAddress }, (err, hash) => {
+    await tokenInstance.approve(rfaiContractAddress, amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -49,7 +49,7 @@ export const approveToken = (metamaskDetails, amount) => {
   });
 };
 
-export const depositTokenToEscrow = (metamaskDetails, amount) => {
+export const depositTokenToEscrow = (metamaskDetails, amountBN) => {
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
@@ -59,7 +59,7 @@ export const depositTokenToEscrow = (metamaskDetails, amount) => {
   const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
-    await rfaiInstance.deposit(amount, { from: accountAddress }, (err, hash) => {
+    await rfaiInstance.deposit(amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -68,7 +68,7 @@ export const depositTokenToEscrow = (metamaskDetails, amount) => {
   });
 };
 
-export const withdrawTokenFromEscrow = (metamaskDetails, amount) => {
+export const withdrawTokenFromEscrow = (metamaskDetails, amountBN) => {
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
@@ -78,7 +78,7 @@ export const withdrawTokenFromEscrow = (metamaskDetails, amount) => {
   const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
-    await rfaiInstance.withdraw(amount, { from: accountAddress }, (err, hash) => {
+    await rfaiInstance.withdraw(amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }

@@ -155,11 +155,19 @@ const RequestList = ({
                 </div>
                 <div className={classes.exPanelProjURL}>
                   <span>project URL: </span>
-                  <p className={classes.urlLink}>{r.document_uri} </p>
+                  <p className={classes.urlLink}>
+                    <a href={r.git_hub_link} target="_new">
+                      {r.git_hub_link}
+                    </a>{" "}
+                  </p>
                 </div>
                 <div className={classes.exPanelTrainingDataset}>
                   <span>Training Dataset: </span>
-                  <p className={classes.urlLink}>{r.training_data_set_uri} </p>
+                  <p className={classes.urlLink}>
+                    <a href={r.training_data_set_uri} target="_new">
+                      {r.training_data_set_uri}
+                    </a>
+                  </p>
                 </div>
               </div>
             </ExpansionPanelDetails>

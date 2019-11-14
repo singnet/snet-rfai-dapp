@@ -27,11 +27,13 @@ import {
   withdrawTokenFromEscrow,
 } from "../../../../utility/BlockchainHelper";
 
+import { toWei, fromWei } from "../../../../utility/GenHelperFunctions";
+
 import web3 from "web3";
 
 const BN = web3.utils.BN;
 
-class AccountBalance extends Component {
+class MetaMaskAccountBalance extends Component {
   constructor(props) {
     super(props);
 
@@ -71,8 +73,9 @@ class AccountBalance extends Component {
     const { updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
 
     const amount = this.state.amount;
+
     // BigNumber Equivalents
-    const amountBN = new BN(amount);
+    const amountBN = new BN(toWei(amount));
     const tokenAllowanceBN = new BN(tokenAllowance);
 
     let txHash;
@@ -80,7 +83,7 @@ class AccountBalance extends Component {
     try {
       // Need to have an Token Approval before Deposit
       if (tokenAllowanceBN.lt(amountBN)) {
-        txHash = await approveToken(metamaskDetails, amount);
+        txHash = await approveToken(metamaskDetails, amountBN);
         this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
         startLoader(LoaderContent.DEPOSIT);
         bAllowanceCalled = true;
@@ -88,7 +91,7 @@ class AccountBalance extends Component {
       }
 
       // Initiate the Deposit Token to RFAI Escrow
-      txHash = await depositTokenToEscrow(metamaskDetails, amount);
+      txHash = await depositTokenToEscrow(metamaskDetails, amountBN);
       if (!bAllowanceCalled) startLoader(LoaderContent.DEPOSIT);
 
       await waitForTransaction(txHash);
@@ -113,13 +116,12 @@ class AccountBalance extends Component {
 
     const amount = this.state.amount;
     // BigNumber Equivalents
-    //const amountBN = new BN(amount)
-    //const tokenAllowanceBN = new BN(tokenAllowance)
+    const amountBN = new BN(toWei(amount));
 
     let txHash;
     try {
       // Initiate the Deposit Token to RFAI Escrow
-      txHash = await withdrawTokenFromEscrow(metamaskDetails, amount);
+      txHash = await withdrawTokenFromEscrow(metamaskDetails, amountBN);
       startLoader(LoaderContent.WITHDRAW);
       await waitForTransaction(txHash);
 
@@ -142,10 +144,12 @@ class AccountBalance extends Component {
     if (!metamaskDetails.isTxnsAllowed) {
       return;
     }
+
+    // User Input will be in AGI
     const amount = this.state.amount;
 
     // BigNumber Equivalents
-    const amountBN = new BN(amount);
+    const amountBN = new BN(toWei(amount));
     const zeroBN = new BN(0);
     const tokenBalanceBN = new BN(tokenBalance);
     const rfaiTokenBalanceBN = new BN(rfaiTokenBalance);
@@ -247,7 +251,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Total Balance</span>
             </div>
-            <span>{tokenBalance} AGI</span>
+            <span>{fromWei(tokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -255,7 +259,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Escrow Balance</span>
             </div>
-            <span>{rfaiTokenBalance} AGI</span>
+            <span>{fromWei(rfaiTokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -263,7 +267,7 @@ class AccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Authorized Tokens</span>
             </div>
-            <span>{tokenAllowance} AGI</span>
+            <span>{fromWei(tokenAllowance)} AGI</span>
           </div>
         </div>
         <div className={classes.tabsContainer}>
@@ -307,4 +311,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(AccountBalance));
+)(withStyles(useStyles)(MetaMaskAccountBalance));
