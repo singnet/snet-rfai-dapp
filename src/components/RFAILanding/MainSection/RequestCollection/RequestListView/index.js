@@ -22,6 +22,7 @@ import StakeList from "../StakeList";
 import VoteList from "../VoteList";
 import ApproveRejectRequest from "../ApproveRejectRequest";
 import StakeRequest from "../StakeRequest";
+import SubmitSolution from "../SubmitSolution";
 import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
@@ -45,6 +46,7 @@ const RequestList = ({
     STAKE: "StakeList",
     APPROVEREJECT: "ApproveReject",
     STAKEREQUEST: "StakeRequest",
+    SUBMITSOLUTION: "SubmitSolution",
     NONE: "None",
   };
 
@@ -207,6 +209,11 @@ const RequestList = ({
                   onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
                   btnText="Back the Request"
                 />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
+                  btnText="Submit Solution"
+                />
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>
@@ -241,6 +248,11 @@ const RequestList = ({
         />
         <StakeRequest
           open={openModel === modals.STAKEREQUEST ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+        />
+        <SubmitSolution
+          open={openModel === modals.SUBMITSOLUTION ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
         />
