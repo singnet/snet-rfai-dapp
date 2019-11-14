@@ -22,7 +22,7 @@ import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestSolutions, loading }) => {
+const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSolutions, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -48,8 +48,8 @@ const SolutionList = ({ open, handleClose, requestId, requestTitle, requestDetai
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
               <div className={classes.requestTitleContainer}>
-                <span className={classes.requestTitle}>Request Title</span>
-                <span className={classes.titleName}>A very long service provider request</span>
+                <span className={classes.requestTitle}>Request Title : </span>
+                <span className={classes.titleName}>{requestDetails.request_title}</span>
               </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>

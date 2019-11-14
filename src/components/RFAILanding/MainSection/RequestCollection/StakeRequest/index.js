@@ -22,7 +22,7 @@ import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestStakes, loading }) => {
+const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestStakes, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -39,7 +39,7 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={"View Backers"}
+            title={"Back the Request"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -60,31 +60,25 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
                   </div>
                 </div>
               )}
-              {requestStakes.length === 0 && (
-                <div>
-                  <span>No solutions found.</span>
-                </div>
-              )}
-              {!loading && requestStakes.length > 0 && (
+              {!loading && (
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Backed by</TableCell>
-                      <TableCell align="right">Backed on</TableCell>
+                      <TableCell>Requested By</TableCell>
                       <TableCell align="right">Tokens Awarded</TableCell>
+                      <TableCell align="right">Backers</TableCell>
+                      <TableCell align="right">Expiry</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {requestStakes.map(stake => (
-                      <TableRow key={stake.stake_member}>
-                        <TableCell component="th" scope="row">
-                          {stake.stake_member} <br />
-                          {stake.stake_member_name}
-                        </TableCell>
-                        <TableCell align="right">{stake.created}</TableCell>
-                        <TableCell align="right">{stake.stake_amount}</TableCell>
-                      </TableRow>
-                    ))}
+                    <TableRow>
+                      <TableCell component="td" scope="row">
+                        {requestDetails.requester}
+                      </TableCell>
+                      <TableCell align="right">{requestDetails.total_stake}</TableCell>
+                      <TableCell align="right">{requestDetails.num_stakers}</TableCell>
+                      <TableCell align="right">{requestDetails.expiration}</TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               )}
@@ -100,10 +94,6 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
   );
 };
 
-StakeList.defaultProps = {
-  requestStakes: [],
-};
-
 const mapStateToProps = (state, ownProps) => {
   const { requestId } = ownProps;
 
@@ -113,4 +103,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(StakeList);
+export default connect(mapStateToProps)(StakeRequest);

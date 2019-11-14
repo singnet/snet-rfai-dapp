@@ -21,6 +21,7 @@ import SolutionList from "../SolutionList";
 import StakeList from "../StakeList";
 import VoteList from "../VoteList";
 import ApproveRejectRequest from "../ApproveRejectRequest";
+import StakeRequest from "../StakeRequest";
 import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
@@ -43,6 +44,7 @@ const RequestList = ({
     VOTE: "VoteList",
     STAKE: "StakeList",
     APPROVEREJECT: "ApproveReject",
+    STAKEREQUEST: "StakeRequest",
     NONE: "None",
   };
 
@@ -177,12 +179,12 @@ const RequestList = ({
               <div>
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id, r.request_title)}
+                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
                   btnText="View Solution"
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.STAKE, r.request_id, r.request_title)}
+                  onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
                   btnText="View Backers"
                 />
                 <StyledButton
@@ -199,6 +201,11 @@ const RequestList = ({
                   type="red"
                   onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
                   btnText="Reject Request"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
+                  btnText="Back the Request"
                 />
               </div>
             </ExpansionPanelActions>
@@ -231,6 +238,11 @@ const RequestList = ({
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
           actionType="Approve"
+        />
+        <StakeRequest
+          open={openModel === modals.STAKEREQUEST ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
         />
       </div>
     );
