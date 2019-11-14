@@ -29,6 +29,8 @@ const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestSta
     handleClose();
   };
 
+  const currentBlockNumber = "123456789";
+
   if (!requestDetails) {
     return <div />;
   }
@@ -82,11 +84,21 @@ const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestSta
                   </TableBody>
                 </Table>
               )}
+              <div className={classes.inputContainer}>
+                <div className={classes.escrowBalContainer}>
+                  <label>Escrow Balance</label>
+                  <input name="escrowBalance" type="number" autoComplete="off" min={currentBlockNumber} />
+                </div>
+                <div className={classes.fundingAmtContainer}>
+                  <label>Funding Amount</label>
+                  <input name="fundingAmt" type="number" autoComplete="off" min={currentBlockNumber} />
+                </div>
+              </div>
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="back the request" type="blue" />
+            <StyledButton btnText="submit funds" type="blue" />
           </CardActions>
         </Card>
       </Modal>
