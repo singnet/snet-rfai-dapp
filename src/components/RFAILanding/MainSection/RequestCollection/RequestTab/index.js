@@ -8,6 +8,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
@@ -63,6 +65,18 @@ class RequestTab extends Component {
               <Tab className="singularity-tab" label={"Expired(" + requestSummary.Expired + ")"} value={5} />
               <Tab className="singularity-tab" label="My Requests" value={6} />
             </Tabs>
+            <div className={classes.checkboxContainer}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={true}
+                    // onChange={handleChange('checkedB')}
+                    color="primary"
+                  />
+                }
+                label="Show my requests only"
+              />
+            </div>
           </AppBar>
 
           {/* TODO: Need to update the Tabs based on the UI Screens and tie it to API based on Status */}
