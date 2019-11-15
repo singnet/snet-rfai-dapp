@@ -172,5 +172,6 @@ export const useStyles = makeStyles(theme => ({
       borderRadius: 4,
       "@media(max-width:500px)": { width: "100%" },
     },
+    "@media(max-width:500px)": { padding: "0 20px" },
   },
 }));

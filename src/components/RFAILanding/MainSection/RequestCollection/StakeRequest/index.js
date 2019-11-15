@@ -48,12 +48,12 @@ const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestSta
               </IconButton>
             }
           />
+          <div className={classes.requestTitleContainer}>
+            <span className={classes.requestTitle}>Request Title : </span>
+            <span className={classes.titleName}>{requestDetails.request_title}</span>
+          </div>
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
-              <div className={classes.requestTitleContainer}>
-                <span className={classes.requestTitle}>Request Title : </span>
-                <span className={classes.titleName}>{requestDetails.request_title}</span>
-              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
@@ -75,11 +75,21 @@ const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestSta
                   <TableBody>
                     <TableRow>
                       <TableCell component="td" scope="row">
+                        <span className={classes.mobileTableHeader}>Requested By:</span>
                         {requestDetails.requester}
                       </TableCell>
-                      <TableCell align="right">{requestDetails.total_stake}</TableCell>
-                      <TableCell align="right">{requestDetails.num_stakers}</TableCell>
-                      <TableCell align="right">{requestDetails.expiration}</TableCell>
+                      <TableCell align="right">
+                        <span className={classes.mobileTableHeader}>Toekns Awarded:</span>
+                        {requestDetails.total_stake}
+                      </TableCell>
+                      <TableCell align="right">
+                        <span className={classes.mobileTableHeader}>Backers:</span>
+                        {requestDetails.num_stakers}
+                      </TableCell>
+                      <TableCell align="right">
+                        <span className={classes.mobileTableHeader}>Expiry:</span>
+                        {requestDetails.expiration}
+                      </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
