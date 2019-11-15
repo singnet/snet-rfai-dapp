@@ -13,11 +13,11 @@ export const useStyles = makeStyles(theme => ({
   },
   Modal: { overflow: "auto" },
   card: {
-    width: 650,
-    paddingBottom: 25,
-    margin: "0px auto 80px	",
+    width: 720,
+    paddingBottom: 35,
+    margin: "0px auto",
     transform: "translateY(25%)",
-    "@media(max-width:650px)": { width: "100%" },
+    "@media(max-width:720px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
@@ -74,11 +74,11 @@ export const useStyles = makeStyles(theme => ({
         "@media(max-width:600px)": {
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "flex-start",
         },
       },
       "& th, & td": {
-        padding: "7px 40px 8px 0",
+        padding: "7px 20px 8px 0",
         border: "none",
         color: theme.palette.text.mediumShadeGray,
         fontFamily: theme.typography.primary.main,
@@ -86,15 +86,14 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "18px",
         overflow: "hidden",
         textOverflow: "ellipsis",
+        letterSpacing: 0.25,
         "@media(max-width:600px)": { wordBreak: "break-all" },
         "& span": {
           display: "none",
           color: theme.palette.text.darkShadedGray,
           fontFamily: theme.typography.primary.main,
           fontSize: 16,
-          fontWeight: 600,
           lineHeight: "20px",
-          textAlign: "center",
           "@media(max-width:600px)": { display: "block" },
         },
       },
@@ -137,4 +136,18 @@ export const useStyles = makeStyles(theme => ({
   },
   requestTitle: { color: theme.palette.text.mediumShadeGray },
   titleName: { color: theme.palette.text.darkShadedGray },
+  voteBtn: {
+    textOverflow: "initial",
+    "& span": {
+      display: "block !important",
+      color: `${theme.palette.text.disabledBtnBg} !important`,
+      fontSize: "14px !important",
+      letterSpacing: 1.25,
+    },
+    "@media(max-width:600px)": { alignSelf: "center" },
+  },
+  blueText: {
+    color: theme.palette.text.primary,
+    textDecoration: "none",
+  },
 }));
