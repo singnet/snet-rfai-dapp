@@ -24,6 +24,7 @@ import ApproveRejectRequest from "../ApproveRejectRequest";
 import StakeRequest from "../StakeRequest";
 import SubmitSolution from "../SubmitSolution";
 import CloseRequest from "../CloseRequest";
+import VoteSolution from "../VoteSolution";
 
 import StyledButton from "../../../../common/StyledButton";
 
@@ -51,6 +52,7 @@ const RequestList = ({
     STAKEREQUEST: "StakeRequest",
     SUBMITSOLUTION: "SubmitSolution",
     CLOSEREQUEST: "CloseRequest",
+    VOTESOLUTION: "VoteSolution",
     NONE: "None",
   };
 
@@ -70,6 +72,7 @@ const RequestList = ({
     // To Initiate the respective API Calls
     switch (modal) {
       case modals.SOLUTION:
+      case modals.VOTESOLUTION:
         await fetchRequestSolutionData(requestId);
         break;
       case modals.VOTE:
@@ -223,6 +226,11 @@ const RequestList = ({
                   onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
                   btnText="Close Request"
                 />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
+                  btnText="Vote Solution"
+                />
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>
@@ -275,6 +283,12 @@ const RequestList = ({
           open={openModel === modals.CLOSEREQUEST ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
+        />
+        <VoteSolution
+          open={openModel === modals.VOTESOLUTION ? true : false}
+          handleClose={handleCloseModel}
+          requestId={selectedRequestId}
+          requestSolutions={requestSolutions}
         />
       </div>
     );

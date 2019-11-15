@@ -155,7 +155,7 @@ export const stakeForRequest = (metamaskDetails, requestId, stakeAmountBN) => {
   });
 };
 
-export const voteForRequest = (metamaskDetails, requestId, votedForSubmitter) => {
+export const voteForSolution = (metamaskDetails, requestId, votedForSubmitter) => {
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
