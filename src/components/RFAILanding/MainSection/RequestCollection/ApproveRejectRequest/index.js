@@ -51,6 +51,91 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
 
   //   }
 
+  const approveComponent = () => {
+    return (
+      <CardContent className={classes.CardContent}>
+        <Paper className={classes.root}>
+          <div className={classes.requestTitle}>
+            <span>Request Title: </span>
+            <p>{requestDetails.request_title}</p>
+          </div>
+          <div className={classes.requestedByAndExpiryContainer}>
+            <div className={classes.requestedBy}>
+              <span>Request By</span>
+              <p>{requestDetails.requester}</p>
+            </div>
+            <div className={classes.expirySet}>
+              <span>Expiry Set By Requester</span>
+              <p>{requestDetails.expiration}</p>
+            </div>
+          </div>
+          <div className={classes.currentBlockNumber}>
+            <span>Current Block Number: </span>
+            <p>{currentBlockNumber}</p>
+          </div>
+
+          <div className={classes.inputFieldContainer}>
+            <div>
+              <label>End Submission Block:</label>
+              <input
+                name="endSubmission"
+                type="number"
+                autoComplete="off"
+                min={currentBlockNumber}
+                onChange={(event, value) => setEndSubmission(value)}
+              />
+            </div>
+
+            <div>
+              <label>End Evaluation Block:</label>
+              <input
+                name="endEvaluation"
+                type="number"
+                autoComplete="off"
+                min={currentBlockNumber}
+                onChange={(event, value) => setEndEvaluation(value)}
+              />
+            </div>
+
+            <div>
+              <label>Expiration Block:</label>
+              <input
+                name="newExpiration"
+                type="number"
+                autoComplete="off"
+                min={currentBlockNumber}
+                onChange={(event, value) => setNewExpiration(value)}
+              />
+            </div>
+          </div>
+        </Paper>
+      </CardContent>
+    );
+  };
+
+  const rejectComponent = () => {
+    return (
+      <CardContent className={classes.CardContent}>
+        <Paper className={classes.root}>
+          <div className={classes.requestTitle}>
+            <span>Request Title: </span>
+            <p>{requestDetails.request_title}</p>
+          </div>
+          <div className={classes.requestedByAndExpiryContainer}>
+            <div className={classes.requestedBy}>
+              <span>Request By</span>
+              <p>{requestDetails.requester}</p>
+            </div>
+            <div className={classes.requestedBy}>
+              <span>Token Awarded</span>
+              <p>{requestDetails.total_stake}</p>
+            </div>
+          </div>
+        </Paper>
+      </CardContent>
+    );
+  };
+
   if (!requestDetails) {
     return <div />;
   }
@@ -68,70 +153,7 @@ const ApproveRejectRequest = ({ open, handleClose, requestId, actionType, reques
               </IconButton>
             }
           />
-          <CardContent className={classes.CardContent}>
-            <Paper className={classes.root}>
-              <div className={classes.requestTitle}>
-                <span>Request Title: </span>
-                <p>{requestDetails.request_title}</p>
-              </div>
-              <div className={classes.requestedByAndExpiryContainer}>
-                <div className={classes.requestedBy}>
-                  <span>Request By</span>
-                  <p>{requestDetails.requester}</p>
-                </div>
-                <div className={classes.expirySet}>
-                  <span>{actionType === "Approve" ? "Expiry Set By Requester" : "Tokens Awarded"}</span>
-                  <p>{requestDetails.expiration}</p>
-                </div>
-              </div>
-              <div className={classes.currentBlockNumber}>
-                <span>Current Block Number: </span>
-                <p>{currentBlockNumber}</p>
-              </div>
-
-              {actionType === "Approve" ? (
-                <div className={classes.inputFieldContainer}>
-                  <div>
-                    <label>End Submission Block:</label>
-                    <input
-                      name="endSubmission"
-                      type="number"
-                      autoComplete="off"
-                      min={currentBlockNumber}
-                      onChange={(event, value) => setEndSubmission(value)}
-                    />
-                  </div>
-
-                  <div>
-                    <label>End Evaluation Block:</label>
-                    <input
-                      name="endEvaluation"
-                      type="number"
-                      autoComplete="off"
-                      min={currentBlockNumber}
-                      onChange={(event, value) => setEndEvaluation(value)}
-                    />
-                  </div>
-
-                  <div>
-                    <label>Expiration Block:</label>
-                    <input
-                      name="newExpiration"
-                      type="number"
-                      autoComplete="off"
-                      min={currentBlockNumber}
-                      onChange={(event, value) => setNewExpiration(value)}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className={classes.rejectionInput}>
-                  <span>Reason for Rejection</span>
-                  <StyledDropdown />
-                </div>
-              )}
-            </Paper>
-          </CardContent>
+          {actionType === "Approve" ? approveComponent() : rejectComponent()}
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
             {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} />}
@@ -151,9 +173,5 @@ const mapStateToProps = (state, ownProps) => {
     requestDetails: requestDetailsById(state, requestId),
   };
 };
-
-// const mapStateToProps = state => ({
-//   loading: state.loaderReducer.RequestModalCallStatus,
-// });
 
 export default connect(mapStateToProps)(ApproveRejectRequest);

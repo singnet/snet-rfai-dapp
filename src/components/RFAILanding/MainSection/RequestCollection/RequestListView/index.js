@@ -44,7 +44,8 @@ const RequestList = ({
     SOLUTION: "SolutionList",
     VOTE: "VoteList",
     STAKE: "StakeList",
-    APPROVEREJECT: "ApproveReject",
+    APPROVEREQUEST: "ApproveRequest",
+    REJECTREQUEST: "RejectRequest",
     STAKEREQUEST: "StakeRequest",
     SUBMITSOLUTION: "SubmitSolution",
     NONE: "None",
@@ -196,7 +197,7 @@ const RequestList = ({
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.APPROVEREJECT, r.request_id)}
+                  onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
                   btnText="Approve Request"
                 />
                 <StyledButton
@@ -241,10 +242,10 @@ const RequestList = ({
           requestVotes={requestVotes}
         />
         <ApproveRejectRequest
-          open={openModel === modals.APPROVEREJECT ? true : false}
+          open={openModel === modals.APPROVEREQUEST || openModel === modals.REJECTREQUEST ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
-          actionType="Approve"
+          actionType={openModel === modals.APPROVEREQUEST ? "Approve" : "Reject"}
         />
         <ApproveRejectRequest
           open={openModel === modals.REJECTREQUEST ? true : false}
