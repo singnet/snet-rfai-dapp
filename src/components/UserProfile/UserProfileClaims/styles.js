@@ -28,8 +28,6 @@ export const useStyles = theme => ({
     flexBasis: "30%",
     "@media(max-width:960px)": {
       maxWidth: "100%",
-      marginTop: 25,
-      marginLeft: 0,
       flexBasis: "100%",
     },
   },
@@ -38,8 +36,11 @@ export const useStyles = theme => ({
     borderRadius: 4,
     backgroundColor: theme.palette.text.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
-    "& > div": {
-      padding: "0 22px",
+    "& > div": { padding: "0 22px" },
+    "@media(max-width:960px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+      margin: "25px 0 0",
     },
   },
   description: {
@@ -56,6 +57,7 @@ export const useStyles = theme => ({
       fontWeight: 600,
       lineHeight: "20px",
     },
+    "@media(max-width:1315px)": { display: "none" },
   },
   tableData: {
     padding: "9px 0",
@@ -63,6 +65,27 @@ export const useStyles = theme => ({
     borderTopStyle: "solid",
     borderTopColor: theme.palette.text.lightGray,
     alignItems: "center",
+    "& div": {
+      "@media(max-width:1315px)": {
+        maxWidth: "100%",
+        marginBottom: 10,
+        display: "flex",
+      },
+    },
+    "@media(max-width:1315px)": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+    },
+  },
+  responsiveHeader: {
+    marginRight: 10,
+    display: "none",
+    color: theme.palette.text.darkShadedGray,
+    fontSize: 16,
+    fontWeight: 600,
+    lineHeight: "20px",
+    "@media(max-width:1315px)": { display: "block" },
   },
   centerAlign: { textAlign: "center" },
   claimsForRequest: { marginTop: 8 },
