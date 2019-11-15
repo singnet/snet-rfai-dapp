@@ -60,4 +60,16 @@ export const LoaderContent = {
     loaderHeader: "Vote",
     loaderText: "Voting to the Request, Please wait for transaction to confirm",
   },
+  CLOSE_REQUEST: {
+    loaderHeader: "Close Request",
+    loaderText: "Closing the Request, Please wait for transaction to confirm",
+  },
+  REJECT_REQUEST: {
+    loaderHeader: "Reject Request",
+    loaderText: "Rejecting the Request, Please wait for transaction to confirm",
+  },
+  APPROVE_REQUEST: {
+    loaderHeader: "Approve Request",
+    loaderText: "Approving the Request, Please wait for transaction to confirm",
+  },
 };
