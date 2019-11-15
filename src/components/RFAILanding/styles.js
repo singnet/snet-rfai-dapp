@@ -5,10 +5,11 @@ export const useStyles = theme => ({
   mainWrapper: {
     width: "92%",
     margin: "0 auto",
+    "@media(max-width:1280px)": { width: "98%" },
   },
   topSectionCotainer: {
     marginTop: 24,
-    "@media(max-width: 1024px)": {
+    "@media(max-width: 960px)": {
       flexDirection: "column",
       alignItems: "center",
     },
@@ -23,9 +24,6 @@ export const useStyles = theme => ({
     fontWeight: 600,
     letterSpacing: -0.5,
     lineHeight: "48px",
-    "@media(max-width: 1280px)": { marginTop: 16 },
-    "@media(max-width: 1024px)": { fontSize: 28 },
-    "@media(max-width: 768px)": { marginTop: 0 },
   },
   descriptionContainer: {
     "@media(max-width: 1024px)": {

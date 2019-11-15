@@ -83,11 +83,18 @@ const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSol
                     {requestSolutions.map(sol => (
                       <TableRow key={sol.solution_submitter}>
                         <TableCell component="th" scope="row">
+                          <span className={classes.mobileTableHeader}>Submitted by:</span>
                           {sol.solution_submitter} <br />
                           {sol.solution_submitter_name}
                         </TableCell>
-                        <TableCell>{sol.created}</TableCell>
-                        <TableCell className={classes.solutionsURLData}>{sol.solution_docURI}</TableCell>
+                        <TableCell>
+                          <span className={classes.mobileTableHeader}>Submitted on:</span>
+                          {sol.created}
+                        </TableCell>
+                        <TableCell className={classes.solutionsURLData}>
+                          <span className={classes.mobileTableHeader}>Solution URI:</span>
+                          {sol.solution_docURI}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

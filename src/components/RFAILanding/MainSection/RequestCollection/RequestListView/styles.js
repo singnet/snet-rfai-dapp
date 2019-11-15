@@ -1,9 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
-  requestListView: {
-    paddingLeft: 25,
-  },
+  requestListView: { paddingLeft: 25 },
   circularProgressContainer: {
     paddingTop: 20,
     textAlign: "center",
@@ -34,6 +32,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "20px 20px 16px",
     margin: "0 15px",
     backgroundColor: theme.palette.text.expansionPanelBg,
+    "@media(max-width:600px)": { flexDirection: "column" },
   },
   exPanelLeftSection: {
     width: 0,
@@ -51,6 +50,7 @@ export const useStyles = makeStyles(theme => ({
       letterSpacing: 0.17,
       lineHeight: "18px",
     },
+    "@media(max-width:600px)": { width: "100%" },
   },
   exPanelDescription: {
     marginBottom: 24,
@@ -71,6 +71,11 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: 26,
       "&:last-of-type": { marginBottom: 0 },
     },
+    "@media(max-width:600px)": {
+      width: "100%",
+      paddingLeft: 0,
+      borderLeft: "none",
+    },
   },
   urlLink: {
     color: `${theme.palette.text.primary} !important`,
@@ -85,9 +90,18 @@ export const useStyles = makeStyles(theme => ({
     margin: "0 15px 10px",
     backgroundColor: theme.palette.text.expansionPanelBg,
     justifyContent: "flex-start",
+    "& > div": {
+      "@media(max-width:600px)": {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      },
+    },
     "& button": {
       margin: "16px 0 15px 35px",
       "&:last-of-type": { fontWeight: "bold" },
+      "@media(max-width:600px)": { marginLeft: 0 },
     },
   },
   title: {
@@ -95,6 +109,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 14,
     lineHeight: "18px",
     textAlign: "right",
+    "@media(max-width:720px)": { marginRight: 10 },
   },
   data: {
     margin: 0,
@@ -117,6 +132,16 @@ export const useStyles = makeStyles(theme => ({
       paddingRight: 25,
       display: "flex",
       justifyContent: "space-between",
+      "@media(max-width:720px)": {
+        flexDirection: "column",
+        alignItems: "flex-start",
+      },
+      "& > div": {
+        "@media(max-width:720px)": {
+          display: "flex",
+          alignItems: "center",
+        },
+      },
     },
   },
   divider: { margin: "0 15px" },

@@ -46,12 +46,12 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
               </IconButton>
             }
           />
+          <div className={classes.requestTitleContainer}>
+            <span className={classes.requestTitle}>Request Title : </span>
+            <span className={classes.titleName}>{requestDetails.request_title}</span>
+          </div>
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
-              <div className={classes.requestTitleContainer}>
-                <span className={classes.requestTitle}>Request Title : </span>
-                <span className={classes.titleName}>{requestDetails.request_title}</span>
-              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
@@ -78,11 +78,18 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
                     {requestStakes.map(stake => (
                       <TableRow key={stake.stake_member}>
                         <TableCell component="th" scope="row">
+                          <span className={classes.mobileTableHeader}>Backed by:</span>
                           {stake.stake_member} <br />
                           {stake.stake_member_name}
                         </TableCell>
-                        <TableCell align="right">{stake.created}</TableCell>
-                        <TableCell align="right">{stake.stake_amount}</TableCell>
+                        <TableCell align="right">
+                          <span className={classes.mobileTableHeader}>Backed on:</span>
+                          {stake.created}
+                        </TableCell>
+                        <TableCell align="right">
+                          <span className={classes.mobileTableHeader}>Tokens Awarded:</span>
+                          {stake.stake_amount}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

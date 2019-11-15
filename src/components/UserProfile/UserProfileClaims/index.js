@@ -44,38 +44,23 @@ const UserProfileClaims = ({ classes }) => {
           </Grid>
           <Grid container className={classes.tableData}>
             <Grid xs={12} sm={4} md={4} lg={4}>
+              <span className={classes.responsiveHeader}>Request Title:</span>
               <span>A very long Request name</span>
             </Grid>
             <Grid xs={12} sm={1} md={1} lg={1}>
+              <span className={classes.responsiveHeader}>Votes:</span>
               <span>12</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2}>
+              <span className={classes.responsiveHeader}>Completed on:</span>
               <span>20 Oct 2019</span>
             </Grid>
             <Grid xs={12} sm={1} md={1} lg={1}>
+              <span className={classes.responsiveHeader}>Days left to claim:</span>
               <span>28 days</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
-              <span>999 AGI</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2}>
-              <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
-            </Grid>
-          </Grid>
-          <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={4} md={4} lg={4}>
-              <span>A very long Request name</span>
-            </Grid>
-            <Grid xs={12} sm={1} md={1} lg={1}>
-              <span>12</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2}>
-              <span>20 Oct 2019</span>
-            </Grid>
-            <Grid xs={12} sm={1} md={1} lg={1}>
-              <span>28 days</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
+              <span className={classes.responsiveHeader}>Tokens:</span>
               <span>999 AGI</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2}>
@@ -104,12 +89,15 @@ const UserProfileClaims = ({ classes }) => {
           </Grid>
           <Grid container className={classes.tableData}>
             <Grid xs={12} sm={4} md={4} lg={4}>
+              <span className={classes.responsiveHeader}>Request Title:</span>
               <span>A very long Request name</span>
             </Grid>
             <Grid xs={12} sm={3} md={3} lg={3}>
+              <span className={classes.responsiveHeader}>Reason for claim:</span>
               <span>Request Rejected</span>
             </Grid>
             <Grid xs={12} sm={3} md={3} lg={3}>
+              <span className={classes.responsiveHeader}>Tokens backed:</span>
               <span>999 AGI</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2}>

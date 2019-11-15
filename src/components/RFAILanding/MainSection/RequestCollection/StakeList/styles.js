@@ -17,10 +17,10 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
+    "@media(max-width:640px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
-    backgroundColor: theme.palette.text.offWhiteColor,
     "& span": {
       color: theme.palette.text.black1,
       fontFamily: theme.typography.primary.main,
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: "16px 21px 0",
+    padding: "0 21px",
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -53,8 +53,8 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: "none",
   },
   table: {
-    padding: "0 22px",
     tableLayout: "fixed",
+    marginTop: 24,
     "& thead": {
       "& th": {
         padding: "0 0 8px",
@@ -64,12 +64,18 @@ export const useStyles = makeStyles(theme => ({
         fontSize: 16,
         lineHeight: "20px",
       },
+      "@media(max-width:600px)": { display: "none" },
     },
     "& tbody": {
       "& tr": {
         borderTopWidth: 1,
         borderTopStyle: "solid",
         borderTopColor: theme.palette.text.lightGray,
+        "@media(max-width:600px)": {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        },
       },
       "& th, & td": {
         padding: "7px 0 8px 0",
@@ -80,6 +86,19 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "18px",
         overflow: "hidden",
         textOverflow: "ellipsis",
+        "& span": {
+          display: "none",
+          color: theme.palette.text.darkShadedGray,
+          fontFamily: theme.typography.primary.main,
+          fontSize: 16,
+          fontWeight: 600,
+          lineHeight: "20px",
+          "@media(max-width:600px)": { display: "block" },
+        },
+        "@media(max-width:600px)": {
+          textAlign: "left",
+          wordBreak: "break-all",
+        },
       },
     },
   },

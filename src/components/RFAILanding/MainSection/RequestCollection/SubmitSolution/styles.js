@@ -17,6 +17,7 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
+    "@media(max-width:860px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
@@ -139,9 +140,7 @@ export const useStyles = makeStyles(theme => ({
   solutionUrlContainer: {
     width: 424,
     margin: "32px auto 0",
-    "& div": {
-      position: "relative",
-    },
+    "& div": { position: "relative" },
     "& p": {
       margin: "4px 0 0",
       color: theme.palette.text.alertBoxColor,
@@ -160,10 +159,12 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 12,
     },
     "& input": {
+      boxSizing: "border-box",
       width: "100%",
       padding: "18px 10px",
       border: "1px solid rgba(25,25,25,0.32)",
       borderRadius: 4,
     },
+    "@media(max-width:600px)": { width: "100%" },
   },
 }));

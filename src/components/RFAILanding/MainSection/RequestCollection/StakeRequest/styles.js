@@ -17,6 +17,7 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: 25,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
+    "@media(max-width:720px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
@@ -28,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardContent: {
-    padding: 0,
+    padding: "0 22px",
     "& h2": {
       color: theme.palette.text.darkShadedGray,
       fontSize: 18,
@@ -54,7 +55,7 @@ export const useStyles = makeStyles(theme => ({
   table: {
     tableLayout: "fixed",
     padding: "0 22px",
-    margin: "24px 22px 16px",
+    margin: "24px 0 16px",
     "& thead": {
       "& th": {
         padding: 0,
@@ -62,6 +63,7 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.text.lightShadedGray,
         fontSize: 14,
       },
+      "@media(max-width:600px)": { display: "none" },
     },
     "& tbody": {
       "& td": {
@@ -71,6 +73,19 @@ export const useStyles = makeStyles(theme => ({
         fontSize: 20,
         lineHeight: "26px",
         wordBreak: "break-all",
+        "& span": {
+          display: "none",
+          color: theme.palette.text.lightShadedGray,
+          fontSize: 14,
+          fontWeight: 600,
+          "@media(max-width:600px)": { display: "block" },
+        },
+        "@media(max-width:600px)": {
+          paddingBottom: 15,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        },
       },
     },
   },
@@ -120,8 +135,10 @@ export const useStyles = makeStyles(theme => ({
     },
     "& > div": {
       position: "relative",
-      "@media(max-width:500px)": { width: "100%" },
-      "&:last-of-type": { marginBottom: 0 },
+      "&:last-of-type": {
+        marginBottom: 0,
+        "@media(max-width:600px)": { marginTop: 15 },
+      },
       "& input": {
         boxSizing: "border-box",
         width: 312,
@@ -130,7 +147,7 @@ export const useStyles = makeStyles(theme => ({
         borderStyle: "solid",
         borderColor: "rgba(25,25,25,0.32)",
         borderRadius: 4,
-        "@media(max-width:500px)": {
+        "@media(max-width:720px)": {
           boxSizing: "border-box",
           width: "100%",
         },
@@ -145,6 +162,16 @@ export const useStyles = makeStyles(theme => ({
         fontSize: 12,
         letterSpacing: 0.4,
       },
+      "@media(max-width:720px)": {
+        flex: "1 0 0",
+        width: 0,
+      },
+      "@media(max-width:600px)": { width: "100%" },
+    },
+    "@media(max-width:720px)": { padding: 0 },
+    "@media(max-width:600px)": {
+      flexDirection: "column",
+      alignItems: "flex-start",
     },
   },
 }));
