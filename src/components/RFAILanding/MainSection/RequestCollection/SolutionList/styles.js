@@ -64,12 +64,18 @@ export const useStyles = makeStyles(theme => ({
         fontSize: 16,
         lineHeight: "20px",
       },
+      "@media(max-width:600px)": { display: "none" },
     },
     "& tbody": {
       "& tr": {
         borderTopWidth: 1,
         borderTopStyle: "solid",
         borderTopColor: theme.palette.text.lightGray,
+        "@media(max-width:600px)": {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        },
       },
       "& th, & td": {
         padding: "7px 40px 8px 0",
@@ -80,6 +86,17 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "18px",
         overflow: "hidden",
         textOverflow: "ellipsis",
+        "@media(max-width:600px)": { wordBreak: "break-all" },
+        "& span": {
+          display: "none",
+          color: theme.palette.text.darkShadedGray,
+          fontFamily: theme.typography.primary.main,
+          fontSize: 16,
+          fontWeight: 600,
+          lineHeight: "20px",
+          textAlign: "center",
+          "@media(max-width:600px)": { display: "block" },
+        },
       },
       "& td": {
         "&:last-of-type": { paddingRight: 40 },

@@ -17,10 +17,5 @@ export const useStyles = theme => ({
       flexBasis: "30%",
     },
   },
-  servieMainContainer: {
-    "@media(min-width: 1024px) and (max-width: 1280px)": {
-      maxWidth: "70%",
-      flexBasis: "70%",
-    },
-  },
+  servieMainContainer: {},
 });
