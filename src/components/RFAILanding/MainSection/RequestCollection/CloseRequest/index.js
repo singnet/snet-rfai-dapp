@@ -11,9 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { waitForTransaction, submitSolutionForRequest } from "../../../../../utility/BlockchainHelper";
-
-import web3 from "web3";
+import { waitForTransaction, closeRequest } from "../../../../../utility/BlockchainHelper";
 
 import Paper from "@material-ui/core/Paper";
 
@@ -23,7 +21,7 @@ import StyledButton from "../../../../common/StyledButton";
 import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
 import { loaderActions } from "../../../../../Redux/actionCreators";
 
-const SubmitSolution = ({
+const CloseRequest = ({
   open,
   handleClose,
   requestId,
@@ -36,7 +34,6 @@ const SubmitSolution = ({
   const classes = useStyles();
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
-  const [solURI, setSolURI] = useState("");
 
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
@@ -49,27 +46,21 @@ const SubmitSolution = ({
       return;
     }
 
-    if (solURI.trim().length > 0) {
-      try {
-        const docURIinBytes = web3.utils.fromAscii(solURI);
+    try {
+      // Initiate the Deposit Token to RFAI Escrow
+      let txHash = await closeRequest(metamaskDetails, requestId);
 
-        // Initiate the Deposit Token to RFAI Escrow
-        let txHash = await submitSolutionForRequest(metamaskDetails, requestId, docURIinBytes);
+      startLoader(LoaderContent.CLOSE_REQUEST);
 
-        startLoader(LoaderContent.SOLUTION_REQUEST);
+      // Wait for the transaction to be completed
+      await waitForTransaction(txHash);
 
-        // Wait for the transaction to be completed
-        await waitForTransaction(txHash);
+      setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 
-        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
-
-        stopLoader();
-      } catch (err) {
-        setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
-        stopLoader();
-      }
-    } else {
-      setAlert({ type: alertTypes.ERROR, message: `Invalid solution URI.` });
+      stopLoader();
+    } catch (err) {
+      setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
+      stopLoader();
     }
   };
 
@@ -83,7 +74,7 @@ const SubmitSolution = ({
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={"Submit Solution"}
+            title={"Close Request"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -105,37 +96,11 @@ const SubmitSolution = ({
                 </div>
               )}
               {!loading && (
-                <div className={classes.submitSolutionContent}>
+                <div className={classes.closeRequestContent}>
                   <div className="overview-content">
                     <p>
-                      All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance
-                      criteria as specified in the request is met and the problem is solved for. Please keep in mind the
-                      mentioned points:
-                    </p>
-                    <ul>
-                      <li>* The specified acceptance criteria in the request must be met</li>
-                      <li>* Any performance metrics specified against provided test datasets should be met</li>
-                      <li>* Submission should pass the curation process for AI services on the platform</li>
-                      <li>* Provide the github repo of your code</li>
-                      <li>
-                        * Sign your request using the same address used to publish the service. This is an important
-                        step to ensure that you are the owner of the service.
-                      </li>
-                    </ul>
-                  </div>
-                  <div className={classes.solutionUrlContainer}>
-                    <div>
-                      <label>Solution URL</label>
-                      <input
-                        type="text"
-                        name="solURI"
-                        autoComplete="off"
-                        onChange={event => setSolURI(event.target.value)}
-                      />
-                    </div>
-                    <p>
-                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentaion for more
-                      info.
+                      You are about to close the existing request which restricts the users to view this request. If you
+                      want to continue to close the request click on Close Request button.
                     </p>
                   </div>
                 </div>
@@ -144,8 +109,8 @@ const SubmitSolution = ({
             <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Submit Solution" type="blue" onClick={handleSubmit} />
+            <StyledButton btnText="Cancel" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="Close Request" type="redBg" onClick={handleSubmit} />
           </CardActions>
         </Card>
       </Modal>
@@ -171,4 +136,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SubmitSolution);
+)(CloseRequest);
