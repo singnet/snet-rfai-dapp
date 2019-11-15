@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -9,18 +9,68 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
+import { waitForTransaction, submitSolutionForRequest } from "../../../../../utility/BlockchainHelper";
+
+import web3 from "web3";
 
 import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const SubmitSolution = ({ open, handleClose, requestId, requestDetails, loading }) => {
+import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
+import { loaderActions } from "../../../../../Redux/actionCreators";
+
+const SubmitSolution = ({
+  open,
+  handleClose,
+  requestId,
+  requestDetails,
+  loading,
+  metamaskDetails,
+  startLoader,
+  stopLoader,
+}) => {
   const classes = useStyles();
 
+  const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+  const [solURI, setSolURI] = useState("");
+
   const handleCancel = () => {
+    setAlert({ type: alertTypes.ERROR, message: undefined });
     handleClose();
+  };
+
+  const handleSubmit = async () => {
+    if (!metamaskDetails.isTxnsAllowed) {
+      setAlert({ type: alertTypes.ERROR, message: `Needs connection to Metamask` });
+      return;
+    }
+
+    if (solURI.trim().length > 0) {
+      try {
+        const docURIinBytes = web3.utils.fromAscii(solURI);
+
+        // Initiate the Deposit Token to RFAI Escrow
+        let txHash = await submitSolutionForRequest(metamaskDetails, requestId, docURIinBytes);
+
+        startLoader(LoaderContent.SOLUTION_REQUEST);
+
+        // Wait for the transaction to be completed
+        await waitForTransaction(txHash);
+
+        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+
+        stopLoader();
+      } catch (err) {
+        setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
+        stopLoader();
+      }
+    } else {
+      setAlert({ type: alertTypes.ERROR, message: `Invalid solution URI.` });
+    }
   };
 
   if (!requestDetails) {
@@ -76,7 +126,12 @@ const SubmitSolution = ({ open, handleClose, requestId, requestDetails, loading 
                   <div className={classes.solutionUrlContainer}>
                     <div>
                       <label>Solution URL</label>
-                      <input type="text" name="SolURI" />
+                      <input
+                        type="text"
+                        name="solURI"
+                        autoComplete="off"
+                        onChange={event => setSolURI(event.target.value)}
+                      />
                     </div>
                     <p>
                       The solution must be hosted on singularitynet AI Marketplace. Please refer documentaion for more
@@ -86,10 +141,11 @@ const SubmitSolution = ({ open, handleClose, requestId, requestDetails, loading 
                 </div>
               )}
             </Paper>
+            <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Submit Solution" type="blue" />
+            <StyledButton btnText="Submit Solution" type="blue" onClick={handleSubmit} />
           </CardActions>
         </Card>
       </Modal>
@@ -102,8 +158,17 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     loading: state.loaderReducer.RequestModalCallStatus,
+    metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
   };
 };
 
-export default connect(mapStateToProps)(SubmitSolution);
+const mapDispatchToProps = dispatch => ({
+  startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SubmitSolution);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -8,9 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-
 // Table dependencies
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -19,17 +16,76 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+import AlertBox, { alertTypes } from "../../../../common/AlertBox";
+import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
+import { toWei, fromWei } from "../../../../../utility/GenHelperFunctions";
+import { waitForTransaction, stakeForRequest } from "../../../../../utility/BlockchainHelper";
+
+import web3 from "web3";
+
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
+import { rfaiContractActions, loaderActions } from "../../../../../Redux/actionCreators";
 
-const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestStakes, loading }) => {
+const StakeRequest = ({
+  open,
+  handleClose,
+  requestId,
+  requestDetails,
+  rfaiTokenBalance,
+  loading,
+  metamaskDetails,
+  updateRFAITokenBalance,
+  startLoader,
+  stopLoader,
+}) => {
   const classes = useStyles();
+  const BN = web3.utils.BN;
+
+  const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+  const [amount, setAmount] = useState(0);
 
   const handleCancel = () => {
+    setAlert({ type: alertTypes.ERROR, message: undefined });
     handleClose();
   };
 
-  const currentBlockNumber = "123456789";
+  const handleSubmit = async () => {
+    if (!metamaskDetails.isTxnsAllowed) {
+      setAlert({ type: alertTypes.ERROR, message: `Needs connection to Metamask` });
+      return;
+    }
+
+    //value, expiration, documentURI
+    const zeroBN = new BN(0);
+    const amountBN = new BN(toWei(amount));
+    const rfaiTokenBalanceBN = new BN(rfaiTokenBalance);
+
+    if (amountBN.lte(rfaiTokenBalanceBN) && amountBN.gt(zeroBN)) {
+      try {
+        // Initiate the Deposit Token to RFAI Escrow
+        let txHash = await stakeForRequest(metamaskDetails, requestId, amountBN);
+
+        startLoader(LoaderContent.STAKE_REQUEST);
+
+        // Wait for the transaction to be completed
+        await waitForTransaction(txHash);
+
+        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+
+        stopLoader();
+
+        // Call the dependent dispatchers for updates
+        updateRFAITokenBalance(metamaskDetails);
+      } catch (err) {
+        setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
+        stopLoader();
+      }
+    } else {
+      setAlert({ type: alertTypes.ERROR, message: `Not enough balance in the Escrow` });
+    }
+  };
 
   if (!requestDetails) {
     return <div />;
@@ -86,19 +142,32 @@ const StakeRequest = ({ open, handleClose, requestId, requestDetails, requestSta
               )}
               <div className={classes.inputContainer}>
                 <div className={classes.escrowBalContainer}>
-                  <label>Escrow Balance</label>
-                  <input name="escrowBalance" type="number" autoComplete="off" min={currentBlockNumber} />
+                  <label>Escrow Balance in AGI</label>
+                  <input
+                    name="escrowBalance"
+                    type="number"
+                    autoComplete="off"
+                    value={fromWei(rfaiTokenBalance)}
+                    readOnly
+                  />
                 </div>
                 <div className={classes.fundingAmtContainer}>
                   <label>Funding Amount</label>
-                  <input name="fundingAmt" type="number" autoComplete="off" min={currentBlockNumber} />
+                  <input
+                    name="amount"
+                    type="number"
+                    autoComplete="off"
+                    min={1}
+                    onChange={event => setAmount(event.target.value)}
+                  />
                 </div>
               </div>
             </Paper>
+            <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="submit funds" type="blue" />
+            <StyledButton btnText="submit funds" type="blue" onClick={handleSubmit} />
           </CardActions>
         </Card>
       </Modal>
@@ -111,8 +180,19 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     loading: state.loaderReducer.RequestModalCallStatus,
+    metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
+    rfaiTokenBalance: state.rfaiContractReducer.rfaiTokenBalance,
   };
 };
 
-export default connect(mapStateToProps)(StakeRequest);
+const mapDispatchToProps = dispatch => ({
+  updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
+  startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StakeRequest);

@@ -48,4 +48,16 @@ export const LoaderContent = {
     loaderHeader: "Create Request",
     loaderText: "Creating a new AI Request, Please wait for transaction to confirm",
   },
+  STAKE_REQUEST: {
+    loaderHeader: "Back Request",
+    loaderText: "Adding funds to the Request, Please wait for transaction to confirm",
+  },
+  SOLUTION_REQUEST: {
+    loaderHeader: "Submit Solution",
+    loaderText: "Submitting solution to the Request, Please wait for transaction to confirm",
+  },
+  VOTE_REQUEST: {
+    loaderHeader: "Vote",
+    loaderText: "Voting to the Request, Please wait for transaction to confirm",
+  },
 };
