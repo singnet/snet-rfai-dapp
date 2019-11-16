@@ -13,11 +13,11 @@ export const useStyles = makeStyles(theme => ({
   },
   Modal: { overflow: "auto" },
   card: {
-    width: 844,
-    paddingBottom: 25,
-    margin: "0px auto 80px	",
+    width: 480,
+    paddingBottom: 40,
+    margin: "0px auto",
     transform: "translateY(25%)",
-    "@media(max-width:860px)": { width: "100%" },
+    "@media(max-width:480px)": { width: "100%" },
   },
   CardHeader: {
     padding: "5px 22px",
@@ -45,6 +45,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   CardActions: {
+    padding: 0,
     justifyContent: "center",
   },
   root: {
@@ -110,19 +111,14 @@ export const useStyles = makeStyles(theme => ({
   },
   requestTitleContainer: {
     padding: "14px 22px",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderTopStyle: "solid",
-    borderBottomStyle: "solid",
-    borderTopColor: "rgba(155, 155, 155, 0.25)",
-    borderBottomColor: "rgba(155, 155, 155, 0.25)",
+    backgroundColor: theme.palette.text.offWhiteColor,
     fontSize: 16,
     lineHeight: "20px",
   },
   requestTitle: { color: theme.palette.text.mediumShadeGray },
   titleName: { color: theme.palette.text.darkShadedGray },
   closeRequestContent: {
-    padding: "18px 22px 24px",
+    padding: "16px 22px 40px",
     "& p": {
       margin: 0,
       fontSize: 16,

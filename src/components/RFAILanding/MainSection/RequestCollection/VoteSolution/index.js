@@ -85,7 +85,7 @@ const VoteSolution = ({
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={"View Solutions"}
+            title={"Vote Solutions"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -112,12 +112,6 @@ const VoteSolution = ({
                 </div>
               )}
               {!loading && requestSolutions.length > 0 && (
-                // <Grid container className={classes.backRequestContainer}>
-                //   <Gird item xs={12} sm={12} md={12} lg={12} className={classes.backRequestHeader}>
-                //     <Gird item xs={12} sm={12} md={12} lg={12}></div>
-                //   </Grid>
-                //   <Gird item xs={12} sm={12} md={12} lg={12} className={classes.backRequestDetails}></Grid>
-                // </Grid>
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>
@@ -142,7 +136,7 @@ const VoteSolution = ({
                         </TableCell>
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
-                          <a href={sol.solution_docURI} target="_new">
+                          <a href={sol.solution_docURI} target="_new" className={classes.blueText}>
                             {sol.solution_docURI}
                           </a>
                         </TableCell>
@@ -150,11 +144,11 @@ const VoteSolution = ({
                           <span className={classes.mobileTableHeader}>Votes</span>
                           {sol.total_votes}
                         </TableCell>
-                        <TableCell>
-                          <span className={classes.mobileTableHeader}>&nbsp;</span>
+                        <TableCell className={classes.voteBtn}>
                           <StyledButton
                             btnText="Vote"
-                            type="blue"
+                            disabled
+                            type="transparentBlueBorder"
                             onClick={event => handleVoteSubmit(event, sol.solution_submitter)}
                           />
                         </TableCell>
@@ -168,6 +162,7 @@ const VoteSolution = ({
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="Back the request" type="blue" onClick={handleCancel} />
           </CardActions>
         </Card>
       </Modal>
