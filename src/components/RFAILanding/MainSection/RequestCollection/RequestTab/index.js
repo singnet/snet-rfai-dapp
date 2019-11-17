@@ -20,6 +20,7 @@ class RequestTab extends Component {
     super(props);
     this.state = {
       selectedTab: 1,
+      myRequestsFlag: false,
     };
   }
 
@@ -69,9 +70,10 @@ class RequestTab extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={true}
-                    // onChange={handleChange('checkedB')}
+                    checked={this.state.myRequestsFlag}
+                    onChange={() => this.setState({ myRequestsFlag: !this.state.myRequestsFlag })}
                     color="primary"
+                    disabled={metamaskDetails.isTxnsAllowed ? false : true}
                   />
                 }
                 label="Show my requests only"

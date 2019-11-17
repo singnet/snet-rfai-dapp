@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 //import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -26,6 +26,9 @@ import SubmitSolution from "../SubmitSolution";
 import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
+import { computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
+import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
+
 import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
@@ -42,6 +45,23 @@ const RequestList = ({
   const [openModel, setOpenModel] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState("");
   const [selectedRequestTitle, setSelectedRequestTitle] = useState("");
+  const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the BlockNumber
+    setBlockNumber();
+  });
+
+  // TODO: Need to check why we are getting Block NUmber in Reject
+  const setBlockNumber = async () => {
+    try {
+      let blockNumber = await getBlockNumber();
+      setCurrentBlockNumber(blockNumber);
+    } catch (err) {
+      setCurrentBlockNumber(err);
+    }
+  };
 
   const modals = {
     SOLUTION: "SolutionList",
@@ -145,7 +165,7 @@ const RequestList = ({
               </div>
               <div className={classes.expiryContainer}>
                 <span className={classes.title}>Expiry</span>
-                <p className={classes.data}>29 Dec 2019 </p>
+                <p className={classes.data}>{computeDateFromBlockNumber(currentBlockNumber, r.expiration)} </p>
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
