@@ -57,9 +57,7 @@ export const useStyles = theme => ({
     height: 10,
     margin: "9px 0 5px",
     backgroundColor: "rgba(64, 134, 255, 0.3)",
-    "& div": {
-      backgroundColor: theme.palette.text.primary,
-    },
+    "& div": { backgroundColor: theme.palette.text.primary },
   },
   usedCredits: {
     color: theme.palette.text.lightShadedGray,

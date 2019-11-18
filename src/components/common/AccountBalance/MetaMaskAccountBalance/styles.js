@@ -1,6 +1,7 @@
 export const useStyles = theme => ({
-  metamaskAccBalanceContainer: { padding: "32px 19px 0" },
+  metamaskAccBalanceContainer: { padding: "0 19px 0" },
   description: {
+    marginTop: 40,
     color: theme.palette.text.mediumShadeGray,
     fontFamily: theme.typography.primary.main,
     fontSize: 14,

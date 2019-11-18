@@ -79,7 +79,10 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 20,
       lineHeight: "26px",
     },
-    "& > div": { flex: 1 },
+    "& > div": {
+      flex: 1,
+      "&:first-of-type": { paddingRight: 20 },
+    },
     "@media(max-width:500px)": {
       flexDirection: "column",
       alignItems: "flex-start",

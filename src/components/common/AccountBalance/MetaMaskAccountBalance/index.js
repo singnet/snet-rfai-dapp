@@ -217,7 +217,7 @@ class MetaMaskAccountBalance extends Component {
       <div className={classes.metamaskAccBalanceContainer}>
         <Typography className={classes.description}>
           Information about the linked walled and network. Also explain about each balance. Lorem ipsum dolor sit amet,
-          ad cum illum nonumy, dicit laoreet his et.{" "}
+          ad cum illum nonumy, dicit laoreet his et.
         </Typography>
         <div className={classes.accountDetails}>
           <div>

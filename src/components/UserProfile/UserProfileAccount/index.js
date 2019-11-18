@@ -3,8 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 
 import { useStyles } from "./styles";
-import MetamaskDetails from "./MetamaskDetails";
+import AccountBalance from "../../common/AccountBalance";
 import AlertBox from "../../common/AlertBox";
+import StyledDropdown from "../../common/StyledDropdown";
 
 const UserProfileAccount = ({ classes }) => {
   const [alert] = useState({});
@@ -15,8 +16,9 @@ const UserProfileAccount = ({ classes }) => {
         <div className={classes.accountWrapper}>
           <div className={classes.dropDown}>
             <span className={classes.dropDownTitle}>Wallet</span>
+            <StyledDropdown />
           </div>
-          <MetamaskDetails />
+          <AccountBalance />
           <AlertBox type={alert.type} message={alert.message} />
         </div>
       </Grid>

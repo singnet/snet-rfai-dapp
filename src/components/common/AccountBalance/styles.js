@@ -25,6 +25,7 @@ export const useStyles = theme => ({
       flexBasis: "100%",
     },
   },
+  demo: { backgroundColor: "red" },
   warningBox: {
     borderWidth: 1,
     borderStyle: "solid",

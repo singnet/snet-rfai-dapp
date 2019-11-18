@@ -9,7 +9,6 @@ import { Switch, Route } from "react-router-dom";
 import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
-//import UserProfileAccount from "./UserProfileAccount";
 import AccountBalance from "../common/AccountBalance";
 import Notification from "../Notification";
 
