@@ -32,7 +32,7 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
               </div>
               <div className={classes.btnContainer}>
                 <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
-                  <StyledButton type="blue" btnText="Create Request" />
+                  {isLoggedIn && <StyledButton type="blue" btnText="Create Request" />}
                 </Link>
                 <Link to={Routes.SIGNUP} className={classes.signupLink}>
                   {!isLoggedIn && <StyledButton type="blue" btnText="Sign up" />}
