@@ -46,7 +46,7 @@ class RequestTab extends Component {
     // eslint-disable-next-line no-unused-vars
     var isFoundationMember = false;
 
-    if (metamaskDetails.isTxnsAllowed && foundationMembers) {
+    if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
       const mems = foundationMembers.filter(
         mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
       );
@@ -58,13 +58,16 @@ class RequestTab extends Component {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <AppBar position="static" color="default" className={classes.header}>
             <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
-              {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> } */}
-              <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />
-              <Tab className="singularity-tab" label="Evaluation" value={2} />
-              <Tab className="singularity-tab" label={"Completed(" + requestSummary.Completed + ")"} value={3} />
-              {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
-              <Tab className="singularity-tab" label={"Expired(" + requestSummary.Expired + ")"} value={5} />
-              <Tab className="singularity-tab" label="My Requests" value={6} />
+              {/* ---TBD--- {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
+              <Tab className="singularity-tab" label={"Pending(" + requestSummary.Open + ")"} value={1} /> {/** Open */}
+              <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />{" "}
+              {/** Approved */}
+              <Tab className="singularity-tab" label="Solution Vote" value={2} /> {/** Evaluation Phase*/}
+              <Tab className="singularity-tab" label={"Completed(" + requestSummary.Completed + ")"} value={3} />{" "}
+              {/** Completed */}
+              <Tab className="singularity-tab" label={"In Complete(" + requestSummary.Expired + ")"} value={5} />{" "}
+              {/** Expired */}
+              <Tab className="singularity-tab" label="Closed" value={4} /> {/** Closed / Rejected */}
             </Tabs>
             <div className={classes.checkboxContainer}>
               <FormControlLabel

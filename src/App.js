@@ -87,20 +87,20 @@ class App extends Component {
                   {...this.props}
                   component={withRegistrationHeader(Onboarding, headerData.ONBOARDING)}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                   isAllowed={isTermsAccepted}
                   redirectTo={`/${Routes.ONBOARDING}`}
                   path={`/${Routes.RFAI_LANDING}`}
                   {...this.props}
                   component={withInAppWrapper(RFAILanding)}
-                />
-                <PrivateRoute
+                /> */}
+                {/* <PrivateRoute
                   isAllowed={isTermsAccepted}
                   redirectTo={`/${Routes.ONBOARDING}`}
                   path={`/${Routes.CREATE_REQUEST}`}
                   {...this.props}
                   component={withInAppWrapper(CreateRequest)}
-                />
+                /> */}
                 <PrivateRoute
                   isAllowed={isLoggedIn && isTermsAccepted}
                   redirectTo={isLoggedIn ? `/${Routes.ONBOARDING}` : `/${Routes.LOGIN}`}
@@ -108,15 +108,18 @@ class App extends Component {
                   {...this.props}
                   component={withInAppWrapper(UserProfile)}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                   isAllowed={isTermsAccepted}
                   redirectTo={`/${Routes.ONBOARDING}`}
                   path="/"
                   exact
                   {...this.props}
                   component={withInAppWrapper(RFAILanding)}
-                />
+                /> */}
+                <Route path={`/${Routes.RFAI_LANDING}`} component={withInAppWrapper(RFAILanding)} />
+                <Route path={`/${Routes.CREATE_REQUEST}`} component={withInAppWrapper(CreateRequest)} />
                 <Route path={`/${Routes.GET_STARTED}`} component={withInAppWrapper(GetStarted)} />
+                <Route path="/" exact component={withInAppWrapper(RFAILanding)} />
                 <Route component={PageNotFound} />
               </Switch>
             </Suspense>
