@@ -44,6 +44,11 @@ const tabs = [
     link: `/${Routes.RFAI_LANDING}`,
     newTab: false,
   },
+  {
+    title: "Claims",
+    link: `/${Routes.USER_PROFILE}/claims`,
+    newTab: false,
+  },
 ];
 
 export const NavData = {

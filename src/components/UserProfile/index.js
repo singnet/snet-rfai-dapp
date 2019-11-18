@@ -12,9 +12,17 @@ import { useStyles } from "./styles";
 import UserProfileAccount from "./UserProfileAccount";
 import Notification from "../Notification";
 
-const UserProfileTabs = {
-  account: 0,
-  settings: 1,
+import Routes from "../../utility/constants/Routes";
+
+// const UserProfileTabs = {
+//   account: 0,
+//   settings: 1,
+// };
+
+const activeIndexEnum = {
+  [`/${Routes.USER_PROFILE}/account`]: 0,
+  [`/${Routes.USER_PROFILE}/settings`]: 1,
+  [`/${Routes.USER_PROFILE}/claims`]: 2,
 };
 
 class UserProfile extends Component {
@@ -22,15 +30,27 @@ class UserProfile extends Component {
     activeTab: 0,
   };
 
-  componentDidMount = () => {
-    const { activeTab } = this.props.match.params;
-    if (activeTab && UserProfileTabs[activeTab.toLowerCase()]) {
-      this.setState({ activeTab: UserProfileTabs[activeTab.toLowerCase()] });
+  getActiveTab = () => {
+    const { pathname } = window.location;
+    const activeIndex = activeIndexEnum[`${pathname.toLowerCase()}`];
+    if (activeIndex) {
+      return activeIndex;
     }
+    return 0;
   };
 
-  onTabChange = activeTab => {
+  componentDidMount = () => {
+    // const { activeTab } = this.props.match.params;
+    // if (activeTab && UserProfileTabs[activeTab.toLowerCase()]) {
+    //   this.setState({ activeTab: UserProfileTabs[activeTab.toLowerCase()] });
+    // }
+    let activeTab = this.getActiveTab();
     this.setState({ activeTab });
+  };
+
+  onTabChange = (activeTab, activePath) => {
+    this.setState({ activeTab });
+    //history.push(activePath);
   };
 
   render() {
@@ -42,9 +62,15 @@ class UserProfile extends Component {
         name: "Account",
         activeIndex: 0,
         component: <UserProfileAccount showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+        path: `/${Routes.USER_PROFILE}/account`,
       },
-      { name: "Settings", activeIndex: 1, component: <UserProfileSettings history={history} /> },
-      { name: "Claims", activeIndex: 2, component: <UserProfileClaims /> },
+      {
+        name: "Settings",
+        activeIndex: 1,
+        path: `/${Routes.USER_PROFILE}/settings`,
+        component: <UserProfileSettings history={history} />,
+      },
+      { name: "Claims", activeIndex: 2, path: `/${Routes.USER_PROFILE}/claims`, component: <UserProfileClaims /> },
     ];
     const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0].component;
     return (
@@ -56,7 +82,11 @@ class UserProfile extends Component {
             <AppBar position="static" className={classes.tabsHeader}>
               <Tabs value={activeTab}>
                 {tabs.map(value => (
-                  <Tab key={value.name} label={value.name} onClick={() => this.onTabChange(value.activeIndex)} />
+                  <Tab
+                    key={value.name}
+                    label={value.name}
+                    onClick={() => this.onTabChange(value.activeIndex, value.path)}
+                  />
                 ))}
               </Tabs>
             </AppBar>
