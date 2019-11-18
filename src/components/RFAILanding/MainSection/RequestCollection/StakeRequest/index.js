@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -18,8 +18,8 @@ import Paper from "@material-ui/core/Paper";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { toWei, fromWei } from "../../../../../utility/GenHelperFunctions";
-import { waitForTransaction, stakeForRequest } from "../../../../../utility/BlockchainHelper";
+import { toWei, fromWei, computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
+import { getBlockNumber, waitForTransaction, stakeForRequest } from "../../../../../utility/BlockchainHelper";
 
 import web3 from "web3";
 
@@ -45,6 +45,23 @@ const StakeRequest = ({
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
   const [amount, setAmount] = useState(0);
+  const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the BlockNumber
+    setBlockNumber();
+  });
+
+  // TODO: Need to check why we are getting Block NUmber in Reject
+  const setBlockNumber = async () => {
+    try {
+      let blockNumber = await getBlockNumber();
+      setCurrentBlockNumber(blockNumber);
+    } catch (err) {
+      setCurrentBlockNumber(err);
+    }
+  };
 
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
@@ -144,7 +161,7 @@ const StakeRequest = ({
                       </TableCell>
                       <TableCell align="right">
                         <span className={classes.mobileTableHeader}>Expiry:</span>
-                        {requestDetails.expiration}
+                        {computeDateFromBlockNumber(currentBlockNumber, requestDetails.expiration)}
                       </TableCell>
                     </TableRow>
                   </TableBody>

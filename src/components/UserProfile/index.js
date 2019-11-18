@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -9,7 +9,9 @@ import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
 import { useStyles } from "./styles";
-import UserProfileAccount from "./UserProfileAccount";
+//import UserProfileAccount from "./UserProfileAccount";
+import AccountBalance from "../common/AccountBalance";
+import Notification from "../Notification";
 
 const UserProfileTabs = {
   account: 0,
@@ -33,35 +35,43 @@ class UserProfile extends Component {
   };
 
   render() {
-    const { classes, history, nickname } = this.props;
+    const { classes, history, nickname, metamaskDetails } = this.props;
     const { activeTab } = this.state;
 
     const tabs = [
-      { name: "Account", activeIndex: 0, component: <UserProfileAccount /> },
+      {
+        name: "Account",
+        activeIndex: 0,
+        component: <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+      },
       { name: "Settings", activeIndex: 1, component: <UserProfileSettings history={history} /> },
       { name: "Claims", activeIndex: 2, component: <UserProfileClaims /> },
     ];
     const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0].component;
     return (
-      <div className={classes.UserProfileContainer}>
-        <UserProfileHeader nickname={nickname} />
-        <div>
-          <AppBar position="static" className={classes.tabsHeader}>
-            <Tabs value={activeTab}>
-              {tabs.map(value => (
-                <Tab key={value.name} label={value.name} onClick={() => this.onTabChange(value.activeIndex)} />
-              ))}
-            </Tabs>
-          </AppBar>
-          {activeComponent}
+      <Fragment>
+        <Notification />
+        <div className={classes.UserProfileContainer}>
+          <UserProfileHeader nickname={nickname} />
+          <div>
+            <AppBar position="static" className={classes.tabsHeader}>
+              <Tabs value={activeTab}>
+                {tabs.map(value => (
+                  <Tab key={value.name} label={value.name} onClick={() => this.onTabChange(value.activeIndex)} />
+                ))}
+              </Tabs>
+            </AppBar>
+            {activeComponent}
+          </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
   nickname: state.userReducer.nickname,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
 export default connect(mapStateToProps)(withStyles(useStyles)(UserProfile));

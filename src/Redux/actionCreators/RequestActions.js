@@ -21,6 +21,9 @@ const fetchRequestAPI = (token, requestStatus) => {
   const apiPath = `${APIPaths.RFAI_REQUEST}?status=${requestStatus}&requester=${requester}`;
   const apiOptions = initializeAPIOptions(token);
   return API.get(apiName, apiPath, apiOptions);
+
+  // const response = await fetch(apiPath);
+  // return response;
 };
 
 export const fetchRequestData = requestStatus => async dispatch => {
