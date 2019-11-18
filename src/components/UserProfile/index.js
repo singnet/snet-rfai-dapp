@@ -1,37 +1,49 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { withStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { connect } from "react-redux";
+import { Switch, Route } from "react-router-dom";
 
 import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
-import { useStyles } from "./styles";
 import AccountBalance from "../common/AccountBalance";
 import Notification from "../Notification";
 
+//import UserProfileTransactionHistory from "./UserProfileTransactionHistory";
+import { useStyles } from "./styles";
 import Routes from "../../utility/constants/Routes";
 
-// const UserProfileTabs = {
-//   account: 0,
-//   settings: 1,
-// };
-
-const activeIndexEnum = {
-  [`/${Routes.USER_PROFILE}/account`]: 0,
-  [`/${Routes.USER_PROFILE}/settings`]: 1,
-  [`/${Routes.USER_PROFILE}/claims`]: 2,
-};
-
-class UserProfile extends Component {
-  state = {
-    activeTab: 0,
+const UserProfile = ({ classes, nickname, history, location, email, metamaskDetails }) => {
+  const userProfileRoutes = {
+    ACCOUNT: {
+      path: `/${Routes.USER_PROFILE}/account`,
+      component: () => <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+    },
+    SETTINGS: { path: `/${Routes.USER_PROFILE}/settings`, component: () => <UserProfileSettings /> },
+    CLAIMS: { path: `/${Routes.USER_PROFILE}/claims`, component: () => <UserProfileClaims /> },
   };
 
-  getActiveTab = () => {
-    const { pathname } = window.location;
+  const activeIndexEnum = {
+    [`${userProfileRoutes.ACCOUNT.path}`]: 0,
+    [`${userProfileRoutes.SETTINGS.path}`]: 1,
+    [`${userProfileRoutes.CLAIMS.path}`]: 2,
+  };
+
+  const tabs = [
+    { name: "Account", activeIndex: 0, path: userProfileRoutes.ACCOUNT.path },
+    { name: "Settings", activeIndex: 1, path: userProfileRoutes.SETTINGS.path },
+    { name: "Claims", activeIndex: 2, path: userProfileRoutes.CLAIMS.path },
+  ];
+
+  const onTabChange = (activeTab, activePath) => {
+    history.push(activePath);
+  };
+
+  const activeTab = () => {
+    const { pathname } = location;
     const activeIndex = activeIndexEnum[`${pathname.toLowerCase()}`];
     if (activeIndex) {
       return activeIndex;
@@ -39,67 +51,33 @@ class UserProfile extends Component {
     return 0;
   };
 
-  componentDidMount = () => {
-    // const { activeTab } = this.props.match.params;
-    // if (activeTab && UserProfileTabs[activeTab.toLowerCase()]) {
-    //   this.setState({ activeTab: UserProfileTabs[activeTab.toLowerCase()] });
-    // }
-    let activeTab = this.getActiveTab();
-    this.setState({ activeTab });
-  };
-
-  onTabChange = (activeTab, activePath) => {
-    this.setState({ activeTab });
-    //history.push(activePath);
-  };
-
-  render() {
-    const { classes, history, nickname, metamaskDetails } = this.props;
-    const { activeTab } = this.state;
-
-    const tabs = [
-      {
-        name: "Account",
-        activeIndex: 0,
-        component: <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
-        path: `/${Routes.USER_PROFILE}/account`,
-      },
-      {
-        name: "Settings",
-        activeIndex: 1,
-        path: `/${Routes.USER_PROFILE}/settings`,
-        component: <UserProfileSettings history={history} />,
-      },
-      { name: "Claims", activeIndex: 2, path: `/${Routes.USER_PROFILE}/claims`, component: <UserProfileClaims /> },
-    ];
-    const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0].component;
-    return (
-      <Fragment>
-        <Notification />
-        <div className={classes.UserProfileContainer}>
-          <UserProfileHeader nickname={nickname} />
-          <div>
-            <AppBar position="static" className={classes.tabsHeader}>
-              <Tabs value={activeTab}>
-                {tabs.map(value => (
-                  <Tab
-                    key={value.name}
-                    label={value.name}
-                    onClick={() => this.onTabChange(value.activeIndex, value.path)}
-                  />
-                ))}
-              </Tabs>
-            </AppBar>
-            {activeComponent}
-          </div>
+  return (
+    <Fragment>
+      <Notification />
+      <div className={classes.UserProfileContainer}>
+        <UserProfileHeader nickname={nickname} email={email} />
+        <div>
+          <AppBar position="static" className={classes.tabsHeader}>
+            <Tabs value={activeTab()}>
+              {tabs.map(value => (
+                <Tab key={value.name} label={value.name} onClick={() => onTabChange(value.activeIndex, value.path)} />
+              ))}
+            </Tabs>
+          </AppBar>
+          <Switch>
+            <Route path={userProfileRoutes.CLAIMS.path} component={userProfileRoutes.CLAIMS.component} />
+            <Route path={userProfileRoutes.SETTINGS.path} component={userProfileRoutes.SETTINGS.component} />
+            <Route path={Routes.userProfileRoutes} component={userProfileRoutes.ACCOUNT.component} />
+          </Switch>
         </div>
-      </Fragment>
-    );
-  }
-}
+      </div>
+    </Fragment>
+  );
+};
 
 const mapStateToProps = state => ({
   nickname: state.userReducer.nickname,
+  email: state.userReducer.email,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
