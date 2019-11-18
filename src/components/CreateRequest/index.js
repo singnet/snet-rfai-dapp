@@ -86,7 +86,12 @@ class CreateRequest extends Component {
             )}
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
-            <AccountBalance showMetaMaskAccBal={isTxnsAllowed} />
+            <AccountBalance
+              showMetaMaskAccBal={isTxnsAllowed}
+              title="Account Balance"
+              description="Information about the linked walled and network. Also explain about each balance. Lorem ipsum dolor sit amet,
+              ad cum illum nonumy, dicit laoreet his et."
+            />
           </Grid>
         </Grid>
       </Fragment>

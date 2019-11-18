@@ -180,7 +180,7 @@ class MetaMaskAccountBalance extends Component {
   };
 
   render() {
-    const { classes, metamaskDetails, tokenBalance, tokenAllowance, rfaiTokenBalance } = this.props;
+    const { classes, metamaskDetails, tokenBalance, tokenAllowance, rfaiTokenBalance, description } = this.props;
     const { activeTab, alert } = this.state;
 
     const tabs = [
@@ -215,10 +215,7 @@ class MetaMaskAccountBalance extends Component {
 
     return (
       <div className={classes.metamaskAccBalanceContainer}>
-        <Typography className={classes.description}>
-          Information about the linked walled and network. Also explain about each balance. Lorem ipsum dolor sit amet,
-          ad cum illum nonumy, dicit laoreet his et.{" "}
-        </Typography>
+        {description ? <Typography className={classes.description} /> : null}
         <div className={classes.accountDetails}>
           <div>
             <div className={classes.label}>

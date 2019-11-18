@@ -23,7 +23,7 @@ export const useStyles = theme => ({
     },
   },
   accountWrapper: {
-    padding: "0 22px",
+    padding: 0,
     display: "flex",
     flexDirection: "column",
     "& button": { alignSelf: "center" },
@@ -34,7 +34,7 @@ export const useStyles = theme => ({
     borderStyle: "solid",
     borderColor: "rgba(25,25,25,0.32)",
     borderRadius: 4,
-    marginTop: 26,
+    margin: "26px 23px 0 19px",
     position: "relative",
     "& > div": {
       width: "100%",

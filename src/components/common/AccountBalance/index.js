@@ -7,12 +7,12 @@ import { useStyles } from "./styles";
 import StyledButton from "../StyledButton";
 import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 
-const AccountBalance = (classes, showMetaMaskAccBal, button) => {
+const AccountBalance = (classes, showMetaMaskAccBal, button, title, description) => {
   return (
     <div className={classes.test}>
-      <h3>Account Balance</h3>
+      {title ? <h3>{title}</h3> : null}
       {showMetaMaskAccBal ? (
-        <MetaMaskAccountBalance />
+        <MetaMaskAccountBalance description />
       ) : (
         <div>
           <div className={classes.warningBox}>

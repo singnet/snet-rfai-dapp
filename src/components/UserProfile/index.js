@@ -9,8 +9,7 @@ import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
 import { useStyles } from "./styles";
-//import UserProfileAccount from "./UserProfileAccount";
-import AccountBalance from "../common/AccountBalance";
+import UserProfileAccount from "./UserProfileAccount";
 import Notification from "../Notification";
 
 const UserProfileTabs = {
@@ -42,7 +41,7 @@ class UserProfile extends Component {
       {
         name: "Account",
         activeIndex: 0,
-        component: <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+        component: <UserProfileAccount showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
       },
       { name: "Settings", activeIndex: 1, component: <UserProfileSettings history={history} /> },
       { name: "Claims", activeIndex: 2, component: <UserProfileClaims /> },
