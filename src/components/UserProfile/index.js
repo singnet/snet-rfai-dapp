@@ -9,7 +9,7 @@ import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
 import { useStyles } from "./styles";
-import UserProfileAccount from "./UserProfileAccount";
+import AccountBalance from "../common/AccountBalance";
 import Notification from "../Notification";
 
 import Routes from "../../utility/constants/Routes";
@@ -61,7 +61,7 @@ class UserProfile extends Component {
       {
         name: "Account",
         activeIndex: 0,
-        component: <UserProfileAccount showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+        component: <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
         path: `/${Routes.USER_PROFILE}/account`,
       },
       {
