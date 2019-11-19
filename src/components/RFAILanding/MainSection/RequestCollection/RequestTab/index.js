@@ -59,7 +59,7 @@ class RequestTab extends Component {
           <AppBar position="static" color="default" className={classes.header}>
             <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
               {/* ---TBD--- {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
-              <Tab className="singularity-tab" label={"Pending(" + requestSummary.Open + ")"} value={1} /> {/** Open */}
+              <Tab className="singularity-tab" label={"Pending(" + requestSummary.Open + ")"} value={0} /> {/** Open */}
               <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />{" "}
               {/** Approved */}
               <Tab className="singularity-tab" label="Solution Vote" value={2} /> {/** Evaluation Phase*/}
@@ -84,9 +84,11 @@ class RequestTab extends Component {
             </div>
           </AppBar>
 
-          {/* TODO: Need to update the Tabs based on the UI Screens and tie it to API based on Status */}
-
-          {/* {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}         */}
+          {selectedTab === 0 && (
+            <Typography component="div" className={classes.requestTabDetailContainer}>
+              <RequestListView requestListData={requestDetails} loading={true} />
+            </Typography>
+          )}
           {selectedTab === 1 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} loading={true} />

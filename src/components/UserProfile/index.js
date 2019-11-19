@@ -20,7 +20,7 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
   const userProfileRoutes = {
     ACCOUNT: {
       path: `/${Routes.USER_PROFILE}/account`,
-      component: () => <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
+      component: () => <AccountBalance />,
     },
     SETTINGS: { path: `/${Routes.USER_PROFILE}/settings`, component: () => <UserProfileSettings /> },
     CLAIMS: { path: `/${Routes.USER_PROFILE}/claims`, component: () => <UserProfileClaims /> },

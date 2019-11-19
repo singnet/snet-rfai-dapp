@@ -86,7 +86,7 @@ class CreateRequest extends Component {
             )}
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
-            <AccountBalance showMetaMaskAccBal={isTxnsAllowed} />
+            <AccountBalance />
           </Grid>
         </Grid>
       </Fragment>
