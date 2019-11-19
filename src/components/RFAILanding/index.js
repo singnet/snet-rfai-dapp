@@ -30,14 +30,20 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
                   token rewards.
                 </p>
               </div>
-              <div className={classes.btnContainer}>
-                <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
-                  {isLoggedIn && <StyledButton type="blue" btnText="Create Request" />}
-                </Link>
-                <Link to={Routes.SIGNUP} className={classes.signupLink}>
-                  {!isLoggedIn && <StyledButton type="blue" btnText="Sign up" />}
-                </Link>
-              </div>
+              {isLoggedIn ? (
+                <div className={classes.btnContainer}>
+                  <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
+                    <StyledButton type="blue" btnText="Create Request" />
+                  </Link>
+                </div>
+              ) : (
+                <div className={classes.loginContainer}>
+                  <p>
+                    Please <Link to={Routes.LOGIN}>Login</Link> or <Link to={Routes.SIGNUP}>Signup</Link> to use the
+                    full features of Request for AI [RFAI] platform.
+                  </p>
+                </div>
+              )}
             </Grid>
           </Grid>
           <div>
