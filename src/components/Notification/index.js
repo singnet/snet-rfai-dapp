@@ -82,7 +82,14 @@ class Notification extends Component {
       updateTokenBalance,
       updateTokenAllowance,
       updateRFAITokenBalance,
+      isLoggedIn,
     } = this.props;
+
+    if (!isLoggedIn) {
+      updateMetamaskDetails(false, "0x0", 0, false);
+      return;
+    }
+
     if (window.ethereum) {
       const ethereum = window.ethereum;
       window.web3 = new window.Web3(ethereum);
@@ -111,14 +118,23 @@ class Notification extends Component {
   };
 
   generateNotificationMessage = () => {
-    const { metamaskDetails, updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+    // updateTokenBalance,
+    // updateTokenAllowance,
+    // updateRFAITokenBalance,
+
+    const { metamaskDetails, isLoggedIn } = this.props;
 
     // TODO : To be Deleted from Here...
-    updateTokenBalance(metamaskDetails);
-    updateTokenAllowance(metamaskDetails);
-    updateRFAITokenBalance(metamaskDetails);
+    // updateTokenBalance(metamaskDetails);
+    // updateTokenAllowance(metamaskDetails);
+    // updateRFAITokenBalance(metamaskDetails);
 
     var message = "";
+
+    if (!isLoggedIn) {
+      message = "User need to login to the RFAI DApp - This message is kept only for ref.";
+      return message;
+    }
 
     const networkName = NetworkNames.find(nw => nw.networkId.toString() === process.env.REACT_APP_ETH_NETWORK)
       .networkName;
@@ -138,7 +154,7 @@ class Notification extends Component {
       } else if (metamaskDetails.account === null || metamaskDetails.account === "0x0") {
         message = "Click to connect with Metamask";
       } else {
-        message = "Metamask connected successfully " + networkName;
+        message = "Metamask connected successfully " + networkName + "- This message is kept only for ref.";
       }
     } else {
       message = "Need to have Metamask enabled browser";
@@ -153,13 +169,13 @@ class Notification extends Component {
 
   render() {
     // Actual Code
-    //const { classes, metamaskDetails } = this.props;
+    //const { classes, metamaskDetails, isLoggedIn } = this.props;
     const message = this.generateNotificationMessage();
 
     // TODO: Line to be deleted added for Debugg only
     const showNotificationBar = true;
     // Actual Code
-    //const showNotificationBar = (metamaskDetails.isConnected && metamaskDetails.networkId === process.env.REACT_APP_ETH_NETWORK)
+    //const showNotificationBar = isLoggedIn && (metamaskDetails.isConnected && metamaskDetails.networkId === process.env.REACT_APP_ETH_NETWORK)
 
     return (
       <NotificationBar
@@ -174,6 +190,7 @@ class Notification extends Component {
 }
 
 const mapStateToProps = state => ({
+  isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 

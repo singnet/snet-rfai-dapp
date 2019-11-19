@@ -99,4 +99,5 @@ export const useStyles = theme => ({
       flexBasis: "100%",
     },
   },
+  signupLink: { textDecoration: "none" },
 });

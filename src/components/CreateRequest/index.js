@@ -5,6 +5,9 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 
+import Routes from "../../utility/constants/Routes";
+import { Link } from "react-router-dom";
+
 //components
 import ProgressBar from "../common/ProgressBar";
 import StyledButton from "../common/StyledButton";
@@ -42,7 +45,7 @@ class CreateRequest extends Component {
   };
 
   render() {
-    const { classes, metamaskDetails } = this.props;
+    const { classes, metamaskDetails, isLoggedIn } = this.props;
     const { requestSummary, progressText, progressState, activeSection } = this.state;
 
     const isTxnsAllowed = metamaskDetails.isTxnsAllowed;
@@ -76,12 +79,17 @@ class CreateRequest extends Component {
                   <li>* Quantitative evaluation criteria</li>
                   <li>* Provide a title and description along with acceptance criteria</li>
                 </ul>
-                <StyledButton
-                  btnText="continue"
-                  onClick={this.showDetailsContent}
-                  type="blue"
-                  disabled={!isTxnsAllowed}
-                />
+                {isLoggedIn && (
+                  <StyledButton
+                    btnText="continue"
+                    onClick={this.showDetailsContent}
+                    type="blue"
+                    disabled={!isTxnsAllowed}
+                  />
+                )}
+                <Link to={Routes.LOGIN} className={classes.signupLink}>
+                  {!isLoggedIn && <StyledButton type="blue" btnText="Login" />}
+                </Link>
               </div>
             )}
           </Grid>
@@ -95,6 +103,7 @@ class CreateRequest extends Component {
 }
 
 const mapStateToProps = state => ({
+  isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 

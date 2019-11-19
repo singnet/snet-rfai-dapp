@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import { connect } from "react-redux";
 //components
-import StyledButton from "../StyledButton";
+//import StyledButton from "../StyledButton";
 import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 
 const AccountBalance = ({ classes, metamaskDetails }) => {
@@ -30,11 +30,12 @@ const AccountBalance = ({ classes, metamaskDetails }) => {
               Marketplace.
             </Typography>
           </div>
-          {!isTxnsAllowed ? (
+          {/* Commented the button as per the UI flow suggestion*/}
+          {/* {!isTxnsAllowed ? (
             <div className={classes.btnContainer}>
               <StyledButton type="blue" btnText="connect metamask" />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       )}
     </div>
