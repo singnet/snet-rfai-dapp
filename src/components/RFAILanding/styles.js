@@ -50,4 +50,17 @@ export const useStyles = theme => ({
   },
   btnContainer: { marginTop: 33 },
   signupLink: { textDecoration: "none" },
+  loginContainer: {
+    "& p": {
+      color: theme.palette.text.darkShadedGray,
+      fontSize: 22,
+      fontWeight: 200,
+      lineHeight: "28px",
+    },
+    "& a": {
+      color: theme.palette.text.primary,
+      fontWeight: 600,
+      textDecoration: "none",
+    },
+  },
 });
