@@ -14,6 +14,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
+import StyledDropdown from "../../../../common/StyledDropdown";
 
 class RequestTab extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class RequestTab extends Component {
     this.state = {
       selectedTab: 1,
       myRequestsFlag: false,
+      tabsName: [{ label: "Completed" }, { label: "Expired" }, { label: "My Requests" }],
     };
   }
 
@@ -41,7 +43,7 @@ class RequestTab extends Component {
 
   render() {
     const { foundationMembers, metamaskDetails, requestDetails, requestSummary, classes } = this.props;
-    const { selectedTab } = this.state;
+    const { selectedTab, tabsName } = this.state;
 
     // eslint-disable-next-line no-unused-vars
     var isFoundationMember = false;
@@ -65,7 +67,11 @@ class RequestTab extends Component {
               {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
               <Tab className="singularity-tab" label={"Expired(" + requestSummary.Expired + ")"} value={5} />
               <Tab className="singularity-tab" label="My Requests" value={6} />
+              <div className={classes.showMoreContaienr}>
+                <StyledDropdown inputLabel="More" list={tabsName} onChange={this.handleChange} />
+              </div>
             </Tabs>
+
             <div className={classes.checkboxContainer}>
               <FormControlLabel
                 control={

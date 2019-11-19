@@ -13,6 +13,9 @@ export const useStyles = theme => ({
       fontSize: 18,
       textTransform: "capitalize",
       lineHeight: "23px",
+      "&:nth-child(n+3)": {
+        "@media(max-width:720px)": { display: "none" },
+      },
     },
     "& .MuiTab-textColorPrimary.Mui-selected": {
       color: theme.palette.text.primary,
@@ -37,5 +40,24 @@ export const useStyles = theme => ({
       fontSize: 14,
       letterSpacing: 0.25,
     },
+    "@media(max-width:1024px)": {
+      position: "static",
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+  },
+  showMoreContaienr: {
+    minWidth: 65,
+    marginLeft: 15,
+    display: "none",
+    "& > div": { width: "100%" },
+    "& label": {
+      color: theme.palette.text.lightShadedGray,
+      fontSize: 18,
+      fontFamily: theme.typography.primary.main,
+      transform: "translate(0, 16px) scale(1)",
+    },
+    "& svg": { top: -2 },
+    "@media(max-width:720px)": { display: "block" },
   },
 });
