@@ -2,16 +2,18 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
-
+import { connect } from "react-redux";
 //components
-import StyledButton from "../StyledButton";
+//import StyledButton from "../StyledButton";
 import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 
-const AccountBalance = (classes, showMetaMaskAccBal, button) => {
+const AccountBalance = ({ classes, metamaskDetails }) => {
+  const isTxnsAllowed = metamaskDetails.isTxnsAllowed;
+
   return (
     <div className={classes.accountBalanceContainer}>
       <h3>Account Balance</h3>
-      {showMetaMaskAccBal ? (
+      {isTxnsAllowed ? (
         <MetaMaskAccountBalance description />
       ) : (
         <div>
@@ -28,15 +30,21 @@ const AccountBalance = (classes, showMetaMaskAccBal, button) => {
               Marketplace.
             </Typography>
           </div>
-          {button ? (
+          {/* Commented the button as per the UI flow suggestion*/}
+          {/* {!isTxnsAllowed ? (
             <div className={classes.btnContainer}>
               <StyledButton type="blue" btnText="connect metamask" />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       )}
     </div>
   );
 };
 
-export default withStyles(useStyles)(AccountBalance);
+const mapStateToProps = state => ({
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+});
+
+//export default withStyles(useStyles)(AccountBalance);
+export default connect(mapStateToProps)(withStyles(useStyles)(AccountBalance));

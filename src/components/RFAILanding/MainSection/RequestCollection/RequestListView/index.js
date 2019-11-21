@@ -122,7 +122,7 @@ const RequestList = ({
       </div>
     );
   }
-  if (requestListData.length === 0) {
+  if (!requestListData.length || requestListData.length === 0) {
     return (
       <div>
         <span>No requests found.</span>
@@ -132,6 +132,7 @@ const RequestList = ({
   if (requestListData.length > 0) {
     return (
       <div>
+        <span>Testing...</span>
         {requestListData.map(r => (
           <ExpansionPanel
             className="expansion-panel"

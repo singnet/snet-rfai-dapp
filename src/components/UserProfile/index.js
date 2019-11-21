@@ -10,6 +10,7 @@ import UserProfileSettings from "./UserProfileSettings";
 import UserProfileHeader from "./UserProfileHeader";
 import UserProfileClaims from "./UserProfileClaims";
 import AccountBalance from "../common/AccountBalance";
+import UserProfileAdmin from "./UserProfileAdmin";
 import Notification from "../Notification";
 
 //import UserProfileTransactionHistory from "./UserProfileTransactionHistory";
@@ -18,24 +19,24 @@ import Routes from "../../utility/constants/Routes";
 
 const UserProfile = ({ classes, nickname, history, location, email, metamaskDetails }) => {
   const userProfileRoutes = {
-    ACCOUNT: {
-      path: `/${Routes.USER_PROFILE}/account`,
-      component: () => <AccountBalance showMetaMaskAccBal={metamaskDetails.isTxnsAllowed} />,
-    },
+    ACCOUNT: { path: `/${Routes.USER_PROFILE}/account`, component: () => <AccountBalance /> },
     SETTINGS: { path: `/${Routes.USER_PROFILE}/settings`, component: () => <UserProfileSettings /> },
     CLAIMS: { path: `/${Routes.USER_PROFILE}/claims`, component: () => <UserProfileClaims /> },
+    ADMIN: { path: `/${Routes.USER_PROFILE}/admin`, component: () => <UserProfileAdmin /> },
   };
 
   const activeIndexEnum = {
     [`${userProfileRoutes.ACCOUNT.path}`]: 0,
     [`${userProfileRoutes.SETTINGS.path}`]: 1,
     [`${userProfileRoutes.CLAIMS.path}`]: 2,
+    [`${userProfileRoutes.ADMIN.path}`]: 3,
   };
 
   const tabs = [
     { name: "Account", activeIndex: 0, path: userProfileRoutes.ACCOUNT.path },
     { name: "Settings", activeIndex: 1, path: userProfileRoutes.SETTINGS.path },
     { name: "Claims", activeIndex: 2, path: userProfileRoutes.CLAIMS.path },
+    { name: "Admin", activeIndex: 3, path: userProfileRoutes.ADMIN.path },
   ];
 
   const onTabChange = (activeTab, activePath) => {
@@ -65,6 +66,7 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
             </Tabs>
           </AppBar>
           <Switch>
+            <Route path={userProfileRoutes.ADMIN.path} component={userProfileRoutes.ADMIN.component} />
             <Route path={userProfileRoutes.CLAIMS.path} component={userProfileRoutes.CLAIMS.component} />
             <Route path={userProfileRoutes.SETTINGS.path} component={userProfileRoutes.SETTINGS.component} />
             <Route path={Routes.userProfileRoutes} component={userProfileRoutes.ACCOUNT.component} />

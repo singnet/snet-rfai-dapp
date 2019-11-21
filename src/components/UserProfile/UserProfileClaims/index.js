@@ -12,7 +12,7 @@ const UserProfileClaims = ({ classes }) => {
   return (
     <Grid container className={classes.claimsMainContainer}>
       <Grid xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
-        <AccountBalance button isTxnsAllowed />
+        <AccountBalance />
       </Grid>
 
       <Grid xs={12} sm={12} md={8} lg={8} className={classes.claimsContainer}>

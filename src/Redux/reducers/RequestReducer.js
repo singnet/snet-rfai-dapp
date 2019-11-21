@@ -3,7 +3,14 @@ import { requestActions } from "../actionCreators";
 const InitialRequestDetails = {
   requestDetails: {},
   foundationMembers: {},
-  requestSummary: {},
+  requestSummary: {
+    Open: 0,
+    Active: 0,
+    Closed: 0,
+    Expired: 0,
+    Rejected: 0,
+    Completed: 0,
+  },
   requestSolutions: {},
   requestStakes: {},
   requestVotes: {},

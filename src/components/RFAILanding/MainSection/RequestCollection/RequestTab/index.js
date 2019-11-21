@@ -48,7 +48,7 @@ class RequestTab extends Component {
     // eslint-disable-next-line no-unused-vars
     var isFoundationMember = false;
 
-    if (metamaskDetails.isTxnsAllowed && foundationMembers) {
+    if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
       const mems = foundationMembers.filter(
         mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
       );
@@ -87,9 +87,11 @@ class RequestTab extends Component {
             </div>
           </AppBar>
 
-          {/* TODO: Need to update the Tabs based on the UI Screens and tie it to API based on Status */}
-
-          {/* {selectedTab === 0 && this.state.isFoundationMember === true && <Typography component="div" ><RequestListV2  compRequestStatus="0"/> </Typography>}         */}
+          {selectedTab === 0 && (
+            <Typography component="div" className={classes.requestTabDetailContainer}>
+              <RequestListView requestListData={requestDetails} loading={true} />
+            </Typography>
+          )}
           {selectedTab === 1 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} loading={true} />
