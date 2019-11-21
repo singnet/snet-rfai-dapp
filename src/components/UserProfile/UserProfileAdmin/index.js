@@ -88,19 +88,18 @@ const UserProfileAdmin = ({ classes, metamaskDetails, foundationMembers, startLo
             {m.member_address}
           </TableCell>
           <TableCell>
-            <span>User Name</span>
-            {"-"}
+            <span>Role</span>
+            {m.role === 1 ? "Admin" : "Normal"}
           </TableCell>
           <TableCell>
             <span>Date Added</span>
-            {"-"}
+            {m.created_at}
           </TableCell>
           <TableCell align="right">
-            {/** TODO: Need to add the Role as parameter  */}
             <StyledButton
-              onClick={() => handleUpdateActivation(m.member_address, 0, !m.active)}
-              btnText={m.active ? "deactivate" : "activate"}
-              type={m.active ? "red" : "transparentBlueBorder"}
+              onClick={() => handleUpdateActivation(m.member_address, m.role, m.status === 1 ? false : true)}
+              btnText={m.status === 1 ? "deactivate" : "activate"}
+              type={m.status === 1 ? "red" : "transparentBlueBorder"}
             />
           </TableCell>
         </TableRow>

@@ -57,7 +57,7 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
 
     if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
       const mems = foundationMembers.filter(
-        mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
+        mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.status === 1
       );
       if (mems.length > 0) _isFoundationMember = true;
     }

@@ -132,7 +132,6 @@ const RequestList = ({
   if (requestListData.length > 0) {
     return (
       <div>
-        <span>Testing...</span>
         {requestListData.map(r => (
           <ExpansionPanel
             className="expansion-panel"
