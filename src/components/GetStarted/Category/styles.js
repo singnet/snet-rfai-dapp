@@ -27,10 +27,7 @@ export const useStyles = theme => ({
       lineHeight: "28px",
       "@media(max-width:960px)": { marginTop: 10 },
     },
-    "& > span": {
-      marginTop: 20,
-      display: "inline-block",
-    },
+    "& > span": { display: "inline-block" },
     "& ul": {
       padding: 0,
       margin: 0,
@@ -45,6 +42,10 @@ export const useStyles = theme => ({
       },
       "& p": {
         margin: "0 !important",
+        display: "inline-block",
+      },
+      "& span": {
+        marginTop: 17,
         display: "inline-block",
       },
     },

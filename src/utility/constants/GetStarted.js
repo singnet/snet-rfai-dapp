@@ -91,12 +91,12 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>All request created by users will be reviewed by The SingularityNET foundation.  After your request is created, it will be located in the “Pending” tab on the <a href="/">View Request </a>page until it has been approved.   After it is approved it will be moved to the “Active” tab where it will be public to all users.   Reviews could take a few hours or a few days.</p>`,
+        value: `<p>If you are an AI developer, you can submit solutions to requests.  You will need provide the solution URL which you will have when you publish your AI service to the AI Marketplace.  Refer to SingularityNET Dev Documentation to learn more how to publish your AI service onto the platform.  Submission Criteria</p>`,
       },
       {
         type: "list",
         items: [
-          `<p>Acceptance criteria in the request must be met</p>`,
+          `<span>Acceptance criteria in the request must be met</span>`,
           `<p>Performance metrics specified against provided test datasets should be met</p>`,
           `<p>Solution must be published and reviewed on the AI Marketplace platform</p>`,
           `<p>Provide the github repo of your code</p>`,
