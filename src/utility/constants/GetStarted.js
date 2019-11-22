@@ -1,11 +1,11 @@
 import Routes from "./Routes";
-const imgPath = (directory = "BrowsingTheMarketplace", file = "CardorListViews", extension = "png") =>
+const imgPath = (directory = "RateReviewImprove", file = "RatingAIServices", extension = "png") =>
   `${process.env.REACT_APP_SNET_CDN}/assets/images/GetStarted/${directory}/${file}.${extension}`;
 
 export const GetStartedCategoriesData = [
   {
     title: "Overview",
-    media: imgPath("Overview"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -26,7 +26,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Making A Request",
-    media: imgPath("MakingaRequest"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -55,7 +55,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Backing A Request",
-    media: imgPath("BackingaRequest"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -65,7 +65,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Request Review Process",
-    media: imgPath("RequestreviewProgress"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -87,7 +87,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Submitting A Solution",
-    media: imgPath("SubmittingaSolution"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -118,7 +118,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Solution Voting",
-    media: imgPath("SolutionVoting"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -128,7 +128,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Claiming Tokens",
-    media: imgPath("ClamingTokens"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",
@@ -138,7 +138,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Closing A Request",
-    media: imgPath("ClosingaRequest"),
+    media: imgPath("RateReviewImprove", "RatingAIServices"),
     content: [
       {
         type: "description",

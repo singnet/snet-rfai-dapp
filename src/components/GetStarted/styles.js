@@ -1,13 +1,13 @@
 export const useStyles = theme => ({
   GetStartedMainContaienr: {
-    padding: "40px 0 100px",
+    padding: "40px 0 60px",
     backgroundColor: theme.palette.text.offWhiteColor,
     flexDirection: "column",
     "@media(max-width:360px)": { padding: "15px 15px 40px" },
   },
   TopSection: { textAlign: "center" },
   btnContainer: {
-    margiinTop: 15,
+    marginTop: 50,
     display: "flex",
     justifyContent: "center",
   },
