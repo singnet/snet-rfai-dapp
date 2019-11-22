@@ -20,9 +20,8 @@ const UserProfileClaims = ({ classes }) => {
         <div className={classes.claimsForSolutions}>
           <h4>Claims for Solutions</h4>
           <Typography className={classes.description}>
-            All claims from the solutions that you submitted will be listed here. Lorem ipsum dolor sit amet, mel debet
-            dissentiet philosophia ut. Sed nibh solum temporibus in. An insolens electram pro, qui nobis ornatus
-            consectetuer an.{" "}
+            All AGI tokens you receieved as rewards from the solutions that you submitted will be listed here for you
+            claim to your Metamask wallet.
           </Typography>
           <Grid container className={classes.tableHeader}>
             <Grid xs={12} sm={4} md={4} lg={4}>
@@ -71,9 +70,9 @@ const UserProfileClaims = ({ classes }) => {
         <div className={classes.claimsForRequest}>
           <h4>Claims for Request</h4>
           <Typography className={classes.description}>
-            All claims from the solutions that you submitted will be listed here. Lorem ipsum dolor sit amet, mel debet
-            dissentiet philosophia ut. Sed nibh solum temporibus in. An insolens electram pro, qui nobis ornatus
-            consectetuer an.{" "}
+            All claims from the requests that you backed that were closed by you, the original requester or rejected
+            SingularityNET foundation will be listed here for you to claim back to your Metamask wallet. Automatic
+            refunds and transfer are currently not supported.
           </Typography>
           <Grid container className={classes.tableHeader}>
             <Grid xs={12} sm={4} md={4} lg={4}>

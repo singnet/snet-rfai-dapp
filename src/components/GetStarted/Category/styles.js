@@ -1,7 +1,7 @@
 export const useStyles = theme => ({
   CategoryWrapper: {
     width: "80%",
-    padding: "33px 0",
+    padding: "32px 0",
     borderTopWidth: 1,
     borderTopStyle: "solid",
     borderTopColor: theme.palette.text.lightShadedGray,
@@ -12,14 +12,47 @@ export const useStyles = theme => ({
   },
   CategoryContent: {
     paddingLeft: 24,
-    "& p": {
-      margin: "22px 0 0",
-      color: "#616166",
-      fontSize: 18,
+    "& h3": {
+      margin: 0,
+      display: "inline-block",
+      color: theme.palette.text.darkShadedGray,
+      fontSize: 24,
+      fontWeight: 600,
+      lineHeight: "30px",
+    },
+    "& p, & > span, & li": {
+      margin: "17px 0 0",
+      color: theme.palette.text.mediumShadeGray,
+      fontSize: 16,
       lineHeight: "28px",
-      "& span": { fontWeight: 600 },
       "@media(max-width:960px)": { marginTop: 10 },
     },
+    "& > span": {
+      marginTop: 20,
+      display: "inline-block",
+    },
+    "& ul": {
+      padding: 0,
+      margin: 0,
+    },
+    "& li": {
+      marginTop: 0,
+      listStyle: "none",
+      "&:before": {
+        content: '"*"',
+        marginRight: 5,
+        display: "inline-block",
+      },
+      "& p": {
+        margin: "0 !important",
+        display: "inline-block",
+      },
+    },
+    "& a": {
+      color: theme.palette.text.primary,
+      textDecoration: "none",
+    },
+    "& button": { marginTop: 20 },
     "@media(max-width:960px)": {
       maxWidth: "100%",
       paddingLeft: 0,
@@ -40,22 +73,6 @@ export const useStyles = theme => ({
     },
     "@media(max-width:960px)": {
       flexDirection: "column-reverse",
-    },
-  },
-  Title: {
-    "& svg": {
-      marginRight: 11,
-      color: theme.palette.text.grayTitleText,
-      fontSize: 30,
-      verticalAlign: "bottom",
-    },
-    "& h3": {
-      margin: 0,
-      display: "inline-block",
-      color: theme.palette.text.black1,
-      fontSize: 24,
-      fontWeight: 600,
-      lineHeight: "30px",
     },
   },
   CategoryMedia: {

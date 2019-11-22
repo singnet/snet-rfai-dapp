@@ -52,7 +52,7 @@ export const useStyles = theme => ({
   createRequestContent: {
     padding: "0 30px",
     "& p, & > span, & li": {
-      color: theme.palette.text.alertBoxColor,
+      color: theme.palette.text.mediumShadeGray,
       lineHeight: "21px",
       letterSpacing: 0.25,
       fontFamily: theme.typography.primary.main,

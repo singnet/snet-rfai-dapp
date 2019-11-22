@@ -11,6 +11,7 @@
     "clsx": "^1.0.4",
     "color": "^3.1.2",
     "history": "^4.9.0",
+    "html-react-parser": "^0.10.0",
     "lodash": "latest",
     "material-design-icons": "^3.0.1",
     "material-ui-flat-pagination": "^4.0.0",
