@@ -150,4 +150,5 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary,
     textDecoration: "none",
   },
+  noDataFound: { padding: "16px 22px" },
 }));

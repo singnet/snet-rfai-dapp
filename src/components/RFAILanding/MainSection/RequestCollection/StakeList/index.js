@@ -61,8 +61,8 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
                 </div>
               )}
               {requestStakes.length === 0 && (
-                <div>
-                  <span>No solutions found.</span>
+                <div className={classes.noDataFound}>
+                  <span>No backers found.</span>
                 </div>
               )}
               {!loading && requestStakes.length > 0 && (

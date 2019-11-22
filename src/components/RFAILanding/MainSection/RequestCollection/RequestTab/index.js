@@ -15,6 +15,15 @@ import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
 
+const requestStatusMap = {
+  "0": "PENDING",
+  "1": "ACTIVE",
+  "2": "SOLUTION_VOTE",
+  "3": "COMPLETED",
+  "4": "REJECTED",
+  "5": "CLOSED",
+};
+
 class RequestTab extends Component {
   constructor(props) {
     super(props);
@@ -25,18 +34,34 @@ class RequestTab extends Component {
   }
 
   componentDidMount = async () => {
-    const { fetchRequestData } = this.props;
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
 
     // Need to set this value as per the Default Tab - Active
-    const requestStatus = 1;
-    await fetchRequestData(requestStatus);
+    const requestStatus = requestStatusMap[this.state.selectedTab];
+    const isMyRequests = false;
+    await fetchRequestSummaryData(metamaskDetails, isMyRequests);
+    await fetchRequestData(requestStatus, metamaskDetails, isMyRequests);
   };
 
+  // Tab Change
   handleChange = async (event, value) => {
-    const { fetchRequestData } = this.props;
+    const { fetchRequestData, metamaskDetails } = this.props;
     this.setState({ selectedTab: value });
-    const requestStatus = 1;
-    await fetchRequestData(requestStatus);
+    const requestStatus = requestStatusMap[value];
+    await fetchRequestData(requestStatus, metamaskDetails, this.state.myRequestsFlag);
+  };
+
+  handleMyRequestChange = async () => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
+
+    const myRequestsFlag = !this.state.myRequestsFlag;
+    this.setState({ myRequestsFlag });
+
+    const requestStatus = requestStatusMap[this.state.selectedTab];
+
+    // Call the Dispatch to Reload the databased on the Selected Tab
+    await fetchRequestSummaryData(metamaskDetails, myRequestsFlag);
+    await fetchRequestData(requestStatus, metamaskDetails, myRequestsFlag);
   };
 
   render() {
@@ -58,23 +83,30 @@ class RequestTab extends Component {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <AppBar position="static" color="default" className={classes.header}>
             <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
-              {/* ---TBD--- {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
-              <Tab className="singularity-tab" label={"Pending(" + requestSummary.Open + ")"} value={0} /> {/** Open */}
-              <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />{" "}
-              {/** Approved */}
-              <Tab className="singularity-tab" label="Solution Vote" value={2} /> {/** Evaluation Phase*/}
-              <Tab className="singularity-tab" label={"Completed(" + requestSummary.Completed + ")"} value={3} />{" "}
-              {/** Completed */}
-              <Tab className="singularity-tab" label={"In Complete(" + requestSummary.Expired + ")"} value={5} />{" "}
-              {/** Expired */}
-              <Tab className="singularity-tab" label="Closed" value={4} /> {/** Closed / Rejected */}
+              {/** Open */}
+              <Tab className="singularity-tab" label={"Pending(" + requestSummary.PENDING + ")"} value={0} />
+              {/** Approved - Active for Solution Submission */}
+              <Tab className="singularity-tab" label={"Active(" + requestSummary.ACTIVE + ")"} value={1} />{" "}
+              {/** Approved - Active for Voting */}
+              <Tab
+                className="singularity-tab"
+                label={"Solution Vote(" + requestSummary.SOLUTION_VOTE + ")"}
+                value={2}
+              />
+              {/** Approved - Completed*/}
+              <Tab className="singularity-tab" label={"Completed(" + requestSummary.COMPLETED + ")"} value={3} />{" "}
+              {/** Rejected TODO: Need to check the logic for the In Complete Status  */}
+              <Tab className="singularity-tab" label={"In Complete(" + requestSummary.REJECTED + ")"} value={4} />{" "}
+              {/** Closed */}
+              <Tab className="singularity-tab" label={"Closed(" + requestSummary.CLOSED + ")"} value={5} />{" "}
+              {/** Closed / Rejected */}
             </Tabs>
             <div className={classes.checkboxContainer}>
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={this.state.myRequestsFlag}
-                    onChange={() => this.setState({ myRequestsFlag: !this.state.myRequestsFlag })}
+                    onChange={this.handleMyRequestChange}
                     color="primary"
                     disabled={metamaskDetails.isTxnsAllowed ? false : true}
                   />
@@ -104,7 +136,6 @@ class RequestTab extends Component {
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
-          {/* {selectedTab === 4 && this.state.isFoundationMember === true && <Typography component="div" className={classes.requestTabDetailContainer} ><RequestListV2  compRequestStatus="2"/> </Typography>} */}
           {selectedTab === 5 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
@@ -128,7 +159,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchRequestData: requestStatus => dispatch(requestActions.fetchRequestData(requestStatus)),
+  fetchRequestSummaryData: (metamaskDetails, isMyRequests) =>
+    dispatch(requestActions.fetchRequestSummaryData(metamaskDetails, isMyRequests)),
+  fetchRequestData: (requestStatus, metamaskDetails, isMyRequests) =>
+    dispatch(requestActions.fetchRequestData(requestStatus, metamaskDetails, isMyRequests)),
 });
 
 export default connect(

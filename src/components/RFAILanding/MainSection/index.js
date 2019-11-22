@@ -14,9 +14,9 @@ class MainSection extends Component {
   };
 
   componentDidMount = async () => {
-    const { fetchRequestSummaryData, fetchFoundationMembers } = this.props;
+    const { fetchFoundationMembers } = this.props;
 
-    await fetchRequestSummaryData();
+    // Load the foundation Members
     await fetchFoundationMembers();
   };
 
@@ -44,7 +44,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchFoundationMembers: () => dispatch(requestActions.fetchFoundationMembersData()),
-  fetchRequestSummaryData: () => dispatch(requestActions.fetchRequestSummaryData()),
 });
 
 export default connect(

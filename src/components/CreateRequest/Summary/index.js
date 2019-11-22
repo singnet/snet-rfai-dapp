@@ -6,6 +6,8 @@ import { useStyles } from "./styles";
 //components
 import StyledButton from "../../common/StyledButton";
 import AlertText from "../../common/AlertText";
+import { Link } from "react-router-dom";
+import Routes from "../../../utility/constants/Routes";
 
 class Summary extends Component {
   constructor(props) {
@@ -54,8 +56,13 @@ class Summary extends Component {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <StyledButton type="transparent" btnText="create new request" />
-          <StyledButton type="blue" btnText="view pending request" />
+          <Link to={Routes.CREATE_REQUEST}>
+            <StyledButton type="transparent" btnText="create new request" />
+          </Link>
+
+          <Link to={Routes.RFAI_LANDING}>
+            <StyledButton type="blue" btnText="view pending request" />
+          </Link>
         </div>
       </div>
     );

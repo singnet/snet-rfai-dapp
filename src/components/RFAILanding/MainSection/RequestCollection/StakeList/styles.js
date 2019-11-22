@@ -136,4 +136,5 @@ export const useStyles = makeStyles(theme => ({
   },
   requestTitle: { color: theme.palette.text.mediumShadeGray },
   titleName: { color: theme.palette.text.darkShadedGray },
+  noDataFound: { padding: "16px 22px" },
 }));

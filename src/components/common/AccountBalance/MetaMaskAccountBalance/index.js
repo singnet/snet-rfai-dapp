@@ -249,7 +249,7 @@ class MetaMaskAccountBalance extends Component {
           <div className={classes.bgBox}>
             <div className={classes.label}>
               <InfoIcon className={classes.infoIcon} />
-              <span>Total Balance</span>
+              <span>Token Balance</span>
             </div>
             <span>{fromWei(tokenBalance)} AGI</span>
           </div>
