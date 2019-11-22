@@ -107,7 +107,7 @@ const VoteSolution = ({
                 </div>
               )}
               {requestSolutions.length === 0 && (
-                <div>
+                <div className={classes.noDataFound}>
                   <span>No solutions found.</span>
                 </div>
               )}

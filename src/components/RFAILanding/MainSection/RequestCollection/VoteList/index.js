@@ -51,7 +51,7 @@ const VoteList = ({ open, handleClose, requestId, requestTitle, requestVotes, lo
                 </div>
               )}
               {requestVotes.length === 0 && (
-                <div>
+                <div className={classes.noDataFound}>
                   <span>No solutions found.</span>
                 </div>
               )}

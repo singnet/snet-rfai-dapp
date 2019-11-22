@@ -26,7 +26,7 @@ import SubmitSolution from "../SubmitSolution";
 import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
-import { computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
+import { fromWei, computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
 import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
@@ -146,13 +146,13 @@ const RequestList = ({
               <div className={classes.tokenAwardedContainer}>
                 <span className={classes.title}>Tokens Awarded:</span>
                 <p className={classes.data}>
-                  {r.total_fund} <span>AGI</span>
+                  {r.fund_total > 0 ? fromWei(r.fund_total) : 0} <span>AGI</span>
                 </p>
               </div>
               <div className={classes.backersContainer}>
                 <span className={classes.title}>Backers</span>
                 <p className={classes.data}>
-                  {r.num_stackers} <span>users</span>{" "}
+                  {r.stake_count} <span>users</span>{" "}
                 </p>
               </div>
               <div className={classes.solutionsContainer}>
