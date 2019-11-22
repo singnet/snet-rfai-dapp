@@ -152,12 +152,12 @@ const StakeRequest = ({
                         {requestDetails.requester}
                       </TableCell>
                       <TableCell align="right">
-                        <span className={classes.mobileTableHeader}>Toekns Awarded:</span>
-                        {requestDetails.total_stake}
+                        <span className={classes.mobileTableHeader}>Tokens Awarded:</span>
+                        {fromWei(requestDetails.fund_total)}
                       </TableCell>
                       <TableCell align="right">
                         <span className={classes.mobileTableHeader}>Backers:</span>
-                        {requestDetails.num_stakers}
+                        {requestDetails.stake_count}
                       </TableCell>
                       <TableCell align="right">
                         <span className={classes.mobileTableHeader}>Expiry:</span>

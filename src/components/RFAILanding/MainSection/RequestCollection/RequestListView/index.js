@@ -157,11 +157,11 @@ const RequestList = ({
               </div>
               <div className={classes.solutionsContainer}>
                 <span className={classes.title}>Solutions</span>
-                <p className={classes.data}>{r.num_solutions} </p>
+                <p className={classes.data}>{r.solution_count} </p>
               </div>
               <div className={classes.votesContainer}>
                 <span className={classes.title}>Votes</span>
-                <p className={classes.data}> - </p>
+                <p className={classes.data}> {r.vote_count} </p>
               </div>
               <div className={classes.expiryContainer}>
                 <span className={classes.title}>Expiry</span>
