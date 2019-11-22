@@ -340,18 +340,31 @@ export const updateConfigLimits = (metamaskDetails, minStake, maxStakers) => {
 };
 
 export const getBlockNumber = () => {
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  // Return the Block Number
-  return new Promise(async (reject, resolve) => {
-    await window.web3.eth.getBlockNumber((err, blockNumber) => {
-      if (err) {
-        resolve(err);
-      }
-      resolve(blockNumber);
+  // Check for Metamask
+  if (window.ethereum) {
+    const ethereum = window.ethereum;
+    window.web3 = new window.Web3(ethereum);
+    // Return the Block Number
+    return new Promise(async (reject, resolve) => {
+      await window.web3.eth.getBlockNumber((err, blockNumber) => {
+        if (err) {
+          resolve(err);
+        }
+        resolve(blockNumber);
+      });
     });
-  });
+  } else {
+    // Fallback to Infura to get the blocknumber
+    var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+    return new Promise(async (reject, resolve) => {
+      await web3.eth.getBlockNumber((err, blockNumber) => {
+        if (err) {
+          resolve(err);
+        }
+        resolve(blockNumber);
+      });
+    });
+  }
 };
 
 const getRFAIContractAddress = () => {

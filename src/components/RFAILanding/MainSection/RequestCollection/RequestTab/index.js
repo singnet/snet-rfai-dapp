@@ -20,7 +20,7 @@ const requestStatusMap = {
   "1": "ACTIVE",
   "2": "SOLUTION_VOTE",
   "3": "COMPLETED",
-  "4": "REJECTED",
+  "4": "INCOMPLETE",
   "5": "CLOSED",
 };
 
@@ -34,11 +34,21 @@ class RequestTab extends Component {
   }
 
   componentDidMount = async () => {
-    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
+    await this.updateRequestData();
+  };
 
+  componentDidUpdate = async (prevProps, prevState) => {
+    const { metamaskDetails } = this.props;
+    if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
+      await this.updateRequestData();
+    }
+  };
+
+  updateRequestData = async () => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
     // Need to set this value as per the Default Tab - Active
     const requestStatus = requestStatusMap[this.state.selectedTab];
-    const isMyRequests = false;
+    const isMyRequests = this.state.myRequestsFlag;
     await fetchRequestSummaryData(metamaskDetails, isMyRequests);
     await fetchRequestData(requestStatus, metamaskDetails, isMyRequests);
   };
@@ -95,8 +105,12 @@ class RequestTab extends Component {
               />
               {/** Approved - Completed*/}
               <Tab className="singularity-tab" label={"Completed(" + requestSummary.COMPLETED + ")"} value={3} />{" "}
-              {/** Rejected TODO: Need to check the logic for the In Complete Status  */}
-              <Tab className="singularity-tab" label={"In Complete(" + requestSummary.REJECTED + ")"} value={4} />{" "}
+              {/** InComplete TODO: Need to check where we need to show the rejected Items  */}
+              <Tab
+                className="singularity-tab"
+                label={"In Complete(" + requestSummary.INCOMPLETE + ")"}
+                value={4}
+              />{" "}
               {/** Closed */}
               <Tab className="singularity-tab" label={"Closed(" + requestSummary.CLOSED + ")"} value={5} />{" "}
               {/** Closed / Rejected */}
@@ -136,12 +150,12 @@ class RequestTab extends Component {
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
-          {selectedTab === 5 && (
+          {selectedTab === 4 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
           )}
-          {selectedTab === 6 && (
+          {selectedTab === 5 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
               <RequestListView requestListData={requestDetails} />
             </Typography>
