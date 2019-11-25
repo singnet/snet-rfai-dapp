@@ -18,7 +18,7 @@ import { LoaderContent } from "../../../utility/constants/LoaderContent";
 
 import { saveIPFSDocument } from "../../../utility/IPFSHelper";
 import { waitForTransaction, createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
-import { toWei, computeBlocksFromDates } from "../../../utility/GenHelperFunctions";
+import { toWei, isValidInputAmount, computeBlocksFromDates } from "../../../utility/GenHelperFunctions";
 
 const BN = web3.utils.BN;
 
@@ -73,8 +73,7 @@ class Details extends Component {
   };
 
   handleAmountInputChange = event => {
-    //  Fixed to two decimal places
-    if (event.target.value.match(/^\d+(\.\d{1,2})?$/)) {
+    if (isValidInputAmount(event.target.value)) {
       this.setState({ [event.target.name]: event.target.value });
     } else if (event.target.value === "") {
       this.setState({ [event.target.name]: "" });
@@ -280,9 +279,8 @@ class Details extends Component {
           <label>Initial Funding Amount</label>
           <input
             name="initialStake"
-            type="number"
+            type="text"
             autoComplete="off"
-            min={0}
             value={this.state.initialStake}
             onChange={this.handleAmountInputChange}
             disabled={ctrlsToDisable ? "disabled" : ""}

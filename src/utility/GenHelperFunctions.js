@@ -47,3 +47,14 @@ export const computeDateFromBlockNumber = (currentBlockNumber, toBlockNumber) =>
 export const generateRandomKey = prefix => {
   return `${prefix}_${new Date().getTime()}`;
 };
+
+export const isValidInputAmount = value => {
+  //  Fixed to two decimal places
+  const regE = new RegExp(/^\d+(\.\d{0,2})?$/);
+  let bIsValid = false;
+  if (regE.test(value)) {
+    bIsValid = true;
+  }
+
+  return bIsValid;
+};
