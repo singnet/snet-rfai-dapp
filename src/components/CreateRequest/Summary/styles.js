@@ -46,4 +46,5 @@ export const useStyles = theme => ({
   receiptAmt: {
     "@media(max-width:600px)": { marginTop: 10 },
   },
+  buttonLink: { textDecoration: "none" },
 });

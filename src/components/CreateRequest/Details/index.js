@@ -52,6 +52,12 @@ class Details extends Component {
     this.setBlockNumber();
   }
 
+  componentDidMount = () => {
+    const { metamaskDetails, updateRFAITokenBalance } = this.props;
+    // Initiate the RFAI Token Balance
+    updateRFAITokenBalance(metamaskDetails);
+  };
+
   // TODO: Need to check why we are getting Block NUmber in Reject
   setBlockNumber = async () => {
     try {

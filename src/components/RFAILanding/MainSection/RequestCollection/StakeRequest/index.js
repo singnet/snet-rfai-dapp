@@ -51,6 +51,7 @@ const StakeRequest = ({
   useEffect(() => {
     // Update the BlockNumber
     setBlockNumber();
+    updateRFAITokenBalance(metamaskDetails);
   });
 
   // TODO: Need to check why we are getting Block NUmber in Reject

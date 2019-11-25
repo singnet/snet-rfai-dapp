@@ -27,7 +27,7 @@ import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
 import { fromWei, computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
-import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
+import { getBlockNumber, claimBackRequest, claimRequest } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
 
@@ -40,6 +40,7 @@ const RequestList = ({
   requestStakes,
   fetchRequestVoteData,
   requestVotes,
+  metamaskDetails,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -109,6 +110,15 @@ const RequestList = ({
   const handleCloseModel = () => {
     //setOpenModel(false);
     setOpenModel(modals.NONE);
+  };
+
+  // TODO: To be Deleted
+  const handleClaimBack = (event, modal, requestId) => {
+    claimBackRequest(metamaskDetails, requestId);
+  };
+  // TODO: To be Deleted
+  const handleClaim = (event, modal, requestId) => {
+    claimRequest(metamaskDetails, requestId);
   };
 
   // Render HTML
@@ -251,6 +261,16 @@ const RequestList = ({
                   onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
                   btnText="Vote Solution"
                 />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleClaimBack(event, modals.NONE, r.request_id)}
+                  btnText="Claim Back"
+                />
+                <StyledButton
+                  type="blue"
+                  onClick={event => handleClaim(event, modals.NONE, r.request_id)}
+                  btnText="Claim"
+                />
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>
@@ -326,6 +346,7 @@ const mapStateToProps = state => ({
   requestSolutions: state.requestReducer.requestSolutions,
   requestStakes: state.requestReducer.requestStakes,
   requestVotes: state.requestReducer.requestVotes,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
 const mapDispatchToProps = dispatch => ({

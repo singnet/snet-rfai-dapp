@@ -124,20 +124,20 @@ const VoteSolution = ({
                   </TableHead>
                   <TableBody>
                     {requestSolutions.map(sol => (
-                      <TableRow key={sol.solution_submitter}>
+                      <TableRow key={sol.submitter}>
                         <TableCell component="th" scope="row">
                           <span className={classes.mobileTableHeader}>Submitted by:</span>
-                          {sol.solution_submitter} <br />
-                          {sol.solution_submitter_name}
+                          {sol.submitter} <br />
+                          {/* {sol.solution_submitter_name} */}
                         </TableCell>
                         <TableCell>
                           <span className={classes.mobileTableHeader}>Submitted on:</span>
-                          {sol.created}
+                          {sol.created_at}
                         </TableCell>
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
                           <a href={sol.solution_docURI} target="_new" className={classes.blueText}>
-                            {sol.solution_docURI}
+                            {sol.doc_uri}
                           </a>
                         </TableCell>
                         <TableCell>
@@ -147,9 +147,8 @@ const VoteSolution = ({
                         <TableCell className={classes.voteBtn}>
                           <StyledButton
                             btnText="Vote"
-                            disabled
                             type="transparentBlueBorder"
-                            onClick={event => handleVoteSubmit(event, sol.solution_submitter)}
+                            onClick={event => handleVoteSubmit(event, sol.submitter)}
                           />
                         </TableCell>
                       </TableRow>
