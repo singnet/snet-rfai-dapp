@@ -58,3 +58,16 @@ export const isValidInputAmount = value => {
 
   return bIsValid;
 };
+
+export const isFoundationMember = (metamaskDetails, foundationMembers) => {
+  var _isFoundationMember = false;
+
+  if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
+    const mems = foundationMembers.filter(
+      mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.status === 1
+    );
+    if (mems.length > 0) _isFoundationMember = true;
+  }
+
+  return _isFoundationMember;
+};

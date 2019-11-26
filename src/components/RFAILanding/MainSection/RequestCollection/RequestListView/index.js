@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 //import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -26,7 +26,7 @@ import SubmitSolution from "../SubmitSolution";
 import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
-import { fromWei, computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
+import { fromWei, computeDateFromBlockNumber, isFoundationMember } from "../../../../../utility/GenHelperFunctions";
 import { getBlockNumber, claimBackRequest, claimRequest } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
@@ -34,6 +34,7 @@ import StyledButton from "../../../../common/StyledButton";
 const RequestList = ({
   requestListData,
   loading,
+  selectedTab,
   fetchRequestSolutionData,
   requestSolutions,
   fetchRequestStakeData,
@@ -41,6 +42,7 @@ const RequestList = ({
   fetchRequestVoteData,
   requestVotes,
   metamaskDetails,
+  foundationMembers,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -102,7 +104,7 @@ const RequestList = ({
       case modals.STAKE:
         await fetchRequestStakeData(requestId);
         break;
-      case modals.NONE:
+      default:
       //DO NOTHING
     }
   };
@@ -140,6 +142,7 @@ const RequestList = ({
     );
   }
   if (requestListData.length > 0) {
+    const bIsFoundationMember = isFoundationMember(metamaskDetails, foundationMembers);
     return (
       <div>
         {requestListData.map(r => (
@@ -216,11 +219,71 @@ const RequestList = ({
             {/* {this.createActionRow(req, index)} */}
             <ExpansionPanelActions className={classes.expansionPanelAction}>
               <div>
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
-                  btnText="View Solution"
-                />
+                {selectedTab === 0 && bIsFoundationMember === true && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
+                      btnText="Approve Request"
+                    />
+                    <StyledButton
+                      type="red"
+                      onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
+                      btnText="Reject Request"
+                    />
+                  </Fragment>
+                )}
+
+                {(selectedTab === 1 || selectedTab === 2) && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
+                      btnText="Back Request"
+                    />
+                  </Fragment>
+                )}
+                {(selectedTab === 2 || selectedTab === 3) && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
+                      btnText="View Solutions"
+                    />
+                  </Fragment>
+                )}
+
+                {selectedTab === 1 && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
+                      btnText="Submit Solution"
+                    />
+                  </Fragment>
+                )}
+
+                {selectedTab === 2 && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
+                      btnText="Vote Solutions"
+                    />
+                  </Fragment>
+                )}
+
+                {(selectedTab === 0 || ((selectedTab === 1 || selectedTab === 2) && bIsFoundationMember === true)) && (
+                  <Fragment>
+                    <StyledButton
+                      type="red"
+                      onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
+                      btnText="Close Request"
+                    />
+                  </Fragment>
+                )}
+
+                {/** Following Buttons to be deleted */}
                 <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
@@ -230,36 +293,6 @@ const RequestList = ({
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}
                   btnText="View Votes"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
-                  btnText="Approve Request"
-                />
-                <StyledButton
-                  type="red"
-                  onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
-                  btnText="Reject Request"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
-                  btnText="Back the Request"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
-                  btnText="Submit Solution"
-                />
-                <StyledButton
-                  type="red"
-                  onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
-                  btnText="Close Request"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
-                  btnText="Vote Solution"
                 />
                 <StyledButton
                   type="blue"
@@ -339,6 +372,7 @@ const RequestList = ({
 
 RequestList.defaultProps = {
   requestListData: [],
+  foundationMembers: [],
 };
 
 const mapStateToProps = state => ({
@@ -347,6 +381,7 @@ const mapStateToProps = state => ({
   requestStakes: state.requestReducer.requestStakes,
   requestVotes: state.requestReducer.requestVotes,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  foundationMembers: state.requestReducer.foundationMembers,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -54,10 +54,12 @@ class RequestTab extends Component {
   };
 
   // Tab Change
-  handleChange = async (event, value) => {
-    const { fetchRequestData, metamaskDetails } = this.props;
+  handleTabChange = async (event, value) => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
     this.setState({ selectedTab: value });
     const requestStatus = requestStatusMap[value];
+
+    await fetchRequestSummaryData(metamaskDetails, this.state.myRequestsFlag);
     await fetchRequestData(requestStatus, metamaskDetails, this.state.myRequestsFlag);
   };
 
@@ -92,7 +94,7 @@ class RequestTab extends Component {
       <Grid container spacing={24} className={classes.requestTabMainContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <AppBar position="static" color="default" className={classes.header}>
-            <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
+            <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
               {/** Open */}
               <Tab className="singularity-tab" label={"Pending(" + requestSummary.PENDING + ")"} value={0} />
               {/** Approved - Active for Solution Submission */}
@@ -132,32 +134,32 @@ class RequestTab extends Component {
 
           {selectedTab === 0 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} loading={true} />
+              <RequestListView requestListData={requestDetails} loading={true} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 1 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} loading={true} />
+              <RequestListView requestListData={requestDetails} loading={true} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 2 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 3 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 4 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 5 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
         </Grid>
