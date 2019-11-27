@@ -6,6 +6,7 @@ import ParseHTML from "html-react-parser";
 import { useStyles } from "./styles";
 import StyledButton from "../../common/StyledButton";
 import DummyGetStartedCard from "../../../assets/images/dummy-card.png";
+import { Link } from "react-router-dom";
 
 const Description = ({ content }) => <p>{ParseHTML(content)}</p>;
 
@@ -47,7 +48,12 @@ const Category = ({ classes, title, content, rightAlign, media }) => {
             return <List items={item.items} />;
           }
           if (item.type === "action") {
-            return <StyledButton {...item.value} />;
+            //return <StyledButton {...item.value} />;
+            return (
+              <Link to={item.linkTo} className={classes.createRequestLink}>
+                <StyledButton {...item.value} />
+              </Link>
+            );
           }
           return null;
         })}

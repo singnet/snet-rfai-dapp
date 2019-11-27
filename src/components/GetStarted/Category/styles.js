@@ -86,4 +86,5 @@ export const useStyles = theme => ({
       margin: "0 auto",
     },
   },
+  createRequestLink: { textDecoration: "none" },
 });

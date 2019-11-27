@@ -50,6 +50,7 @@ export const GetStartedCategoriesData = [
           type: "blue",
           btnText: "create a new request",
         },
+        linkTo: `${Routes.CREATE_REQUEST}`,
       },
     ],
   },
@@ -107,13 +108,14 @@ export const GetStartedCategoriesData = [
         type: "subheading",
         value: `<p>Coming soon… SingularityNET Publisher allows you to publish your AI services.  This will be released early 2020.</p>`,
       },
-      {
-        type: "action",
-        value: {
-          type: "transparentBlueBorder",
-          btnText: "learn more about publisher",
-        },
-      },
+      // {
+      //   type: "action",
+      //   value: {
+      //     type: "transparentBlueBorder",
+      //     btnText: "learn more about publisher",
+      //   },
+      //   linkTo: `${Routes.CREATE_REQUEST}`
+      // },
     ],
   },
   {
