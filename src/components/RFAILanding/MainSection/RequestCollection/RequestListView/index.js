@@ -202,7 +202,7 @@ const RequestList = ({
                   <span>Project URL: </span>
 
                   <p className={classes.urlLink}>
-                    <LaunchIcon />
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.git_hub_link} target="_new">
                       {r.git_hub_link}
                     </a>{" "}
@@ -211,7 +211,7 @@ const RequestList = ({
                 <div className={classes.exPanelTrainingDataset}>
                   <span>Training Dataset: </span>
                   <p className={classes.urlLink}>
-                    <LaunchIcon />
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.training_data_set_uri} target="_new">
                       {r.training_data_set_uri}
                     </a>
