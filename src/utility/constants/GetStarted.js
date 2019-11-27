@@ -19,7 +19,7 @@ export const GetStartedCategoriesData = [
         type: "list",
         items: [
           `<p><a href="/${Routes.LOGIN}">Login </a>or <a href="/${Routes.SIGNUP}">Signup</a> for your AI Marketplace account</p>`,
-          `<p>Use your <a href="/">Metamask </a>wallet to user your AGI tokens</p>`,
+          `<p>Use your <a href="https://metamask.io/" target="_blank">Metamask </a>wallet to user your AGI tokens</p>`,
         ],
       },
     ],
@@ -30,7 +30,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>When you are logged into your <a href="/${Routes.SIGNUP}">SingularityNET account</a> and <a href="https://metamask.io/">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be avaliable for you to “Reclaim” (or be refunded) back to you.</p>`,
+        value: `<p>When you are logged into your <a href="/${Routes.SIGNUP}">SingularityNET account</a> and <a href="https://metamask.io/" target="_blank">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be avaliable for you to “Reclaim” (or be refunded) back to you.</p>`,
       },
       {
         type: "listHeading",
