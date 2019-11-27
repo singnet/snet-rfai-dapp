@@ -52,6 +52,12 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
           </div>
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
+              <div className={classes.viewBackersDescription}>
+                <p>
+                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGI tokens.
+                </p>
+              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>

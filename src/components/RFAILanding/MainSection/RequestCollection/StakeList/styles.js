@@ -137,4 +137,18 @@ export const useStyles = makeStyles(theme => ({
   requestTitle: { color: theme.palette.text.mediumShadeGray },
   titleName: { color: theme.palette.text.darkShadedGray },
   noDataFound: { padding: "16px 22px" },
+  viewBackersDescription: {
+    "& p": {
+      maxHeight: 99,
+      padding: 0,
+      margin: "7px 12px 7px 0",
+      fontSize: "16px !important",
+      overflowY: "scroll",
+      "&::-webkit-scrollbar": { width: 5 },
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.text.lightShadedGray,
+        borderRadius: 10,
+      },
+    },
+  },
 }));

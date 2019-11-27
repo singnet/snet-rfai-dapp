@@ -81,6 +81,10 @@ export const useStyles = makeStyles(theme => ({
     color: `${theme.palette.text.primary} !important`,
     fontSize: 14,
     wordBreak: "break-all",
+    "& a": {
+      color: theme.palette.text.primary,
+      textDecoration: "none",
+    },
   },
   exPanelSubDeadline: {
     "& p": { display: "inline-block" },
@@ -127,7 +131,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "20px",
   },
   expansionPanelSummary: {
-    padding: "10px 15px",
+    padding: "3px 15px",
     "& .MuiExpansionPanelSummary-content": {
       paddingRight: 25,
       display: "flex",
@@ -145,4 +149,9 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   divider: { margin: "0 15px" },
+  launchIcon: {
+    marginRight: 4,
+    fontSize: 14,
+    verticalAlign: "middle",
+  },
 }));

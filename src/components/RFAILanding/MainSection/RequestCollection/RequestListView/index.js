@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import { withStyles } from "@material-ui/styles";
 import { useStyles } from "./styles";
-
+import LaunchIcon from "@material-ui/icons/Launch";
 // Request List View Functionality
 import { requestActions } from "../../../../../Redux/actionCreators";
 
@@ -97,6 +97,7 @@ const RequestList = ({
       case modals.SOLUTION:
       case modals.VOTESOLUTION:
         await fetchRequestSolutionData(requestId);
+        await fetchRequestVoteData(requestId);
         break;
       case modals.VOTE:
         await fetchRequestVoteData(requestId);
@@ -199,8 +200,10 @@ const RequestList = ({
                   <p>{r.end_submission} </p>
                 </div>
                 <div className={classes.exPanelProjURL}>
-                  <span>project URL: </span>
+                  <span>Project URL: </span>
+
                   <p className={classes.urlLink}>
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.git_hub_link} target="_new">
                       {r.git_hub_link}
                     </a>{" "}
@@ -209,6 +212,7 @@ const RequestList = ({
                 <div className={classes.exPanelTrainingDataset}>
                   <span>Training Dataset: </span>
                   <p className={classes.urlLink}>
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.training_data_set_uri} target="_new">
                       {r.training_data_set_uri}
                     </a>
@@ -363,6 +367,7 @@ const RequestList = ({
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
           requestSolutions={requestSolutions}
+          requestVotes={requestVotes}
         />
       </div>
     );

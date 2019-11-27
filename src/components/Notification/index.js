@@ -55,7 +55,6 @@ class Notification extends Component {
       try {
         window.web3.currentProvider.publicConfigStore.on("update", () => {
           window.web3.version.getNetwork(async (err, netId) => {
-            //console.log("subscribeToMetamask account - ", window.web3.eth.defaultAccount);
             const isTxnsAllowed =
               Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
             await updateMetamaskDetails(
@@ -102,6 +101,9 @@ class Notification extends Component {
             netId,
             isTxnsAllowed
           );
+
+          // Subscribe to Metamask for the connection already exists
+          this.subscribeToMetamask();
 
           await updateTokenBalance(metamaskDetails);
           await updateTokenAllowance(metamaskDetails);

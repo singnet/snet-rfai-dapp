@@ -109,13 +109,8 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: 0.25,
   },
   requestTitleContainer: {
-    padding: "14px 22px",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderTopStyle: "solid",
-    borderBottomStyle: "solid",
-    borderTopColor: "rgba(155, 155, 155, 0.25)",
-    borderBottomColor: "rgba(155, 155, 155, 0.25)",
+    padding: "17px 22px",
+    backgroundColor: theme.palette.text.offWhiteColor,
     fontSize: 16,
     lineHeight: "20px",
   },
@@ -128,7 +123,7 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 16,
     },
     "& ul": {
-      padding: "24px 15px",
+      padding: "18px 15px",
       margin: "24px 0 0",
       backgroundColor: "#f5f5f5",
       "& li": {

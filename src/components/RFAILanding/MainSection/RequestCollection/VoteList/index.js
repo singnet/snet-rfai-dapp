@@ -68,11 +68,10 @@ const VoteList = ({ open, handleClose, requestId, requestTitle, requestVotes, lo
                     {requestVotes.map(vot => (
                       <TableRow key={vot.solution_voter + "-" + vot.solution_submitter}>
                         <TableCell component="th" scope="row">
-                          {vot.solution_voter} <br />
-                          {vot.solution_voter_name}
+                          {vot.voter}
                         </TableCell>
-                        <TableCell>{vot.created}</TableCell>
-                        <TableCell align="right">{vot.solution_submitter}</TableCell>
+                        <TableCell>{vot.created_at}</TableCell>
+                        <TableCell align="right">{vot.submitter}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

@@ -151,4 +151,18 @@ export const useStyles = makeStyles(theme => ({
     textDecoration: "none",
   },
   noDataFound: { padding: "16px 22px" },
+  voteSolutionDescription: {
+    "& p": {
+      height: 99,
+      padding: "0 14px 0 23px",
+      margin: "7px 12px 7px 0",
+      fontSize: "16px !important",
+      overflowY: "scroll",
+      "&::-webkit-scrollbar": { width: 5 },
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.text.lightShadedGray,
+        borderRadius: 10,
+      },
+    },
+  },
 }));

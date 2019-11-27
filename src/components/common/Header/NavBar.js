@@ -18,7 +18,6 @@ const NavBar = ({ data, history }) => {
     } else if (history.location.pathname === `/${Routes.USER_PROFILE}/claims`) {
       return link === `/${Routes.USER_PROFILE}/claims`;
     }
-
     return false;
   };
 
