@@ -143,6 +143,7 @@ const RequestList = ({
   }
   if (requestListData.length > 0) {
     const bIsFoundationMember = isFoundationMember(metamaskDetails, foundationMembers);
+    //const bDisableAction = !metamaskDetails.isTxnsAllowed;
     return (
       <div>
         {requestListData.map(r => (

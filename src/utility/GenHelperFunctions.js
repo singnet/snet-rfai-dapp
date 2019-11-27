@@ -71,3 +71,7 @@ export const isFoundationMember = (metamaskDetails, foundationMembers) => {
 
   return _isFoundationMember;
 };
+
+export const toChecksumAddress = address => {
+  return web3.utils.toChecksumAddress(address);
+};

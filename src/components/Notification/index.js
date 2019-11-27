@@ -11,6 +11,7 @@ import NotificationBar, { notificationBarTypes } from "../common/NotificationBar
 import NotificationIcon from "@material-ui/icons/Warning";
 
 import { NetworkNames } from "../../utility/constants/NetworkNames";
+import { toChecksumAddress } from "../../utility/GenHelperFunctions";
 
 class Notification extends Component {
   connectMetamask = async () => {
@@ -33,7 +34,7 @@ class Notification extends Component {
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
           await updateMetamaskDetails(
             Boolean(window.web3.eth.defaultAccount),
-            window.web3.eth.defaultAccount,
+            toChecksumAddress(window.web3.eth.defaultAccount),
             netId,
             isTxnsAllowed
           );
@@ -62,7 +63,7 @@ class Notification extends Component {
               Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
             await updateMetamaskDetails(
               Boolean(window.web3.eth.defaultAccount),
-              window.web3.eth.defaultAccount,
+              toChecksumAddress(window.web3.eth.defaultAccount),
               netId,
               isTxnsAllowed
             );
@@ -101,7 +102,7 @@ class Notification extends Component {
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
           await updateMetamaskDetails(
             Boolean(window.web3.eth.defaultAccount),
-            window.web3.eth.defaultAccount,
+            toChecksumAddress(window.web3.eth.defaultAccount),
             netId,
             isTxnsAllowed
           );
