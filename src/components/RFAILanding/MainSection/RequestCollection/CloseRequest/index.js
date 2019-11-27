@@ -99,8 +99,8 @@ const CloseRequest = ({
                 <div className={classes.closeRequestContent}>
                   <div className="overview-content">
                     <p>
-                      You are about to close the existing request which restricts the users to view this request. If you
-                      want to continue to close the request click on Close Request button.
+                      Are you sure you want to close your request? Once the request is closed, it can not be reopened.
+                      All AGI tokens will be returned the Backers through the Claims page.
                     </p>
                   </div>
                 </div>

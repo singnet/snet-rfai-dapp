@@ -14,6 +14,7 @@ export const useStyles = theme => ({
         fontSize: 12,
         letterSpacing: 0.4,
         lineHeight: "16px",
+        zIndex: 1,
       },
       "& > span": {
         marginBottom: 13,

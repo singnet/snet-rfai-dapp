@@ -109,17 +109,17 @@ const SubmitSolution = ({
                   <div className="overview-content">
                     <p>
                       All submissions are evaluated by the SingularityNet foundation to ensure that the acceptance
-                      criteria as specified in the request is met and the problem is solved for. Please keep in mind the
-                      mentioned points:
+                      criteria as specified in the request is met and the problem is solved for. Please review the
+                      criteria mentioned below:
                     </p>
                     <ul>
                       <li>* The specified acceptance criteria in the request must be met</li>
                       <li>* Any performance metrics specified against provided test datasets should be met</li>
-                      <li>* Submission should pass the curation process for AI services on the platform</li>
+                      <li>* Submission should pass the review process for AI services on the platform</li>
                       <li>* Provide the github repo of your code</li>
                       <li>
-                        * Sign your request using the same address used to publish the service. This is an important
-                        step to ensure that you are the owner of the service.
+                        * Sign your request using the same Metamask address used to publish the service. This is an
+                        important step to ensure that you are the owner of the service.
                       </li>
                     </ul>
                   </div>

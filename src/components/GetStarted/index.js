@@ -21,8 +21,8 @@ const GetStarted = ({ classes, history }) => {
       {GetStartedCategoriesData.map((item, index) => (
         <Category
           key={item.categoryTitle}
-          title={item.categoryTitle}
-          description={item.categoryDescription}
+          title={item.title}
+          content={item.content}
           media={item.media}
           rightAlign={(index + 1) % 2 === 0}
         />
