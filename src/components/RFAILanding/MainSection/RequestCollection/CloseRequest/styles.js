@@ -39,7 +39,7 @@ export const useStyles = makeStyles(theme => ({
     "& p": {
       margin: "16px 0 0",
       color: theme.palette.text.mediumShadeGray,
-      fontSize: 14,
+      fontSize: "14px !important",
       letterSpacing: 0.25,
       lineHeight: "20px",
     },
