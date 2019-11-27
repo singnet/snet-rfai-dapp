@@ -8,6 +8,8 @@ import { GetStartedCategoriesData } from "../../utility/constants/GetStarted";
 import Category from "./Category";
 import StyledButton from "../common/StyledButton";
 import { useStyles } from "./styles";
+import Routes from "../../utility/constants/Routes";
+import { Link } from "react-router-dom";
 
 const GetStarted = ({ classes, history }) => {
   return (
@@ -28,7 +30,9 @@ const GetStarted = ({ classes, history }) => {
         />
       ))}
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <StyledButton type="blue" btnText="create new request" />
+        <Link to={Routes.CREATE_REQUEST} className={classes.createRequestLink}>
+          <StyledButton type="blue" btnText="Create new Request" />
+        </Link>
       </Grid>
     </Grid>
   );

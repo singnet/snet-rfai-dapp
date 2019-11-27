@@ -11,4 +11,5 @@ export const useStyles = theme => ({
     display: "flex",
     justifyContent: "center",
   },
+  createRequestLink: { textDecoration: "none" },
 });

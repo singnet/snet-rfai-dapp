@@ -27,9 +27,6 @@ class Notification extends Component {
         await ethereum.enable();
 
         window.web3.version.getNetwork(async (err, netId) => {
-          //console.log("connectMetamask getNetwork1 account - ", window.web3.eth.defaultAccount);
-          //console.log("connectMetamask accounts - ", accounts[0]);
-
           const isTxnsAllowed =
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
           await updateMetamaskDetails(
@@ -97,7 +94,6 @@ class Notification extends Component {
 
       try {
         window.web3.version.getNetwork(async (err, netId) => {
-          //console.log("loadMetamaskDetails account - ", window.web3.eth.defaultAccount);
           const isTxnsAllowed =
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
           await updateMetamaskDetails(
@@ -119,21 +115,12 @@ class Notification extends Component {
   };
 
   generateNotificationMessage = () => {
-    // updateTokenBalance,
-    // updateTokenAllowance,
-    // updateRFAITokenBalance,
-
     const { metamaskDetails, isLoggedIn } = this.props;
-
-    // TODO : To be Deleted from Here...
-    // updateTokenBalance(metamaskDetails);
-    // updateTokenAllowance(metamaskDetails);
-    // updateRFAITokenBalance(metamaskDetails);
 
     var message = "";
 
     if (!isLoggedIn) {
-      message = "User need to login to the RFAI DApp - This message is kept only for ref.";
+      message = "User need to login to the RFAI DApp.";
       return message;
     }
 
@@ -141,9 +128,6 @@ class Notification extends Component {
       .networkName;
 
     if (window.ethereum) {
-      //console.log("metamaskDetails.isConnected - ", metamaskDetails.isConnected);
-      //console.log("metamaskDetails.networkId - ", metamaskDetails.networkId);
-
       if (!metamaskDetails.isConnected) {
         message = (
           <span>
@@ -155,7 +139,7 @@ class Notification extends Component {
       } else if (metamaskDetails.account === null || metamaskDetails.account === "0x0") {
         message = "Click to connect with Metamask";
       } else {
-        message = "Metamask connected successfully " + networkName + "- This message is kept only for ref.";
+        message = "Metamask connected successfully " + networkName;
       }
     } else {
       message = "Need to have Metamask enabled browser";
@@ -169,14 +153,12 @@ class Notification extends Component {
   };
 
   render() {
-    // Actual Code
-    //const { classes, metamaskDetails, isLoggedIn } = this.props;
+    const { metamaskDetails, isLoggedIn } = this.props;
     const message = this.generateNotificationMessage();
 
-    // TODO: Line to be deleted added for Debugg only
-    const showNotificationBar = true;
-    // Actual Code
-    //const showNotificationBar = isLoggedIn && (metamaskDetails.isConnected && metamaskDetails.networkId === process.env.REACT_APP_ETH_NETWORK)
+    // Metamask Notifications should be shown only after user is loggedIn
+    let showNotificationBar = false;
+    if (isLoggedIn && !metamaskDetails.isTxnsAllowed) showNotificationBar = true;
 
     return (
       <NotificationBar
