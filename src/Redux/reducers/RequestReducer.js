@@ -8,6 +8,7 @@ const InitialRequestDetails = {
     ACTIVE: 0,
     SOLUTION_VOTE: 0,
     COMPLETED: 0,
+    INCOMPLETE: 0,
     REJECTED: 0,
     CLOSED: 0,
   },

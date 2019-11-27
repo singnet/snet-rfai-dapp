@@ -56,11 +56,11 @@ class Summary extends Component {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <Link to={Routes.CREATE_REQUEST}>
+          <Link to={Routes.CREATE_REQUEST} className={classes.buttonLink}>
             <StyledButton type="transparent" btnText="create new request" />
           </Link>
 
-          <Link to={Routes.RFAI_LANDING}>
+          <Link to={Routes.RFAI_LANDING} className={classes.buttonLink}>
             <StyledButton type="blue" btnText="view pending request" />
           </Link>
         </div>

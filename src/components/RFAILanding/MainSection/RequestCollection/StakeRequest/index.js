@@ -18,7 +18,12 @@ import Paper from "@material-ui/core/Paper";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { toWei, fromWei, computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
+import {
+  isValidInputAmount,
+  toWei,
+  fromWei,
+  computeDateFromBlockNumber,
+} from "../../../../../utility/GenHelperFunctions";
 import { getBlockNumber, waitForTransaction, stakeForRequest } from "../../../../../utility/BlockchainHelper";
 
 import web3 from "web3";
@@ -51,6 +56,7 @@ const StakeRequest = ({
   useEffect(() => {
     // Update the BlockNumber
     setBlockNumber();
+    updateRFAITokenBalance(metamaskDetails);
   });
 
   // TODO: Need to check why we are getting Block NUmber in Reject
@@ -101,6 +107,16 @@ const StakeRequest = ({
       }
     } else {
       setAlert({ type: alertTypes.ERROR, message: `Not enough balance in the Escrow` });
+    }
+  };
+
+  const handleAmountInputChange = event => {
+    if (isValidInputAmount(event.target.value)) {
+      setAmount(event.target.value);
+    } else if (event.target.value === "") {
+      setAmount("");
+    } else {
+      // Just Ignore the value
     }
   };
 
@@ -180,13 +196,7 @@ const StakeRequest = ({
                 </div>
                 <div className={classes.fundingAmtContainer}>
                   <label>Funding Amount</label>
-                  <input
-                    name="amount"
-                    type="number"
-                    autoComplete="off"
-                    min={1}
-                    onChange={event => setAmount(event.target.value)}
-                  />
+                  <input name="amount" type="number" autoComplete="off" min={1} onChange={handleAmountInputChange} />
                 </div>
               </div>
             </Paper>

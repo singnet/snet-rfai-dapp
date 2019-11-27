@@ -27,7 +27,7 @@ import {
   withdrawTokenFromEscrow,
 } from "../../../../utility/BlockchainHelper";
 
-import { toWei, fromWei } from "../../../../utility/GenHelperFunctions";
+import { toWei, fromWei, isValidInputAmount } from "../../../../utility/GenHelperFunctions";
 
 import web3 from "web3";
 
@@ -54,8 +54,7 @@ class MetaMaskAccountBalance extends Component {
   }
 
   handleAmountInputChange(event) {
-    //  Fixed to two decimal places
-    if (event.target.value.match(/^\d+(\.\d{1,2})?$/)) {
+    if (isValidInputAmount(event.target.value)) {
       this.setState({ [event.target.name]: event.target.value });
     } else if (event.target.value === "") {
       this.setState({ [event.target.name]: "" });
@@ -190,6 +189,7 @@ class MetaMaskAccountBalance extends Component {
         component: (
           <StyledTextField
             name="amount"
+            type="text"
             label="AGI Token Amount"
             value={this.state.amount}
             onChange={event => this.handleAmountInputChange(event)}
@@ -202,6 +202,7 @@ class MetaMaskAccountBalance extends Component {
         component: (
           <StyledTextField
             name="amount"
+            type="text"
             label="Amount to be withdrawn in AGI"
             value={this.state.amount}
             onChange={event => this.handleAmountInputChange(event)}
