@@ -97,6 +97,7 @@ const RequestList = ({
       case modals.SOLUTION:
       case modals.VOTESOLUTION:
         await fetchRequestSolutionData(requestId);
+        await fetchRequestVoteData(requestId);
         break;
       case modals.VOTE:
         await fetchRequestVoteData(requestId);
@@ -366,6 +367,7 @@ const RequestList = ({
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
           requestSolutions={requestSolutions}
+          requestVotes={requestVotes}
         />
       </div>
     );

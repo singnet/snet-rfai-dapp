@@ -33,6 +33,7 @@ const VoteSolution = ({
   requestId,
   requestDetails,
   requestSolutions,
+  requestVotes,
   loading,
   metamaskDetails,
   startLoader,
@@ -45,6 +46,18 @@ const VoteSolution = ({
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
     handleClose();
+  };
+
+  const isUserAlreadyVotedForSolution = submitter => {
+    let isVoted = false;
+    if (metamaskDetails.isTxnsAllowed && Object.entries(requestVotes).length > 0) {
+      const vots = requestVotes.filter(
+        vot =>
+          vot.voter.toLowerCase() === metamaskDetails.account.toLowerCase() && vot.submitter.toLowerCase() === submitter
+      );
+      if (vots.length > 0) isVoted = true;
+    }
+    return isVoted;
   };
 
   const handleVoteSubmit = async (event, solutionSubmitter) => {
@@ -76,9 +89,8 @@ const VoteSolution = ({
   }
   return (
     // TODO: Need to contorl the disability of the Vote Button
-    // Based on StakeMember
-    // Already Voted
-    // Indicator of Foundation Vote
+    // Based on StakeMember & metamask Connection
+    // Indicator of Foundation Vote -- Looks like not required based on UI Design
 
     <div>
       <Modal open={open} onClose={handleCancel} className={classes.Modal}>
@@ -153,11 +165,15 @@ const VoteSolution = ({
                           {sol.total_votes}
                         </TableCell>
                         <TableCell className={classes.voteBtn}>
-                          <StyledButton
-                            btnText="Vote"
-                            type="transparentBlueBorder"
-                            onClick={event => handleVoteSubmit(event, sol.submitter)}
-                          />
+                          {isUserAlreadyVotedForSolution(sol.submitter) ? (
+                            <span>Voted</span>
+                          ) : (
+                            <StyledButton
+                              btnText="Vote"
+                              type="transparentBlueBorder"
+                              onClick={event => handleVoteSubmit(event, sol.submitter)}
+                            />
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -179,6 +195,7 @@ const VoteSolution = ({
 
 VoteSolution.defaultProps = {
   requestSolutions: [],
+  requestVotes: [],
 };
 
 const mapStateToProps = (state, ownProps) => {
