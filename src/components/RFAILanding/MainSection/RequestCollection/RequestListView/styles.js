@@ -127,7 +127,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "20px",
   },
   expansionPanelSummary: {
-    padding: "10px 15px",
+    padding: "3px 15px",
     "& .MuiExpansionPanelSummary-content": {
       paddingRight: 25,
       display: "flex",

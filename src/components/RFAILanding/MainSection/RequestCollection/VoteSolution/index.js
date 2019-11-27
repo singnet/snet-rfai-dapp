@@ -98,6 +98,14 @@ const VoteSolution = ({
                 <span className={classes.requestTitle}>Request Title : </span>
                 <span className={classes.titleName}>{requestDetails.request_title}</span>
               </div>
+              <div className={classes.voteSolutionDescription}>
+                <p>
+                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGI tokens. Backers that vote for multiple
+                  solutions will have their back AGI tokens split evening on the voted solutions. Backers who do not
+                  vote will have SingularityNet foundation vote determine their backed AGI distribution.{" "}
+                </p>
+              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>

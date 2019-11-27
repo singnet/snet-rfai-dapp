@@ -19,7 +19,7 @@ export const GetStartedCategoriesData = [
         type: "list",
         items: [
           `<p><a href="/${Routes.LOGIN}">Login </a>or <a href="/${Routes.SIGNUP}">Signup</a> for your AI Marketplace account</p>`,
-          `<p>Use your <a href="/">Metamask </a>wallet to user your AGI tokens</p>`,
+          `<p>Use your <a href="https://metamask.io/" target="_blank">Metamask </a>wallet to user your AGI tokens</p>`,
         ],
       },
     ],
@@ -30,7 +30,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>When you are logged into your <a href="/">SingularityNET account</a> and <a href="/">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be avaliable for you to “Reclaim” (or be refunded) back to you.</p>`,
+        value: `<p>When you are logged into your <a href="/${Routes.SIGNUP}">SingularityNET account</a> and <a href="https://metamask.io/" target="_blank">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be avaliable for you to “Reclaim” (or be refunded) back to you.</p>`,
       },
       {
         type: "listHeading",
@@ -60,7 +60,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>There are two ways to “back” or fund a request.  You can create a request and be the first “backer” for that request.  Or you can “back” any of the avaliable requests on the <a href="/">View Requests </a>page. </p><p>After you have backed one or multiple requests, you will be given the ability to vote on any submitted solution during the Solution Vote period.  Only “backers” of a request can vote.   Your vote will determine who will get your share of the AGI tokens that you funded.  If you vote for one solution, then the developer for that solution will get your alloted backed AGI tokens.  If you vote for more than one solution for single request, then your alloted backed AGI tokens will be split amongst solutions you voted for evenly. </p><p>The higher the pool of AGI tokens for a request, the more likely developer will submit solutions.  Remember to vote!.</p>`,
+        value: `<p>There are two ways to “back” or fund a request.  You can create a request and be the first “backer” for that request.  Or you can “back” any of the avaliable requests on the <a href="/${Routes.RFAI_LANDING}">View Requests </a>page. </p><p>After you have backed one or multiple requests, you will be given the ability to vote on any submitted solution during the Solution Vote period.  Only “backers” of a request can vote.   Your vote will determine who will get your share of the AGI tokens that you funded.  If you vote for one solution, then the developer for that solution will get your alloted backed AGI tokens.  If you vote for more than one solution for single request, then your alloted backed AGI tokens will be split amongst solutions you voted for evenly. </p><p>The higher the pool of AGI tokens for a request, the more likely developer will submit solutions.  Remember to vote!.</p>`,
       },
     ],
   },
@@ -70,7 +70,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>All request created by users will be reviewed by The SingularityNET foundation.  After your request is created, it will be located in the “Pending” tab on the <a href="/">View Request </a>page until it has been approved.   After it is approved it will be moved to the “Active” tab where it will be public to all users.   Reviews could take a few hours or a few days.</p>`,
+        value: `<p>All request created by users will be reviewed by The SingularityNET foundation.  After your request is created, it will be located in the “Pending” tab on the <a href="/${Routes.RFAI_LANDING}">View Request </a>page until it has been approved.   After it is approved it will be moved to the “Active” tab where it will be public to all users.   Reviews could take a few hours or a few days.</p>`,
       },
       {
         type: "listHeading",
@@ -134,7 +134,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>If you are AI developer, you can use the <a href="/">Claims page </a>to claim any AGI tokens that your solution has been awarded.</p><p> If you are Backer of a request that has expired, closed by the requestor, or failed to have any solutions submitted by AI developers, then you will be able to “reclaim” your AGI tokens back using the <a href="/">Claims page.</a></p><p><span>**Important Note**<span>AGI tokens can not be automatically transferred or refunded to your Metamask wallet currently with the platform.  You must go the <a href="/">Claims page </a>to claim all your AGI tokens to your specified Metamask wallet.</p>`,
+        value: `<p>If you are AI developer, you can use the <a href="/${Routes.USER_PROFILE}/claims">Claims page </a>to claim any AGI tokens that your solution has been awarded.</p><p> If you are Backer of a request that has expired, closed by the requestor, or failed to have any solutions submitted by AI developers, then you will be able to “reclaim” your AGI tokens back using the <a href="/${Routes.USER_PROFILE}/claims">Claims page.</a></p><p><span>**Important Note**<span>AGI tokens can not be automatically transferred or refunded to your Metamask wallet currently with the platform.  You must go the <a href="/${Routes.USER_PROFILE}/claims">Claims page </a>to claim all your AGI tokens to your specified Metamask wallet.</p>`,
       },
     ],
   },
@@ -144,7 +144,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>Requests can only be closed either by SingularityNET foundation or the request creator.  If a request is closed before completion, all the Backers will be able to reclaim their AGI tokens through the <a href="/">Claims page.<a></p>`,
+        value: `<p>Requests can only be closed either by SingularityNET foundation or the request creator.  If a request is closed before completion, all the Backers will be able to reclaim their AGI tokens through the <a href="/${Routes.USER_PROFILE}/claims">Claims page.<a></p>`,
       },
     ],
   },
