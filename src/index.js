@@ -1,24 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route } from 'react-router'
-import { DrizzleProvider } from 'drizzle-react'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider as ReduxProvider } from "react-redux";
 
-// Layouts
-import App from './App'
-//import { LoadingContainer } from 'drizzle-react-components'
-import LoadingContainer from './layouts/LoadingContainer'
+import "./index.css";
+import "./assets/icomoon.css";
+import configureStore from "./Redux/Store";
+import App from "./App";
 
-import { history, store } from './store'
-import drizzleOptions from './drizzleOptions'
+const store = configureStore();
 
-ReactDOM.render((
-    <DrizzleProvider options={drizzleOptions} store={store}>
-      <LoadingContainer>
-        <Router history={history} store={store}>
-          <Route exact path="/" component={App} />
-        </Router>
-      </LoadingContainer>
-    </DrizzleProvider>
-  ),
-  document.getElementById('root')
+ReactDOM.render(
+  <ReduxProvider store={store}>
+    <App />
+  </ReduxProvider>,
+  document.getElementById("root")
 );
