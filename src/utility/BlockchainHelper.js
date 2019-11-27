@@ -1,7 +1,8 @@
 import Web3 from "web3";
-import rfai from "../config/ServiceRequest.json";
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
+import rfaiNetworks from "singularitynet-rfai-contracts/networks/ServiceRequest";
+import rfaiABI from "singularitynet-rfai-contracts/abi/ServiceRequest";
 
 export const waitForTransaction = async hash => {
   let receipt;
@@ -56,7 +57,7 @@ export const depositTokenToEscrow = (metamaskDetails, amountBN) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.deposit(amountBN.toString(), { from: accountAddress }, (err, hash) => {
@@ -75,7 +76,7 @@ export const withdrawTokenFromEscrow = (metamaskDetails, amountBN) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.withdraw(amountBN.toString(), { from: accountAddress }, (err, hash) => {
@@ -94,7 +95,7 @@ export const createRequest = (metamaskDetails, initialStakeBN, expiration, docUR
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.createRequest(
@@ -119,7 +120,7 @@ export const submitSolutionForRequest = (metamaskDetails, requestId, docURIinByt
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.createOrUpdateSolutionProposal(
@@ -143,7 +144,7 @@ export const stakeForRequest = (metamaskDetails, requestId, stakeAmountBN) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.addFundsToRequest(requestId, stakeAmountBN.toString(), { from: accountAddress }, (err, hash) => {
@@ -162,7 +163,7 @@ export const voteForSolution = (metamaskDetails, requestId, votedForSubmitter) =
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.vote(requestId, votedForSubmitter, { from: accountAddress }, (err, hash) => {
@@ -181,7 +182,7 @@ export const claimRequest = (metamaskDetails, requestId) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.requestClaim(requestId, { from: accountAddress }, (err, hash) => {
@@ -200,7 +201,7 @@ export const claimBackRequest = (metamaskDetails, requestId) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.requestClaimBack(requestId, { from: accountAddress }, (err, hash) => {
@@ -219,7 +220,7 @@ export const approveRequest = (metamaskDetails, requestId, endSubmission, endEva
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.approveRequest(
@@ -246,7 +247,7 @@ export const rejectRequest = (metamaskDetails, requestId) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.rejectRequest(requestId, { from: accountAddress }, (err, hash) => {
@@ -266,7 +267,7 @@ export const closeRequest = (metamaskDetails, requestId) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.closeRequest(requestId, { from: accountAddress }, (err, hash) => {
@@ -287,7 +288,7 @@ export const addOrUpdateFoundationMembers = (metamaskDetails, member, role, acti
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.addOrUpdateFoundationMembers(member, role, active, { from: accountAddress }, (err, hash) => {
@@ -307,7 +308,7 @@ export const updateOwner = (metamaskDetails, newOwner) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.updateOwner(newOwner, { from: accountAddress }, (err, hash) => {
@@ -327,7 +328,7 @@ export const updateConfigLimits = (metamaskDetails, minStake, maxStakers) => {
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const rfaiInstance = window.web3.eth.contract(rfai.abi).at(rfaiContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise(async (resolve, reject) => {
     await rfaiInstance.updateLimits(minStake, maxStakers, { from: accountAddress }, (err, hash) => {
@@ -368,7 +369,7 @@ export const getBlockNumber = () => {
 };
 
 const getRFAIContractAddress = () => {
-  return rfai.networks[process.env.REACT_APP_ETH_NETWORK].address;
+  return rfaiNetworks[process.env.REACT_APP_ETH_NETWORK].address;
 };
 
 const getTokenContractAddress = () => {
