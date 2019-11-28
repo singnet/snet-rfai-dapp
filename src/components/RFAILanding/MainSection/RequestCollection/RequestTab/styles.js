@@ -26,6 +26,8 @@ export const useStyles = theme => ({
     },
   },
   requestTabDetailContainer: {
+    minHeight: 200,
+    position: "relative",
     "& .MuiExpansionPanel-root": { marginBottom: 10 },
     "& .MuiPaper-elevation1": { boxShadow: "none" },
   },
