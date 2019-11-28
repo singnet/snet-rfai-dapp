@@ -27,7 +27,7 @@ import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
 import { fromWei, computeDateFromBlockNumber, isFoundationMember } from "../../../../../utility/GenHelperFunctions";
-import { getBlockNumber, claimBackRequest, claimRequest } from "../../../../../utility/BlockchainHelper";
+import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
 
@@ -113,15 +113,6 @@ const RequestList = ({
   const handleCloseModel = () => {
     //setOpenModel(false);
     setOpenModel(modals.NONE);
-  };
-
-  // TODO: To be Deleted
-  const handleClaimBack = (event, modal, requestId) => {
-    claimBackRequest(metamaskDetails, requestId);
-  };
-  // TODO: To be Deleted
-  const handleClaim = (event, modal, requestId) => {
-    claimRequest(metamaskDetails, requestId);
   };
 
   // Render HTML
@@ -289,7 +280,7 @@ const RequestList = ({
                 )}
 
                 {/** Following Buttons to be deleted */}
-                <StyledButton
+                {/* <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
                   btnText="View Backers"
@@ -298,17 +289,7 @@ const RequestList = ({
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}
                   btnText="View Votes"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleClaimBack(event, modals.NONE, r.request_id)}
-                  btnText="Claim Back"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleClaim(event, modals.NONE, r.request_id)}
-                  btnText="Claim"
-                />
+                /> */}
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>
