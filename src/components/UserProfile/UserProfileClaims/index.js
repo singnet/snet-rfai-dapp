@@ -69,10 +69,18 @@ const UserProfileClaims = ({
   };
 
   const handleClaim = async (event, requestId) => {
+    if (!metamaskDetails.isTxnsAllowed) {
+      setSubmitterAlert({ type: alertTypes.ERROR, message: `Needs connection to Metamask` });
+      return;
+    }
     await initiateRequestClaim(requestId);
   };
 
   const handleClaimBack = async (event, requestId) => {
+    if (!metamaskDetails.isTxnsAllowed) {
+      setStakerAlert({ type: alertTypes.ERROR, message: `Needs connection to Metamask` });
+      return;
+    }
     await initiateRequestClaimBack(requestId);
   };
 

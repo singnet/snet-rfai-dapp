@@ -40,8 +40,8 @@ export const approveToken = (metamaskDetails, amountBN) => {
 
   const tokenInstance = window.web3.eth.contract(tokenABI).at(tokenContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await tokenInstance.approve(rfaiContractAddress, amountBN.toString(), { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    tokenInstance.approve(rfaiContractAddress, amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -59,8 +59,8 @@ export const depositTokenToEscrow = (metamaskDetails, amountBN) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.deposit(amountBN.toString(), { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.deposit(amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -78,8 +78,8 @@ export const withdrawTokenFromEscrow = (metamaskDetails, amountBN) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.withdraw(amountBN.toString(), { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.withdraw(amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -97,8 +97,8 @@ export const createRequest = (metamaskDetails, initialStakeBN, expiration, docUR
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.createRequest(
+  return new Promise((resolve, reject) => {
+    rfaiInstance.createRequest(
       initialStakeBN.toString(),
       expiration,
       docURIinBytes,
@@ -122,18 +122,13 @@ export const submitSolutionForRequest = (metamaskDetails, requestId, docURIinByt
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.createOrUpdateSolutionProposal(
-      requestId,
-      docURIinBytes,
-      { from: accountAddress },
-      (err, hash) => {
-        if (err) {
-          reject(hash);
-        }
-        resolve(hash);
+  return new Promise((resolve, reject) => {
+    rfaiInstance.createOrUpdateSolutionProposal(requestId, docURIinBytes, { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
       }
-    );
+      resolve(hash);
+    });
   });
 };
 
@@ -146,8 +141,8 @@ export const stakeForRequest = (metamaskDetails, requestId, stakeAmountBN) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.addFundsToRequest(requestId, stakeAmountBN.toString(), { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.addFundsToRequest(requestId, stakeAmountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -165,8 +160,8 @@ export const voteForSolution = (metamaskDetails, requestId, votedForSubmitter) =
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.vote(requestId, votedForSubmitter, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.vote(requestId, votedForSubmitter, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -184,8 +179,8 @@ export const claimRequest = (metamaskDetails, requestId) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.requestClaim(requestId, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.requestClaim(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -203,8 +198,8 @@ export const claimBackRequest = (metamaskDetails, requestId) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.requestClaimBack(requestId, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.requestClaimBack(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -222,8 +217,8 @@ export const approveRequest = (metamaskDetails, requestId, endSubmission, endEva
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.approveRequest(
+  return new Promise((resolve, reject) => {
+    rfaiInstance.approveRequest(
       requestId,
       endSubmission,
       endEvaluation,
@@ -249,8 +244,8 @@ export const rejectRequest = (metamaskDetails, requestId) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.rejectRequest(requestId, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.rejectRequest(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -269,8 +264,8 @@ export const closeRequest = (metamaskDetails, requestId) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.closeRequest(requestId, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.closeRequest(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -290,8 +285,8 @@ export const addOrUpdateFoundationMembers = (metamaskDetails, member, role, acti
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.addOrUpdateFoundationMembers(member, role, active, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.addOrUpdateFoundationMembers(member, role, active, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -310,8 +305,8 @@ export const updateOwner = (metamaskDetails, newOwner) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.updateOwner(newOwner, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.updateOwner(newOwner, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -330,8 +325,8 @@ export const updateConfigLimits = (metamaskDetails, minStake, maxStakers) => {
 
   const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
-  return new Promise(async (resolve, reject) => {
-    await rfaiInstance.updateLimits(minStake, maxStakers, { from: accountAddress }, (err, hash) => {
+  return new Promise((resolve, reject) => {
+    rfaiInstance.updateLimits(minStake, maxStakers, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -346,8 +341,8 @@ export const getBlockNumber = () => {
     const ethereum = window.ethereum;
     window.web3 = new window.Web3(ethereum);
     // Return the Block Number
-    return new Promise(async (reject, resolve) => {
-      await window.web3.eth.getBlockNumber((err, blockNumber) => {
+    return new Promise((reject, resolve) => {
+      window.web3.eth.getBlockNumber((err, blockNumber) => {
         if (err) {
           resolve(err);
         }
@@ -357,8 +352,8 @@ export const getBlockNumber = () => {
   } else {
     // Fallback to Infura to get the blocknumber
     var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    return new Promise(async (reject, resolve) => {
-      await web3.eth.getBlockNumber((err, blockNumber) => {
+    return new Promise((reject, resolve) => {
+      web3.eth.getBlockNumber((err, blockNumber) => {
         if (err) {
           resolve(err);
         }

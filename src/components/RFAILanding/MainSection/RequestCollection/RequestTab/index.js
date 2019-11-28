@@ -77,18 +77,8 @@ class RequestTab extends Component {
   };
 
   render() {
-    const { foundationMembers, metamaskDetails, requestDetails, requestSummary, classes } = this.props;
+    const { metamaskDetails, requestDetails, requestSummary, classes } = this.props;
     const { selectedTab } = this.state;
-
-    // eslint-disable-next-line no-unused-vars
-    var isFoundationMember = false;
-
-    if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
-      const mems = foundationMembers.filter(
-        mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
-      );
-      if (mems.length > 0) isFoundationMember = true;
-    }
 
     return (
       <Grid container spacing={24} className={classes.requestTabMainContainer}>
@@ -113,6 +103,7 @@ class RequestTab extends Component {
               <Tab className="singularity-tab" label={"Closed(" + requestSummary.CLOSED + ")"} value={5} />{" "}
               {/** Closed / Rejected */}
             </Tabs>
+
             <div className={classes.checkboxContainer}>
               <FormControlLabel
                 control={
@@ -166,7 +157,6 @@ class RequestTab extends Component {
 
 const mapStateToProps = state => ({
   requestDetails: state.requestReducer.requestDetails,
-  foundationMembers: state.requestReducer.foundationMembers,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 

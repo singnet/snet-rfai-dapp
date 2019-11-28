@@ -90,4 +90,15 @@ export const useStyles = theme => ({
     backgroundColor: "white",
     padding: 20,
   },
+  expiryDateContainer: {
+    "& > div": {
+      "& > div": {
+        "&::before": { border: "none" },
+        "&:hover": {
+          "&:not(.Mui-disabled):before": { border: "none" },
+        },
+      },
+    },
+    "& input": { marginBottom: "0 !important" },
+  },
 });

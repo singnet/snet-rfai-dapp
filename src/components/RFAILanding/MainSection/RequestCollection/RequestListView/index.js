@@ -27,7 +27,7 @@ import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
 import { fromWei, computeDateFromBlockNumber, isFoundationMember } from "../../../../../utility/GenHelperFunctions";
-import { getBlockNumber, claimBackRequest, claimRequest } from "../../../../../utility/BlockchainHelper";
+import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
 
@@ -54,9 +54,9 @@ const RequestList = ({
   useEffect(() => {
     // Update the BlockNumber
     setBlockNumber();
-  });
+  }, []);
 
-  // TODO: Need to check why we are getting Block NUmber in Reject
+  // TODO: Need to check why we are getting Block Number in Reject
   const setBlockNumber = async () => {
     try {
       let blockNumber = await getBlockNumber();
@@ -115,15 +115,6 @@ const RequestList = ({
     setOpenModel(modals.NONE);
   };
 
-  // TODO: To be Deleted
-  const handleClaimBack = (event, modal, requestId) => {
-    claimBackRequest(metamaskDetails, requestId);
-  };
-  // TODO: To be Deleted
-  const handleClaim = (event, modal, requestId) => {
-    claimRequest(metamaskDetails, requestId);
-  };
-
   // Render HTML
   if (loading) {
     return (
@@ -137,7 +128,7 @@ const RequestList = ({
   }
   if (!requestListData.length || requestListData.length === 0) {
     return (
-      <div>
+      <div className={classes.noRequestFountTxt}>
         <span>No requests found.</span>
       </div>
     );
@@ -167,12 +158,28 @@ const RequestList = ({
               <div className={classes.backersContainer}>
                 <span className={classes.title}>Backers</span>
                 <p className={classes.data}>
-                  {r.stake_count} <span>users</span>{" "}
+                  <div
+                    className={classes.pseudolink}
+                    onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
+                  >
+                    {r.stake_count} <span>users</span>{" "}
+                  </div>
                 </p>
               </div>
               <div className={classes.solutionsContainer}>
                 <span className={classes.title}>Solutions</span>
-                <p className={classes.data}>{r.solution_count} </p>
+                <p className={classes.data}>
+                  {selectedTab !== 2 ? (
+                    r.solution_count
+                  ) : (
+                    <div
+                      className={classes.pseudolink}
+                      onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
+                    >
+                      {r.solution_count}
+                    </div>
+                  )}
+                </p>
               </div>
               <div className={classes.votesContainer}>
                 <span className={classes.title}>Votes</span>
@@ -289,7 +296,7 @@ const RequestList = ({
                 )}
 
                 {/** Following Buttons to be deleted */}
-                <StyledButton
+                {/* <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
                   btnText="View Backers"
@@ -298,17 +305,7 @@ const RequestList = ({
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}
                   btnText="View Votes"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleClaimBack(event, modals.NONE, r.request_id)}
-                  btnText="Claim Back"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleClaim(event, modals.NONE, r.request_id)}
-                  btnText="Claim"
-                />
+                /> */}
               </div>
             </ExpansionPanelActions>
           </ExpansionPanel>

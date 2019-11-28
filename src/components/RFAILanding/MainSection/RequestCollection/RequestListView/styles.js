@@ -154,4 +154,18 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 14,
     verticalAlign: "middle",
   },
+  noRequestFountTxt: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    color: theme.palette.text.lightShadedGray,
+    fontFamily: theme.typography.primary.main,
+    fontSize: 18,
+    transform: "translate(-50%, -50%)",
+  },
+  pseudolink: {
+    color: "blue",
+    textdecoration: "none",
+    cursor: "pointer",
+  },
 }));
