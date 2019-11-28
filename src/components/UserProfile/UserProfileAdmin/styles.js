@@ -63,6 +63,18 @@ export const useStyles = theme => ({
       letterSpacing: 0.15,
       lineHeight: "24px",
     },
+    "& select": {
+      boxSizing: "border-box",
+      padding: "15px 10px",
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: "rgba(25,25,25,0.32)",
+      borderRadius: 4,
+      color: theme.palette.text.darkShadedGray,
+      fontSize: 16,
+      letterSpacing: 0.15,
+      lineHeight: "24px",
+    },
   },
   ethereumAddressMainContainer: {
     padding: "21px 32px 47px 25px",
@@ -80,6 +92,10 @@ export const useStyles = theme => ({
       },
     },
     "& input": {
+      width: 411,
+      "@media(max-width:960px)": { width: "100%" },
+    },
+    "& select": {
       width: 411,
       "@media(max-width:960px)": { width: "100%" },
     },

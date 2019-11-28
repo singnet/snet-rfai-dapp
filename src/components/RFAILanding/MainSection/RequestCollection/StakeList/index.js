@@ -52,6 +52,12 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
           </div>
           <CardContent className={classes.CardContent}>
             <Paper className={classes.root}>
+              <div className={classes.viewBackersDescription}>
+                <p>
+                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGI tokens.
+                </p>
+              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
@@ -61,8 +67,8 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
                 </div>
               )}
               {requestStakes.length === 0 && (
-                <div>
-                  <span>No solutions found.</span>
+                <div className={classes.noDataFound}>
+                  <span>No backers found.</span>
                 </div>
               )}
               {!loading && requestStakes.length > 0 && (

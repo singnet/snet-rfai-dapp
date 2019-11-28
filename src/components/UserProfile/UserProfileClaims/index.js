@@ -1,14 +1,179 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import AlertBox, { alertTypes } from "../../common/AlertBox";
 
 import { useStyles } from "./styles";
 import AccountBalance from "../../common/AccountBalance";
 import StyledButton from "../../common/StyledButton";
 import TransactionReceipt from "./TransactionReceipt";
+import { requestActions, loaderActions } from "../../../Redux/actionCreators";
+import { LoaderContent } from "../../../utility/constants/LoaderContent";
+import { waitForTransaction, claimRequest, claimBackRequest } from "../../../utility/BlockchainHelper";
 
-const UserProfileClaims = ({ classes }) => {
+const UserProfileClaims = ({
+  classes,
+  metamaskDetails,
+  requestSubmitterClaims,
+  requestStakerClaims,
+  fetchRequestClaimData,
+  loading,
+  startLoader,
+  stopLoader,
+}) => {
+  const [submitterAlert, setSubmitterAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+  const [stakerAlert, setStakerAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+
+  //Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // code to run on component mount
+    // Fetch the Claim Data for both Submitter & Stacker
+    fetchRequestClaimData(metamaskDetails, "submitter");
+    fetchRequestClaimData(metamaskDetails, "stacker");
+  }, [fetchRequestClaimData, metamaskDetails]);
+
+  const initiateRequestClaim = async requestId => {
+    let txHash;
+    try {
+      // Initiate the Claim for Submitter
+      txHash = await claimRequest(metamaskDetails, requestId);
+      startLoader(LoaderContent.CLAIM_REQUEST);
+      await waitForTransaction(txHash);
+
+      setSubmitterAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+      stopLoader();
+    } catch (err) {
+      setSubmitterAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
+      stopLoader();
+    }
+  };
+
+  const initiateRequestClaimBack = async requestId => {
+    let txHash;
+    try {
+      // Initiate the Claim for Submitter
+      txHash = await claimBackRequest(metamaskDetails, requestId);
+      startLoader(LoaderContent.CLAIM_REQUEST);
+      await waitForTransaction(txHash);
+
+      setStakerAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+      stopLoader();
+    } catch (err) {
+      setStakerAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
+      stopLoader();
+    }
+  };
+
+  const handleClaim = async (event, requestId) => {
+    await initiateRequestClaim(requestId);
+  };
+
+  const handleClaimBack = async (event, requestId) => {
+    await initiateRequestClaimBack(requestId);
+  };
+
+  const LoadSubmitterClaims = () => {
+    if (loading) {
+      return (
+        <div className={classes.circularProgressContainer}>
+          <div className={classes.loaderChild}>
+            <CircularProgress className={classes.circularProgress} />
+            <p className={classes.loaderText}>LOADING CLAIMS..</p>
+          </div>
+        </div>
+      );
+    } else if (Object.entries(requestSubmitterClaims).length === 0) {
+      return (
+        <div className={classes.noDataFound}>
+          <span>No claims found.</span>
+        </div>
+      );
+    } else if (!loading && requestSubmitterClaims.length > 0) {
+      return requestSubmitterClaims.map(claim => (
+        <Grid container key={claim.request_id} className={classes.tableData}>
+          <Grid xs={12} sm={4} md={4} lg={4}>
+            <span className={classes.responsiveHeader}>Request Title:</span>
+            <span>{claim.request_title}</span>
+          </Grid>
+          <Grid xs={12} sm={1} md={1} lg={1}>
+            <span className={classes.responsiveHeader}>Votes:</span>
+            <span>{claim.votes}</span>
+          </Grid>
+          <Grid xs={12} sm={2} md={2} lg={2}>
+            <span className={classes.responsiveHeader}>Completed on:</span>
+            <span>{claim.end_evaluation}</span>
+          </Grid>
+          <Grid xs={12} sm={1} md={1} lg={1}>
+            <span className={classes.responsiveHeader}>Days left to claim:</span>
+            <span>{claim.expiration}</span>
+          </Grid>
+          <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
+            <span className={classes.responsiveHeader}>Tokens:</span>
+            <span>Coming Soon</span>
+          </Grid>
+          <Grid xs={12} sm={2} md={2} lg={2}>
+            <StyledButton
+              onClick={event => handleClaim(event, claim.request_id)}
+              type="transparentBlueBorder"
+              btnText="claim"
+            />
+          </Grid>
+        </Grid>
+      ));
+    } else {
+      return null;
+    }
+  };
+
+  const LoadStackerClaims = () => {
+    if (loading) {
+      return (
+        <div className={classes.circularProgressContainer}>
+          <div className={classes.loaderChild}>
+            <CircularProgress className={classes.circularProgress} />
+            <p className={classes.loaderText}>LOADING CLAIMS..</p>
+          </div>
+        </div>
+      );
+    } else if (Object.entries(requestStakerClaims).length === 0) {
+      return (
+        <div className={classes.noDataFound}>
+          <span>No claims found.</span>
+        </div>
+      );
+    } else if (!loading && requestStakerClaims.length > 0) {
+      return requestStakerClaims.map(claim => (
+        <Grid container key={claim.request_id} className={classes.tableData}>
+          <Grid xs={12} sm={4} md={4} lg={4}>
+            <span className={classes.responsiveHeader}>Request Title:</span>
+            <span>{claim.request_title}</span>
+          </Grid>
+          <Grid xs={12} sm={3} md={3} lg={3}>
+            <span className={classes.responsiveHeader}>Reason for claim:</span>
+            <span>{claim.status}</span>
+          </Grid>
+          <Grid xs={12} sm={3} md={3} lg={3}>
+            <span className={classes.responsiveHeader}>Tokens backed:</span>
+            <span>Coming Soon</span>
+          </Grid>
+          <Grid xs={12} sm={2} md={2} lg={2}>
+            <StyledButton
+              onClick={event => handleClaimBack(event, claim.request_id)}
+              type="transparentBlueBorder"
+              btnText="claim"
+            />
+          </Grid>
+        </Grid>
+      ));
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Grid container className={classes.claimsMainContainer}>
       <Grid xs={12} sm={12} md={4} lg={4} className={classes.accountBalanceContainer}>
@@ -20,9 +185,8 @@ const UserProfileClaims = ({ classes }) => {
         <div className={classes.claimsForSolutions}>
           <h4>Claims for Solutions</h4>
           <Typography className={classes.description}>
-            All claims from the solutions that you submitted will be listed here. Lorem ipsum dolor sit amet, mel debet
-            dissentiet philosophia ut. Sed nibh solum temporibus in. An insolens electram pro, qui nobis ornatus
-            consectetuer an.{" "}
+            All AGI tokens you receieved as rewards from the solutions that you submitted will be listed here for you
+            claim to your Metamask wallet.
           </Typography>
           <Grid container className={classes.tableHeader}>
             <Grid xs={12} sm={4} md={4} lg={4}>
@@ -42,38 +206,15 @@ const UserProfileClaims = ({ classes }) => {
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2} />
           </Grid>
-          <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={4} md={4} lg={4}>
-              <span className={classes.responsiveHeader}>Request Title:</span>
-              <span>A very long Request name</span>
-            </Grid>
-            <Grid xs={12} sm={1} md={1} lg={1}>
-              <span className={classes.responsiveHeader}>Votes:</span>
-              <span>12</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2}>
-              <span className={classes.responsiveHeader}>Completed on:</span>
-              <span>20 Oct 2019</span>
-            </Grid>
-            <Grid xs={12} sm={1} md={1} lg={1}>
-              <span className={classes.responsiveHeader}>Days left to claim:</span>
-              <span>28 days</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
-              <span className={classes.responsiveHeader}>Tokens:</span>
-              <span>999 AGI</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2}>
-              <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
-            </Grid>
-          </Grid>
+          <LoadSubmitterClaims />
+          <AlertBox type={submitterAlert.type} message={submitterAlert.message} />
         </div>
         <div className={classes.claimsForRequest}>
           <h4>Claims for Request</h4>
           <Typography className={classes.description}>
-            All claims from the solutions that you submitted will be listed here. Lorem ipsum dolor sit amet, mel debet
-            dissentiet philosophia ut. Sed nibh solum temporibus in. An insolens electram pro, qui nobis ornatus
-            consectetuer an.{" "}
+            All claims from the requests that you backed that were closed by you, the original requester or rejected
+            SingularityNET foundation will be listed here for you to claim back to your Metamask wallet. Automatic
+            refunds and transfer are currently not supported.
           </Typography>
           <Grid container className={classes.tableHeader}>
             <Grid xs={12} sm={4} md={4} lg={4}>
@@ -87,23 +228,8 @@ const UserProfileClaims = ({ classes }) => {
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2} />
           </Grid>
-          <Grid container className={classes.tableData}>
-            <Grid xs={12} sm={4} md={4} lg={4}>
-              <span className={classes.responsiveHeader}>Request Title:</span>
-              <span>A very long Request name</span>
-            </Grid>
-            <Grid xs={12} sm={3} md={3} lg={3}>
-              <span className={classes.responsiveHeader}>Reason for claim:</span>
-              <span>Request Rejected</span>
-            </Grid>
-            <Grid xs={12} sm={3} md={3} lg={3}>
-              <span className={classes.responsiveHeader}>Tokens backed:</span>
-              <span>999 AGI</span>
-            </Grid>
-            <Grid xs={12} sm={2} md={2} lg={2}>
-              <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
-            </Grid>
-          </Grid>
+          <LoadStackerClaims />
+          <AlertBox type={stakerAlert.type} message={stakerAlert.message} />
         </div>
       </Grid>
 
@@ -117,4 +243,26 @@ const UserProfileClaims = ({ classes }) => {
   );
 };
 
-export default withStyles(useStyles)(UserProfileClaims);
+UserProfileClaims.defaultProps = {
+  requestSubmitterClaims: [],
+  requestStakerClaims: [],
+};
+
+const mapStateToProps = state => ({
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  requestSubmitterClaims: state.requestReducer.requestSubmitterClaims,
+  requestStakerClaims: state.requestReducer.requestStakerClaims,
+  loading: state.loaderReducer.RequestModalCallStatus,
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchRequestClaimData: (metamaskDetails, claimBy) =>
+    dispatch(requestActions.fetchRequestClaimData(metamaskDetails, claimBy)),
+  startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(UserProfileClaims));

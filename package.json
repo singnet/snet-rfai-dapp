@@ -11,6 +11,7 @@
     "clsx": "^1.0.4",
     "color": "^3.1.2",
     "history": "^4.9.0",
+    "html-react-parser": "^0.10.0",
     "lodash": "latest",
     "material-design-icons": "^3.0.1",
     "material-ui-flat-pagination": "^4.0.0",
@@ -24,6 +25,7 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "singularitynet-rfai-contracts": "^0.2.5",
     "singularitynet-token-contracts": "^2.0.1",
     "validate.js": "^0.13.1",
     "web3": "^1.2.2"

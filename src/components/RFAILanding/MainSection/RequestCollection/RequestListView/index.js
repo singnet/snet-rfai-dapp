@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 //import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import { withStyles } from "@material-ui/styles";
 import { useStyles } from "./styles";
-
+import LaunchIcon from "@material-ui/icons/Launch";
 // Request List View Functionality
 import { requestActions } from "../../../../../Redux/actionCreators";
 
@@ -26,20 +26,23 @@ import SubmitSolution from "../SubmitSolution";
 import CloseRequest from "../CloseRequest";
 import VoteSolution from "../VoteSolution";
 
-import { computeDateFromBlockNumber } from "../../../../../utility/GenHelperFunctions";
-import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
+import { fromWei, computeDateFromBlockNumber, isFoundationMember } from "../../../../../utility/GenHelperFunctions";
+import { getBlockNumber, claimBackRequest, claimRequest } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
 
 const RequestList = ({
   requestListData,
   loading,
+  selectedTab,
   fetchRequestSolutionData,
   requestSolutions,
   fetchRequestStakeData,
   requestStakes,
   fetchRequestVoteData,
   requestVotes,
+  metamaskDetails,
+  foundationMembers,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -94,6 +97,7 @@ const RequestList = ({
       case modals.SOLUTION:
       case modals.VOTESOLUTION:
         await fetchRequestSolutionData(requestId);
+        await fetchRequestVoteData(requestId);
         break;
       case modals.VOTE:
         await fetchRequestVoteData(requestId);
@@ -101,7 +105,7 @@ const RequestList = ({
       case modals.STAKE:
         await fetchRequestStakeData(requestId);
         break;
-      case modals.NONE:
+      default:
       //DO NOTHING
     }
   };
@@ -109,6 +113,15 @@ const RequestList = ({
   const handleCloseModel = () => {
     //setOpenModel(false);
     setOpenModel(modals.NONE);
+  };
+
+  // TODO: To be Deleted
+  const handleClaimBack = (event, modal, requestId) => {
+    claimBackRequest(metamaskDetails, requestId);
+  };
+  // TODO: To be Deleted
+  const handleClaim = (event, modal, requestId) => {
+    claimRequest(metamaskDetails, requestId);
   };
 
   // Render HTML
@@ -130,9 +143,10 @@ const RequestList = ({
     );
   }
   if (requestListData.length > 0) {
+    const bIsFoundationMember = isFoundationMember(metamaskDetails, foundationMembers);
+    //const bDisableAction = !metamaskDetails.isTxnsAllowed;
     return (
       <div>
-        <span>Testing...</span>
         {requestListData.map(r => (
           <ExpansionPanel
             className="expansion-panel"
@@ -147,22 +161,22 @@ const RequestList = ({
               <div className={classes.tokenAwardedContainer}>
                 <span className={classes.title}>Tokens Awarded:</span>
                 <p className={classes.data}>
-                  {r.total_fund} <span>AGI</span>
+                  {r.fund_total > 0 ? fromWei(r.fund_total) : 0} <span>AGI</span>
                 </p>
               </div>
               <div className={classes.backersContainer}>
                 <span className={classes.title}>Backers</span>
                 <p className={classes.data}>
-                  {r.num_stackers} <span>users</span>{" "}
+                  {r.stake_count} <span>users</span>{" "}
                 </p>
               </div>
               <div className={classes.solutionsContainer}>
                 <span className={classes.title}>Solutions</span>
-                <p className={classes.data}>{r.num_solutions} </p>
+                <p className={classes.data}>{r.solution_count} </p>
               </div>
               <div className={classes.votesContainer}>
                 <span className={classes.title}>Votes</span>
-                <p className={classes.data}> - </p>
+                <p className={classes.data}> {r.vote_count} </p>
               </div>
               <div className={classes.expiryContainer}>
                 <span className={classes.title}>Expiry</span>
@@ -186,8 +200,10 @@ const RequestList = ({
                   <p>{r.end_submission} </p>
                 </div>
                 <div className={classes.exPanelProjURL}>
-                  <span>project URL: </span>
+                  <span>Project URL: </span>
+
                   <p className={classes.urlLink}>
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.git_hub_link} target="_new">
                       {r.git_hub_link}
                     </a>{" "}
@@ -196,6 +212,7 @@ const RequestList = ({
                 <div className={classes.exPanelTrainingDataset}>
                   <span>Training Dataset: </span>
                   <p className={classes.urlLink}>
+                    <LaunchIcon className={classes.launchIcon} />
                     <a href={r.training_data_set_uri} target="_new">
                       {r.training_data_set_uri}
                     </a>
@@ -207,11 +224,71 @@ const RequestList = ({
             {/* {this.createActionRow(req, index)} */}
             <ExpansionPanelActions className={classes.expansionPanelAction}>
               <div>
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
-                  btnText="View Solution"
-                />
+                {selectedTab === 0 && bIsFoundationMember === true && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
+                      btnText="Approve Request"
+                    />
+                    <StyledButton
+                      type="red"
+                      onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
+                      btnText="Reject Request"
+                    />
+                  </Fragment>
+                )}
+
+                {(selectedTab === 1 || selectedTab === 2) && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
+                      btnText="Back Request"
+                    />
+                  </Fragment>
+                )}
+                {(selectedTab === 2 || selectedTab === 3) && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
+                      btnText="View Solutions"
+                    />
+                  </Fragment>
+                )}
+
+                {selectedTab === 1 && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
+                      btnText="Submit Solution"
+                    />
+                  </Fragment>
+                )}
+
+                {selectedTab === 2 && (
+                  <Fragment>
+                    <StyledButton
+                      type="blue"
+                      onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
+                      btnText="Vote Solutions"
+                    />
+                  </Fragment>
+                )}
+
+                {(selectedTab === 0 || ((selectedTab === 1 || selectedTab === 2) && bIsFoundationMember === true)) && (
+                  <Fragment>
+                    <StyledButton
+                      type="red"
+                      onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
+                      btnText="Close Request"
+                    />
+                  </Fragment>
+                )}
+
+                {/** Following Buttons to be deleted */}
                 <StyledButton
                   type="blue"
                   onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
@@ -224,33 +301,13 @@ const RequestList = ({
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
-                  btnText="Approve Request"
-                />
-                <StyledButton
-                  type="red"
-                  onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
-                  btnText="Reject Request"
+                  onClick={event => handleClaimBack(event, modals.NONE, r.request_id)}
+                  btnText="Claim Back"
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
-                  btnText="Back the Request"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
-                  btnText="Submit Solution"
-                />
-                <StyledButton
-                  type="red"
-                  onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
-                  btnText="Close Request"
-                />
-                <StyledButton
-                  type="blue"
-                  onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
-                  btnText="Vote Solution"
+                  onClick={event => handleClaim(event, modals.NONE, r.request_id)}
+                  btnText="Claim"
                 />
               </div>
             </ExpansionPanelActions>
@@ -310,6 +367,7 @@ const RequestList = ({
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
           requestSolutions={requestSolutions}
+          requestVotes={requestVotes}
         />
       </div>
     );
@@ -320,6 +378,7 @@ const RequestList = ({
 
 RequestList.defaultProps = {
   requestListData: [],
+  foundationMembers: [],
 };
 
 const mapStateToProps = state => ({
@@ -327,6 +386,8 @@ const mapStateToProps = state => ({
   requestSolutions: state.requestReducer.requestSolutions,
   requestStakes: state.requestReducer.requestStakes,
   requestVotes: state.requestReducer.requestVotes,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  foundationMembers: state.requestReducer.foundationMembers,
 });
 
 const mapDispatchToProps = dispatch => ({

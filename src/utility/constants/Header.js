@@ -30,8 +30,8 @@ export const headerData = {
 
 const tabs = [
   {
-    title: "Get Started",
-    link: `/${Routes.GET_STARTED}`,
+    title: "View Requests",
+    link: `/${Routes.RFAI_LANDING}`,
     newTab: false,
   },
   {
@@ -40,8 +40,8 @@ const tabs = [
     newTab: false,
   },
   {
-    title: "View Requests",
-    link: `/${Routes.RFAI_LANDING}`,
+    title: "Get Started",
+    link: `/${Routes.GET_STARTED}`,
     newTab: false,
   },
   {

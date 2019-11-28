@@ -47,3 +47,32 @@ export const computeDateFromBlockNumber = (currentBlockNumber, toBlockNumber) =>
 export const generateRandomKey = prefix => {
   return `${prefix}_${new Date().getTime()}`;
 };
+
+export const isValidInputAmount = value => {
+  //  Fixed to two decimal places
+  const regE = new RegExp(/^\d+(\.\d{0,2})?$/);
+  let bIsValid = false;
+  if (regE.test(value)) {
+    bIsValid = true;
+  }
+
+  return bIsValid;
+};
+
+export const isFoundationMember = (metamaskDetails, foundationMembers) => {
+  var _isFoundationMember = false;
+
+  if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
+    const mems = foundationMembers.filter(
+      mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.status === 1
+    );
+    if (mems.length > 0) _isFoundationMember = true;
+  }
+
+  return _isFoundationMember;
+};
+
+export const toChecksumAddress = address => {
+  if (web3.utils.isAddress(address)) return web3.utils.toChecksumAddress(address);
+  return address;
+};

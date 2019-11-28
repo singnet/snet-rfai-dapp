@@ -23,7 +23,7 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
             </Grid>
             <Grid item xs={12} sm={9} md={9} lg={9} className={classes.descriptionContainer}>
               <div className={classes.description}>
-                <span> Welcome to Request for AI Portal.</span>
+                <span>Welcome</span>
                 <p>
                   With this community portal, you can make projects requests for AI services that you think the others
                   will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI
@@ -33,7 +33,7 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
               {isLoggedIn ? (
                 <div className={classes.btnContainer}>
                   <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
-                    <StyledButton type="blue" btnText="Create Request" />
+                    <StyledButton type="blue" btnText="Create new Request" />
                   </Link>
                 </div>
               ) : (

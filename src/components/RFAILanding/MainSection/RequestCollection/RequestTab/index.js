@@ -16,6 +16,15 @@ import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
 import StyledDropdown from "../../../../common/StyledDropdown";
 
+const requestStatusMap = {
+  "0": "PENDING",
+  "1": "ACTIVE",
+  "2": "SOLUTION_VOTE",
+  "3": "COMPLETED",
+  "4": "INCOMPLETE",
+  "5": "CLOSED",
+};
+
 class RequestTab extends Component {
   constructor(props) {
     super(props);
@@ -27,18 +36,46 @@ class RequestTab extends Component {
   }
 
   componentDidMount = async () => {
-    const { fetchRequestData } = this.props;
-
-    // Need to set this value as per the Default Tab - Active
-    const requestStatus = 1;
-    await fetchRequestData(requestStatus);
+    await this.updateRequestData();
   };
 
-  handleChange = async (event, value) => {
-    const { fetchRequestData } = this.props;
+  componentDidUpdate = async (prevProps, prevState) => {
+    const { metamaskDetails } = this.props;
+    if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
+      await this.updateRequestData();
+    }
+  };
+
+  updateRequestData = async () => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
+    // Need to set this value as per the Default Tab - Active
+    const requestStatus = requestStatusMap[this.state.selectedTab];
+    const isMyRequests = this.state.myRequestsFlag;
+    await fetchRequestSummaryData(metamaskDetails, isMyRequests);
+    await fetchRequestData(requestStatus, metamaskDetails, isMyRequests);
+  };
+
+  // Tab Change
+  handleTabChange = async (event, value) => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
     this.setState({ selectedTab: value });
-    const requestStatus = 1;
-    await fetchRequestData(requestStatus);
+    const requestStatus = requestStatusMap[value];
+
+    await fetchRequestSummaryData(metamaskDetails, this.state.myRequestsFlag);
+    await fetchRequestData(requestStatus, metamaskDetails, this.state.myRequestsFlag);
+  };
+
+  handleMyRequestChange = async () => {
+    const { fetchRequestSummaryData, fetchRequestData, metamaskDetails } = this.props;
+
+    const myRequestsFlag = !this.state.myRequestsFlag;
+    this.setState({ myRequestsFlag });
+
+    const requestStatus = requestStatusMap[this.state.selectedTab];
+
+    // Call the Dispatch to Reload the databased on the Selected Tab
+    await fetchRequestSummaryData(metamaskDetails, myRequestsFlag);
+    await fetchRequestData(requestStatus, metamaskDetails, myRequestsFlag);
   };
 
   render() {
@@ -77,7 +114,7 @@ class RequestTab extends Component {
                 control={
                   <Checkbox
                     checked={this.state.myRequestsFlag}
-                    onChange={() => this.setState({ myRequestsFlag: !this.state.myRequestsFlag })}
+                    onChange={this.handleMyRequestChange}
                     color="primary"
                     disabled={metamaskDetails.isTxnsAllowed ? false : true}
                   />
@@ -89,33 +126,32 @@ class RequestTab extends Component {
 
           {selectedTab === 0 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} loading={true} />
+              <RequestListView requestListData={requestDetails} loading={true} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 1 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} loading={true} />
+              <RequestListView requestListData={requestDetails} loading={true} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 2 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
           {selectedTab === 3 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
-          {/* {selectedTab === 4 && this.state.isFoundationMember === true && <Typography component="div" className={classes.requestTabDetailContainer} ><RequestListV2  compRequestStatus="2"/> </Typography>} */}
+          {selectedTab === 4 && (
+            <Typography component="div" className={classes.requestTabDetailContainer}>
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
+            </Typography>
+          )}
           {selectedTab === 5 && (
             <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
-            </Typography>
-          )}
-          {selectedTab === 6 && (
-            <Typography component="div" className={classes.requestTabDetailContainer}>
-              <RequestListView requestListData={requestDetails} />
+              <RequestListView requestListData={requestDetails} selectedTab={selectedTab} />
             </Typography>
           )}
         </Grid>
@@ -131,7 +167,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchRequestData: requestStatus => dispatch(requestActions.fetchRequestData(requestStatus)),
+  fetchRequestSummaryData: (metamaskDetails, isMyRequests) =>
+    dispatch(requestActions.fetchRequestSummaryData(metamaskDetails, isMyRequests)),
+  fetchRequestData: (requestStatus, metamaskDetails, isMyRequests) =>
+    dispatch(requestActions.fetchRequestData(requestStatus, metamaskDetails, isMyRequests)),
 });
 
 export default connect(

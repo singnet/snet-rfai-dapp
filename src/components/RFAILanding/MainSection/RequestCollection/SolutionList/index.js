@@ -60,7 +60,7 @@ const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSol
                 </div>
               )}
               {requestSolutions.length === 0 && (
-                <div>
+                <div className={classes.noDataFound}>
                   <span>No solutions found.</span>
                 </div>
               )}
@@ -84,16 +84,16 @@ const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSol
                       <TableRow key={sol.solution_submitter}>
                         <TableCell component="th" scope="row">
                           <span className={classes.mobileTableHeader}>Submitted by:</span>
-                          {sol.solution_submitter} <br />
+                          {sol.submitter} <br />
                           {sol.solution_submitter_name}
                         </TableCell>
                         <TableCell>
                           <span className={classes.mobileTableHeader}>Submitted on:</span>
-                          {sol.created}
+                          {sol.created_at}
                         </TableCell>
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
-                          {sol.solution_docURI}
+                          {sol.doc_uri}
                         </TableCell>
                       </TableRow>
                     ))}

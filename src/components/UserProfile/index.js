@@ -17,7 +17,7 @@ import Notification from "../Notification";
 import { useStyles } from "./styles";
 import Routes from "../../utility/constants/Routes";
 
-const UserProfile = ({ classes, nickname, history, location, email, metamaskDetails }) => {
+const UserProfile = ({ classes, nickname, history, location, email, metamaskDetails, foundationMembers }) => {
   const userProfileRoutes = {
     ACCOUNT: { path: `/${Routes.USER_PROFILE}/account`, component: () => <AccountBalance /> },
     SETTINGS: { path: `/${Routes.USER_PROFILE}/settings`, component: () => <UserProfileSettings /> },
@@ -52,6 +52,26 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
     return 0;
   };
 
+  const isFoundationMember = () => {
+    var _isFoundationMember = false;
+
+    if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
+      const mems = foundationMembers.filter(
+        mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.status === 1
+      );
+      if (mems.length > 0) _isFoundationMember = true;
+    }
+
+    return _isFoundationMember;
+  };
+
+  const loadTabs = value => {
+    if (value.name !== "Admin" || (value.name === "Admin" && isFoundationMember())) {
+      return <Tab key={value.name} label={value.name} onClick={() => onTabChange(value.activeIndex, value.path)} />;
+    }
+    return null;
+  };
+
   return (
     <Fragment>
       <Notification />
@@ -59,11 +79,7 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
         <UserProfileHeader nickname={nickname} email={email} />
         <div>
           <AppBar position="static" className={classes.tabsHeader}>
-            <Tabs value={activeTab()}>
-              {tabs.map(value => (
-                <Tab key={value.name} label={value.name} onClick={() => onTabChange(value.activeIndex, value.path)} />
-              ))}
-            </Tabs>
+            <Tabs value={activeTab()}>{tabs.map(value => loadTabs(value))}</Tabs>
           </AppBar>
           <Switch>
             <Route path={userProfileRoutes.ADMIN.path} component={userProfileRoutes.ADMIN.component} />
@@ -81,6 +97,7 @@ const mapStateToProps = state => ({
   nickname: state.userReducer.nickname,
   email: state.userReducer.email,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  foundationMembers: state.requestReducer.foundationMembers,
 });
 
 export default connect(mapStateToProps)(withStyles(useStyles)(UserProfile));

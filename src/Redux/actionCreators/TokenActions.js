@@ -1,6 +1,6 @@
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
-import rfai from "../../config/ServiceRequest.json";
+import rfaiNetworks from "singularitynet-rfai-contracts/networks/ServiceRequest";
 
 export const UPDATE_TOKEN_BALANCE = "UPDATE_TOKEN_BALANCE";
 export const UPDATE_TOKEN_ALLOWANCE = "UPDATE_TOKEN_ALLOWANCE";
@@ -10,7 +10,7 @@ const getTokenContractAddress = () => {
 };
 
 const getRFAIContractAddress = () => {
-  return rfai.networks[process.env.REACT_APP_ETH_NETWORK].address;
+  return rfaiNetworks[process.env.REACT_APP_ETH_NETWORK].address;
 };
 
 // Fetching The the Token Balance

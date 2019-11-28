@@ -144,6 +144,8 @@ const ApproveRejectRequest = ({
       case "newExpiration":
         setNewExpiration(val);
         break;
+      default:
+      // Do Nothing
     }
   };
 

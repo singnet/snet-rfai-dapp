@@ -33,6 +33,7 @@ const VoteSolution = ({
   requestId,
   requestDetails,
   requestSolutions,
+  requestVotes,
   loading,
   metamaskDetails,
   startLoader,
@@ -45,6 +46,18 @@ const VoteSolution = ({
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
     handleClose();
+  };
+
+  const isUserAlreadyVotedForSolution = submitter => {
+    let isVoted = false;
+    if (metamaskDetails.isTxnsAllowed && Object.entries(requestVotes).length > 0) {
+      const vots = requestVotes.filter(
+        vot =>
+          vot.voter.toLowerCase() === metamaskDetails.account.toLowerCase() && vot.submitter.toLowerCase() === submitter
+      );
+      if (vots.length > 0) isVoted = true;
+    }
+    return isVoted;
   };
 
   const handleVoteSubmit = async (event, solutionSubmitter) => {
@@ -76,9 +89,8 @@ const VoteSolution = ({
   }
   return (
     // TODO: Need to contorl the disability of the Vote Button
-    // Based on StakeMember
-    // Already Voted
-    // Indicator of Foundation Vote
+    // Based on StakeMember & metamask Connection
+    // Indicator of Foundation Vote -- Looks like not required based on UI Design
 
     <div>
       <Modal open={open} onClose={handleCancel} className={classes.Modal}>
@@ -98,6 +110,14 @@ const VoteSolution = ({
                 <span className={classes.requestTitle}>Request Title : </span>
                 <span className={classes.titleName}>{requestDetails.request_title}</span>
               </div>
+              <div className={classes.voteSolutionDescription}>
+                <p>
+                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGI tokens. Backers that vote for multiple
+                  solutions will have their back AGI tokens split evening on the voted solutions. Backers who do not
+                  vote will have SingularityNet foundation vote determine their backed AGI distribution.{" "}
+                </p>
+              </div>
               {loading && (
                 <div className={classes.circularProgressContainer}>
                   <div className={classes.loaderChild}>
@@ -107,7 +127,7 @@ const VoteSolution = ({
                 </div>
               )}
               {requestSolutions.length === 0 && (
-                <div>
+                <div className={classes.noDataFound}>
                   <span>No solutions found.</span>
                 </div>
               )}
@@ -124,20 +144,20 @@ const VoteSolution = ({
                   </TableHead>
                   <TableBody>
                     {requestSolutions.map(sol => (
-                      <TableRow key={sol.solution_submitter}>
+                      <TableRow key={sol.submitter}>
                         <TableCell component="th" scope="row">
                           <span className={classes.mobileTableHeader}>Submitted by:</span>
-                          {sol.solution_submitter} <br />
-                          {sol.solution_submitter_name}
+                          {sol.submitter} <br />
+                          {/* {sol.solution_submitter_name} */}
                         </TableCell>
                         <TableCell>
                           <span className={classes.mobileTableHeader}>Submitted on:</span>
-                          {sol.created}
+                          {sol.created_at}
                         </TableCell>
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
                           <a href={sol.solution_docURI} target="_new" className={classes.blueText}>
-                            {sol.solution_docURI}
+                            {sol.doc_uri}
                           </a>
                         </TableCell>
                         <TableCell>
@@ -145,12 +165,15 @@ const VoteSolution = ({
                           {sol.total_votes}
                         </TableCell>
                         <TableCell className={classes.voteBtn}>
-                          <StyledButton
-                            btnText="Vote"
-                            disabled
-                            type="transparentBlueBorder"
-                            onClick={event => handleVoteSubmit(event, sol.solution_submitter)}
-                          />
+                          {isUserAlreadyVotedForSolution(sol.submitter) ? (
+                            <span>Voted</span>
+                          ) : (
+                            <StyledButton
+                              btnText="Vote"
+                              type="transparentBlueBorder"
+                              onClick={event => handleVoteSubmit(event, sol.submitter)}
+                            />
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -172,6 +195,7 @@ const VoteSolution = ({
 
 VoteSolution.defaultProps = {
   requestSolutions: [],
+  requestVotes: [],
 };
 
 const mapStateToProps = (state, ownProps) => {

@@ -4,16 +4,19 @@ const InitialRequestDetails = {
   requestDetails: {},
   foundationMembers: {},
   requestSummary: {
-    Open: 0,
-    Active: 0,
-    Closed: 0,
-    Expired: 0,
-    Rejected: 0,
-    Completed: 0,
+    PENDING: 0,
+    ACTIVE: 0,
+    SOLUTION_VOTE: 0,
+    COMPLETED: 0,
+    INCOMPLETE: 0,
+    REJECTED: 0,
+    CLOSED: 0,
   },
   requestSolutions: {},
   requestStakes: {},
   requestVotes: {},
+  requestSubmitterClaims: {},
+  requestStakerClaims: {},
 };
 
 const requestReducer = (state = InitialRequestDetails, action) => {
@@ -36,6 +39,13 @@ const requestReducer = (state = InitialRequestDetails, action) => {
     case requestActions.UPDATE_REQUEST_VOTES: {
       return { ...state, requestVotes: action.payload };
     }
+    case requestActions.UPDATE_REQUEST_CLAIM_SUBMITTER: {
+      return { ...state, requestSubmitterClaims: action.payload };
+    }
+    case requestActions.UPDATE_REQUEST_CLAIM_STAKER: {
+      return { ...state, requestStakerClaims: action.payload };
+    }
+
     default: {
       return state;
     }
