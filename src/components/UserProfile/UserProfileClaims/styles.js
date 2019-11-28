@@ -3,7 +3,7 @@ export const useStyles = theme => ({
     maxWidth: "100% !important",
     boxShadow: "none !important",
     marginBottom: 30,
-    backgroundColor: `&{theme.palette.text.offWhiteColor} !important`,
+    backgroundColor: `${theme.palette.text.offWhiteColor} !important`,
     "& h3": {
       padding: "0 22px",
       borderBottomWidth: 1,

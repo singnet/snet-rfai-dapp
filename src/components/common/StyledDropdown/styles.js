@@ -10,4 +10,5 @@ export const useStyles = makeStyles(theme => ({
       },
     },
   },
+  menuItem: { backgroundColor: "red" },
 }));

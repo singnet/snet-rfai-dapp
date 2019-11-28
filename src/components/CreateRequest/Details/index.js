@@ -287,7 +287,7 @@ class Details extends Component {
           />
         </div>
 
-        <div>
+        <div className={classes.expiryDateContainer}>
           <InfoIcon className={classes.infoIcon} />
           <label>Expiry Date</label>
           <TextField

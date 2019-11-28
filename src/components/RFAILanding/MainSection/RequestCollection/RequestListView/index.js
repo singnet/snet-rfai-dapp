@@ -128,7 +128,7 @@ const RequestList = ({
   }
   if (!requestListData.length || requestListData.length === 0) {
     return (
-      <div>
+      <div className={classes.noRequestFountTxt}>
         <span>No requests found.</span>
       </div>
     );

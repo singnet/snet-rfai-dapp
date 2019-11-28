@@ -2,7 +2,7 @@ export const useStyles = theme => ({
   settingMainContainer: {
     marginBottom: 50,
     boxShadow: "none !important",
-    backgroundColor: `&{theme.palette.text.offWhiteColor} !important`,
+    backgroundColor: `${theme.palette.text.offWhiteColor} !important`,
   },
   settingsContainer: {
     maxWidth: 845,
