@@ -250,7 +250,7 @@ class Details extends Component {
         <div className={classes.githubURLContainer}>
           <div className={classes.githubLinkContainer}>
             <InfoIcon className={classes.infoIcon} />
-            <label>Github Link</label>
+            <label>Additional documents Link</label>
             <input
               name="documentURI"
               type="text"

@@ -72,4 +72,8 @@ export const LoaderContent = {
     loaderHeader: "Approve Request",
     loaderText: "Approving the Request, Please wait for transaction to confirm",
   },
+  CLAIM_REQUEST: {
+    loaderHeader: "Claim Request",
+    loaderText: "Claim is in progress, Please wait for transaction to confirm",
+  },
 };

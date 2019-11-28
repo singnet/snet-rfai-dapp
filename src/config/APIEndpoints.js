@@ -45,5 +45,6 @@ export const APIPaths = {
   RFAI_REQUEST_SOLUTION: "/solution",
   RFAI_REQUEST_STAKE: "/stake",
   RFAI_REQUEST_VOTE: "/vote",
-  RFAI_REQUEST_CLAIM: "/claim",
+  RFAI_REQUEST_CLAIM_SUBMITTER: "/claim/submitter",
+  RFAI_REQUEST_CLAIM_STAKER: "/claim/staker",
 };

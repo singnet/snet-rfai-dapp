@@ -11,6 +11,8 @@ export const UPDATE_REQUEST_STAKES = "UPDATE_REQUEST_STAKES";
 export const UPDATE_REQUEST_VOTES = "UPDATE_REQUEST_VOTES";
 export const UPDATE_REQUEST_SUMMARY = "UPDATE_REQUEST_SUMMARY";
 export const UPDATE_RFAI_FOUNDATION_MEMBERS = "UPDATE_RFAI_FOUNDATION_MEMBERS";
+export const UPDATE_REQUEST_CLAIM_SUBMITTER = "UPDATE_REQUEST_CLAIM_SUBMITTER";
+export const UPDATE_REQUEST_CLAIM_STAKER = "UPDATE_REQUEST_CLAIM_STAKER";
 
 // Fetching The the Requests
 const fetchRequestAPI = async (requestStatus, metamaskDetails, isMyRequests) => {
@@ -102,11 +104,6 @@ const updateRequestSummary = data => dispatch => {
 
 // Fetching The the Request Solution
 const fetchRequestSolutionAPI = async requestId => {
-  // const apiName = APIEndpoints.RFAI.name;
-  // const apiPath = `${APIPaths.RFAI_REQUEST_SOLUTION}?requestId=${requestId}`;
-  // const apiOptions = initializeAPIOptions(token);
-  // return API.get(apiName, apiPath, apiOptions);
-
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_SOLUTION}`;
   const response = await fetch(url);
   return response.json();
@@ -135,11 +132,6 @@ const updateRequestSolution = data => dispatch => {
 
 // Fetching The the Request Stake
 const fetchRequestStakeAPI = async requestId => {
-  // const apiName = APIEndpoints.RFAI.name;
-  // const apiPath = `${APIPaths.RFAI_REQUEST_STAKE}?requestId=${requestId}`;
-  // const apiOptions = initializeAPIOptions(token);
-  // return API.get(apiName, apiPath, apiOptions);
-
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_STAKE}`;
   const response = await fetch(url);
   return response.json();
@@ -168,12 +160,6 @@ const updateRequestStake = data => dispatch => {
 
 // Fetching The the Request Vote
 const fetchRequestVoteAPI = async requestId => {
-  // const apiName = APIEndpoints.RFAI.name;
-  // const apiPath = `${APIPaths.RFAI_REQUEST_VOTE}?requestId=${requestId}`;
-  // const apiOptions = initializeAPIOptions(token);
-
-  // return API.get(apiName, apiPath, apiOptions);
-
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_VOTE}`;
   const response = await fetch(url);
   return response.json();
@@ -198,4 +184,57 @@ const fetchRequestVoteSuccess = response => dispatch => {
 
 const updateRequestVote = data => dispatch => {
   dispatch({ type: UPDATE_REQUEST_VOTES, payload: data });
+};
+
+// Fetching The the Request Claims
+const fetchRequestClaimAPI = async (metamaskDetails, claimBy) => {
+  let url = "";
+  let requester = "0x0";
+  if (metamaskDetails.isTxnsAllowed) {
+    requester = metamaskDetails.account;
+  }
+
+  if (claimBy === "submitter") {
+    url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST_CLAIM_SUBMITTER}?user_address=${requester}`;
+  } else {
+    url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST_CLAIM_STAKER}?user_address=${requester}`;
+  }
+
+  const response = await fetch(url);
+  return response.json();
+};
+
+export const fetchRequestClaimData = (metamaskDetails, claimBy) => async dispatch => {
+  try {
+    dispatch(loaderActions.startRequestModalLoader);
+
+    if (claimBy === "submitter") {
+      const response = await fetchRequestClaimAPI(metamaskDetails, claimBy);
+      dispatch(fetchRequestSubmitterClaimSuccess(response.data));
+    } else {
+      // Will be for stacker
+      const response = await fetchRequestClaimAPI(metamaskDetails, claimBy);
+      dispatch(fetchRequestStackerClaimSuccess(response.data));
+    }
+
+    dispatch(loaderActions.stopRequestModalLoader);
+  } catch (exp) {
+    dispatch(loaderActions.stopRequestModalLoader);
+  }
+};
+
+const fetchRequestSubmitterClaimSuccess = response => dispatch => {
+  dispatch(updateRequestSubmitterClaim(response));
+};
+
+const updateRequestSubmitterClaim = data => dispatch => {
+  dispatch({ type: UPDATE_REQUEST_CLAIM_SUBMITTER, payload: data });
+};
+
+const fetchRequestStackerClaimSuccess = response => dispatch => {
+  dispatch(updateRequestStackerClaim(response));
+};
+
+const updateRequestStackerClaim = data => dispatch => {
+  dispatch({ type: UPDATE_REQUEST_CLAIM_STAKER, payload: data });
 };
