@@ -30,10 +30,12 @@ const CloseRequest = ({
   metamaskDetails,
   startLoader,
   stopLoader,
+  isLoggedIn,
 }) => {
   const classes = useStyles();
-
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+
+  const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
@@ -110,7 +112,7 @@ const CloseRequest = ({
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Cancel" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Close Request" type="redBg" onClick={handleSubmit} />
+            <StyledButton btnText="Close Request" type="redBg" onClick={handleSubmit} disabled={actionToDisable} />
           </CardActions>
         </Card>
       </Modal>
@@ -122,6 +124,7 @@ const mapStateToProps = (state, ownProps) => {
   const { requestId } = ownProps;
 
   return {
+    isLoggedIn: state.userReducer.login.isLoggedIn,
     loading: state.loaderReducer.RequestModalCallStatus,
     metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),

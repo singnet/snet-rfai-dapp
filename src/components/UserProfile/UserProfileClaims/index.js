@@ -24,9 +24,11 @@ const UserProfileClaims = ({
   loading,
   startLoader,
   stopLoader,
+  isLoggedIn,
 }) => {
   const [submitterAlert, setSubmitterAlert] = useState({ type: alertTypes.ERROR, message: undefined });
   const [stakerAlert, setStakerAlert] = useState({ type: alertTypes.ERROR, message: undefined });
+  const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
   //Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -128,6 +130,7 @@ const UserProfileClaims = ({
               onClick={event => handleClaim(event, claim.request_id)}
               type="transparentBlueBorder"
               btnText="claim"
+              disabled={actionToDisable}
             />
           </Grid>
         </Grid>
@@ -173,6 +176,7 @@ const UserProfileClaims = ({
               onClick={event => handleClaimBack(event, claim.request_id)}
               type="transparentBlueBorder"
               btnText="claim"
+              disabled={actionToDisable}
             />
           </Grid>
         </Grid>
@@ -257,6 +261,7 @@ UserProfileClaims.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   requestSubmitterClaims: state.requestReducer.requestSubmitterClaims,
   requestStakerClaims: state.requestReducer.requestStakerClaims,

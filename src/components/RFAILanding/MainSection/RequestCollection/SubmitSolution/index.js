@@ -32,11 +32,14 @@ const SubmitSolution = ({
   metamaskDetails,
   startLoader,
   stopLoader,
+  isLoggedIn,
 }) => {
   const classes = useStyles();
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
   const [solURI, setSolURI] = useState("");
+
+  const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
   const handleCancel = () => {
     setAlert({ type: alertTypes.ERROR, message: undefined });
@@ -145,7 +148,7 @@ const SubmitSolution = ({
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Submit Solution" type="blue" onClick={handleSubmit} />
+            <StyledButton btnText="Submit Solution" type="blue" onClick={handleSubmit} disabled={actionToDisable} />
           </CardActions>
         </Card>
       </Modal>
@@ -157,6 +160,7 @@ const mapStateToProps = (state, ownProps) => {
   const { requestId } = ownProps;
 
   return {
+    isLoggedIn: state.userReducer.login.isLoggedIn,
     loading: state.loaderReducer.RequestModalCallStatus,
     metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),

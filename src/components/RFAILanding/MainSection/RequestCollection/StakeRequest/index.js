@@ -44,6 +44,7 @@ const StakeRequest = ({
   updateRFAITokenBalance,
   startLoader,
   stopLoader,
+  isLoggedIn,
 }) => {
   const classes = useStyles();
   const BN = web3.utils.BN;
@@ -51,6 +52,8 @@ const StakeRequest = ({
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
   const [amount, setAmount] = useState(0);
   const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
+
+  const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -204,7 +207,7 @@ const StakeRequest = ({
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="submit funds" type="blue" onClick={handleSubmit} />
+            <StyledButton btnText="submit funds" type="blue" onClick={handleSubmit} disabled={actionToDisable} />
           </CardActions>
         </Card>
       </Modal>
@@ -216,6 +219,7 @@ const mapStateToProps = (state, ownProps) => {
   const { requestId } = ownProps;
 
   return {
+    isLoggedIn: state.userReducer.login.isLoggedIn,
     loading: state.loaderReducer.RequestModalCallStatus,
     metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
