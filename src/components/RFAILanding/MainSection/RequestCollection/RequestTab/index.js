@@ -14,7 +14,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
-import StyledDropdown from "../../../../common/StyledDropdown";
 
 const requestStatusMap = {
   "0": "PENDING",
@@ -31,7 +30,6 @@ class RequestTab extends Component {
     this.state = {
       selectedTab: 1,
       myRequestsFlag: false,
-      tabsName: [{ label: "Completed" }, { label: "Expired" }, { label: "My Requests" }],
     };
   }
 
@@ -79,34 +77,31 @@ class RequestTab extends Component {
   };
 
   render() {
-    const { foundationMembers, metamaskDetails, requestDetails, requestSummary, classes } = this.props;
-    const { selectedTab, tabsName } = this.state;
-
-    // eslint-disable-next-line no-unused-vars
-    var isFoundationMember = false;
-
-    if (metamaskDetails.isTxnsAllowed && Object.entries(foundationMembers).length > 0) {
-      const mems = foundationMembers.filter(
-        mem => mem.member_address.toLowerCase() === metamaskDetails.account.toLowerCase() && mem.active
-      );
-      if (mems.length > 0) isFoundationMember = true;
-    }
+    const { metamaskDetails, requestDetails, requestSummary, classes } = this.props;
+    const { selectedTab } = this.state;
 
     return (
       <Grid container spacing={24} className={classes.requestTabMainContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <AppBar position="static" color="default" className={classes.header}>
-            <Tabs value={selectedTab} onChange={this.handleChange} indicatorColor="primary" textColor="primary">
-              {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Pending" value={0}/> } */}
-              <Tab className="singularity-tab" label={"Active(" + requestSummary.Active + ")"} value={1} />
-              <Tab className="singularity-tab" label="Evaluation" value={2} />
-              <Tab className="singularity-tab" label={"Completed(" + requestSummary.Completed + ")"} value={3} />
-              {/* {this.state.isFoundationMember === true && <Tab className="singularity-tab" label="Rejected" value={4}/> } */}
-              <Tab className="singularity-tab" label={"Expired(" + requestSummary.Expired + ")"} value={5} />
-              <Tab className="singularity-tab" label="My Requests" value={6} />
-              <div className={classes.showMoreContaienr}>
-                <StyledDropdown inputLabel="More" list={tabsName} onChange={this.handleChange} />
-              </div>
+            <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
+              {/** Open */}
+              <Tab className="singularity-tab" label={"Pending(" + requestSummary.PENDING + ")"} value={0} />
+              {/** Approved - Active for Solution Submission */}
+              <Tab className="singularity-tab" label={"Active(" + requestSummary.ACTIVE + ")"} value={1} />{" "}
+              {/** Approved - Active for Voting */}
+              <Tab
+                className="singularity-tab"
+                label={"Solution Vote(" + requestSummary.SOLUTION_VOTE + ")"}
+                value={2}
+              />
+              {/** Approved - Completed*/}
+              <Tab className="singularity-tab" label={"Completed(" + requestSummary.COMPLETED + ")"} value={3} />{" "}
+              {/** InComplete TODO: Need to check where we need to show the rejected Items  */}
+              <Tab className="singularity-tab" label={"InComplete(" + requestSummary.INCOMPLETE + ")"} value={4} />{" "}
+              {/** Closed */}
+              <Tab className="singularity-tab" label={"Closed(" + requestSummary.CLOSED + ")"} value={5} />{" "}
+              {/** Closed / Rejected */}
             </Tabs>
 
             <div className={classes.checkboxContainer}>
@@ -162,7 +157,6 @@ class RequestTab extends Component {
 
 const mapStateToProps = state => ({
   requestDetails: state.requestReducer.requestDetails,
-  foundationMembers: state.requestReducer.foundationMembers,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 

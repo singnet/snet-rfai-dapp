@@ -158,12 +158,28 @@ const RequestList = ({
               <div className={classes.backersContainer}>
                 <span className={classes.title}>Backers</span>
                 <p className={classes.data}>
-                  {r.stake_count} <span>users</span>{" "}
+                  <div
+                    className={classes.pseudolink}
+                    onClick={event => handleOpenModel(event, modals.STAKE, r.request_id)}
+                  >
+                    {r.stake_count} <span>users</span>{" "}
+                  </div>
                 </p>
               </div>
               <div className={classes.solutionsContainer}>
                 <span className={classes.title}>Solutions</span>
-                <p className={classes.data}>{r.solution_count} </p>
+                <p className={classes.data}>
+                  {selectedTab !== 2 ? (
+                    r.solution_count
+                  ) : (
+                    <div
+                      className={classes.pseudolink}
+                      onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
+                    >
+                      {r.solution_count}
+                    </div>
+                  )}
+                </p>
               </div>
               <div className={classes.votesContainer}>
                 <span className={classes.title}>Votes</span>

@@ -163,4 +163,9 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 18,
     transform: "translate(-50%, -50%)",
   },
+  pseudolink: {
+    color: "blue",
+    textdecoration: "none",
+    cursor: "pointer",
+  },
 }));
