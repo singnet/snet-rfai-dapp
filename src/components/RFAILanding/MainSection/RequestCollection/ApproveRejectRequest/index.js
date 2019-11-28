@@ -124,7 +124,7 @@ const ApproveRejectRequest = ({
     }
   };
 
-  const handleBlockNumInputChange = async event => {
+  const handleBlockNumInputChange = event => {
     var val = "";
     if (event.target.value.match(/^[0-9]{1,40}$/)) {
       val = event.target.value;
