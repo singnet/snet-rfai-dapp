@@ -54,9 +54,9 @@ const RequestList = ({
   useEffect(() => {
     // Update the BlockNumber
     setBlockNumber();
-  });
+  }, []);
 
-  // TODO: Need to check why we are getting Block NUmber in Reject
+  // TODO: Need to check why we are getting Block Number in Reject
   const setBlockNumber = async () => {
     try {
       let blockNumber = await getBlockNumber();
