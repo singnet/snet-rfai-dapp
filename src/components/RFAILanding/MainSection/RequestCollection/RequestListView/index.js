@@ -152,7 +152,7 @@ const RequestList = ({
               <div className={classes.tokenAwardedContainer}>
                 <span className={classes.title}>Tokens Awarded:</span>
                 <p className={classes.data}>
-                  {r.fund_total > 0 ? fromWei(r.fund_total) : 0} <span>AGI</span>
+                  {r.request_fund > 0 ? fromWei(r.request_fund) : 0} <span>AGI</span>
                 </p>
               </div>
               <div className={classes.backersContainer}>

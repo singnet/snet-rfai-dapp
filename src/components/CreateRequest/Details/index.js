@@ -205,8 +205,10 @@ class Details extends Component {
 
   render() {
     const ctrlsToDisable = false;
-    const { classes } = this.props;
+    const { classes, metamaskDetails, isLoggedIn } = this.props;
     const { alert } = this.state;
+
+    const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
     return (
       <div className={classes.detailsMainContainer}>
@@ -306,7 +308,12 @@ class Details extends Component {
 
         <div className={classes.btnContainer}>
           <StyledButton type="transparent" onClick={event => this.handleBackButton(event, true)} btnText="back" />
-          <StyledButton type="blue" onClick={event => this.handleCreateButton(event, true)} btnText="continue" />
+          <StyledButton
+            type="blue"
+            onClick={event => this.handleCreateButton(event, true)}
+            btnText="continue"
+            disabled={actionToDisable}
+          />
         </div>
 
         <Dialog PaperProps={classes.dialogStyles} open={this.state.showConfirmation}>
@@ -333,6 +340,7 @@ class Details extends Component {
 }
 
 const mapStateToProps = state => ({
+  isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   tokenBalance: state.tokenReducer.tokenBalance,
   tokenAllowance: state.tokenReducer.tokenAllowance,
