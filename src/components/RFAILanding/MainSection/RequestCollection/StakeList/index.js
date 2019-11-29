@@ -22,8 +22,20 @@ import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestStakes, loading }) => {
+const StakeList = ({
+  open,
+  handleClose,
+  showBackRequest,
+  requestId,
+  requestDetails,
+  requestStakes,
+  selectedTab,
+  loading,
+  metamaskDetails,
+  isLoggedIn,
+}) => {
   const classes = useStyles();
+  const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
 
   const handleCancel = () => {
     handleClose();
@@ -105,7 +117,9 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="back the request" type="blue" />
+            {(selectedTab === 1 || selectedTab === 2) && (
+              <StyledButton btnText="back request" type="blue" onClick={showBackRequest} disabled={actionToDisable} />
+            )}
           </CardActions>
         </Card>
       </Modal>
@@ -121,7 +135,9 @@ const mapStateToProps = (state, ownProps) => {
   const { requestId } = ownProps;
 
   return {
+    isLoggedIn: state.userReducer.login.isLoggedIn,
     loading: state.loaderReducer.RequestModalCallStatus,
+    metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
   };
 };

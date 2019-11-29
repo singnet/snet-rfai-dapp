@@ -30,10 +30,12 @@ import { loaderActions } from "../../../../../Redux/actionCreators";
 const VoteSolution = ({
   open,
   handleClose,
+  showBackRequest,
   requestId,
   requestDetails,
   requestSolutions,
   requestVotes,
+  selectedTab,
   loading,
   metamaskDetails,
   startLoader,
@@ -187,7 +189,9 @@ const VoteSolution = ({
           </CardContent>
           <CardActions className={classes.CardActions}>
             <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Back the request" type="blue" onClick={handleCancel} disabled={actionToDisable} />
+            {(selectedTab === 1 || selectedTab === 2) && (
+              <StyledButton btnText="Back request" type="blue" onClick={showBackRequest} disabled={actionToDisable} />
+            )}
           </CardActions>
         </Card>
       </Modal>
