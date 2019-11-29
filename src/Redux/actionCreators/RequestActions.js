@@ -3,7 +3,7 @@ import { APIEndpoints, APIPaths } from "../../config/APIEndpoints";
 //import { initializeAPIOptions } from "../../utility/API";
 
 //import { fetchAuthenticatedUser } from "./UserActions";
-import { loaderActions } from "./";
+import { loaderActions, errorActions } from "./";
 
 export const UPDATE_REQUEST_DETAILS = "UPDATE_REQUEST_DETAILS";
 export const UPDATE_REQUEST_SOLUTIONS = "UPDATE_REQUEST_SOLUTIONS";
@@ -18,17 +18,22 @@ export const UPDATE_REQUEST_CLAIM_STAKER = "UPDATE_REQUEST_CLAIM_STAKER";
 const fetchRequestAPI = async (requestStatus, metamaskDetails, isMyRequests) => {
   let requester = "0x0";
 
-  if (metamaskDetails.isTxnsAllowed) {
-    requester = metamaskDetails.account;
-  }
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      requester = metamaskDetails.account;
+    }
 
-  const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST}?status=${requestStatus}&requester=${requester}&my_request=${isMyRequests}`;
-  const response = await fetch(url);
-  return response.json();
+    const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST}?status=${requestStatus}&requester=${requester}&my_request=${isMyRequests}`;
+    const response = await fetch(url);
+    return response.json();
+  } catch (exp) {
+    throw exp;
+  }
 };
 
 export const fetchRequestData = (requestStatus, metamaskDetails, isMyRequests) => async dispatch => {
   try {
+    dispatch(errorActions.resetRequestDetailsError);
     dispatch(loaderActions.startRequestLoader);
 
     const response = await fetchRequestAPI(requestStatus, metamaskDetails, isMyRequests);
@@ -37,11 +42,16 @@ export const fetchRequestData = (requestStatus, metamaskDetails, isMyRequests) =
     dispatch(loaderActions.stopRequestLoader);
   } catch (exp) {
     dispatch(loaderActions.stopRequestLoader);
+    dispatch(fetchRequestFailure(exp));
   }
 };
 
 const fetchRequestSuccess = response => dispatch => {
   dispatch(updateRequestDetails(response));
+};
+
+const fetchRequestFailure = error => dispatch => {
+  dispatch(errorActions.updateRequestDetailsError(error));
 };
 
 const updateRequestDetails = data => dispatch => {
