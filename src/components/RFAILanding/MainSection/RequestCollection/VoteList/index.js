@@ -19,21 +19,24 @@ import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
 
-const VoteList = ({ open, handleClose, requestId, requestTitle, requestVotes, loading }) => {
+const VoteList = ({ open, handleClose, requestId, requestDetails, requestVotes, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
     handleClose();
   };
-
+  if (!requestDetails) {
+    return <div />;
+  }
   return (
     <div>
       <Modal open={open} onClose={handleCancel} className={classes.Modal}>
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title={requestTitle + "- Votes"}
+            title={requestDetails.request_title + "- Votes"}
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -92,8 +95,13 @@ VoteList.defaultProps = {
   requestVotes: [],
 };
 
-const mapStateToProps = state => ({
-  loading: state.loaderReducer.RequestModalCallStatus,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { requestId } = ownProps;
+
+  return {
+    loading: state.loaderReducer.RequestModalCallStatus,
+    requestDetails: requestDetailsById(state, requestId),
+  };
+};
 
 export default connect(mapStateToProps)(VoteList);

@@ -16,7 +16,7 @@ class Summary extends Component {
   }
 
   render() {
-    const { requestSummary } = this.props;
+    const { requestSummary, showOverview } = this.props;
 
     //request_title, request_by, request_expiry, request_stake
 
@@ -56,9 +56,7 @@ class Summary extends Component {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <Link to={Routes.CREATE_REQUEST} className={classes.buttonLink}>
-            <StyledButton type="transparent" btnText="create new request" />
-          </Link>
+          <StyledButton type="transparent" btnText="create new request" onClick={showOverview} />
 
           <Link to={Routes.RFAI_LANDING} className={classes.buttonLink}>
             <StyledButton type="blue" btnText="view pending request" />

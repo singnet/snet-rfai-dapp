@@ -47,7 +47,6 @@ const RequestList = ({
   const [expanded, setExpanded] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState("");
-  const [selectedRequestTitle, setSelectedRequestTitle] = useState("");
   const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
 
   // Similar to componentDidMount and componentDidUpdate:
@@ -86,11 +85,10 @@ const RequestList = ({
     setExpanded(expanded ? panel : false);
   };
 
-  const handleOpenModel = async (event, modal, requestId, requestTitle) => {
+  const handleOpenModel = async (event, modal, requestId) => {
     //setOpenModel(true);
     setOpenModel(modal);
     setSelectedRequestId(requestId);
-    setSelectedRequestTitle(requestTitle);
 
     // To Initiate the respective API Calls
     switch (modal) {
@@ -113,6 +111,10 @@ const RequestList = ({
   const handleCloseModel = () => {
     //setOpenModel(false);
     setOpenModel(modals.NONE);
+  };
+
+  const showBackRequest = () => {
+    setOpenModel(modals.STAKEREQUEST);
   };
 
   // Render HTML
@@ -303,7 +305,7 @@ const RequestList = ({
                 />
                 <StyledButton
                   type="blue"
-                  onClick={event => handleOpenModel(event, modals.VOTE, r.request_id, r.request_title)}
+                  onClick={event => handleOpenModel(event, modals.VOTE, r.request_id)}
                   btnText="View Votes"
                 /> */}
               </div>
@@ -315,21 +317,20 @@ const RequestList = ({
           open={openModel === modals.SOLUTION ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
-          requestTitle={selectedRequestTitle}
           requestSolutions={requestSolutions}
         />
         <StakeList
           open={openModel === modals.STAKE ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
-          requestTitle={selectedRequestTitle}
           requestStakes={requestStakes}
+          selectedTab={selectedTab}
+          showBackRequest={showBackRequest}
         />
         <VoteList
           open={openModel === modals.VOTE ? true : false}
           handleClose={handleCloseModel}
           requestId={selectedRequestId}
-          requestTitle={selectedRequestTitle}
           requestVotes={requestVotes}
         />
         <ApproveRejectRequest
@@ -365,6 +366,8 @@ const RequestList = ({
           requestId={selectedRequestId}
           requestSolutions={requestSolutions}
           requestVotes={requestVotes}
+          selectedTab={selectedTab}
+          showBackRequest={showBackRequest}
         />
       </div>
     );

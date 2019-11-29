@@ -29,6 +29,13 @@ class CreateRequest extends Component {
     this.showDetailsContent = this.showDetailsContent.bind(this);
   }
 
+  showOverview = () => {
+    this.setState({
+      progressState: "Overview",
+      activeSection: 1,
+    });
+  };
+
   showDetailsContent = () => {
     this.setState({
       progressState: "Details",
@@ -60,7 +67,7 @@ class CreateRequest extends Component {
             {progressState === "Details" ? (
               <Details showSummary={this.showSummary} />
             ) : progressState === "Summary" ? (
-              <Summary requestSummary={requestSummary} />
+              <Summary requestSummary={requestSummary} showOverview={this.showOverview} />
             ) : (
               <div className={classes.createRequestContent}>
                 <Typography>
