@@ -92,6 +92,7 @@ const StakeRequest = ({
       try {
         // Initiate the Deposit Token to RFAI Escrow
         let txHash = await stakeForRequest(metamaskDetails, requestId, amountBN);
+        setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
         startLoader(LoaderContent.STAKE_REQUEST);
 

@@ -57,7 +57,8 @@ const VoteSolution = ({
     if (metamaskDetails.isTxnsAllowed && Object.entries(requestVotes).length > 0) {
       const vots = requestVotes.filter(
         vot =>
-          vot.voter.toLowerCase() === metamaskDetails.account.toLowerCase() && vot.submitter.toLowerCase() === submitter
+          vot.voter.toLowerCase() === metamaskDetails.account.toLowerCase() &&
+          vot.submitter.toLowerCase() === submitter.toLowerCase()
       );
       if (vots.length > 0) isVoted = true;
     }
@@ -73,6 +74,7 @@ const VoteSolution = ({
     try {
       // Initiate the Deposit Token to RFAI Escrow
       let txHash = await voteForSolution(metamaskDetails, requestId, solutionSubmitter);
+      setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
       startLoader(LoaderContent.VOTE_REQUEST);
 
@@ -168,17 +170,20 @@ const VoteSolution = ({
                           <span className={classes.mobileTableHeader}>Votes</span>
                           {sol.total_votes}
                         </TableCell>
-                        <TableCell className={classes.voteBtn}>
-                          {isUserAlreadyVotedForSolution(sol.submitter) ? (
-                            <span>Voted</span>
-                          ) : (
+
+                        {isUserAlreadyVotedForSolution(sol.submitter) ? (
+                          <TableCell className={classes.voted}>
+                            <div>Voted</div>
+                          </TableCell>
+                        ) : (
+                          <TableCell className={classes.voteBtn}>
                             <StyledButton
                               btnText="Vote"
                               type="transparentBlueBorder"
                               onClick={event => handleVoteSubmit(event, sol.submitter)}
                             />
-                          )}
-                        </TableCell>
+                          </TableCell>
+                        )}
                       </TableRow>
                     ))}
                   </TableBody>
