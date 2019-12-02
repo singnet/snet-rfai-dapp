@@ -4,6 +4,8 @@ export const UPDATE_FORGOT_PASSWORD_SUBMIT_ERROR = "UPDATE_FORGOT_PASSWORD_SUBMI
 export const RESET_FORGOT_PASSWORD_SUBMIT_ERROR = "RESET_FORGOT_PASSWORD_SUBMIT_ERROR";
 export const UPDATE_PROFILE_SETTINGS_ERROR = "UPDATE_PROFILE_SETTINGS_ERROR";
 export const RESET_PROFILE_SETTINGS_ERROR = "RESET_PROFILE_SETTINGS_ERROR";
+export const UPDATE_REQUEST_DETAILS_ERROR = "UPDATE_REQUEST_DETAILS_ERROR";
+export const RESET_REQUEST_DETAILS_ERROR = "RESET_REQUEST_DETAILS_ERROR";
 
 export const updateForgotPasswordError = error => dispatch => {
   dispatch({ type: UPDATE_FORGOT_PASSWORD_ERROR, payload: { forgotPassword: error } });
@@ -27,4 +29,12 @@ export const updateProfileSettingsError = error => dispatch => {
 
 export const resetProfileSettingsError = dispatch => {
   dispatch({ type: RESET_PROFILE_SETTINGS_ERROR, payload: { profileSettings: undefined } });
+};
+
+export const updateRequestDetailsError = error => dispatch => {
+  dispatch({ type: UPDATE_REQUEST_DETAILS_ERROR, payload: { requestDetails: error } });
+};
+
+export const resetRequestDetailsError = dispatch => {
+  dispatch({ type: RESET_REQUEST_DETAILS_ERROR, payload: { requestDetails: undefined } });
 };

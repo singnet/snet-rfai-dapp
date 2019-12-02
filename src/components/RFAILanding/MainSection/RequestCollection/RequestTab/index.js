@@ -14,6 +14,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
 import { requestActions } from "../../../../../Redux/actionCreators";
+//import ErrorBox from "../../../../common/ErrorBox";
 
 const requestStatusMap = {
   "0": "PENDING",
@@ -79,6 +80,12 @@ class RequestTab extends Component {
   render() {
     const { metamaskDetails, requestDetails, requestSummary, classes } = this.props;
     const { selectedTab } = this.state;
+
+    // requestFailed
+    // TODO: Hamdling Error Message and Showing it on the Screen
+    // if(requestFailed) {
+    //   return <ErrorBox />
+    // }
 
     return (
       <Grid container spacing={24} className={classes.requestTabMainContainer}>
@@ -158,6 +165,7 @@ class RequestTab extends Component {
 const mapStateToProps = state => ({
   requestDetails: state.requestReducer.requestDetails,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  requestFailed: state.errorReducer.requestDetails,
 });
 
 const mapDispatchToProps = dispatch => ({

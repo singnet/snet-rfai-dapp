@@ -165,4 +165,5 @@ export const useStyles = makeStyles(theme => ({
       },
     },
   },
+  voted: { color: "green !important" },
 }));

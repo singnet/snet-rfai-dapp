@@ -71,13 +71,17 @@ const ApproveRejectRequest = ({
     }
 
     if (
+      parseInt(endSubmission, 10) > parseInt(currentBlockNumber, 10) &&
       parseInt(endSubmission, 10) < parseInt(endEvaluation, 10) &&
       parseInt(endEvaluation, 10) < parseInt(newExpiration, 10) &&
-      parseInt(newExpiration, 10) > parseInt(currentBlockNumber, 10)
+      parseInt(newExpiration, 10) >= parseInt(requestDetails.expiration, 10)
     ) {
       try {
+        setAlert({ type: alertTypes.ERROR, message: undefined });
+
         // Initiate the Deposit Token to RFAI Escrow
         let txHash = await approveRequest(metamaskDetails, requestId, endSubmission, endEvaluation, newExpiration);
+        setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
         startLoader(LoaderContent.APPROVE_REQUEST);
 
@@ -91,11 +95,13 @@ const ApproveRejectRequest = ({
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         stopLoader();
       }
+    } else if (parseInt(endSubmission, 10) <= parseInt(currentBlockNumber, 10)) {
+      setAlert({ type: alertTypes.ERROR, message: "Invalid end submission block number" });
     } else if (parseInt(endSubmission, 10) >= parseInt(endEvaluation, 10)) {
       setAlert({ type: alertTypes.ERROR, message: "Invalid end submission block number" });
     } else if (parseInt(endEvaluation, 10) >= parseInt(newExpiration, 10)) {
       setAlert({ type: alertTypes.ERROR, message: "Invalid end evaluation block number" });
-    } else if (parseInt(newExpiration, 10) <= parseInt(currentBlockNumber, 10)) {
+    } else if (parseInt(newExpiration, 10) < parseInt(requestDetails.expiration, 10)) {
       setAlert({ type: alertTypes.ERROR, message: "Invalid expiration block number" });
     }
   };
