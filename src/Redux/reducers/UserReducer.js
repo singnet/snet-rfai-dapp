@@ -9,6 +9,7 @@ const InitialUserDetails = {
   },
   isInitialized: false,
   isEmailVerified: false,
+  walletList: [],
   email: "",
   nickname: "",
   emailAlerts: false,
@@ -92,6 +93,9 @@ const userReducer = (state = InitialUserDetails, action) => {
     }
     case userActions.UPDATE_IS_TERMS_ACCEPTED: {
       return { ...state, isTermsAccepted: action.payload };
+    }
+    case userActions.UPDATE_WALLET_LIST: {
+      return { ...state, walletList: action.payload };
     }
     default: {
       return state;

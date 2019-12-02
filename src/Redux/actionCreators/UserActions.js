@@ -1,5 +1,5 @@
 import { Auth, API } from "aws-amplify";
-
+import isEmpty from "lodash/isEmpty";
 import { APIEndpoints, APIPaths } from "../../config/APIEndpoints";
 import { parseError } from "../../utility/ErrorHandling";
 import { userActions, errorActions, loaderActions } from ".";
@@ -20,6 +20,7 @@ export const UPDATE_EMAIL_VERIFIED = "UPDATE_EMAIL_VERIFIED";
 export const UPDATE_EMAIL_ALERTS_SUBSCRIPTION = "UPDATE_EMAIL_ALERTS_SUBSCRIPTION";
 export const APP_INITIALIZATION_SUCCESS = "APP_INITIALIZATION_SUCCESS";
 export const UPDATE_IS_TERMS_ACCEPTED = "UPDATE_IS_TERMS_ACCEPTED";
+export const UPDATE_WALLET_LIST = "UPDATE_WALLET_LIST";
 
 export const fetchAuthenticatedUser = async () => {
   const currentUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
@@ -345,4 +346,63 @@ export const forgotPasswordSubmit = ({ email, code, password, history, route }) 
     .catch(err => {
       dispatch(forgotPasswordSubmitFailure(err.message));
     });
+};
+
+// Fetch User Wallet Association Details
+const fetchWalletAPI = token => {
+  const apiName = APIEndpoints.ORCHESTRATOR.name;
+  const apiPath = APIPaths.WALLET;
+
+  // Passing Dummy values to orgId, groupId
+  const orgId = "snet";
+  const groupId = "rfaigroupid";
+
+  const queryStringParameters = {
+    org_id: orgId,
+    group_id: groupId,
+  };
+
+  const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
+  return API.get(apiName, apiPath, apiOptions);
+};
+
+export const fetchWallet = () => async dispatch => {
+  const { token } = await fetchAuthenticatedUser();
+  const response = await fetchWalletAPI(token);
+  return dispatch(fetchWalletSuccess(response));
+};
+
+const fetchWalletSuccess = response => dispatch => {
+  if (!isEmpty(response.data.wallets)) {
+    dispatch(updateWalletList(response.data.wallets));
+  }
+};
+
+const updateWalletList = data => dispatch => {
+  dispatch({ type: UPDATE_WALLET_LIST, payload: data });
+};
+
+// Associate the wallet to User - Update Wallet List in the backend
+const registerWalletAPI = (token, address) => {
+  const apiName = APIEndpoints.ORCHESTRATOR.name;
+  const apiPath = APIPaths.REGISTER_WALLET;
+  const type = "METAMASK";
+  const postObj = { address, type };
+  const apiOptions = initializeAPIOptions(token, postObj);
+  return API.post(apiName, apiPath, apiOptions);
+};
+
+export const registerWallet = address => async dispatch => {
+  try {
+    const { token } = await fetchAuthenticatedUser();
+    await registerWalletAPI(token, address);
+    return dispatch(registerWalletSuccess(address));
+  } catch (exp) {
+    // This request is fire and forget as it works in the backgroud for now
+  }
+};
+
+const registerWalletSuccess = address => dispatch => {
+  // On Success Update the Wallet List
+  dispatch(fetchWallet);
 };

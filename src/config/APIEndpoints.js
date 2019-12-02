@@ -23,6 +23,10 @@ export const APIEndpoints = {
     name: "RFAI",
     endpoint: process.env.REACT_APP_RFAI_ENDPOINT,
   },
+  ORCHESTRATOR: {
+    name: "Orchestrator",
+    endpoint: process.env.REACT_APP_ORCHESTRATOR_ENDPOINT,
+  },
 };
 
 export const APIPaths = {
@@ -31,6 +35,7 @@ export const APIPaths = {
   GET_USER_PROFILE: "/profile",
   UPDATE_USER_PROFILE: "/profile",
   WALLET: "/wallet",
+  REGISTER_WALLET: "/wallet/register",
   INVOKE_SERVICE: "/invoke",
   FILTER_DATA: "/service?attribute=",
   FEEDBACK: "/feedback",

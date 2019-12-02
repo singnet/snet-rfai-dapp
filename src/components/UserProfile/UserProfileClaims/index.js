@@ -10,10 +10,10 @@ import AlertBox, { alertTypes } from "../../common/AlertBox";
 import { useStyles } from "./styles";
 import AccountBalance from "../../common/AccountBalance";
 import StyledButton from "../../common/StyledButton";
-import TransactionReceipt from "./TransactionReceipt";
 import { requestActions, loaderActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
 import { waitForTransaction, claimRequest, claimBackRequest } from "../../../utility/BlockchainHelper";
+import { fromWei } from "../../../utility/GenHelperFunctions";
 
 const UserProfileClaims = ({
   classes,
@@ -123,7 +123,7 @@ const UserProfileClaims = ({
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
             <span className={classes.responsiveHeader}>Tokens:</span>
-            <span>Coming Soon</span>
+            <span>{fromWei(claim.tokens)} AGI</span>
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2}>
             <StyledButton
@@ -169,7 +169,7 @@ const UserProfileClaims = ({
           </Grid>
           <Grid xs={12} sm={3} md={3} lg={3}>
             <span className={classes.responsiveHeader}>Tokens backed:</span>
-            <span>Coming Soon</span>
+            <span>{fromWei(claim.claim_back_amount)} AGI</span>
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2}>
             <StyledButton
@@ -236,7 +236,7 @@ const UserProfileClaims = ({
               <span>Reason for claim</span>
             </Grid>
             <Grid xs={12} sm={3} md={3} lg={3}>
-              <span>tokens backed</span>
+              <span>Tokens backed</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2} />
           </Grid>
@@ -244,13 +244,6 @@ const UserProfileClaims = ({
           <AlertBox type={stakerAlert.type} message={stakerAlert.message} />
         </div>
       </Grid>
-
-      <TransactionReceipt
-        open={false}
-        succesMsg="Claim for Request Succesfully Processed"
-        receiptHeader="Claim"
-        requestTitle="A very long service provider request"
-      />
     </Grid>
   );
 };
