@@ -354,21 +354,23 @@ const fetchWalletAPI = token => {
   const apiPath = APIPaths.WALLET;
 
   // Passing Dummy values to orgId, groupId
-  const orgId = "snet";
-  const groupId = "rfaigroupid";
+  // const orgId = "snet";
+  // const groupId = "rfaigroupid";
 
-  const queryStringParameters = {
-    org_id: orgId,
-    group_id: groupId,
-  };
+  // const queryStringParameters = {
+  //   org_id: orgId,
+  //   group_id: groupId,
+  // };
 
-  const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
+  //const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
+  const apiOptions = initializeAPIOptions(token);
   return API.get(apiName, apiPath, apiOptions);
 };
 
 export const fetchWallet = () => async dispatch => {
   const { token } = await fetchAuthenticatedUser();
   const response = await fetchWalletAPI(token);
+
   return dispatch(fetchWalletSuccess(response));
 };
 

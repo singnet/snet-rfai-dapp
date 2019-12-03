@@ -7,6 +7,7 @@ import { useStyles } from "./styles";
 import { requestActions } from "../../../Redux/actionCreators";
 
 import RequestCollection from "./RequestCollection";
+import isEmpty from "lodash/isEmpty";
 
 class MainSection extends Component {
   state = {
@@ -14,10 +15,12 @@ class MainSection extends Component {
   };
 
   componentDidMount = async () => {
-    const { fetchFoundationMembers } = this.props;
+    const { fetchFoundationMembers, foundationMembers } = this.props;
 
-    // Load the foundation Members
-    await fetchFoundationMembers();
+    if (isEmpty(foundationMembers)) {
+      // Load the foundation Members
+      await fetchFoundationMembers();
+    }
   };
 
   toggleView = () => {
