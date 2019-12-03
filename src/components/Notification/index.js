@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 
 import { useStyles } from "./styles";
-import { metamaskActions } from "../../Redux/actionCreators";
+import { metamaskActions, userActions } from "../../Redux/actionCreators";
 import { tokenActions } from "../../Redux/actionCreators";
 import { rfaiContractActions } from "../../Redux/actionCreators";
 
@@ -12,6 +12,7 @@ import NotificationIcon from "@material-ui/icons/Warning";
 
 import { NetworkNames } from "../../utility/constants/NetworkNames";
 import { toChecksumAddress } from "../../utility/GenHelperFunctions";
+import isEmpty from "lodash/isEmpty";
 
 class Notification extends Component {
   connectMetamask = async () => {
@@ -66,7 +67,7 @@ class Notification extends Component {
           });
         });
       } catch (error) {
-        // User denied account access...
+        // User has denied account access...
         updateMetamaskDetails(false, "0x0", 0, false);
       }
     }
@@ -80,11 +81,17 @@ class Notification extends Component {
       updateTokenAllowance,
       updateRFAITokenBalance,
       isLoggedIn,
+      fetchWallet,
+      walletList,
     } = this.props;
 
     if (!isLoggedIn) {
       updateMetamaskDetails(false, "0x0", 0, false);
       return;
+    } else {
+      if (isEmpty(walletList)) {
+        fetchWallet();
+      }
     }
 
     if (window.ethereum) {
@@ -177,6 +184,7 @@ class Notification extends Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  walletList: state.userReducer.walletList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -185,6 +193,7 @@ const mapDispatchToProps = dispatch => ({
   updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
   updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
+  fetchWallet: () => dispatch(userActions.fetchWallet()),
 });
 
 export default connect(

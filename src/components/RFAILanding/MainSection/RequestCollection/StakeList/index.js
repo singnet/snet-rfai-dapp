@@ -102,7 +102,7 @@ const StakeList = ({
                         </TableCell>
                         <TableCell align="right">
                           <span className={classes.mobileTableHeader}>Backed on:</span>
-                          {stake.created}
+                          {stake.created_at}
                         </TableCell>
                         <TableCell align="right">
                           <span className={classes.mobileTableHeader}>Tokens Awarded:</span>
