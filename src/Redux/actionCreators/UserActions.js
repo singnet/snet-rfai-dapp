@@ -352,17 +352,6 @@ export const forgotPasswordSubmit = ({ email, code, password, history, route }) 
 const fetchWalletAPI = token => {
   const apiName = APIEndpoints.ORCHESTRATOR.name;
   const apiPath = APIPaths.WALLET;
-
-  // Passing Dummy values to orgId, groupId
-  // const orgId = "snet";
-  // const groupId = "rfaigroupid";
-
-  // const queryStringParameters = {
-  //   org_id: orgId,
-  //   group_id: groupId,
-  // };
-
-  //const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
   const apiOptions = initializeAPIOptions(token);
   return API.get(apiName, apiPath, apiOptions);
 };
@@ -398,13 +387,15 @@ export const registerWallet = address => async dispatch => {
   try {
     const { token } = await fetchAuthenticatedUser();
     await registerWalletAPI(token, address);
-    return dispatch(registerWalletSuccess(address));
+    dispatch(registerWalletSuccess());
   } catch (exp) {
     // This request is fire and forget as it works in the backgroud for now
+    // Update the list in case if User address is added from other portal at the same time
+    dispatch(fetchWallet());
   }
 };
 
-const registerWalletSuccess = address => dispatch => {
+const registerWalletSuccess = () => dispatch => {
   // On Success Update the Wallet List
-  dispatch(fetchWallet);
+  dispatch(fetchWallet());
 };
