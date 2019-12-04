@@ -16,8 +16,6 @@ import isEmpty from "lodash/isEmpty";
 
 class Notification extends Component {
   connectMetamask = async () => {
-    const { updateMetamaskDetails } = this.props;
-
     if (window.ethereum) {
       try {
         const ethereum = window.ethereum;
@@ -30,7 +28,7 @@ class Notification extends Component {
         window.web3.version.getNetwork(async (err, netId) => {
           const isTxnsAllowed =
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
-          await updateMetamaskDetails(
+          await this.storeMetamaskDetails(
             Boolean(window.web3.eth.defaultAccount),
             toChecksumAddress(window.web3.eth.defaultAccount),
             netId,
@@ -42,13 +40,12 @@ class Notification extends Component {
         this.subscribeToMetamask();
       } catch (error) {
         // User denied account access...
-        updateMetamaskDetails(false, "0x0", 0, false);
+        this.storeMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
 
   subscribeToMetamask = () => {
-    const { updateMetamaskDetails } = this.props;
     if (window.ethereum) {
       const ethereum = window.ethereum;
       window.web3 = new window.Web3(ethereum);
@@ -58,7 +55,7 @@ class Notification extends Component {
           window.web3.version.getNetwork(async (err, netId) => {
             const isTxnsAllowed =
               Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
-            await updateMetamaskDetails(
+            await this.storeMetamaskDetails(
               Boolean(window.web3.eth.defaultAccount),
               toChecksumAddress(window.web3.eth.defaultAccount),
               netId,
@@ -68,15 +65,14 @@ class Notification extends Component {
         });
       } catch (error) {
         // User has denied account access...
-        updateMetamaskDetails(false, "0x0", 0, false);
+        this.storeMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
 
-  loadMetamaskDetails = () => {
+  loadMetamaskDetails = async () => {
     const {
       metamaskDetails,
-      updateMetamaskDetails,
       updateTokenBalance,
       updateTokenAllowance,
       updateRFAITokenBalance,
@@ -86,11 +82,11 @@ class Notification extends Component {
     } = this.props;
 
     if (!isLoggedIn) {
-      updateMetamaskDetails(false, "0x0", 0, false);
+      this.storeMetamaskDetails(false, "0x0", 0, false);
       return;
     } else {
       if (isEmpty(walletList)) {
-        fetchWallet();
+        await fetchWallet();
       }
     }
 
@@ -102,7 +98,7 @@ class Notification extends Component {
         window.web3.version.getNetwork(async (err, netId) => {
           const isTxnsAllowed =
             Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
-          await updateMetamaskDetails(
+          await this.storeMetamaskDetails(
             Boolean(window.web3.eth.defaultAccount),
             toChecksumAddress(window.web3.eth.defaultAccount),
             netId,
@@ -118,7 +114,7 @@ class Notification extends Component {
         });
       } catch (error) {
         // User denied account access...
-        updateMetamaskDetails(false, "0x0", 0, false);
+        this.storeMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };
@@ -161,6 +157,25 @@ class Notification extends Component {
     await this.loadMetamaskDetails();
   };
 
+  storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
+    const { updateMetamaskDetails, walletList, registerWallet } = this.props;
+
+    await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
+
+    if (isTxnsAllowed) {
+      if (!isEmpty(walletList) && account !== "0x0") {
+        const wallets = walletList.filter(w => w.address.toLowerCase() === account.toLowerCase());
+        if (wallets.length === 0) {
+          // Call the Register API to associate the Wallet to User
+          registerWallet(account);
+        }
+      } else if (account !== "0x0") {
+        // Call the Register API to associate the Wallet to User
+        registerWallet(account);
+      }
+    }
+  };
+
   render() {
     const { metamaskDetails, isLoggedIn } = this.props;
     const message = this.generateNotificationMessage();
@@ -194,6 +209,7 @@ const mapDispatchToProps = dispatch => ({
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
   updateRFAITokenBalance: metamaskDetails => dispatch(rfaiContractActions.updateRFAITokenBalance(metamaskDetails)),
   fetchWallet: () => dispatch(userActions.fetchWallet()),
+  registerWallet: address => dispatch(userActions.registerWallet(address)),
 });
 
 export default connect(
