@@ -206,7 +206,7 @@ const RequestList = ({
               <div className={classes.exPanelRightSection}>
                 <div className={classes.exPanelSubDeadline}>
                   <span>Submission Deadline: </span>
-                  <p>{r.end_submission} </p>
+                  <p>{computeDateFromBlockNumber(currentBlockNumber, r.end_submission)} </p>
                 </div>
                 <div className={classes.exPanelProjURL}>
                   <span>Project URL: </span>
