@@ -168,4 +168,8 @@ export const useStyles = makeStyles(theme => ({
     textdecoration: "none",
     cursor: "pointer",
   },
+  serviceProviderRequestByContainer: {
+    flexgrow: 0,
+    width: "30%",
+  },
 }));
