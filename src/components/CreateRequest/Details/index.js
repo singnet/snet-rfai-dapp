@@ -94,8 +94,6 @@ class Details extends Component {
 
     var initialStakeBN = new BN(toWei(this.state.initialStake));
 
-    // TODO: Check if we need to add Nick name or email as the Requester?
-    //"author": this.state.requestAuthor,
     var ipfsInput = {
       title: this.state.requestTitle,
       description: this.state.requestDesc,

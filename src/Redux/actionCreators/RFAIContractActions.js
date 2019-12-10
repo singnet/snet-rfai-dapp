@@ -78,7 +78,7 @@ export const updateRFAIMaxStakers = metamaskState => async dispatch => {
   }
 };
 
-// Fetching The RFAI Min Stake Configuration
+// Fetching The RFAI Owner
 export const updateRFAIOwner = metamaskState => async dispatch => {
   var rfaiOwner = 0x0;
   const rfaiContractAddress = getRFAIContractAddress();
