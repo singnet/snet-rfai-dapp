@@ -60,7 +60,7 @@ const StakeRequest = ({
     // Update the BlockNumber
     setBlockNumber();
     updateRFAITokenBalance(metamaskDetails);
-  });
+  }, [metamaskDetails, updateRFAITokenBalance]);
 
   // TODO: Need to check why we are getting Block NUmber in Reject
   const setBlockNumber = async () => {

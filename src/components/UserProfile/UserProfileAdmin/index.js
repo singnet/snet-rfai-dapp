@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
@@ -7,24 +7,48 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { loaderActions } from "../../../Redux/actionCreators";
+import { loaderActions, rfaiContractActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
 import { useStyles } from "./styles";
 import StyledButton from "../../common/StyledButton";
 import AlertBox, { alertTypes } from "../../common/AlertBox";
 
 import { waitForTransaction, addOrUpdateFoundationMembers } from "../../../utility/BlockchainHelper";
+import { fromWei } from "../../../utility/GenHelperFunctions";
 import web3 from "web3";
 
-const UserProfileAdmin = ({ classes, metamaskDetails, foundationMembers, startLoader, stopLoader }) => {
+const UserProfileAdmin = ({
+  classes,
+  metamaskDetails,
+  foundationMembers,
+  startLoader,
+  stopLoader,
+  rfaiMinStake,
+  rfaiMaxStakers,
+  rfaiOwner,
+  updateRFAIOwner,
+  updateRFAIMinStake,
+  updateRFAIMaxStakers,
+}) => {
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
   const [foundationMember, SetFoundationMember] = useState("");
   const [memberRole, SetMemberRole] = useState(0); //Normal User, 1-Admin User who can add other members
 
   // eslint-disable-next-line no-unused-vars
+  const [owner, SetOwner] = useState("0x0");
+  // eslint-disable-next-line no-unused-vars
   const [minStake, SetMinStake] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [maxStakers, SetMaxStakers] = useState(1);
+
+  //Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // code to run on component mount
+    // Fetch the RFAI Contract Configurations
+    updateRFAIMinStake(metamaskDetails);
+    updateRFAIMaxStakers(metamaskDetails);
+    updateRFAIOwner(metamaskDetails);
+  }, [metamaskDetails, updateRFAIMaxStakers, updateRFAIMinStake, updateRFAIOwner]);
 
   const createOrUpdateMember = async (_foundationMember, _memberRole, _isActive) => {
     let txHash;
@@ -165,12 +189,28 @@ const UserProfileAdmin = ({ classes, metamaskDetails, foundationMembers, startLo
         <h3>Configuration</h3>
         <div className={classes.inputFieldContainer}>
           <div className={classes.textField}>
-            <span>Minimum Stake</span>
-            <input name="minStake" type="number" min={1} onChange={event => SetMinStake(event.target.value)} />
+            <span>Owner</span>
+            <input name="owner" type="text" value={rfaiOwner} onChange={event => SetOwner(event.target.value)} />
+          </div>
+          <div className={classes.textField}>
+            <span>Minimum Stake (AGI)</span>
+            <input
+              name="minStake"
+              type="number"
+              value={fromWei(rfaiMinStake)}
+              min={1}
+              onChange={event => SetMinStake(event.target.value)}
+            />
           </div>
           <div className={classes.textField}>
             <span>Maximum Stakers</span>
-            <input name="maxStakers" type="number" min={1} onChange={event => SetMaxStakers(event.target.value)} />
+            <input
+              name="maxStakers"
+              type="number"
+              value={rfaiMaxStakers}
+              min={1}
+              onChange={event => SetMaxStakers(event.target.value)}
+            />
           </div>
         </div>
         {/* <div className={classes.btnContainer}>
@@ -188,11 +228,17 @@ UserProfileAdmin.defaultProps = {
 const mapStateToProps = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   foundationMembers: state.requestReducer.foundationMembers,
+  rfaiMinStake: state.rfaiContractReducer.rfaiMinStake,
+  rfaiMaxStakers: state.rfaiContractReducer.rfaiMaxStakers,
+  rfaiOwner: state.rfaiContractReducer.rfaiOwner,
 });
 
 const mapDispatchToProps = dispatch => ({
   startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
+  updateRFAIOwner: metamaskDetails => dispatch(rfaiContractActions.updateRFAIOwner(metamaskDetails)),
+  updateRFAIMinStake: metamaskDetails => dispatch(rfaiContractActions.updateRFAIMinStake(metamaskDetails)),
+  updateRFAIMaxStakers: metamaskDetails => dispatch(rfaiContractActions.updateRFAIMaxStakers(metamaskDetails)),
 });
 
 export default connect(

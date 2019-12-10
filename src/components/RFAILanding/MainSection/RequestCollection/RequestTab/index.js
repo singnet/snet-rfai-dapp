@@ -104,11 +104,10 @@ class RequestTab extends Component {
               />
               {/** Approved - Completed*/}
               <Tab className="singularity-tab" label={"Completed(" + requestSummary.COMPLETED + ")"} value={3} />{" "}
-              {/** InComplete TODO: Need to check where we need to show the rejected Items  */}
+              {/** InComplete - Crossed End Sub with no Sol or Crossed End Eval with no Votes or Expired with no sols/votes  */}
               <Tab className="singularity-tab" label={"InComplete(" + requestSummary.INCOMPLETE + ")"} value={4} />{" "}
-              {/** Closed */}
+              {/** Closed / Rejected*/}
               <Tab className="singularity-tab" label={"Closed(" + requestSummary.CLOSED + ")"} value={5} />{" "}
-              {/** Closed / Rejected */}
             </Tabs>
 
             <div className={classes.checkboxContainer}>
