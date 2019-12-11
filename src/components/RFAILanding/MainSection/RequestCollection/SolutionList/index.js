@@ -21,8 +21,17 @@ import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import ErrorBox from "../../../../common/ErrorBox";
 
-const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSolutions, loading }) => {
+const SolutionList = ({
+  open,
+  handleClose,
+  requestId,
+  requestDetails,
+  requestSolutions,
+  loading,
+  requestSolsFailed,
+}) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -32,6 +41,39 @@ const SolutionList = ({ open, handleClose, requestId, requestDetails, requestSol
   if (!requestDetails) {
     return <div />;
   }
+
+  if (requestSolsFailed) {
+    return (
+      <div>
+        <Modal open={open} onClose={handleCancel} className={classes.Modal}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.CardHeader}
+              title={"View Solutions"}
+              action={
+                <IconButton onClick={handleCancel}>
+                  <CloseIcon />
+                </IconButton>
+              }
+            />
+            <CardContent className={classes.CardContent}>
+              <Paper className={classes.root}>
+                <div className={classes.requestTitleContainer}>
+                  <span className={classes.requestTitle}>Request Title : </span>
+                  <span className={classes.titleName}>{requestDetails.request_title}</span>
+                </div>
+                <ErrorBox />
+              </Paper>
+            </CardContent>
+            <CardActions className={classes.CardActions}>
+              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            </CardActions>
+          </Card>
+        </Modal>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Modal open={open} onClose={handleCancel} className={classes.Modal}>
@@ -121,6 +163,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loading: state.loaderReducer.RequestModalCallStatus,
     requestDetails: requestDetailsById(state, requestId),
+    requestSolsFailed: state.errorReducer.requestSolutions,
   };
 };
 

@@ -10,7 +10,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-
+import { fromWei } from "../../../../../utility/GenHelperFunctions";
 // Table dependencies
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -21,6 +21,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
+import ErrorBox from "../../../../common/ErrorBox";
 
 const StakeList = ({
   open,
@@ -33,6 +34,7 @@ const StakeList = ({
   loading,
   metamaskDetails,
   isLoggedIn,
+  requestStakesFailed,
 }) => {
   const classes = useStyles();
   const actionToDisable = !(metamaskDetails.isTxnsAllowed && isLoggedIn);
@@ -43,6 +45,38 @@ const StakeList = ({
 
   if (!requestDetails) {
     return <div />;
+  }
+
+  if (requestStakesFailed) {
+    return (
+      <div>
+        <Modal open={open} onClose={handleCancel} className={classes.Modal}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.CardHeader}
+              title={"View Backers"}
+              action={
+                <IconButton onClick={handleCancel}>
+                  <CloseIcon />
+                </IconButton>
+              }
+            />
+            <div className={classes.requestTitleContainer}>
+              <span className={classes.requestTitle}>Request Title : </span>
+              <span className={classes.titleName}>{requestDetails.request_title}</span>
+            </div>
+            <CardContent className={classes.CardContent}>
+              <Paper className={classes.root}>
+                <ErrorBox />
+              </Paper>
+            </CardContent>
+            <CardActions className={classes.CardActions}>
+              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            </CardActions>
+          </Card>
+        </Modal>
+      </div>
+    );
   }
 
   return (
@@ -106,7 +140,7 @@ const StakeList = ({
                         </TableCell>
                         <TableCell align="right">
                           <span className={classes.mobileTableHeader}>Tokens Awarded:</span>
-                          {stake.stake_amount}
+                          {fromWei(stake.stake_amount)} AGI
                         </TableCell>
                       </TableRow>
                     ))}
@@ -139,6 +173,7 @@ const mapStateToProps = (state, ownProps) => {
     loading: state.loaderReducer.RequestModalCallStatus,
     metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
+    requestStakesFailed: state.errorReducer.requestStakes,
   };
 };
 

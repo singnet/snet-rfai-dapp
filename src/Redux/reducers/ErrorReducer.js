@@ -6,6 +6,8 @@ const InitialErrorState = {
   forgotPasswordSubmit: undefined,
   profileSettings: undefined,
   requestDetails: undefined,
+  requestSolutions: undefined,
+  requestStakes: undefined,
 };
 
 const errorReducer = (state = InitialErrorState, action) => {
@@ -32,6 +34,18 @@ const errorReducer = (state = InitialErrorState, action) => {
       return { ...state, ...action.payload };
     }
     case errorActions.RESET_REQUEST_DETAILS_ERROR: {
+      return { ...state, ...action.payload };
+    }
+    case errorActions.UPDATE_REQUEST_SOLUTIONS_ERROR: {
+      return { ...state, ...action.payload };
+    }
+    case errorActions.RESET_REQUEST_SOLUTIONS_ERROR: {
+      return { ...state, ...action.payload };
+    }
+    case errorActions.UPDATE_REQUEST_STAKES_ERROR: {
+      return { ...state, ...action.payload };
+    }
+    case errorActions.RESET_REQUEST_STAKES_ERROR: {
       return { ...state, ...action.payload };
     }
     default: {
