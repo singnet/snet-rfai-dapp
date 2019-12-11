@@ -26,6 +26,7 @@ import StyledButton from "../../../../common/StyledButton";
 
 import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
 import { loaderActions } from "../../../../../Redux/actionCreators";
+import ErrorBox from "../../../../common/ErrorBox";
 
 const VoteSolution = ({
   open,
@@ -41,6 +42,7 @@ const VoteSolution = ({
   startLoader,
   stopLoader,
   isLoggedIn,
+  requestSolsFailed,
 }) => {
   const classes = useStyles();
 
@@ -93,6 +95,39 @@ const VoteSolution = ({
   if (!requestDetails) {
     return <div />;
   }
+
+  if (requestSolsFailed) {
+    return (
+      <div>
+        <Modal open={open} onClose={handleCancel} className={classes.Modal}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.CardHeader}
+              title={"Vote Solutions"}
+              action={
+                <IconButton onClick={handleCancel}>
+                  <CloseIcon />
+                </IconButton>
+              }
+            />
+            <CardContent className={classes.CardContent}>
+              <Paper className={classes.root}>
+                <div className={classes.requestTitleContainer}>
+                  <span className={classes.requestTitle}>Request Title : </span>
+                  <span className={classes.titleName}>{requestDetails.request_title}</span>
+                </div>
+                <ErrorBox />
+              </Paper>
+            </CardContent>
+            <CardActions className={classes.CardActions}>
+              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            </CardActions>
+          </Card>
+        </Modal>
+      </div>
+    );
+  }
+
   return (
     // TODO: Need to contorl the disability of the Vote Button
     // Based on StakeMember & metamask Connection
@@ -217,6 +252,7 @@ const mapStateToProps = (state, ownProps) => {
     loading: state.loaderReducer.RequestModalCallStatus,
     metamaskDetails: state.metamaskReducer.metamaskDetails,
     requestDetails: requestDetailsById(state, requestId),
+    requestSolsFailed: state.errorReducer.requestSolutions,
   };
 };
 
