@@ -31,8 +31,6 @@ const fetchRequestAPI = async (requestStatus, metamaskDetails, isMyRequests) => 
       requester = metamaskDetails.account;
     }
     const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST}?status=${requestStatus}&requester=${requester}&my_request=${isMyRequests}`;
-    // const response = await fetch(url);
-    // return response.json();
 
     return new Promise((resolve, reject) => {
       fetch(url)
@@ -160,8 +158,6 @@ const fetchRequestSummaryError = () => dispatch => {
 // Fetching The the Request Solution
 const fetchRequestSolutionAPI = async requestId => {
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_SOLUTION}`;
-  // const response = await fetch(url);
-  // return response.json();
 
   try {
     return new Promise((resolve, reject) => {
