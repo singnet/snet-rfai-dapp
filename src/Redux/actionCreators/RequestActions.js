@@ -14,6 +14,14 @@ export const UPDATE_RFAI_FOUNDATION_MEMBERS = "UPDATE_RFAI_FOUNDATION_MEMBERS";
 export const UPDATE_REQUEST_CLAIM_SUBMITTER = "UPDATE_REQUEST_CLAIM_SUBMITTER";
 export const UPDATE_REQUEST_CLAIM_STAKER = "UPDATE_REQUEST_CLAIM_STAKER";
 
+// General function to check the status of the API Responses
+function checkStatus(response) {
+  if (!response.ok) {
+    throw new Error(response.error);
+  }
+  return response;
+}
+
 // Fetching The the Requests
 const fetchRequestAPI = async (requestStatus, metamaskDetails, isMyRequests) => {
   let requester = "0x0";
@@ -22,10 +30,20 @@ const fetchRequestAPI = async (requestStatus, metamaskDetails, isMyRequests) => 
     if (metamaskDetails.isTxnsAllowed) {
       requester = metamaskDetails.account;
     }
-
     const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST}?status=${requestStatus}&requester=${requester}&my_request=${isMyRequests}`;
-    const response = await fetch(url);
-    return response.json();
+    // const response = await fetch(url);
+    // return response.json();
+
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(checkStatus)
+        .then(response => {
+          resolve(response.json());
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   } catch (exp) {
     throw exp;
   }
@@ -60,9 +78,13 @@ const updateRequestDetails = data => dispatch => {
 
 // Fetching The RFAI Foundation Members
 const fetchFoundationMemberAPI = async () => {
-  const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_FOUNDATION_MEMBERS}`;
-  const response = await fetch(url);
-  return response.json();
+  try {
+    const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_FOUNDATION_MEMBERS}`;
+    const response = await fetch(url);
+    return response.json();
+  } catch (exp) {
+    throw exp;
+  }
 };
 
 export const fetchFoundationMembersData = () => async dispatch => {
@@ -70,7 +92,7 @@ export const fetchFoundationMembersData = () => async dispatch => {
     const response = await fetchFoundationMemberAPI();
     dispatch(fetchFoundationMemberSuccess(response.data));
   } catch (exp) {
-    throw exp;
+    dispatch(fetchFoundationMemberError());
   }
 };
 
@@ -82,17 +104,26 @@ const updateFoundationMember = data => dispatch => {
   dispatch({ type: UPDATE_RFAI_FOUNDATION_MEMBERS, payload: data });
 };
 
+const fetchFoundationMemberError = () => dispatch => {
+  // Foundation members is a background service to check the role of the user
+  // In case of error considered as a non foundation member
+  var data = {};
+  dispatch({ type: UPDATE_RFAI_FOUNDATION_MEMBERS, payload: data });
+};
+
 // Fetching The the Requests Summary report for Tabs
 const fetchRequestSummaryAPI = async (metamaskDetails, isMyRequests) => {
   let requester = "0x0";
-
   if (metamaskDetails.isTxnsAllowed) {
     requester = metamaskDetails.account;
   }
-
-  const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST_SUMMARY}?requester=${requester}&my_request=${isMyRequests}`;
-  const response = await fetch(url);
-  return response.json();
+  try {
+    const url = `${APIEndpoints.RFAI.endpoint}${APIPaths.RFAI_REQUEST_SUMMARY}?requester=${requester}&my_request=${isMyRequests}`;
+    const response = await fetch(url);
+    return response.json();
+  } catch (exp) {
+    throw exp;
+  }
 };
 
 export const fetchRequestSummaryData = (metamaskDetails, isMyRequests) => async dispatch => {
@@ -100,7 +131,7 @@ export const fetchRequestSummaryData = (metamaskDetails, isMyRequests) => async 
     const response = await fetchRequestSummaryAPI(metamaskDetails, isMyRequests);
     dispatch(fetchRequestSummarySuccess(response.data));
   } catch (exp) {
-    throw exp;
+    dispatch(fetchRequestSummaryError());
   }
 };
 
@@ -112,15 +143,45 @@ const updateRequestSummary = data => dispatch => {
   dispatch({ type: UPDATE_REQUEST_SUMMARY, payload: data });
 };
 
+const fetchRequestSummaryError = () => dispatch => {
+  // On Error set the summary data to default Zeros
+  var data = {
+    PENDING: 0,
+    ACTIVE: 0,
+    SOLUTION_VOTE: 0,
+    COMPLETED: 0,
+    INCOMPLETE: 0,
+    REJECTED: 0,
+    CLOSED: 0,
+  };
+  dispatch({ type: UPDATE_REQUEST_SUMMARY, payload: data });
+};
+
 // Fetching The the Request Solution
 const fetchRequestSolutionAPI = async requestId => {
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_SOLUTION}`;
-  const response = await fetch(url);
-  return response.json();
+  // const response = await fetch(url);
+  // return response.json();
+
+  try {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(checkStatus)
+        .then(response => {
+          resolve(response.json());
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  } catch (exp) {
+    throw exp;
+  }
 };
 
 export const fetchRequestSolutionData = requestId => async dispatch => {
   try {
+    dispatch(errorActions.resetRequestSolutionsError);
     dispatch(loaderActions.startRequestModalLoader);
 
     const response = await fetchRequestSolutionAPI(requestId);
@@ -129,6 +190,7 @@ export const fetchRequestSolutionData = requestId => async dispatch => {
     dispatch(loaderActions.stopRequestModalLoader);
   } catch (exp) {
     dispatch(loaderActions.stopRequestModalLoader);
+    dispatch(fetchRequestSolutionError(exp));
   }
 };
 
@@ -140,6 +202,10 @@ const updateRequestSolution = data => dispatch => {
   dispatch({ type: UPDATE_REQUEST_SOLUTIONS, payload: data });
 };
 
+const fetchRequestSolutionError = error => dispatch => {
+  dispatch(errorActions.updateRequestSolutionsError(error));
+};
+
 // Fetching The the Request Stake
 const fetchRequestStakeAPI = async requestId => {
   const url = `${APIEndpoints.RFAI.endpoint}/request/${requestId}${APIPaths.RFAI_REQUEST_STAKE}`;
@@ -149,6 +215,7 @@ const fetchRequestStakeAPI = async requestId => {
 
 export const fetchRequestStakeData = requestId => async dispatch => {
   try {
+    dispatch(errorActions.resetRequestStakesError);
     dispatch(loaderActions.startRequestModalLoader);
 
     const response = await fetchRequestStakeAPI(requestId);
@@ -157,6 +224,7 @@ export const fetchRequestStakeData = requestId => async dispatch => {
     dispatch(loaderActions.stopRequestModalLoader);
   } catch (exp) {
     dispatch(loaderActions.stopRequestModalLoader);
+    dispatch(fetchRequestStakeError(exp));
   }
 };
 
@@ -166,6 +234,10 @@ const fetchRequestStakeSuccess = response => dispatch => {
 
 const updateRequestStake = data => dispatch => {
   dispatch({ type: UPDATE_REQUEST_STAKES, payload: data });
+};
+
+const fetchRequestStakeError = error => dispatch => {
+  dispatch(errorActions.updateRequestStakesError(error));
 };
 
 // Fetching The the Request Vote

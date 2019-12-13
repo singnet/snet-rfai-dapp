@@ -31,6 +31,8 @@ import { getBlockNumber } from "../../../../../utility/BlockchainHelper";
 
 import StyledButton from "../../../../common/StyledButton";
 
+import ErrorBox from "../../../../common/ErrorBox";
+
 const RequestList = ({
   requestListData,
   loading,
@@ -43,6 +45,7 @@ const RequestList = ({
   requestVotes,
   metamaskDetails,
   foundationMembers,
+  requestFailed,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -127,6 +130,9 @@ const RequestList = ({
         </div>
       </div>
     );
+  }
+  if (requestFailed) {
+    return <ErrorBox />;
   }
   if (!requestListData.length || requestListData.length === 0) {
     return (
@@ -388,6 +394,7 @@ const mapStateToProps = state => ({
   requestVotes: state.requestReducer.requestVotes,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   foundationMembers: state.requestReducer.foundationMembers,
+  requestFailed: state.errorReducer.requestDetails,
 });
 
 const mapDispatchToProps = dispatch => ({

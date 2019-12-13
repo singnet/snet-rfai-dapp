@@ -24,7 +24,7 @@ import { requestActions } from "./Redux/actionCreators";
 const ForgotPassword = lazy(() => import("./components/Login/ForgotPassword"));
 const ForgotPasswordSubmit = lazy(() => import("./components/Login/ForgotPasswordSubmit"));
 const Onboarding = lazy(() => import("./components/Onboarding"));
-const PageNotFound = lazy(() => import("./components/PageNotFound"));
+const PageNotFound = lazy(() => import("./components/common/PageNotFound"));
 const RFAILanding = lazy(() => import("./components/RFAILanding"));
 const CreateRequest = lazy(() => import("./components/CreateRequest"));
 const SignUp = lazy(() => import("./components/Login/Signup"));
@@ -51,6 +51,10 @@ class App extends Component {
   componentDidMount = () => {
     this.props.fetchUserDetails();
     this.props.fetchFoundationMembers();
+  };
+
+  pageNotFoundAction = () => {
+    history.push(Routes.RFAI_LANDING);
   };
 
   render() {
@@ -87,20 +91,6 @@ class App extends Component {
                   {...this.props}
                   component={withRegistrationHeader(Onboarding, headerData.ONBOARDING)}
                 />
-                {/* <PrivateRoute
-                  isAllowed={isTermsAccepted}
-                  redirectTo={`/${Routes.ONBOARDING}`}
-                  path={`/${Routes.RFAI_LANDING}`}
-                  {...this.props}
-                  component={withInAppWrapper(RFAILanding)}
-                /> */}
-                {/* <PrivateRoute
-                  isAllowed={isTermsAccepted}
-                  redirectTo={`/${Routes.ONBOARDING}`}
-                  path={`/${Routes.CREATE_REQUEST}`}
-                  {...this.props}
-                  component={withInAppWrapper(CreateRequest)}
-                /> */}
                 <PrivateRoute
                   isAllowed={isLoggedIn && isTermsAccepted}
                   redirectTo={isLoggedIn ? `/${Routes.ONBOARDING}` : `/${Routes.LOGIN}`}
@@ -108,19 +98,11 @@ class App extends Component {
                   {...this.props}
                   component={withInAppWrapper(UserProfile)}
                 />
-                {/* <PrivateRoute
-                  isAllowed={isTermsAccepted}
-                  redirectTo={`/${Routes.ONBOARDING}`}
-                  path="/"
-                  exact
-                  {...this.props}
-                  component={withInAppWrapper(RFAILanding)}
-                /> */}
                 <Route path={`/${Routes.RFAI_LANDING}`} component={withInAppWrapper(RFAILanding)} />
                 <Route path={`/${Routes.CREATE_REQUEST}`} component={withInAppWrapper(CreateRequest)} />
                 <Route path={`/${Routes.GET_STARTED}`} component={withInAppWrapper(GetStarted)} />
                 <Route path="/" exact component={withInAppWrapper(RFAILanding)} />
-                <Route component={PageNotFound} />
+                <Route component={() => <PageNotFound handleGoToHome={this.pageNotFoundAction} />} />
               </Switch>
             </Suspense>
           </Router>
