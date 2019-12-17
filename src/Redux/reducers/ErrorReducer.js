@@ -31,22 +31,22 @@ const errorReducer = (state = InitialErrorState, action) => {
       return { ...state, ...action.payload };
     }
     case errorActions.UPDATE_REQUEST_DETAILS_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestDetails: action.payload };
     }
     case errorActions.RESET_REQUEST_DETAILS_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestDetails: action.payload };
     }
     case errorActions.UPDATE_REQUEST_SOLUTIONS_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestSolutions: action.payload };
     }
     case errorActions.RESET_REQUEST_SOLUTIONS_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestSolutions: action.payload };
     }
     case errorActions.UPDATE_REQUEST_STAKES_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestStakes: action.payload };
     }
     case errorActions.RESET_REQUEST_STAKES_ERROR: {
-      return { ...state, ...action.payload };
+      return { ...state, requestStakes: action.payload };
     }
     default: {
       return state;
