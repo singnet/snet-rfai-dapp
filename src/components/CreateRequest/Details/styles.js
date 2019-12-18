@@ -89,7 +89,9 @@ export const useStyles = theme => ({
   dialogStyles: {
     backgroundColor: "white",
     padding: 20,
+    alignItems: "center",
   },
+  dialogStylesContent: { width: "80%", align: "center", margin: "auto" },
   expiryDateContainer: {
     "& > div": {
       "& > div": {
