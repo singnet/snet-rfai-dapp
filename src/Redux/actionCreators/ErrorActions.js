@@ -42,7 +42,7 @@ export const updateRequestDetailsError = error => dispatch => {
 };
 
 export const resetRequestDetailsError = dispatch => {
-  dispatch({ type: RESET_REQUEST_DETAILS_ERROR, payload: { requestDetails: undefined } });
+  dispatch({ type: RESET_REQUEST_DETAILS_ERROR, payload: undefined });
 };
 
 export const updateRequestSolutionsError = error => dispatch => {
@@ -50,7 +50,7 @@ export const updateRequestSolutionsError = error => dispatch => {
 };
 
 export const resetRequestSolutionsError = dispatch => {
-  dispatch({ type: RESET_REQUEST_SOLUTIONS_ERROR, payload: { requestSolutions: undefined } });
+  dispatch({ type: RESET_REQUEST_SOLUTIONS_ERROR, payload: undefined });
 };
 
 export const updateRequestStakesError = error => dispatch => {
@@ -58,5 +58,5 @@ export const updateRequestStakesError = error => dispatch => {
 };
 
 export const resetRequestStakesError = dispatch => {
-  dispatch({ type: RESET_REQUEST_STAKES_ERROR, payload: { requestStakes: undefined } });
+  dispatch({ type: RESET_REQUEST_STAKES_ERROR, payload: undefined });
 };
