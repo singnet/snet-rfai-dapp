@@ -9,7 +9,6 @@ import web3 from "web3";
 //components
 import TextField from "@material-ui/core/TextField";
 import StyledButton from "../../common/StyledButton";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 
 import AlertBox, { alertTypes } from "../../common/AlertBox";
@@ -315,22 +314,20 @@ class Details extends Component {
         </div>
 
         <Dialog PaperProps={classes.dialogStyles} open={this.state.showConfirmation}>
-          <p>
-            Please make sure that the details entered are accurate. <br /> Click Ok to proceed and Cancel to revalidate!
-          </p>
-          <br />
-          <p>
-            Once the requested submitted successfully, will be sent for approval. You can check the status in my
-            requests tab.
-          </p>
-          <p>
-            <Button className="blue float-right ml-4" onClick={event => this.handleCreateButton(event, false)}>
-              Ok
-            </Button>
-            <Button className="blue float-right ml-4" onClick={() => this.setState({ showConfirmation: false })}>
-              Cancel
-            </Button>
-          </p>
+          <div className={classes.dialogStylesContent}>
+            <p>
+              Please make sure that the details entered are accurate. <br /> Click Ok to proceed and Cancel to
+              revalidate!
+            </p>
+            <p>
+              Once the requested submitted successfully, will be sent for approval. You can check the status in pending
+              requests tab.
+            </p>
+            <p>
+              <StyledButton type="blue" onClick={event => this.handleCreateButton(event, false)} btnText="Ok" />
+              <StyledButton type="red" onClick={() => this.setState({ showConfirmation: false })} btnText="Cancel" />
+            </p>
+          </div>
         </Dialog>
       </div>
     );
