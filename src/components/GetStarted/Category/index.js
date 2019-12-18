@@ -30,7 +30,7 @@ const Category = ({ classes, title, content, rightAlign, media }) => {
       className={`${classes.CategoryWrapper} ${rightAlign ? classes.reverseDirection : null}`}
     >
       <Grid item xs={12} sm={6} md={6} lg={6} className={classes.CategoryMedia}>
-        <img src={media || DummyGetStartedCard} alt="DummyImage" className={classes.FullWidth} />
+        <img src={media || DummyGetStartedCard} alt={title} className={classes.FullWidth} />
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6} className={classes.CategoryContent}>
         <h3>{title}</h3>
