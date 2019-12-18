@@ -1,11 +1,11 @@
 import Routes from "./Routes";
-const imgPath = (directory = "RateReviewImprove", file = "RatingAIServices", extension = "png") =>
-  `${process.env.REACT_APP_SNET_CDN}/assets/images/GetStarted/${directory}/${file}.${extension}`;
+const imgPath = (directory = "GetStarted", file = "Overview2x", extension = "png") =>
+  `${process.env.REACT_APP_SNET_CDN}/assets/images/${directory}/${file}.${extension}`;
 
 export const GetStartedCategoriesData = [
   {
     title: "Overview",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "Overview2x"),
     content: [
       {
         type: "description",
@@ -26,7 +26,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Making A Request",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "MakingaRequest2x"),
     content: [
       {
         type: "description",
@@ -56,7 +56,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Backing A Request",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "BackingaRequest2x"),
     content: [
       {
         type: "description",
@@ -66,7 +66,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Request Review Process",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "RequestreviewProgress2x"),
     content: [
       {
         type: "description",
@@ -88,7 +88,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Submitting A Solution",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "SubmittingaSolution2x"),
     content: [
       {
         type: "description",
@@ -120,7 +120,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Solution Voting",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "SolutionVoting2x"),
     content: [
       {
         type: "description",
@@ -130,7 +130,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Claiming Tokens",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "ClamingTokens2x"),
     content: [
       {
         type: "description",
@@ -140,7 +140,7 @@ export const GetStartedCategoriesData = [
   },
   {
     title: "Closing A Request",
-    media: imgPath("RateReviewImprove", "RatingAIServices"),
+    media: imgPath("GetStarted", "ClosingaRequest2x"),
     content: [
       {
         type: "description",
