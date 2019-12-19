@@ -197,7 +197,7 @@ const UserProfileClaims = ({
         <div className={classes.claimsForSolutions}>
           <h4>Claims for Solutions</h4>
           <Typography className={classes.description}>
-            All AGI tokens you receieved as rewards from the solutions that you submitted will be listed here for you
+            All AGI tokens you received as rewards from the solutions that you submitted will be listed here for your
             claim to your Metamask wallet.
           </Typography>
           <Grid container className={classes.tableHeader}>

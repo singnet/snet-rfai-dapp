@@ -217,8 +217,8 @@ class MetaMaskAccountBalance extends Component {
     return (
       <div className={classes.metamaskAccBalanceContainer}>
         <Typography className={classes.description}>
-          You Metamask wallet is connected. You will need to have available AGI tokens in your Token Balance or Escrow
-          Balance to create a request.
+          Your Metamask wallet is connected. You will need available AGI tokens in your Token Balance or Escrow Balance
+          to create a request.
         </Typography>
         <div className={classes.accountDetails}>
           <div>

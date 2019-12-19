@@ -73,14 +73,14 @@ class CreateRequest extends Component {
                 <Typography>
                   You can request for any AI Service that would like to see built on top of the SingularityNet platform.
                   Requests should be detailed enough to allow discussion and development. Requests accepted by the
-                  foundation will be raised as a github pull request to the RFAI repository.
+                  foundation will be raised as a GitHub pull request to the RFAI repository.
                 </Typography>
                 <span>
                   We would like to have an objective and measurable acceptance criteria (get accuracy above X% of this
                   data, etc).
                 </span>
                 <ul>
-                  <p>The foundation will review all requests and will approve them. In general we look for</p>
+                  <p>The foundation will review all requests and will approve them. In general, we look for</p>
                   <li>* Clear problem description</li>
                   <li>* Relevant problem which if solved will help the community</li>
                   <li>* Quantitative evaluation criteria</li>
