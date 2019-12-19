@@ -18,6 +18,7 @@ import { LoaderContent } from "../../../utility/constants/LoaderContent";
 import { saveIPFSDocument } from "../../../utility/IPFSHelper";
 import { waitForTransaction, createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
 import { toWei, isValidInputAmount, computeBlocksFromDates } from "../../../utility/GenHelperFunctions";
+import snetValidator from "../../../utility/snetValidator";
 
 const BN = web3.utils.BN;
 
@@ -150,6 +151,15 @@ class Details extends Component {
       return;
     }
 
+    const documentURI = this.state.documentURI;
+    const requestTrainingDSURI = this.state.requestTrainingDS;
+
+    const isValidDocumentURI = snetValidator({ documentURI }, { documentURI: { url: true } });
+    const isValidRequestTrainingDSURI = snetValidator(
+      { requestTrainingDSURI },
+      { requestTrainingDSURI: { url: true } }
+    );
+
     //value, expiration, documentURI
     const zeroBN = new BN(0);
     const initialStakeBN = new BN(toWei(this.state.initialStake));
@@ -160,10 +170,20 @@ class Details extends Component {
 
     if (
       this.state.requestTitle.length > 0 &&
+      !isValidDocumentURI &&
+      !isValidRequestTrainingDSURI &&
       initialStakeBN.gt(zeroBN) &&
       initialStakeBN.lte(rfaiTokenBalanceBN) &&
       parseInt(expiration, 10) > parseInt(this.state.blockNumber, 10)
     ) {
+      // Reset the Error Message
+      this.setState({
+        alert: {
+          type: alertTypes.ERROR,
+          message: undefined,
+        },
+      });
+
       if (needConfirmation) {
         this.setState({ showConfirmation: true });
         return;
@@ -177,6 +197,20 @@ class Details extends Component {
         alert: {
           type: alertTypes.ERROR,
           message: `Oops! Request title is blank. Please provide a title for the request`,
+        },
+      });
+    } else if (isValidDocumentURI) {
+      this.setState({
+        alert: {
+          type: alertTypes.ERROR,
+          message: `Oops! Additional document URL is invalid`,
+        },
+      });
+    } else if (isValidRequestTrainingDSURI) {
+      this.setState({
+        alert: {
+          type: alertTypes.ERROR,
+          message: `Oops! Training dataset URL is invalid`,
         },
       });
     } else if (initialStakeBN.lte(zeroBN) || initialStakeBN.gt(rfaiTokenBalanceBN)) {
@@ -313,7 +347,7 @@ class Details extends Component {
           />
         </div>
 
-        <Dialog PaperProps={classes.dialogStyles} open={this.state.showConfirmation}>
+        <Dialog PaperProps={{ className: classes.dialogStyles }} open={this.state.showConfirmation}>
           <div className={classes.dialogStylesContent}>
             <p>
               Please make sure that the details entered are accurate. <br /> Click Ok to proceed and Cancel to
