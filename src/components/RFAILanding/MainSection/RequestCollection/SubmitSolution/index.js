@@ -23,6 +23,8 @@ import StyledButton from "../../../../common/StyledButton";
 import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
 import { loaderActions } from "../../../../../Redux/actionCreators";
 
+import snetValidator from "../../../../../utility/snetValidator";
+
 const SubmitSolution = ({
   open,
   handleClose,
@@ -52,8 +54,13 @@ const SubmitSolution = ({
       return;
     }
 
-    if (solURI.trim().length > 0) {
+    const isValidSolURI = snetValidator({ solURI }, { solURI: { url: true } });
+
+    if (solURI.trim().length > 0 && !isValidSolURI) {
       try {
+        // Reset the Error Message
+        setAlert({ type: alertTypes.ERROR, message: undefined });
+
         const docURIinBytes = web3.utils.fromAscii(solURI);
 
         // Initiate the Deposit Token to RFAI Escrow
@@ -72,7 +79,7 @@ const SubmitSolution = ({
         stopLoader();
       }
     } else {
-      setAlert({ type: alertTypes.ERROR, message: `Invalid solution URI.` });
+      setAlert({ type: alertTypes.ERROR, message: `Invalid solution URL.` });
     }
   };
 
