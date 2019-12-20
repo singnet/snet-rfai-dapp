@@ -144,7 +144,7 @@ const SubmitSolution = ({
                       />
                     </div>
                     <p>
-                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentaion for more
+                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentation for more
                       info.
                     </p>
                   </div>
