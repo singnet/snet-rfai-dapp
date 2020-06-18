@@ -29,7 +29,7 @@ class SignUp extends Component {
   };
 
   handleEmail = event => {
-    this.setState({ email: event.currentTarget.value });
+    this.setState({ email: event.currentTarget.value.toLowerCase() });
   };
 
   handlePassword = event => {

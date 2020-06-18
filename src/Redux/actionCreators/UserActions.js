@@ -197,6 +197,12 @@ export const login = ({ email, password, history, route }) => dispatch => {
         dispatch(loaderActions.stopAppLoader);
         return;
       }
+      if (err.code === "PasswordResetRequiredException") {
+        dispatch(updateEmail(email));
+        history.push(`/${Routes.RESET_PASSWORD}`);
+        dispatch(loaderActions.stopAppLoader);
+        return;
+      }
       const error = parseError(err);
       userDetails = {
         type: userActions.LOGIN_ERROR,

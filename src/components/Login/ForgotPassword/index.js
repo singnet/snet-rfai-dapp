@@ -12,11 +12,20 @@ import { userActions, errorActions } from "../../../Redux/actionCreators";
 import { forgotPasswordConstraints } from "./validationConstraints";
 import snetValidator from "../../../utility/snetValidator";
 
-const ForgotPassword = ({ classes, email, error, handleForgotPassword, history, updateError, resetError }) => {
+const ForgotPassword = ({
+  classes,
+  email,
+  error,
+  handleForgotPassword,
+  history,
+  updateError,
+  resetError,
+  location,
+}) => {
   const [localEmail, setEmail] = useState(email);
 
   const handleEmail = event => {
-    setEmail(event.target.value);
+    setEmail(event.target.value.toLowerCase());
   };
 
   const handleSubmit = event => {
@@ -35,7 +44,7 @@ const ForgotPassword = ({ classes, email, error, handleForgotPassword, history, 
   return (
     <Grid container spacing={24} className={classes.forgotPwdMainContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.forgotPwdContent}>
-        <h2>Forgot your pasword?</h2>
+        <h2>{location.pathname.includes(Routes.RESET_PASSWORD) ? "Reset your password" : "Forgot your pasword?"}</h2>
         <p>We'll email you instructions on how to reset it.</p>
         <form noValidate autoComplete="off" className={classes.forgotPwdForm}>
           <TextField
