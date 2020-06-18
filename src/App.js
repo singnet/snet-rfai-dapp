@@ -80,6 +80,11 @@ class App extends Component {
                   component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
                 />
                 <Route
+                  path={`/${Routes.RESET_PASSWORD}`}
+                  {...this.props}
+                  component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
+                />
+                <Route
                   path={`/${Routes.FORGOT_PASSWORD_SUBMIT}`}
                   {...this.props}
                   component={withRegistrationHeader(ForgotPasswordSubmit, headerData.FORGOT_PASSWORD_SUBMIT)}

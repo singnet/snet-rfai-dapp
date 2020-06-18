@@ -42,7 +42,7 @@ export const useStyles = theme => ({
       },
       "& p": {
         margin: "0 !important",
-        display: "inline-block",
+        display: "inline",
       },
       "& span": {
         marginTop: 17,
