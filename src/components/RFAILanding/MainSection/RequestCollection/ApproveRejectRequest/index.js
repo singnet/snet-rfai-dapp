@@ -15,12 +15,7 @@ import StyledButton from "../../../../common/StyledButton";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import {
-  getBlockNumber,
-  waitForTransaction,
-  approveRequest,
-  rejectRequest,
-} from "../../../../../utility/BlockchainHelper";
+import { getBlockNumber, approveRequest, rejectRequest } from "../../../../../utility/BlockchainHelper";
 import { LoaderContent } from "../../../../../utility/constants/LoaderContent";
 import { loaderActions } from "../../../../../Redux/actionCreators";
 
@@ -79,14 +74,12 @@ const ApproveRejectRequest = ({
       try {
         setAlert({ type: alertTypes.ERROR, message: undefined });
 
-        // Initiate the Deposit Token to RFAI Escrow
-        let txHash = await approveRequest(metamaskDetails, requestId, endSubmission, endEvaluation, newExpiration);
         setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
         startLoader(LoaderContent.APPROVE_REQUEST);
 
-        // Wait for the transaction to be completed
-        await waitForTransaction(txHash);
+        // Initiate the Deposit Token to RFAI Escrow
+        await approveRequest(metamaskDetails, requestId, endSubmission, endEvaluation, newExpiration);
 
         setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 
@@ -113,13 +106,10 @@ const ApproveRejectRequest = ({
     }
 
     try {
-      // Initiate the Deposit Token to RFAI Escrow
-      let txHash = await rejectRequest(metamaskDetails, requestId);
-
       startLoader(LoaderContent.REJECT_REQUEST);
 
-      // Wait for the transaction to be completed
-      await waitForTransaction(txHash);
+      // Initiate the Deposit Token to RFAI Escrow
+      await rejectRequest(metamaskDetails, requestId);
 
       setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 

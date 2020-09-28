@@ -16,7 +16,7 @@ import { rfaiContractActions, loaderActions } from "../../../Redux/actionCreator
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
 
 import { saveIPFSDocument } from "../../../utility/IPFSHelper";
-import { waitForTransaction, createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
+import { createRequest, getBlockNumber } from "../../../utility/BlockchainHelper";
 import { toWei, isValidInputAmount, computeBlocksFromDates } from "../../../utility/GenHelperFunctions";
 import snetValidator from "../../../utility/snetValidator";
 
@@ -107,12 +107,11 @@ class Details extends Component {
       // Get the bytes of IPFS hash - Will be an input to request creation
       let docURIinBytes = await saveIPFSDocument(ipfsInput);
       // console.log("IPFS loaded successfully - ", docURIinBytes);
-      let txHash = await createRequest(metamaskDetails, initialStakeBN, expiration, docURIinBytes);
 
       this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
       startLoader(LoaderContent.CREATE_REQUEST);
 
-      await waitForTransaction(txHash);
+      await createRequest(metamaskDetails, initialStakeBN, expiration, docURIinBytes);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
 
@@ -121,14 +120,14 @@ class Details extends Component {
       // Dispatch the RFAI Escrow Balance Update
       updateRFAITokenBalance(metamaskDetails);
 
-      this.showSummaryComponent(txHash);
+      this.showSummaryComponent();
     } catch (err) {
       this.setState({ alert: { type: alertTypes.ERROR, message: "Transaction has failed." } });
       stopLoader();
     }
   };
 
-  showSummaryComponent = txHash => {
+  showSummaryComponent = () => {
     const { metamaskDetails, showSummary } = this.props;
 
     const summaryData = {
