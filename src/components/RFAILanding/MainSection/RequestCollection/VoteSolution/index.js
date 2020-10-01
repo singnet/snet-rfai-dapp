@@ -196,7 +196,10 @@ const VoteSolution = ({
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
                           <a href={sol.solution_docURI} target="_new" className={classes.blueText}>
-                            {sol.doc_uri}
+                            <a href={sol.doc_uri} target="_blank" rel="noopener noreferrer">
+                              {" "}
+                              {sol.doc_uri}{" "}
+                            </a>
                           </a>
                         </TableCell>
                         <TableCell>

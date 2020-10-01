@@ -12,7 +12,6 @@ import NotificationIcon from "@material-ui/icons/Warning";
 
 import { NetworkNames } from "../../utility/constants/NetworkNames";
 import { toChecksumAddress } from "../../utility/GenHelperFunctions";
-import isEmpty from "lodash/isEmpty";
 
 class Notification extends Component {
   connectMetamask = async () => {
@@ -22,18 +21,6 @@ class Notification extends Component {
 
         const chainId = ethereum.chainId;
         const netId = parseInt(chainId);
-
-        // const _netId = ethereum.networkVersion;
-        // console.log("1. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("1. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("1. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("1. eth_accounts _accounts2[0] - ", _accounts2[0]);
 
         //await ethereum.request({ method: 'eth_accounts' });
         const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -57,20 +44,6 @@ class Notification extends Component {
       const ethereum = window.ethereum;
 
       try {
-        // const _netId = ethereum.networkVersion;
-        // console.log("2. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("2. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("2. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-        // console.log("2. eth_requestAccounts _accounts - ", _accounts);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("2. eth_accounts _accounts2[0] - ", _accounts2[0]);
-        // console.log("2. eth_accounts _accounts2 - ", _accounts2);
-
         // On Network Change
         ethereum.on("chainChanged", _chainId => {
           window.location.reload();
@@ -101,36 +74,17 @@ class Notification extends Component {
       updateTokenAllowance,
       updateRFAITokenBalance,
       isLoggedIn,
-      fetchWallet,
-      walletList,
     } = this.props;
-    //console.log("loadMetamaskDetails called....");
+
     if (!isLoggedIn) {
       this.storeMetamaskDetails(false, "0x0", 0, false);
       return;
-    } else {
-      if (isEmpty(walletList)) {
-        //console.log("Fecth API Called from Notification Component....");
-        await fetchWallet();
-      }
     }
 
     if (window.ethereum) {
       const ethereum = window.ethereum;
 
       try {
-        // const _netId = ethereum.networkVersion;
-        // console.log("3. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("3. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("3. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("3. eth_accounts _accounts2[0] - ", _accounts2[0]);
-
         const chainId = ethereum.chainId;
         const netId = parseInt(chainId);
 
@@ -194,28 +148,23 @@ class Notification extends Component {
     await this.loadMetamaskDetails();
   };
 
-  storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
-    const { updateMetamaskDetails, walletList, registerWallet } = this.props;
+  componentDidUpdate = async () => {
+    const { metamaskDetails, walletList, isWalletListLoaded, registerWallet } = this.props;
 
-    await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
-
-    if (isTxnsAllowed) {
-      if (!isEmpty(walletList) && account !== "0x0") {
-        const wallets = walletList.filter(w => w.address.toLowerCase() === account.toLowerCase());
-
-        // console.log("walletList --- ", walletList);
-        // console.log("wallets ---", wallets);
-        // console.log("wallets.length --- ", wallets.length);
+    if (isWalletListLoaded) {
+      if (metamaskDetails.isTxnsAllowed && metamaskDetails.account !== "0x0") {
+        const wallets = walletList.filter(w => w.address.toLowerCase() === metamaskDetails.account.toLowerCase());
 
         if (wallets.length === 0) {
-          // Call the Register API to associate the Wallet to User
-          await registerWallet(account);
+          await registerWallet(metamaskDetails.account);
         }
-      } else if (account !== "0x0") {
-        // Call the Register API to associate the Wallet to User
-        await registerWallet(account);
       }
     }
+  };
+
+  storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
+    const { updateMetamaskDetails } = this.props;
+    await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
   };
 
   render() {
@@ -242,6 +191,7 @@ const mapStateToProps = state => ({
   isLoggedIn: state.userReducer.login.isLoggedIn,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   walletList: state.userReducer.walletList,
+  isWalletListLoaded: state.userReducer.isWalletListLoaded,
 });
 
 const mapDispatchToProps = dispatch => ({
