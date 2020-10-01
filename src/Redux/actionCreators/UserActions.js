@@ -376,10 +376,14 @@ const fetchWalletAPI = token => {
 };
 
 export const fetchWallet = () => async dispatch => {
-  const { token } = await fetchAuthenticatedUser();
-  const response = await fetchWalletAPI(token);
+  try {
+    const { token } = await fetchAuthenticatedUser();
+    const response = await fetchWalletAPI(token);
 
-  return dispatch(fetchWalletSuccess(response));
+    return dispatch(fetchWalletSuccess(response));
+  } catch (_error) {
+    // In Case of Error we leave it to default value
+  }
 };
 
 const fetchWalletSuccess = response => dispatch => {
