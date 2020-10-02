@@ -24,7 +24,7 @@ import {
   fromWei,
   computeDateFromBlockNumber,
 } from "../../../../../utility/GenHelperFunctions";
-import { getBlockNumber, waitForTransaction, stakeForRequest } from "../../../../../utility/BlockchainHelper";
+import { getBlockNumber, stakeForRequest } from "../../../../../utility/BlockchainHelper";
 
 import web3 from "web3";
 
@@ -90,14 +90,12 @@ const StakeRequest = ({
 
     if (amountBN.lte(rfaiTokenBalanceBN) && amountBN.gt(zeroBN)) {
       try {
-        // Initiate the Deposit Token to RFAI Escrow
-        let txHash = await stakeForRequest(metamaskDetails, requestId, amountBN);
         setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
         startLoader(LoaderContent.STAKE_REQUEST);
 
-        // Wait for the transaction to be completed
-        await waitForTransaction(txHash);
+        // Initiate the Deposit Token to RFAI Escrow
+        await stakeForRequest(metamaskDetails, requestId, amountBN);
 
         setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 

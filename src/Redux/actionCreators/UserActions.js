@@ -1,5 +1,5 @@
 import { Auth, API } from "aws-amplify";
-import isEmpty from "lodash/isEmpty";
+//import isEmpty from "lodash/isEmpty";
 import { APIEndpoints, APIPaths } from "../../config/APIEndpoints";
 import { parseError } from "../../utility/ErrorHandling";
 import { userActions, errorActions, loaderActions } from ".";
@@ -21,6 +21,17 @@ export const UPDATE_EMAIL_ALERTS_SUBSCRIPTION = "UPDATE_EMAIL_ALERTS_SUBSCRIPTIO
 export const APP_INITIALIZATION_SUCCESS = "APP_INITIALIZATION_SUCCESS";
 export const UPDATE_IS_TERMS_ACCEPTED = "UPDATE_IS_TERMS_ACCEPTED";
 export const UPDATE_WALLET_LIST = "UPDATE_WALLET_LIST";
+export const ADD_WALLET_TO_WALLET_LIST = "ADD_WALLET_TO_WALLET_LIST";
+
+export const addWalletToWalletList = address => dispatch => {
+  const _wallet = {
+    address,
+    is_default: 0,
+    type: "METAMASK",
+    status: 1,
+  };
+  dispatch({ type: ADD_WALLET_TO_WALLET_LIST, payload: { ..._wallet } });
+};
 
 export const fetchAuthenticatedUser = async () => {
   const currentUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
@@ -117,6 +128,7 @@ export const fetchUserDetails = async dispatch => {
     }
     if (email_verified) {
       dispatch(fetchUserDetailsSuccess(email_verified, email, nickname));
+      await dispatch(fetchWallet());
     }
   } catch (err) {
     dispatch(fetchUserDetailsError(err));
@@ -175,6 +187,7 @@ export const loginSuccess = ({ res, history, route }) => async dispatch => {
   dispatch(userDetails);
   history.push(route);
   await dispatch(fetchUserProfile(res.signInUserSession.idToken.jwtToken));
+  await dispatch(fetchWallet());
   dispatch(loaderActions.stopAppLoader);
 };
 
@@ -363,20 +376,25 @@ const fetchWalletAPI = token => {
 };
 
 export const fetchWallet = () => async dispatch => {
-  const { token } = await fetchAuthenticatedUser();
-  const response = await fetchWalletAPI(token);
+  try {
+    const { token } = await fetchAuthenticatedUser();
+    const response = await fetchWalletAPI(token);
 
-  return dispatch(fetchWalletSuccess(response));
-};
-
-const fetchWalletSuccess = response => dispatch => {
-  if (!isEmpty(response.data.wallets)) {
-    dispatch(updateWalletList(response.data.wallets));
+    return dispatch(fetchWalletSuccess(response));
+  } catch (_error) {
+    // In Case of Error we leave it to default value
   }
 };
 
+const fetchWalletSuccess = response => dispatch => {
+  // if (!isEmpty(response.data.wallets)) {
+  //   dispatch(updateWalletList(response.data.wallets));
+  // }
+  dispatch(updateWalletList(response.data.wallets));
+};
+
 const updateWalletList = data => dispatch => {
-  dispatch({ type: UPDATE_WALLET_LIST, payload: data });
+  dispatch({ type: UPDATE_WALLET_LIST, payload: { walletList: data, isWalletListLoaded: true } });
 };
 
 // Associate the wallet to User - Update Wallet List in the backend
@@ -393,15 +411,17 @@ export const registerWallet = address => async dispatch => {
   try {
     const { token } = await fetchAuthenticatedUser();
     await registerWalletAPI(token, address);
-    dispatch(registerWalletSuccess());
+    dispatch(registerWalletSuccess(address));
   } catch (exp) {
     // This request is fire and forget as it works in the backgroud for now
     // Update the list in case if User address is added from other portal at the same time
-    dispatch(fetchWallet());
+    //dispatch(fetchWallet());
+    dispatch(addWalletToWalletList(address));
   }
 };
 
-const registerWalletSuccess = () => dispatch => {
+const registerWalletSuccess = address => dispatch => {
   // On Success Update the Wallet List
-  dispatch(fetchWallet());
+  //dispatch(fetchWallet());
+  dispatch(addWalletToWalletList(address));
 };
