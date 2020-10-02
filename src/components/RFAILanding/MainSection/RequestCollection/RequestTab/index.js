@@ -13,7 +13,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import { useStyles } from "./styles";
 import RequestListView from "../RequestListView";
-import { requestActions } from "../../../../../Redux/actionCreators";
+import { requestActions, userActions } from "../../../../../Redux/actionCreators";
 //import ErrorBox from "../../../../common/ErrorBox";
 
 const requestStatusMap = {
@@ -39,9 +39,19 @@ class RequestTab extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
-    const { metamaskDetails } = this.props;
+    const { metamaskDetails, walletList, isWalletListLoaded, registerWallet } = this.props;
     if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
       await this.updateRequestData();
+
+      if (isWalletListLoaded) {
+        if (metamaskDetails.isTxnsAllowed && metamaskDetails.account !== "0x0") {
+          const wallets = walletList.filter(w => w.address.toLowerCase() === metamaskDetails.account.toLowerCase());
+
+          if (wallets.length === 0) {
+            await registerWallet(metamaskDetails.account);
+          }
+        }
+      }
     }
   };
 
@@ -164,6 +174,8 @@ class RequestTab extends Component {
 const mapStateToProps = state => ({
   requestDetails: state.requestReducer.requestDetails,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  walletList: state.userReducer.walletList,
+  isWalletListLoaded: state.userReducer.isWalletListLoaded,
   requestFailed: state.errorReducer.requestDetails,
 });
 
@@ -172,6 +184,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(requestActions.fetchRequestSummaryData(metamaskDetails, isMyRequests)),
   fetchRequestData: (requestStatus, metamaskDetails, isMyRequests) =>
     dispatch(requestActions.fetchRequestData(requestStatus, metamaskDetails, isMyRequests)),
+  registerWallet: address => dispatch(userActions.registerWallet(address)),
 });
 
 export default connect(
