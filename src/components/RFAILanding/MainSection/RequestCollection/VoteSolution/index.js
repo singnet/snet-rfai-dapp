@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { waitForTransaction, voteForSolution } from "../../../../../utility/BlockchainHelper";
+import { voteForSolution } from "../../../../../utility/BlockchainHelper";
 
 // Table dependencies
 import Table from "@material-ui/core/Table";
@@ -74,14 +74,12 @@ const VoteSolution = ({
     }
 
     try {
-      // Initiate the Deposit Token to RFAI Escrow
-      let txHash = await voteForSolution(metamaskDetails, requestId, solutionSubmitter);
       setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
       startLoader(LoaderContent.VOTE_REQUEST);
 
-      // Wait for the transaction to be completed
-      await waitForTransaction(txHash);
+      // Initiate the Deposit Token to RFAI Escrow
+      await voteForSolution(metamaskDetails, requestId, solutionSubmitter);
 
       setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 
@@ -198,7 +196,10 @@ const VoteSolution = ({
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
                           <a href={sol.solution_docURI} target="_new" className={classes.blueText}>
-                            {sol.doc_uri}
+                            <a href={sol.doc_uri} target="_blank" rel="noopener noreferrer">
+                              {" "}
+                              {sol.doc_uri}{" "}
+                            </a>
                           </a>
                         </TableCell>
                         <TableCell>

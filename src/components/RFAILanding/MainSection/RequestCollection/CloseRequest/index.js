@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { waitForTransaction, closeRequest } from "../../../../../utility/BlockchainHelper";
+import { closeRequest } from "../../../../../utility/BlockchainHelper";
 
 import Paper from "@material-ui/core/Paper";
 
@@ -49,13 +49,10 @@ const CloseRequest = ({
     }
 
     try {
-      // Initiate the Deposit Token to RFAI Escrow
-      let txHash = await closeRequest(metamaskDetails, requestId);
-
       startLoader(LoaderContent.CLOSE_REQUEST);
 
-      // Wait for the transaction to be completed
-      await waitForTransaction(txHash);
+      // Initiate the Deposit Token to RFAI Escrow
+      await closeRequest(metamaskDetails, requestId);
 
       setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 

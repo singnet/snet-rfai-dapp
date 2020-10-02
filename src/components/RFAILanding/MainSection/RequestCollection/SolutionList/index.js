@@ -135,7 +135,10 @@ const SolutionList = ({
                         </TableCell>
                         <TableCell className={classes.solutionsURLData}>
                           <span className={classes.mobileTableHeader}>Solution URI:</span>
-                          {sol.doc_uri}
+                          <a href={sol.doc_uri} target="_blank" rel="noopener noreferrer">
+                            {" "}
+                            {sol.doc_uri}{" "}
+                          </a>
                         </TableCell>
                       </TableRow>
                     ))}

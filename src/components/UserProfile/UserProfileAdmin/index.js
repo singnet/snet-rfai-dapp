@@ -13,7 +13,7 @@ import { useStyles } from "./styles";
 import StyledButton from "../../common/StyledButton";
 import AlertBox, { alertTypes } from "../../common/AlertBox";
 
-import { waitForTransaction, addOrUpdateFoundationMembers } from "../../../utility/BlockchainHelper";
+import { addOrUpdateFoundationMembers } from "../../../utility/BlockchainHelper";
 import { fromWei } from "../../../utility/GenHelperFunctions";
 import web3 from "web3";
 
@@ -51,13 +51,11 @@ const UserProfileAdmin = ({
   }, [metamaskDetails, updateRFAIMaxStakers, updateRFAIMinStake, updateRFAIOwner]);
 
   const createOrUpdateMember = async (_foundationMember, _memberRole, _isActive) => {
-    let txHash;
-
     try {
-      // Initiate the Deposit Token to RFAI Escrow
-      txHash = await addOrUpdateFoundationMembers(metamaskDetails, _foundationMember, _memberRole, _isActive);
       startLoader(LoaderContent.FOUNDATION_MEMBER);
-      await waitForTransaction(txHash);
+
+      // Initiate the Deposit Token to RFAI Escrow
+      await addOrUpdateFoundationMembers(metamaskDetails, _foundationMember, _memberRole, _isActive);
 
       setAlert({ type: alertTypes.SUCCESS, message: `Transaction has been completed successfully` });
       stopLoader();
