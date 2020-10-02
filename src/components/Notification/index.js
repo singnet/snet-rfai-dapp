@@ -148,20 +148,6 @@ class Notification extends Component {
     await this.loadMetamaskDetails();
   };
 
-  componentDidUpdate = async () => {
-    const { metamaskDetails, walletList, isWalletListLoaded, registerWallet } = this.props;
-
-    if (isWalletListLoaded) {
-      if (metamaskDetails.isTxnsAllowed && metamaskDetails.account !== "0x0") {
-        const wallets = walletList.filter(w => w.address.toLowerCase() === metamaskDetails.account.toLowerCase());
-
-        if (wallets.length === 0) {
-          await registerWallet(metamaskDetails.account);
-        }
-      }
-    }
-  };
-
   storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
     const { updateMetamaskDetails } = this.props;
     await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
