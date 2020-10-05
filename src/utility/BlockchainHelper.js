@@ -40,15 +40,11 @@ export const waitForTransaction = async hash => {
 };
 
 export const approveToken = (metamaskDetails, amountBN) => {
-  const tokenContractAddress = getTokenContractAddress();
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   try {
-    const ethereum = window.ethereum;
-
-    const web3 = new Web3(ethereum);
-    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+    const tokenInstance = getTokenContractInstance();
 
     return new Promise((resolve, reject) => {
       const method = tokenInstance.methods
@@ -446,22 +442,32 @@ const getRFAIContractInstance = () => {
   }
 };
 
+const getTokenContractInstance = () => {
+  const tokenContractAddress = getTokenContractAddress();
+
+  try {
+    const ethereum = window.ethereum;
+    const web3 = new Web3(ethereum);
+    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+
+    return tokenInstance;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // ******************* User Token Balance Functions ***********************
 export const getTokenBalance = async metamaskDetails => {
   let tokenBalance = 0;
-  const tokenContractAddress = getTokenContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
-
-    const result = await tokenInstance.methods.balanceOf(accountAddress).call();
-
-    tokenBalance = result.toString();
-
-    return tokenBalance;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const tokenInstance = getTokenContractInstance();
+      tokenBalance = await tokenInstance.methods.balanceOf(accountAddress).call();
+    }
+    return tokenBalance.toString();
+  } catch (_error) {
     return tokenBalance.toString();
   }
 };
@@ -469,20 +475,16 @@ export const getTokenBalance = async metamaskDetails => {
 // ********************* Fetching The the Token Allowance *******************
 export const getTokenAllowance = async metamaskDetails => {
   let tokenAllowance = 0;
-  const tokenContractAddress = getTokenContractAddress();
   const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
-
-    const result = await tokenInstance.methods.allowance(accountAddress, rfaiContractAddress).call();
-
-    tokenAllowance = result.toString();
-
-    return tokenAllowance;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const tokenInstance = getTokenContractInstance();
+      tokenAllowance = await tokenInstance.methods.allowance(accountAddress, rfaiContractAddress).call();
+    }
+    return tokenAllowance.toString();
+  } catch (_error) {
     return tokenAllowance.toString();
   }
 };
@@ -490,19 +492,15 @@ export const getTokenAllowance = async metamaskDetails => {
 // Fetching The RFAI Token Balance
 export const getRFAITokenBalance = async metamaskDetails => {
   let rfaiTokenBalance = 0;
-  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const rfaiInstance = new web3.eth.Contract(rfaiABI, rfaiContractAddress);
-
-    const result = await rfaiInstance.methods.balances(accountAddress).call();
-
-    rfaiTokenBalance = result.toString();
-
-    return rfaiTokenBalance;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const rfaiInstance = getRFAIContractInstance();
+      rfaiTokenBalance = await rfaiInstance.methods.balances(accountAddress).call();
+    }
+    return rfaiTokenBalance.toString();
+  } catch (_error) {
     return rfaiTokenBalance.toString();
   }
 };
@@ -510,18 +508,14 @@ export const getRFAITokenBalance = async metamaskDetails => {
 // Fetching The RFAI Min Stake Configuration
 export const getRFAIMinStake = async metamaskDetails => {
   let rfaiMinStake = 0;
-  const rfaiContractAddress = getRFAIContractAddress();
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const rfaiInstance = new web3.eth.Contract(rfaiABI, rfaiContractAddress);
-
-    const result = await rfaiInstance.methods.minStake().call();
-
-    rfaiMinStake = result.toString();
-
-    return rfaiMinStake;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const rfaiInstance = getRFAIContractInstance();
+      rfaiMinStake = await rfaiInstance.methods.minStake().call();
+    }
+    return rfaiMinStake.toString();
+  } catch (_error) {
     return rfaiMinStake.toString();
   }
 };
@@ -529,18 +523,15 @@ export const getRFAIMinStake = async metamaskDetails => {
 // Fetching The RFAI Max Stakers Configuration
 export const getRFAIMaxStakers = async metamaskDetails => {
   let rfaiMaxStakers = 0;
-  const rfaiContractAddress = getRFAIContractAddress();
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const rfaiInstance = new web3.eth.Contract(rfaiABI, rfaiContractAddress);
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const rfaiInstance = getRFAIContractInstance();
+      rfaiMaxStakers = await rfaiInstance.methods.maxStakers().call();
+    }
 
-    const result = await rfaiInstance.methods.maxStakers().call();
-
-    rfaiMaxStakers = result.toString();
-
-    return rfaiMaxStakers;
-  } else {
+    return rfaiMaxStakers.toString();
+  } catch (_error) {
     return rfaiMaxStakers.toString();
   }
 };
@@ -548,18 +539,14 @@ export const getRFAIMaxStakers = async metamaskDetails => {
 // Fetching The RFAI Owner
 export const getRFAIOwner = async metamaskDetails => {
   let rfaiOwner = 0x0;
-  const rfaiContractAddress = getRFAIContractAddress();
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const rfaiInstance = new web3.eth.Contract(rfaiABI, rfaiContractAddress);
-
-    const result = await rfaiInstance.methods.owner().call();
-
-    rfaiOwner = result.toString();
-
-    return rfaiOwner;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const rfaiInstance = getRFAIContractInstance();
+      rfaiOwner = await rfaiInstance.methods.owner().call();
+    }
+    return rfaiOwner.toString();
+  } catch (_error) {
     return rfaiOwner.toString();
   }
 };
