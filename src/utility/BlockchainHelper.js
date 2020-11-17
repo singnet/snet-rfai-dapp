@@ -50,8 +50,13 @@ export const approveToken = (metamaskDetails, amountBN) => {
       const method = tokenInstance.methods
         .approve(rfaiContractAddress, amountBN.toString())
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -73,8 +78,13 @@ export const depositTokenToEscrow = (metamaskDetails, amountBN) => {
       const method = rfaiInstance.methods
         .deposit(amountBN.toString())
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -96,8 +106,13 @@ export const withdrawTokenFromEscrow = (metamaskDetails, amountBN) => {
       const method = rfaiInstance.methods
         .withdraw(amountBN.toString())
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -119,8 +134,13 @@ export const createRequest = (metamaskDetails, initialStakeBN, expiration, docUR
       const method = rfaiInstance.methods
         .createRequest(initialStakeBN.toString(), expiration, docURIinBytes)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -142,8 +162,13 @@ export const submitSolutionForRequest = (metamaskDetails, requestId, docURIinByt
       const method = rfaiInstance.methods
         .createOrUpdateSolutionProposal(requestId, docURIinBytes)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -165,8 +190,13 @@ export const stakeForRequest = (metamaskDetails, requestId, stakeAmountBN) => {
       const method = rfaiInstance.methods
         .addFundsToRequest(requestId, stakeAmountBN.toString())
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -188,8 +218,13 @@ export const voteForSolution = (metamaskDetails, requestId, votedForSubmitter) =
       const method = rfaiInstance.methods
         .vote(requestId, votedForSubmitter)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -211,8 +246,13 @@ export const claimRequest = (metamaskDetails, requestId) => {
       const method = rfaiInstance.methods
         .requestClaim(requestId)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -234,8 +274,13 @@ export const claimBackRequest = (metamaskDetails, requestId) => {
       const method = rfaiInstance.methods
         .requestClaimBack(requestId)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -257,8 +302,13 @@ export const approveRequest = (metamaskDetails, requestId, endSubmission, endEva
       const method = rfaiInstance.methods
         .approveRequest(requestId, endSubmission, endEvaluation, newExpiration)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -281,8 +331,13 @@ export const rejectRequest = (metamaskDetails, requestId) => {
       const method = rfaiInstance.methods
         .rejectRequest(requestId)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -305,8 +360,13 @@ export const closeRequest = (metamaskDetails, requestId) => {
       const method = rfaiInstance.methods
         .closeRequest(requestId)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -330,8 +390,13 @@ export const addOrUpdateFoundationMembers = (metamaskDetails, member, role, acti
       const method = rfaiInstance.methods
         .addOrUpdateFoundationMembers(member, role, active)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -354,8 +419,13 @@ export const updateOwner = (metamaskDetails, newOwner) => {
       const method = rfaiInstance.methods
         .updateOwner(newOwner)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
@@ -378,8 +448,13 @@ export const updateConfigLimits = (metamaskDetails, minStake, maxStakers) => {
       const method = rfaiInstance.methods
         .updateLimits(minStake, maxStakers)
         .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          resolve();
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (receipt.status === true) {
+            resolve(receipt);
+          } else {
+            reject(receipt);
+          }
+          //resolve();
           await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
