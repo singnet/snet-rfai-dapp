@@ -26,7 +26,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "singularitynet-rfai-contracts": "^0.2.5",
-    "singularitynet-token-contracts": "^2.0.1",
+    "singularitynet-token-contracts": "^3.0.0",
     "validate.js": "^0.13.1",
     "web3": "^1.2.2"
   },
