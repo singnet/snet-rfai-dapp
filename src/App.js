@@ -48,8 +48,8 @@ if (process.env.REACT_APP_HOTJAR_ID && process.env.REACT_APP_HOTJAR_SV) {
 initGDPRNotification();
 
 class App extends Component {
-  componentDidMount = () => {
-    this.props.fetchUserDetails();
+  componentDidMount = async () => {
+    await this.props.fetchUserDetails();
     this.props.fetchFoundationMembers();
   };
 
@@ -76,6 +76,11 @@ class App extends Component {
                 />
                 <Route
                   path={`/${Routes.FORGOT_PASSWORD}`}
+                  {...this.props}
+                  component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
+                />
+                <Route
+                  path={`/${Routes.RESET_PASSWORD}`}
                   {...this.props}
                   component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
                 />

@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AlertBox, { alertTypes } from "../../../../common/AlertBox";
 import { requestDetailsById } from "../../../../../Redux/reducers/RequestReducer";
-import { waitForTransaction, submitSolutionForRequest } from "../../../../../utility/BlockchainHelper";
+import { submitSolutionForRequest } from "../../../../../utility/BlockchainHelper";
 
 import web3 from "web3";
 
@@ -63,13 +63,10 @@ const SubmitSolution = ({
 
         const docURIinBytes = web3.utils.fromAscii(solURI);
 
-        // Initiate the Deposit Token to RFAI Escrow
-        let txHash = await submitSolutionForRequest(metamaskDetails, requestId, docURIinBytes);
-
         startLoader(LoaderContent.SOLUTION_REQUEST);
 
-        // Wait for the transaction to be completed
-        await waitForTransaction(txHash);
+        // Initiate the Deposit Token to RFAI Escrow
+        await submitSolutionForRequest(metamaskDetails, requestId, docURIinBytes);
 
         setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 
@@ -144,7 +141,7 @@ const SubmitSolution = ({
                       />
                     </div>
                     <p>
-                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentaion for more
+                      The solution must be hosted on singularitynet AI Marketplace. Please refer documentation for more
                       info.
                     </p>
                   </div>

@@ -20,12 +20,7 @@ import { NetworkNames } from "../../../../utility/constants/NetworkNames";
 import { loaderActions } from "../../../../Redux/actionCreators";
 import { LoaderContent } from "../../../../utility/constants/LoaderContent";
 
-import {
-  waitForTransaction,
-  approveToken,
-  depositTokenToEscrow,
-  withdrawTokenFromEscrow,
-} from "../../../../utility/BlockchainHelper";
+import { approveToken, depositTokenToEscrow, withdrawTokenFromEscrow } from "../../../../utility/BlockchainHelper";
 
 import { toWei, fromWei, isValidInputAmount } from "../../../../utility/GenHelperFunctions";
 
@@ -53,6 +48,15 @@ class MetaMaskAccountBalance extends Component {
     updateRFAITokenBalance(metamaskDetails);
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    const { metamaskDetails, updateTokenBalance, updateTokenAllowance, updateRFAITokenBalance } = this.props;
+    if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
+      updateTokenBalance(metamaskDetails);
+      updateTokenAllowance(metamaskDetails);
+      updateRFAITokenBalance(metamaskDetails);
+    }
+  };
+
   handleAmountInputChange(event) {
     if (isValidInputAmount(event.target.value)) {
       this.setState({ [event.target.name]: event.target.value });
@@ -77,23 +81,22 @@ class MetaMaskAccountBalance extends Component {
     const amountBN = new BN(toWei(amount));
     const tokenAllowanceBN = new BN(tokenAllowance);
 
-    let txHash;
     let bAllowanceCalled = false;
     try {
       // Need to have an Token Approval before Deposit
       if (tokenAllowanceBN.lt(amountBN)) {
-        txHash = await approveToken(metamaskDetails, amountBN);
         this.setState({ alert: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
         startLoader(LoaderContent.DEPOSIT);
+
+        await approveToken(metamaskDetails, amountBN);
+
         bAllowanceCalled = true;
-        await waitForTransaction(txHash);
       }
 
-      // Initiate the Deposit Token to RFAI Escrow
-      txHash = await depositTokenToEscrow(metamaskDetails, amountBN);
       if (!bAllowanceCalled) startLoader(LoaderContent.DEPOSIT);
 
-      await waitForTransaction(txHash);
+      // Initiate the Deposit Token to RFAI Escrow
+      await depositTokenToEscrow(metamaskDetails, amountBN);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
 
@@ -117,12 +120,11 @@ class MetaMaskAccountBalance extends Component {
     // BigNumber Equivalents
     const amountBN = new BN(toWei(amount));
 
-    let txHash;
     try {
-      // Initiate the Deposit Token to RFAI Escrow
-      txHash = await withdrawTokenFromEscrow(metamaskDetails, amountBN);
       startLoader(LoaderContent.WITHDRAW);
-      await waitForTransaction(txHash);
+
+      // Initiate the Deposit Token to RFAI Escrow
+      await withdrawTokenFromEscrow(metamaskDetails, amountBN);
 
       this.setState({ alert: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" } });
       stopLoader();

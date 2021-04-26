@@ -12,7 +12,7 @@ import AccountBalance from "../../common/AccountBalance";
 import StyledButton from "../../common/StyledButton";
 import { requestActions, loaderActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
-import { waitForTransaction, claimRequest, claimBackRequest } from "../../../utility/BlockchainHelper";
+import { claimRequest, claimBackRequest } from "../../../utility/BlockchainHelper";
 import { fromWei } from "../../../utility/GenHelperFunctions";
 
 const UserProfileClaims = ({
@@ -39,12 +39,11 @@ const UserProfileClaims = ({
   }, [fetchRequestClaimData, metamaskDetails]);
 
   const initiateRequestClaim = async requestId => {
-    let txHash;
     try {
-      // Initiate the Claim for Submitter
-      txHash = await claimRequest(metamaskDetails, requestId);
       startLoader(LoaderContent.CLAIM_REQUEST);
-      await waitForTransaction(txHash);
+
+      // Initiate the Claim for Submitter
+      await claimRequest(metamaskDetails, requestId);
 
       setSubmitterAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
       stopLoader();
@@ -55,12 +54,11 @@ const UserProfileClaims = ({
   };
 
   const initiateRequestClaimBack = async requestId => {
-    let txHash;
     try {
-      // Initiate the Claim for Submitter
-      txHash = await claimBackRequest(metamaskDetails, requestId);
       startLoader(LoaderContent.CLAIM_REQUEST);
-      await waitForTransaction(txHash);
+
+      // Initiate the Claim for Submitter
+      await claimBackRequest(metamaskDetails, requestId);
 
       setStakerAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
       stopLoader();
