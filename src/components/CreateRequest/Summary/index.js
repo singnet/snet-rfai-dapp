@@ -50,9 +50,9 @@ class Summary extends Component {
           <div className={classes.transactionReceiptContainer}>
             <div className={classes.receiptTitle}>
               <InfoIcon className={classes.infoIcon} />
-              <span>AGI tokens spend</span>
+              <span>AGIX tokens spend</span>
             </div>
-            <span className={classes.receiptAmt}>{requestSummary.request_stake} AGI</span>
+            <span className={classes.receiptAmt}>{requestSummary.request_stake} AGIX</span>
           </div>
         </div>
         <div className={classes.btnContainer}>
