@@ -100,8 +100,8 @@ const StakeList = ({
             <Paper className={classes.root}>
               <div className={classes.viewBackersDescription}>
                 <p>
-                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
-                  define which solutions will be alloted their backed AGI tokens.
+                  All users must back the request with AGIX tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGIX tokens.
                 </p>
               </div>
               {loading && (
@@ -140,7 +140,7 @@ const StakeList = ({
                         </TableCell>
                         <TableCell align="right">
                           <span className={classes.mobileTableHeader}>Tokens Awarded:</span>
-                          {fromWei(stake.stake_amount)} AGI
+                          {fromWei(stake.stake_amount)} AGIX
                         </TableCell>
                       </TableRow>
                     ))}

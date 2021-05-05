@@ -121,7 +121,7 @@ const UserProfileClaims = ({
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
             <span className={classes.responsiveHeader}>Tokens:</span>
-            <span>{fromWei(claim.tokens)} AGI</span>
+            <span>{fromWei(claim.tokens)} AGIX</span>
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2}>
             <StyledButton
@@ -167,7 +167,7 @@ const UserProfileClaims = ({
           </Grid>
           <Grid xs={12} sm={3} md={3} lg={3}>
             <span className={classes.responsiveHeader}>Tokens backed:</span>
-            <span>{fromWei(claim.claim_back_amount)} AGI</span>
+            <span>{fromWei(claim.claim_back_amount)} AGIX</span>
           </Grid>
           <Grid xs={12} sm={2} md={2} lg={2}>
             <StyledButton
@@ -195,7 +195,7 @@ const UserProfileClaims = ({
         <div className={classes.claimsForSolutions}>
           <h4>Claims for Solutions</h4>
           <Typography className={classes.description}>
-            All AGI tokens you received as rewards from the solutions that you submitted will be listed here for your
+            All AGIX tokens you received as rewards from the solutions that you submitted will be listed here for your
             claim to your Metamask wallet.
           </Typography>
           <Grid container className={classes.tableHeader}>

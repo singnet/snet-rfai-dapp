@@ -187,7 +187,7 @@ const StakeRequest = ({
               )}
               <div className={classes.inputContainer}>
                 <div className={classes.escrowBalContainer}>
-                  <label>Escrow Balance in AGI</label>
+                  <label>Escrow Balance in AGIX</label>
                   <input
                     name="escrowBalance"
                     type="number"

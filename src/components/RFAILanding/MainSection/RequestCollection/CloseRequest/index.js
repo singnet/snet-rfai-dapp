@@ -99,7 +99,7 @@ const CloseRequest = ({
                   <div className="overview-content">
                     <p>
                       Are you sure you want to close your request? Once the request is closed, it can not be reopened.
-                      All AGI tokens will be returned the Backers through the Claims page.
+                      All AGIX tokens will be returned the Backers through the Claims page.
                     </p>
                   </div>
                 </div>
