@@ -4,7 +4,7 @@ import Header from "../../common/Header";
 import Footer from "../../common/Footer";
 import { useStyles } from "./styles";
 
-import { useLocalStorage } from "../../common/localStorage";
+import { useLocalStorage, localStorageKeys } from "../../common/localStorage";
 
 const withInAppWrapper = InputComponent => {
   return props => {
@@ -14,7 +14,10 @@ const withInAppWrapper = InputComponent => {
       setShowUpdateNotificationBar(false);
     };
 
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage("showUpdateNotification", true);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
+      localStorageKeys.showUpdateNotification,
+      true
+    );
 
     return (
       <Fragment>
