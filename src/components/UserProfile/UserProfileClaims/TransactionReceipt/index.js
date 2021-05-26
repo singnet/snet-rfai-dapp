@@ -47,16 +47,16 @@ const TransactionReceipt = ({ classes, open, handleClose }) => {
               <div>
                 <div className={classes.receiptTitle}>
                   <InfoIcon className={classes.infoIcon} />
-                  <span>AGI tokens received</span>
+                  <span>AGIX tokens received</span>
                 </div>
-                <span className={classes.receiptAmt}>4 AGI</span>
+                <span className={classes.receiptAmt}>4 AGIX</span>
               </div>
               <div>
                 <div className={classes.receiptTitle}>
                   <InfoIcon className={classes.infoIcon} />
                   <span>Updated Balance</span>
                 </div>
-                <span className={classes.receiptAmt}>21 AGI</span>
+                <span className={classes.receiptAmt}>21 AGIX</span>
               </div>
             </div>
           </div>

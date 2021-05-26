@@ -191,7 +191,7 @@ const UserProfileAdmin = ({
             <input name="owner" type="text" value={rfaiOwner} onChange={event => SetOwner(event.target.value)} />
           </div>
           <div className={classes.textField}>
-            <span>Minimum Stake (AGI)</span>
+            <span>Minimum Stake (AGIX)</span>
             <input
               name="minStake"
               type="number"

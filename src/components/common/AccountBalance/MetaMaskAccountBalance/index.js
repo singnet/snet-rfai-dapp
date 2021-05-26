@@ -192,7 +192,7 @@ class MetaMaskAccountBalance extends Component {
           <StyledTextField
             name="amount"
             type="text"
-            label="AGI Token Amount"
+            label="AGIX Token Amount"
             value={this.state.amount}
             onChange={event => this.handleAmountInputChange(event)}
           />
@@ -205,7 +205,7 @@ class MetaMaskAccountBalance extends Component {
           <StyledTextField
             name="amount"
             type="text"
-            label="Amount to be withdrawn in AGI"
+            label="Amount to be withdrawn in AGIX"
             value={this.state.amount}
             onChange={event => this.handleAmountInputChange(event)}
           />
@@ -219,7 +219,7 @@ class MetaMaskAccountBalance extends Component {
     return (
       <div className={classes.metamaskAccBalanceContainer}>
         <Typography className={classes.description}>
-          Your Metamask wallet is connected. You will need available AGI tokens in your Token Balance or Escrow Balance
+          Your Metamask wallet is connected. You will need available AGIX tokens in your Token Balance or Escrow Balance
           to create a request.
         </Typography>
         <div className={classes.accountDetails}>
@@ -254,7 +254,7 @@ class MetaMaskAccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Token Balance</span>
             </div>
-            <span>{fromWei(tokenBalance)} AGI</span>
+            <span>{fromWei(tokenBalance)} AGIX</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -262,7 +262,7 @@ class MetaMaskAccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Escrow Balance</span>
             </div>
-            <span>{fromWei(rfaiTokenBalance)} AGI</span>
+            <span>{fromWei(rfaiTokenBalance)} AGIX</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -270,7 +270,7 @@ class MetaMaskAccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Authorized Tokens</span>
             </div>
-            <span>{fromWei(tokenAllowance)} AGI</span>
+            <span>{fromWei(tokenAllowance)} AGIX</span>
           </div>
         </div>
         <div className={classes.tabsContainer}>

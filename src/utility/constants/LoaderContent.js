@@ -34,11 +34,11 @@ export const LoaderContent = {
   },
   DEPOSIT: {
     loaderHeader: "Deposit",
-    loaderText: "Depositing AGI tokens to RFAI Escrow account",
+    loaderText: "Depositing AGIX tokens to RFAI Escrow account",
   },
   WITHDRAW: {
     loaderHeader: "Withdraw",
-    loaderText: "Withdrawing AGI tokens from RFAI Escrow account",
+    loaderText: "Withdrawing AGIX tokens from RFAI Escrow account",
   },
   CONNECT_METAMASK: {
     loaderHeader: "Connecting Metask",
