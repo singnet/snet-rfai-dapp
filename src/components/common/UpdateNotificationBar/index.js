@@ -12,13 +12,14 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
     <div className={classes.updateNotificationBar}>
       <img src={AnnoucementIcon} alt="Announcment" />
       <p>
-        <span>SingularityNET Phase II Launch Sequence Activated! </span>
+        <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
         <a
-          href="https://blog.singularitynet.io/singularitynet-phase-ii-launch-sequence-activated-agi-token-to-be-hard-forked-to-10ede4b6c89"
-          title="Read More"
+          href="https://snapshot.singularitynet.io/"
+          title="SingularityNET Phase II Snapshot"
           target="_blank"
+          rel="noreferrer noopener"
         >
-          Read more on our official blog.
+          snapshot tool.
           <ArrowForwardIosIcon />
         </a>
       </p>
