@@ -83,7 +83,7 @@ const VoteList = ({ open, handleClose, requestId, requestDetails, requestVotes, 
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
           </CardActions>
         </Card>
       </Modal>

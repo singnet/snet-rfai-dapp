@@ -151,8 +151,13 @@ const SubmitSolution = ({
             <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Submit Solution" type="blue" onClick={handleSubmit} disabled={actionToDisable} />
+            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
+            <StyledButton
+              btnText="Submit Solution"
+              type="blue"
+              onClick={handleSubmit}
+              disabled={actionToDisable || true}
+            />
           </CardActions>
         </Card>
       </Modal>
@@ -176,7 +181,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubmitSolution);
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitSolution);

@@ -32,8 +32,8 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
               </div>
               {isLoggedIn ? (
                 <div className={classes.btnContainer}>
-                  <Link to={Routes.CREATE_REQUEST} className={classes.signupLink}>
-                    <StyledButton type="blue" btnText="Create new Request" />
+                  <Link to={Routes.CREATE_REQUEST} className={classes.signupLink} onClick={e => e.preventDefault()}>
+                    <StyledButton type="blue" btnText="Create new Request" disabled />
                   </Link>
                 </div>
               ) : (

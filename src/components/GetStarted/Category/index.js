@@ -50,7 +50,11 @@ const Category = ({ classes, title, content, rightAlign, media }) => {
           if (item.type === "action") {
             //return <StyledButton {...item.value} />;
             return (
-              <Link to={item.linkTo} className={classes.createRequestLink}>
+              <Link
+                to={item.linkTo}
+                className={classes.createRequestLink}
+                onClick={e => (item.value.disabled ? e.preventDefault() : null)}
+              >
                 <StyledButton {...item.value} />
               </Link>
             );

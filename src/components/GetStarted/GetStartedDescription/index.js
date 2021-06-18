@@ -14,7 +14,7 @@ const GetStartedDescription = ({ classes, title, description, button, btnText, b
     <div className={classes.GetStartedDescription}>
       <h2>{title}</h2>
       <p>{description}</p>
-      {button ? <StyledButton btnText={btnText} type={btnType} onClick={handleClick} /> : null}
+      {button ? <StyledButton btnText={btnText} type={btnType} onClick={handleClick} disabled /> : null}
     </div>
   );
 };

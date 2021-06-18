@@ -49,6 +49,7 @@ export const GetStartedCategoriesData = [
         value: {
           type: "blue",
           btnText: "create a new request",
+          disabled: true,
         },
         linkTo: `${Routes.CREATE_REQUEST}`,
       },

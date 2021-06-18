@@ -128,7 +128,7 @@ const UserProfileClaims = ({
               onClick={event => handleClaim(event, claim.request_id)}
               type="transparentBlueBorder"
               btnText="claim"
-              disabled={actionToDisable}
+              disabled={actionToDisable || true}
             />
           </Grid>
         </Grid>
@@ -174,7 +174,7 @@ const UserProfileClaims = ({
               onClick={event => handleClaimBack(event, claim.request_id)}
               type="transparentBlueBorder"
               btnText="claim"
-              disabled={actionToDisable}
+              disabled={actionToDisable || true}
             />
           </Grid>
         </Grid>
@@ -266,7 +266,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(UserProfileClaims));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(UserProfileClaims));
