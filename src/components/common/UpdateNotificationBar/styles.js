@@ -1,31 +1,20 @@
 export const useStyles = theme => ({
   updateNotificationBar: {
-    padding: "2px 0",
+    padding: "2px 20px",
     display: "flex",
+    gap: 12,
     alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
+    justifyContent: "space-between",
     backgroundColor: "#800080",
     color: theme.palette.text.white,
-    "& img": { marginRight: 12 },
-    "& p": {
-      margin: 0,
-      fontSize: 14,
-      letterSpacing: "0.25px",
-      lineHeight: "18px",
-      textAlign: "center",
-      "& span": { fontWeight: "bold" },
-      "& a": {
-        color: "#fff",
-        fontWeight: 200,
-        textDecoration: "none",
-      },
-      "& svg": { fontSize: 12 },
-    },
   },
   closeIcon: {
-    position: "absolute",
-    right: 95,
     cursor: "pointer",
+  },
+  content: {
+    textAlign: "justify",
+    fontSize: 14,
+    "& p": { margin: 1 },
+    margin: "2px 0",
   },
 });

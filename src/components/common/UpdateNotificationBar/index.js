@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AnnoucementIcon from "../../../assets/images/AnnoucementIcon.png";
 
 import { useStyles } from "./styles";
@@ -10,20 +9,21 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
   if (!showNotification) return null;
   return (
     <div className={classes.updateNotificationBar}>
-      <img src={AnnoucementIcon} alt="Announcment" />
-      <p>
-        <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
-        <a
-          href="https://snapshot.singularitynet.io/"
-          title="SingularityNET Phase II Snapshot"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          snapshot tool.
-          <ArrowForwardIosIcon />
-        </a>
-      </p>
-      <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
+      <div>
+        <img src={AnnoucementIcon} alt="Announcment" />
+      </div>
+      <div className={classes.content}>
+        <p>Dear SingularityNET supporter,</p>
+        <p>
+          We are in the process of making some changes to RFAI portal and community-driven AI development support in
+          general. To avoid unnecessary spending of AGIX or transaction costs, we have disabled new entries to the
+          portal, until further notice. Stay tuned and follow our social media channels to be informed about the many
+          exciting developments to come!
+        </p>
+      </div>
+      <div>
+        <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
+      </div>
     </div>
   );
 };
