@@ -122,6 +122,7 @@ const UserProfileAdmin = ({
               onClick={() => handleUpdateActivation(m.member_address, m.role, m.status === 1 ? false : true)}
               btnText={m.status === 1 ? "deactivate" : "activate"}
               type={m.status === 1 ? "red" : "transparentBlueBorder"}
+              disabled
             />
           </TableCell>
         </TableRow>
@@ -164,7 +165,7 @@ const UserProfileAdmin = ({
           </div>
 
           <AlertBox type={alert.type} message={alert.message} />
-          <StyledButton btnText="add foundation member" type="blue" onClick={handleAddMember} />
+          <StyledButton btnText="add foundation member" type="blue" onClick={handleAddMember} disabled />
         </div>
         <hr />
         <div className={classes.foundationMemberContainer}>
@@ -239,7 +240,4 @@ const mapDispatchToProps = dispatch => ({
   updateRFAIMaxStakers: metamaskDetails => dispatch(rfaiContractActions.updateRFAIMaxStakers(metamaskDetails)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(UserProfileAdmin));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(UserProfileAdmin));

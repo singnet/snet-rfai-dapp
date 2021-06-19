@@ -289,6 +289,7 @@ class MetaMaskAccountBalance extends Component {
             type="blue"
             btnText={activeComponent.name}
             onClick={event => this.handleDepositWithdraw(event, activeComponent.name)}
+            disabled
           />
         </div>
       </div>
@@ -311,7 +312,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(MetaMaskAccountBalance));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(MetaMaskAccountBalance));

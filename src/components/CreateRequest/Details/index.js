@@ -337,12 +337,17 @@ class Details extends Component {
         <AlertBox type={alert.type} message={alert.message} />
 
         <div className={classes.btnContainer}>
-          <StyledButton type="transparent" onClick={event => this.handleBackButton(event, true)} btnText="back" />
+          <StyledButton
+            type="transparent"
+            onClick={event => this.handleBackButton(event, true)}
+            btnText="back"
+            disabled
+          />
           <StyledButton
             type="blue"
             onClick={event => this.handleCreateButton(event, true)}
             btnText="continue"
-            disabled={actionToDisable}
+            disabled={actionToDisable || true}
           />
         </div>
 
@@ -357,8 +362,18 @@ class Details extends Component {
               requests tab.
             </p>
             <p>
-              <StyledButton type="blue" onClick={event => this.handleCreateButton(event, false)} btnText="Ok" />
-              <StyledButton type="red" onClick={() => this.setState({ showConfirmation: false })} btnText="Cancel" />
+              <StyledButton
+                type="blue"
+                onClick={event => this.handleCreateButton(event, false)}
+                btnText="Ok"
+                disabled
+              />
+              <StyledButton
+                type="red"
+                onClick={() => this.setState({ showConfirmation: false })}
+                btnText="Cancel"
+                disabled
+              />
             </p>
           </div>
         </Dialog>
@@ -381,7 +396,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(Details));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Details));

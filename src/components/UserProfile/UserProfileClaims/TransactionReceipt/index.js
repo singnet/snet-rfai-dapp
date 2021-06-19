@@ -62,7 +62,7 @@ const TransactionReceipt = ({ classes, open, handleClose }) => {
           </div>
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <StyledButton type="blueText" btnText="close" />
+          <StyledButton type="blueText" btnText="close" disabled />
         </CardActions>
       </Card>
     </Modal>

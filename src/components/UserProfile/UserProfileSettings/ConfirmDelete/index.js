@@ -91,8 +91,8 @@ const ConfirmDelete = ({ open, handleClose, handleSubmit, error }) => {
             </div>
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
-            <StyledButton btnText="Delete Your Account" type="redBg" onClick={handleSubmit} />
+            <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} disabled />
+            <StyledButton btnText="Delete Your Account" type="redBg" onClick={handleSubmit} disabled />
           </CardActions>
         </Card>
       </Modal>

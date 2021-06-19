@@ -71,7 +71,7 @@ const StakeList = ({
               </Paper>
             </CardContent>
             <CardActions className={classes.CardActions}>
-              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
             </CardActions>
           </Card>
         </Modal>
@@ -150,9 +150,14 @@ const StakeList = ({
             </Paper>
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
             {(selectedTab === 1 || selectedTab === 2) && (
-              <StyledButton btnText="back request" type="blue" onClick={showBackRequest} disabled={actionToDisable} />
+              <StyledButton
+                btnText="back request"
+                type="blue"
+                onClick={showBackRequest}
+                disabled={actionToDisable || true}
+              />
             )}
           </CardActions>
         </Card>

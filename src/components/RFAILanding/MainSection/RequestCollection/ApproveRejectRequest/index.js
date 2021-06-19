@@ -251,9 +251,11 @@ const ApproveRejectRequest = ({
             <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} />
-            {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} />}
-            {actionType === "Reject" && <StyledButton btnText="Reject Request" type="redBg" onClick={handleReject} />}
+            <StyledButton btnText="cancel" type="transparent" onClick={handleCancel} disabled />
+            {actionType === "Approve" && <StyledButton btnText="Approve Request" onClick={handleApprove} disabled />}
+            {actionType === "Reject" && (
+              <StyledButton btnText="Reject Request" type="redBg" onClick={handleReject} disabled />
+            )}
           </CardActions>
         </Card>
       </Modal>
@@ -276,7 +278,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ApproveRejectRequest);
+export default connect(mapStateToProps, mapDispatchToProps)(ApproveRejectRequest);

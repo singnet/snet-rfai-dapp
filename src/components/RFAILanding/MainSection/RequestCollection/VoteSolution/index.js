@@ -118,7 +118,7 @@ const VoteSolution = ({
               </Paper>
             </CardContent>
             <CardActions className={classes.CardActions}>
-              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+              <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
             </CardActions>
           </Card>
         </Modal>
@@ -217,6 +217,7 @@ const VoteSolution = ({
                               btnText="Vote"
                               type="transparentBlueBorder"
                               onClick={event => handleVoteSubmit(event, sol.submitter)}
+                              disabled
                             />
                           </TableCell>
                         )}
@@ -229,9 +230,14 @@ const VoteSolution = ({
             <AlertBox type={alert.type} message={alert.message} />
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} />
+            <StyledButton btnText="Close" type="transparent" onClick={handleCancel} disabled />
             {(selectedTab === 1 || selectedTab === 2) && (
-              <StyledButton btnText="Back request" type="blue" onClick={showBackRequest} disabled={actionToDisable} />
+              <StyledButton
+                btnText="Back request"
+                type="blue"
+                onClick={showBackRequest}
+                disabled={actionToDisable || true}
+              />
             )}
           </CardActions>
         </Card>
@@ -262,7 +268,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VoteSolution);
+export default connect(mapStateToProps, mapDispatchToProps)(VoteSolution);
