@@ -56,10 +56,10 @@ class Summary extends Component {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <StyledButton type="transparent" btnText="create new request" onClick={showOverview} />
+          <StyledButton type="transparent" btnText="create new request" onClick={showOverview} disabled />
 
-          <Link to={Routes.RFAI_LANDING} className={classes.buttonLink}>
-            <StyledButton type="blue" btnText="view pending request" />
+          <Link to={Routes.RFAI_LANDING} className={classes.buttonLink} onClick={e => e.preventDefault()}>
+            <StyledButton type="blue" btnText="view pending request" disabled />
           </Link>
         </div>
       </div>

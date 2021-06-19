@@ -116,6 +116,7 @@ class UserProfileSettings extends Component {
                 type="transparentBlueBorder"
                 btnText="Change Password"
                 onClick={this.handleChangePassword}
+                disabled
               />
             </div>
             <div className={classes.notification}>
@@ -141,10 +142,10 @@ class UserProfileSettings extends Component {
             <div className={classes.btnContainer}>
               <StyledButton
                 btnText="save changes"
-                disabled={!this.shouldSubmitBeEnabled()}
+                disabled={!this.shouldSubmitBeEnabled() || true}
                 onClick={this.handleSubmit}
               />
-              <StyledButton btnText="delete account" type="red" onClick={this.handleDelete} />
+              <StyledButton btnText="delete account" type="red" onClick={this.handleDelete} disabled />
             </div>
           </div>
         </Grid>
@@ -172,7 +173,4 @@ const mapDispatchToProps = dispatch => ({
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(UserProfileSettings));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(UserProfileSettings));

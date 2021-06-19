@@ -245,11 +245,13 @@ const RequestList = ({
                       type="blue"
                       onClick={event => handleOpenModel(event, modals.APPROVEREQUEST, r.request_id)}
                       btnText="Approve Request"
+                      disabled
                     />
                     <StyledButton
                       type="red"
                       onClick={event => handleOpenModel(event, modals.REJECTREQUEST, r.request_id)}
                       btnText="Reject Request"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -260,6 +262,7 @@ const RequestList = ({
                       type="blue"
                       onClick={event => handleOpenModel(event, modals.STAKEREQUEST, r.request_id)}
                       btnText="Back Request"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -269,6 +272,7 @@ const RequestList = ({
                       type="blue"
                       onClick={event => handleOpenModel(event, modals.SOLUTION, r.request_id)}
                       btnText="View Solutions"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -279,6 +283,7 @@ const RequestList = ({
                       type="blue"
                       onClick={event => handleOpenModel(event, modals.SUBMITSOLUTION, r.request_id)}
                       btnText="Submit Solution"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -289,6 +294,7 @@ const RequestList = ({
                       type="blue"
                       onClick={event => handleOpenModel(event, modals.VOTESOLUTION, r.request_id)}
                       btnText="Vote Solutions"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -299,6 +305,7 @@ const RequestList = ({
                       type="red"
                       onClick={event => handleOpenModel(event, modals.CLOSEREQUEST, r.request_id)}
                       btnText="Close Request"
+                      disabled
                     />
                   </Fragment>
                 )}
@@ -403,7 +410,4 @@ const mapDispatchToProps = dispatch => ({
   fetchRequestVoteData: requestId => dispatch(requestActions.fetchRequestVoteData(requestId)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RequestList);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestList);

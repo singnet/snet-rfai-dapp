@@ -91,7 +91,7 @@ class CreateRequest extends Component {
                     btnText="continue"
                     onClick={this.showDetailsContent}
                     type="blue"
-                    disabled={!isTxnsAllowed}
+                    disabled={!isTxnsAllowed || true}
                   />
                 )}
                 <Link to={Routes.LOGIN} className={classes.signupLink}>

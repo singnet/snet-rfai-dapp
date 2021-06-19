@@ -30,8 +30,8 @@ const GetStarted = ({ classes, history }) => {
         />
       ))}
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <Link to={Routes.CREATE_REQUEST} className={classes.createRequestLink}>
-          <StyledButton type="blue" btnText="Create new Request" />
+        <Link to={Routes.CREATE_REQUEST} className={classes.createRequestLink} onClick={e => e.preventDefault()}>
+          <StyledButton type="blue" btnText="Create new Request" disabled />
         </Link>
       </Grid>
     </Grid>

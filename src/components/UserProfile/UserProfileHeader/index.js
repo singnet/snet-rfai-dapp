@@ -9,7 +9,7 @@ const UserProfileHeader = ({ classes, nickname }) => {
   return (
     <div className={classes.userProfileHeader}>
       <UserProfileCard nickName={nickname} />
-      <StyledButton type="transparentBlueBorder" btnText="request developer's account" />
+      <StyledButton type="transparentBlueBorder" btnText="request developer's account" disabled />
     </div>
   );
 };
