@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
-import CloseIcon from "@material-ui/icons/Close";
+// import CloseIcon from "@material-ui/icons/Close";
 import AnnoucementIcon from "../../../assets/images/AnnoucementIcon.png";
 
 import { useStyles } from "./styles";
@@ -21,9 +21,9 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
           exciting developments to come!
         </p>
       </div>
-      <div>
+      {/* <div>
         <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
-      </div>
+      </div> */}
     </div>
   );
 };
