@@ -6,7 +6,7 @@ import AnnoucementIcon from "../../../assets/images/AnnoucementIcon.png";
 import { useStyles } from "./styles";
 
 const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
-  if (!showNotification) return null;
+  // if (!showNotification) return null;
   return (
     <div className={classes.updateNotificationBar}>
       <div>
