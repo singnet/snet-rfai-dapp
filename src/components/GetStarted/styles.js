@@ -5,7 +5,7 @@ export const useStyles = theme => ({
     flexDirection: "column",
     "@media(max-width:360px)": { padding: "15px 15px 40px" },
   },
-  TopSection: { textAlign: "center" },
+  TopSection: { textAlign: "center", marginTop: "64px" },
   btnContainer: {
     marginTop: 50,
     display: "flex",
