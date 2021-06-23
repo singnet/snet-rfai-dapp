@@ -16,6 +16,7 @@ export const useStyles = theme => ({
   },
   titleContainer: {
     "@media(max-width: 1024px)": { maxWidth: "100%" },
+    marginTop: "64px",
   },
   title: {
     margin: 0,
@@ -26,6 +27,7 @@ export const useStyles = theme => ({
     lineHeight: "48px",
   },
   descriptionContainer: {
+    marginTop: "64px",
     "@media(max-width: 1024px)": {
       maxWidth: "100%",
       textAlign: "center  ",
