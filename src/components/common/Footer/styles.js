@@ -2,16 +2,12 @@ import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
   footer: {
-    padding: "23px 0",
     backgroundColor: theme.backgroundColor.footerBgColor,
     color: theme.palette.text.offWhite,
     "@media (max-width:767px)": { padding: "21px 0 52px" },
   },
   footerWrapper: {
-    width: "83%",
-    margin: "0 auto",
-    "@media (max-width:1279px) and (min-width:1024px)": { width: "98%" },
-    "@media (max-width:1023px)": { width: "100%" },
+    padding: "33px 65px 33px 61px",
   },
   footerLinks: { listStyle: "none" },
   footerLinkText: {
