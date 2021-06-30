@@ -1,62 +1,52 @@
-import React, { Fragment } from "react";
-import Grid from "@material-ui/core/Grid";
+import React from "react";
+
 import { withStyles } from "@material-ui/styles";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import StyledButton from "../common/StyledButton";
-import MainSection from "./MainSection";
 import { useStyles } from "./styles";
-import Routes from "../../utility/constants/Routes";
 
-import Notification from "../Notification";
-
-const RFAILanding = ({ classes, isLoggedIn }) => {
+const RFAILanding = ({ classes }) => {
   return (
-    <Fragment>
-      <Notification />
-      <div className={classes.RFAILandingContainer}>
-        <div className={classes.mainWrapper}>
-          <Grid container spacing={24} className={classes.topSectionCotainer}>
-            <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
-              <h2 className={classes.title}>Request for AI</h2>
-            </Grid>
-            <Grid item xs={12} sm={9} md={9} lg={9} className={classes.descriptionContainer}>
-              <div className={classes.description}>
-                <span>Welcome</span>
-                <p>
-                  This community portal allows you to make project requests for new AI services that currently are not
-                  available on the market. In addition, you can fund these projects, view other solutions, and submit
-                  solutions to claim AGIX token rewards.
-                </p>
-              </div>
-              {isLoggedIn ? (
-                <div className={classes.btnContainer}>
-                  <Link to={Routes.CREATE_REQUEST} className={classes.signupLink} onClick={e => e.preventDefault()}>
-                    <StyledButton type="blue" btnText="Create new Request" disabled />
-                  </Link>
-                </div>
-              ) : (
-                <div className={classes.loginContainer}>
-                  <p>
-                    Please <Link to={Routes.LOGIN}>Login</Link> or <Link to={Routes.SIGNUP}>Signup</Link> to use the
-                    full features of Request for AI [RFAI] platform.
-                  </p>
-                </div>
-              )}
-            </Grid>
-          </Grid>
+    <div className={classes.disabledPortalMainContainer}>
+      <div className={classes.disabledPortalMainWrapper}>
+        <div className={classes.letterMainContainer}>
+          <span>RFAI Portal Disabled</span>
+          <div className={classes.letterContainer}>
+            <span>Dear SingularityNET Supporter,</span>
+            <div className={classes.letterBody}>
+              <p>
+                We are in the process of making some changes to RFAI portal and community-driven AI development support
+                in general. To avoid unnecessary spending of AGIX or transaction costs, we have disabled new entries to
+                the portal, until further notice. For any help or information contact support{" "}
+                <a href="#" title="here">
+                  here.
+                </a>
+              </p>
+              <p>
+                Stay tuned and follow our social media channels to be informed about the many exciting development to
+                come!
+              </p>
+            </div>
+            <div className={classes.letterFoot}>
+              <span>Thanks,</span>
+              <spa>SingularityNET Team</spa>
+            </div>
+          </div>
+        </div>
+        <div className={classes.lookingForNewAIServiceContainer}>
+          <img src="http://placehold.it/209x199" alt="Looking for New AI Service" />
           <div>
-            <MainSection />
+            <span>Lookingfor New AI Service?</span>
+            <p>
+              If you're looking for a partner with experience in creating personalized AI Solutions, we are happy to
+              help. Fill out your information at the link below and we will contact you shortly.
+            </p>
+            <StyledButton btnType="blue" btnText="request ai form" />
           </div>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.userReducer.login.isLoggedIn,
-});
-
-export default connect(mapStateToProps)(withStyles(useStyles)(RFAILanding));
+export default withStyles(useStyles)(RFAILanding);
