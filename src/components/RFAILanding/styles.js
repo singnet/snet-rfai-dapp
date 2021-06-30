@@ -1,8 +1,9 @@
 export const useStyles = theme => ({
-  disabledPortalMainContainer: { padding: "80px 0" },
+  disabledPortalMainContainer: { padding: "32px 0 62px" },
   disabledPortalMainWrapper: {
     width: 845,
     margin: "0 auto",
+    "@media(max-width:900px)": { width: "90%" },
   },
   letterMainContainer: {
     borderRadius: 4,
@@ -43,8 +44,9 @@ export const useStyles = theme => ({
   },
   lookingForNewAIServiceContainer: {
     display: "flex",
-    padding: "11px 0",
-    marginTop: 48,
+    alignItems: "flex-start",
+    padding: "32px 35px 32px 38px",
+    marginTop: 32,
     "& div": {
       marginLeft: 32,
       "& > span": {

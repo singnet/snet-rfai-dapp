@@ -34,14 +34,14 @@ const RFAILanding = ({ classes }) => {
           </div>
         </div>
         <div className={classes.lookingForNewAIServiceContainer}>
-          <img src="http://placehold.it/209x199" alt="Looking for New AI Service" />
+          <img src="http://placehold.it/100x100" alt="Looking for New AI Service" />
           <div>
-            <span>Lookingfor New AI Service?</span>
+            <span>Looking for New AI Service?</span>
             <p>
               If you're looking for a partner with experience in creating personalized AI Solutions, we are happy to
               help. Fill out your information at the link below and we will contact you shortly.
             </p>
-            <StyledButton btnType="blue" btnText="request ai form" />
+            <StyledButton btnType="blue" btnText="request new ai solution" />
           </div>
         </div>
       </div>
