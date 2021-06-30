@@ -30,24 +30,14 @@ export const headerData = {
 
 const tabs = [
   {
-    title: "View Requests",
-    link: `/${Routes.RFAI_LANDING}`,
-    newTab: false,
+    title: "AI Marketplace",
+    link: "https://beta.singularitynet.io/",
+    newTab: true,
   },
   {
-    title: "Create Request",
-    link: `/${Routes.CREATE_REQUEST}`,
-    newTab: false,
-  },
-  {
-    title: "Get Started",
-    link: `/${Routes.GET_STARTED}`,
-    newTab: false,
-  },
-  {
-    title: "Claims",
-    link: `/${Routes.USER_PROFILE}/claims`,
-    newTab: false,
+    title: "AI Developer",
+    link: "https://dev.singularitynet.io/",
+    newTab: true,
   },
 ];
 
