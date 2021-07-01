@@ -9,7 +9,7 @@ const NavBar = ({ data }) => {
   return (
     <nav>
       <ul className={classes.navUl}>
-        {data.tabs.map(tab => (
+        {data.map(tab => (
           <NavItem key={tab.title} title={tab.title} link={tab.link} />
         ))}
       </ul>

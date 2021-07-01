@@ -5,12 +5,6 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     height: "calc(100vh - 70px)",
     position: "absolute",
-    top: 70,
-    overflowY: "scroll",
     backgroundColor: theme.palette.text.offWhiteColor,
-  },
-  increaseTopSpace: {
-    height: "calc(100vh - 110px)",
-    top: 110,
   },
 }));

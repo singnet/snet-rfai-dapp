@@ -30,7 +30,7 @@ const MobileHeader = ({ classes, data, hamburgerMenu, updateHamburgerState }) =>
         </div>
         <nav className={classes.mobileNavigation}>
           <ul>
-            {data.tabs.map(tab => (
+            {data.map(tab => (
               <NavItem key={tab.title} title={tab.title} link={tab.link} active={tab.active} />
             ))}
           </ul>
