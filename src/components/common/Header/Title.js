@@ -5,7 +5,7 @@ import SnetSvgLogo from "../../../assets/images/WhiteLogo.svg";
 import Routes from "../../../utility/constants/Routes";
 import { useStyles } from "./styles";
 
-const Title = ({ title }) => {
+const Title = ({ platformName }) => {
   const classes = useStyles();
   return (
     <Fragment>
@@ -14,7 +14,7 @@ const Title = ({ title }) => {
           <img src={SnetSvgLogo} alt="SingularityNET" />
         </Link>
       </h1>
-      <span>RFAI</span>
+      {platformName ? <span>RFAI</span> : null}
     </Fragment>
   );
 };
