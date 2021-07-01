@@ -27,20 +27,3 @@ export const headerData = {
     headerText: "Log Out",
   },
 };
-
-const tabs = [
-  {
-    title: "AI Marketplace",
-    link: "https://beta.singularitynet.io/",
-    newTab: true,
-  },
-  {
-    title: "AI Developer",
-    link: "https://dev.singularitynet.io/",
-    newTab: true,
-  },
-];
-
-export const NavData = {
-  tabs,
-};

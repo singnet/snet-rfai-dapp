@@ -1,5 +1,5 @@
 export const useStyles = theme => ({
-  disabledPortalMainContainer: { padding: "32px 0 62px" },
+  disabledPortalMainContainer: { padding: "102px 0 62px" },
   disabledPortalMainWrapper: {
     width: 845,
     margin: "0 auto",
@@ -43,6 +43,8 @@ export const useStyles = theme => ({
     "& span": { display: "block" },
   },
   lookingForNewAIServiceContainer: {
+    borderRadius: 6,
+    background: "linear-gradient(136.03deg, #5A1F69 0.06%, #270D4E 100%)",
     display: "flex",
     alignItems: "flex-start",
     padding: "32px 35px 32px 38px",
@@ -50,15 +52,30 @@ export const useStyles = theme => ({
     "& div": {
       marginLeft: 32,
       "& > span": {
-        color: "rgba(0,0,0,0.87)",
+        color: "#fff",
         fontSize: 24,
         fontWeight: 600,
         lineHeight: "30px",
       },
       "& p": {
         margin: "16px 0 24px",
-        color: theme.palette.text.mediumShadeGray,
+        color: "#eee",
+        fontWeight: 200,
         lineHeight: "24px",
+      },
+      "& button": {
+        padding: "7px 53px",
+        border: "1px solid #fff",
+        borderRadius: 4,
+        background: "transparent",
+        color: "#fff",
+        cursor: "pointer",
+        fontFamily: "Muli",
+        fontSize: 14,
+        fontWeight: 600,
+        letterSpacing: 1.25,
+        lineHeight: "16px",
+        textTransform: "uppercase",
       },
     },
   },
