@@ -27,30 +27,3 @@ export const headerData = {
     headerText: "Log Out",
   },
 };
-
-const tabs = [
-  {
-    title: "View Requests",
-    link: `/${Routes.RFAI_LANDING}`,
-    newTab: false,
-  },
-  {
-    title: "Create Request",
-    link: `/${Routes.CREATE_REQUEST}`,
-    newTab: false,
-  },
-  {
-    title: "Get Started",
-    link: `/${Routes.GET_STARTED}`,
-    newTab: false,
-  },
-  {
-    title: "Claims",
-    link: `/${Routes.USER_PROFILE}/claims`,
-    newTab: false,
-  },
-];
-
-export const NavData = {
-  tabs,
-};

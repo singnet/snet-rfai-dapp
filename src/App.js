@@ -26,6 +26,7 @@ const ForgotPasswordSubmit = lazy(() => import("./components/Login/ForgotPasswor
 const Onboarding = lazy(() => import("./components/Onboarding"));
 const PageNotFound = lazy(() => import("./components/common/PageNotFound"));
 const RFAILanding = lazy(() => import("./components/RFAILanding"));
+const GoogleForm = lazy(() => import("./components/RFAILanding/GoogleForm"));
 const CreateRequest = lazy(() => import("./components/CreateRequest"));
 const SignUp = lazy(() => import("./components/Login/Signup"));
 const Login = lazy(() => import("./components/Login"));
@@ -103,6 +104,7 @@ class App extends Component {
                   {...this.props}
                   component={withInAppWrapper(UserProfile)}
                 />
+                <Route path={`/${Routes.GOOGLE_FORM}`} component={withInAppWrapper(GoogleForm)} />
                 <Route path={`/${Routes.RFAI_LANDING}`} component={withInAppWrapper(RFAILanding)} />
                 <Route path={`/${Routes.CREATE_REQUEST}`} component={withInAppWrapper(CreateRequest)} />
                 <Route path={`/${Routes.GET_STARTED}`} component={withInAppWrapper(GetStarted)} />

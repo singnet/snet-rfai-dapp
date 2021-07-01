@@ -1,68 +1,81 @@
 export const useStyles = theme => ({
-  RFAILandingContainer: {
-    backgroundColor: theme.palette.text.offWhiteColor,
-  },
-  mainWrapper: {
-    width: "92%",
+  disabledPortalMainContainer: { padding: "102px 0 62px" },
+  disabledPortalMainWrapper: {
+    width: 845,
     margin: "0 auto",
-    "@media(max-width:1280px)": { width: "98%" },
+    "@media(max-width:900px)": { width: "90%" },
   },
-  topSectionCotainer: {
-    marginTop: 24,
-    "@media(max-width: 960px)": {
-      flexDirection: "column",
-      alignItems: "center",
+  letterMainContainer: {
+    borderRadius: 4,
+    backgroundColor: theme.backgroundColor.white,
+    boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
+    "& > span": {
+      padding: "28px 0",
+      display: "block",
+      color: "#222",
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: "45px",
+      textAlign: "center",
     },
   },
-  titleContainer: {
-    "@media(max-width: 1024px)": { maxWidth: "100%" },
-    marginTop: "64px",
-  },
-  title: {
-    margin: 0,
-    color: theme.palette.text.darkShadedGray,
-    fontSize: 32,
-    fontWeight: 600,
-    letterSpacing: -0.5,
-    lineHeight: "48px",
-  },
-  descriptionContainer: {
-    marginTop: "64px",
-    "@media(max-width: 1024px)": {
-      maxWidth: "100%",
-      textAlign: "center  ",
+  letterContainer: {
+    padding: "37px 64px 32px",
+    borderTop: "0.75px solid rgb(155 155 155 / 50%)",
+    color: theme.palette.text.mediumShadeGray,
+    fontSize: 16,
+    lineHeight: "26px",
+    "& > span": {
+      marginBottom: 55,
+      display: "block",
     },
-  },
-  description: {
-    margin: 0,
-    color: theme.palette.text.darkShadedGray,
-    fontSize: 22,
-    fontWeight: 600,
-    lineHeight: "32px",
     "& p": {
-      margin: "5px 0 0",
-      fontWeight: 200,
-      lineHeight: "28px",
-    },
-    "@media(max-width: 1280px)": {
-      paddingRight: 0,
-      paddingTop: 16,
-    },
-    "@media(max-width: 1024px)": { paddingTop: 0 },
-  },
-  btnContainer: { marginTop: 33 },
-  signupLink: { textDecoration: "none" },
-  loginContainer: {
-    "& p": {
-      color: theme.palette.text.darkShadedGray,
-      fontSize: 22,
-      fontWeight: 200,
-      lineHeight: "28px",
+      margin: 0,
+      "&:last-of-type": { marginTop: 30 },
     },
     "& a": {
       color: theme.palette.text.primary,
-      fontWeight: 600,
       textDecoration: "none",
+    },
+  },
+  letterFoot: {
+    marginTop: 55,
+    "& span": { display: "block" },
+  },
+  lookingForNewAIServiceContainer: {
+    borderRadius: 6,
+    background: "linear-gradient(136.03deg, #5A1F69 0.06%, #270D4E 100%)",
+    display: "flex",
+    alignItems: "flex-start",
+    padding: "32px 35px 32px 38px",
+    marginTop: 32,
+    "& div": {
+      marginLeft: 32,
+      "& > span": {
+        color: "#fff",
+        fontSize: 24,
+        fontWeight: 600,
+        lineHeight: "30px",
+      },
+      "& p": {
+        margin: "16px 0 24px",
+        color: "#eee",
+        fontWeight: 200,
+        lineHeight: "24px",
+      },
+      "& button": {
+        padding: "7px 53px",
+        border: "1px solid #fff",
+        borderRadius: 4,
+        background: "transparent",
+        color: "#fff",
+        fontFamily: "Muli",
+        fontSize: 14,
+        fontWeight: 600,
+        letterSpacing: 1.25,
+        lineHeight: "16px",
+        textTransform: "uppercase",
+      },
     },
   },
 });

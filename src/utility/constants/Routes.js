@@ -9,6 +9,7 @@ const Routes = {
   CREATE_REQUEST: "createrequest",
   USER_PROFILE: "userprofile",
   GET_STARTED: "getstarted",
+  GOOGLE_FORM: "googleform",
 };
 
 export default Routes;
