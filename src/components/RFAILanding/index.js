@@ -3,9 +3,13 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 
 import StyledButton from "../common/StyledButton";
+import Routes from "../../utility/constants/Routes";
 import { useStyles } from "./styles";
 
 const RFAILanding = ({ classes }) => {
+  const openGoogleForm = () => {
+    window.open(`/${Routes.GOOGLE_FORM}`);
+  };
   return (
     <div className={classes.disabledPortalMainContainer}>
       <div className={classes.disabledPortalMainWrapper}>
@@ -41,7 +45,7 @@ const RFAILanding = ({ classes }) => {
               If you're looking for a partner with experience in creating personalized AI Solutions, we are happy to
               help. Fill out your information at the link below and we will contact you shortly.
             </p>
-            <StyledButton btnType="blue" btnText="request new ai solution" />
+            <StyledButton btnType="blue" btnText="request new ai solution" onClick={openGoogleForm} />
           </div>
         </div>
       </div>
