@@ -22,7 +22,7 @@ const RFAILanding = ({ classes }) => {
   ];
 
   const openGoogleForm = () => {
-    window.open("https://ropsten-v2-dapp.singularitynet.io/");
+    window.open("https://ropsten-v2-dapp.singularitynet.io/airequestform");
   };
 
   return (
