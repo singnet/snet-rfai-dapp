@@ -5,7 +5,6 @@ import { useStyles } from "./styles";
 const withInAppWrapper = InputComponent => {
   return props => {
     const classes = useStyles();
-
     return (
       <Fragment>
         <div className={classes.scrollableContent}>

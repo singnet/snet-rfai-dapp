@@ -69,6 +69,7 @@ export const useStyles = theme => ({
         borderRadius: 4,
         background: "transparent",
         color: "#fff",
+        cursor: "pointer",
         fontFamily: "Muli",
         fontSize: 14,
         fontWeight: 600,

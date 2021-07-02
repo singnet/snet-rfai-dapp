@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 import Title from "./Title";
 import MobileHeader from "./MobileHeader";
 
-const Header = ({ data, platformName }) => {
+const Header = ({ data, portalName }) => {
   const classes = useStyles();
 
   return (
@@ -14,7 +14,7 @@ const Header = ({ data, platformName }) => {
       <div className={classes.mainHeader}>
         <div className={classes.logoSection}>
           <MobileHeader data={data} />
-          <Title platformName={platformName} />
+          <Title portalName={portalName} />
         </div>
         <div className={classes.navigationSection}>
           <NavBar data={data} />
