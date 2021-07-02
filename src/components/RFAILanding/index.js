@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/styles";
 
 import Header from "../common/Header";
 import Footer from "../common/Footer";
-import Routes from "../../utility/constants/Routes";
 import { useStyles } from "./styles";
 import { Fragment } from "react";
 
@@ -23,7 +22,7 @@ const RFAILanding = ({ classes }) => {
   ];
 
   const openGoogleForm = () => {
-    window.open(`/${Routes.GOOGLE_FORM}`);
+    window.open("https://ropsten-v2-dapp.singularitynet.io/airequestform");
   };
 
   return (
