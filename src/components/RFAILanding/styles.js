@@ -1,3 +1,5 @@
+import newAIServiceBG from "../../assets/images/newAIServiceBG.png";
+
 export const useStyles = theme => ({
   disabledPortalMainContainer: { padding: "102px 0 62px" },
   disabledPortalMainWrapper: {
@@ -44,7 +46,10 @@ export const useStyles = theme => ({
   },
   lookingForNewAIServiceContainer: {
     borderRadius: 6,
-    background: "linear-gradient(136.03deg, #5A1F69 0.06%, #270D4E 100%)",
+    backgroundImage: `url(${newAIServiceBG})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     display: "flex",
     alignItems: "flex-start",
     padding: "32px 35px 32px 38px",
@@ -58,13 +63,13 @@ export const useStyles = theme => ({
         lineHeight: "30px",
       },
       "& p": {
-        margin: "16px 0 24px",
+        margin: "9px 0 48px",
         color: "#eee",
         fontWeight: 200,
         lineHeight: "24px",
       },
       "& button": {
-        padding: "7px 53px",
+        padding: "7px 38px",
         border: "1px solid #fff",
         borderRadius: 4,
         background: "transparent",
@@ -77,6 +82,14 @@ export const useStyles = theme => ({
         lineHeight: "16px",
         textTransform: "uppercase",
       },
+      "@media(max-width:600px)": {
+        margin: "15px 0 0",
+        textAlign: "center",
+      },
+    },
+    "@media(max-width:600px)": {
+      flexDirection: "column",
+      alignItems: "center",
     },
   },
 });
