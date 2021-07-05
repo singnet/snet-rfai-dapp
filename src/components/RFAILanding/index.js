@@ -2,6 +2,7 @@ import React from "react";
 
 import { withStyles } from "@material-ui/styles";
 
+import lookingForServiceIcon from "../../assets/images/lookingForService.svg";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { useStyles } from "./styles";
@@ -55,14 +56,14 @@ const RFAILanding = ({ classes }) => {
             </div>
           </div>
           <div className={classes.lookingForNewAIServiceContainer}>
-            <img src="http://placehold.it/100x100" alt="Looking for New AI Service" />
+            <img src={lookingForServiceIcon} alt="Looking for New AI Service" />
             <div>
               <span>Looking for New AI Service?</span>
               <p>
-                If you're looking for a partner with experience in creating personalized AI Solutions, we are happy to
-                help. Fill out your information at the link below and we will contact you shortly.
+                If you have a need for a specific AI service, we would love to know! We will discuss the details with
+                you or use your suggestion to incentivize our network.
               </p>
-              <button onClick={openGoogleForm}>request new ai solution</button>
+              <button onClick={openGoogleForm}>request ai form</button>
             </div>
           </div>
         </div>
