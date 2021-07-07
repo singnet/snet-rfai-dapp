@@ -52,9 +52,7 @@ class App extends Component {
             <Suspense fallback={<CircularProgress thickness={10} />}>
               <Switch>
                 <Route path="/" exact component={withInAppWrapper(RFAILanding)} />
-                <Route>
-                  <Redirect to="/" />
-                </Route>
+                <Redirect to="/" />
               </Switch>
             </Suspense>
           </Router>
