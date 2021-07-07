@@ -90,9 +90,9 @@ export const useStyles = makeStyles(theme => ({
     "& a": {
       textDecoration: "none",
       fontSize: 16,
-      color: theme.palette.text.white,
+      color: theme.palette.text.lightShadedGray,
       lineHeight: "20px",
-      "&:hover": { color: theme.palette.text.white, textDecoration: "none" },
+      "&:hover": { color: theme.palette.text.white },
     },
   },
   navLinksDropDown: {
