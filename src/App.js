@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from "react";
 import Amplify from "aws-amplify";
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { connect } from "react-redux";
 import ReactGA from "react-ga";
@@ -52,7 +52,9 @@ class App extends Component {
             <Suspense fallback={<CircularProgress thickness={10} />}>
               <Switch>
                 <Route path="/" exact component={withInAppWrapper(RFAILanding)} />
-                <Route component={withInAppWrapper(RFAILanding)} />
+                <Route>
+                  <Redirect to="/" />
+                </Route>
               </Switch>
             </Suspense>
           </Router>
