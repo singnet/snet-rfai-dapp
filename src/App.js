@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import ReactGA from "react-ga";
 import { createBrowserHistory } from "history";
 
-import Routes from "./utility/constants/Routes";
 import { aws_config } from "./config/aws_config";
 import theme from "./assets/Theme";
 import withInAppWrapper from "./components/HOC/WithInAppHeader";
@@ -39,10 +38,6 @@ class App extends Component {
   componentDidMount = async () => {
     await this.props.fetchUserDetails();
     this.props.fetchFoundationMembers();
-  };
-
-  pageNotFoundAction = () => {
-    history.push(Routes.RFAI_LANDING);
   };
 
   render() {
