@@ -81,6 +81,7 @@ export const useStyles = theme => ({
         letterSpacing: 1.25,
         lineHeight: "16px",
         textTransform: "uppercase",
+        "&:hover": { background: "rgba(241,241,241,0.15)" },
       },
       "@media(max-width:600px)": {
         margin: "15px 0 0",

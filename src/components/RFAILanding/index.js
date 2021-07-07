@@ -40,7 +40,7 @@ const RFAILanding = ({ classes }) => {
                   We are in the process of making some changes to RFAI portal and community-driven AI development
                   support in general. To avoid unnecessary spending of AGIX or transaction costs, we have disabled new
                   entries to the portal, until further notice. For any help or information contact support{" "}
-                  <a href="mailto:support@singularitynet.io" title="here">
+                  <a href="https://singularitynet.io/contact/" title="here" target="_blank">
                     here.
                   </a>
                 </p>
