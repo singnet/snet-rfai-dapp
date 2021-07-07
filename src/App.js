@@ -9,11 +9,8 @@ import { createBrowserHistory } from "history";
 import Routes from "./utility/constants/Routes";
 import { aws_config } from "./config/aws_config";
 import theme from "./assets/Theme";
-import withRegistrationHeader from "./components/HOC/WithRegistrationHeader";
-import { headerData } from "./utility/constants/Header";
 import withInAppWrapper from "./components/HOC/WithInAppHeader";
 import { userActions } from "./Redux/actionCreators";
-import PrivateRoute from "./components/common/PrivateRoute";
 import AppLoader from "./components/common/AppLoader";
 import { CircularProgress } from "@material-ui/core";
 import initHotjar from "./assets/externalScripts/hotjar";
@@ -21,16 +18,7 @@ import initGDPRNotification from "./assets/externalScripts/gdpr";
 
 import { requestActions } from "./Redux/actionCreators";
 
-const ForgotPassword = lazy(() => import("./components/Login/ForgotPassword"));
-const ForgotPasswordSubmit = lazy(() => import("./components/Login/ForgotPasswordSubmit"));
-const Onboarding = lazy(() => import("./components/Onboarding"));
-const PageNotFound = lazy(() => import("./components/common/PageNotFound"));
 const RFAILanding = lazy(() => import("./components/RFAILanding"));
-const CreateRequest = lazy(() => import("./components/CreateRequest"));
-const SignUp = lazy(() => import("./components/Login/Signup"));
-const Login = lazy(() => import("./components/Login"));
-const UserProfile = lazy(() => import("./components/UserProfile"));
-const GetStarted = lazy(() => import("./components/GetStarted"));
 
 Amplify.configure(aws_config);
 
@@ -58,7 +46,7 @@ class App extends Component {
   };
 
   render() {
-    const { hamburgerMenu, isInitialized, isLoggedIn, isTermsAccepted } = this.props;
+    const { hamburgerMenu, isInitialized } = this.props;
     if (!isInitialized) {
       return <CircularProgress />;
     }
@@ -68,46 +56,8 @@ class App extends Component {
           <Router history={history}>
             <Suspense fallback={<CircularProgress thickness={10} />}>
               <Switch>
-                <Route path={`/${Routes.SIGNUP}`} component={withRegistrationHeader(SignUp, headerData.SIGNUP)} />
-                <Route
-                  path={`/${Routes.LOGIN}`}
-                  {...this.props}
-                  component={withRegistrationHeader(Login, headerData.LOGIN)}
-                />
-                <Route
-                  path={`/${Routes.FORGOT_PASSWORD}`}
-                  {...this.props}
-                  component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
-                />
-                <Route
-                  path={`/${Routes.RESET_PASSWORD}`}
-                  {...this.props}
-                  component={withRegistrationHeader(ForgotPassword, headerData.FORGOT_PASSWORD)}
-                />
-                <Route
-                  path={`/${Routes.FORGOT_PASSWORD_SUBMIT}`}
-                  {...this.props}
-                  component={withRegistrationHeader(ForgotPasswordSubmit, headerData.FORGOT_PASSWORD_SUBMIT)}
-                />
-                <PrivateRoute
-                  isAllowed={isLoggedIn}
-                  redirectTo={`/${Routes.LOGIN}`}
-                  path={`/${Routes.ONBOARDING}`}
-                  {...this.props}
-                  component={withRegistrationHeader(Onboarding, headerData.ONBOARDING)}
-                />
-                <PrivateRoute
-                  isAllowed={isLoggedIn && isTermsAccepted}
-                  redirectTo={isLoggedIn ? `/${Routes.ONBOARDING}` : `/${Routes.LOGIN}`}
-                  path={`/${Routes.USER_PROFILE}/:activeTab?`}
-                  {...this.props}
-                  component={withInAppWrapper(UserProfile)}
-                />
-                <Route path={`/${Routes.RFAI_LANDING}`} component={withInAppWrapper(RFAILanding)} />
-                <Route path={`/${Routes.CREATE_REQUEST}`} component={withInAppWrapper(CreateRequest)} />
-                <Route path={`/${Routes.GET_STARTED}`} component={withInAppWrapper(GetStarted)} />
                 <Route path="/" exact component={withInAppWrapper(RFAILanding)} />
-                <Route component={() => <PageNotFound handleGoToHome={this.pageNotFoundAction} />} />
+                <Route component={withInAppWrapper(RFAILanding)} />
               </Switch>
             </Suspense>
           </Router>
@@ -119,8 +69,6 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.userReducer.login.isLoggedIn,
-  isTermsAccepted: state.userReducer.isTermsAccepted,
   isInitialized: state.userReducer.isInitialized,
   hamburgerMenu: state.stylesReducer.hamburgerMenu,
 });
