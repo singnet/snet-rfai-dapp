@@ -32,13 +32,13 @@ const RFAILanding = ({ classes }) => {
       <div className={classes.disabledPortalMainContainer}>
         <div className={classes.disabledPortalMainWrapper}>
           <div className={classes.letterMainContainer}>
-            <span>RFAI Portal Disabled</span>
+            <span>RFAI Portal Update</span>
             <div className={classes.letterContainer}>
               <span>Dear SingularityNET Supporter,</span>
               <div className={classes.letterBody}>
                 <p>
                   We are in the process of making some changes to RFAI portal and community-driven AI development
-                  support in general. To avoid unnecessary spending of AGIX or transaction costs, we have disabled new
+                  support in general. To avoid unnecessary spending of AGIX or transaction costs, we have suspended new
                   entries to the portal, until further notice. For any help or information contact support{" "}
                   <a href="https://singularitynet.io/contact/" title="here" target="_blank">
                     here.
