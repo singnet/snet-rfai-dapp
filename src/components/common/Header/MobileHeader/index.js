@@ -4,11 +4,10 @@ import { connect } from "react-redux";
 import { stylesActions } from "../../../../Redux/actionCreators";
 import CloseIcon from "@material-ui/icons/Close";
 
-import HeaderActions from "../HeaderActions";
 import NavItem from "../NavItem";
 import { useStyles } from "./styles";
 
-const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburgerState }) => {
+const MobileHeader = ({ classes, data, hamburgerMenu, updateHamburgerState }) => {
   const toggleMobileMenu = () => {
     updateHamburgerState(!hamburgerMenu);
   };
@@ -31,23 +30,10 @@ const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburge
         </div>
         <nav className={classes.mobileNavigation}>
           <ul>
-            {data.tabs.map(tab => (
+            {data.map(tab => (
               <NavItem key={tab.title} title={tab.title} link={tab.link} active={tab.active} />
             ))}
-            {data.dropdowns.map(dropdown => (
-              <div key={dropdown.label} className={classes.subMenues}>
-                <Fragment>
-                  <NavItem title={dropdown.label} subHeader />
-                  {dropdown.list.map(item => (
-                    <NavItem key={item.label} title={item.label} link={item.link} subListItem />
-                  ))}
-                </Fragment>
-              </div>
-            ))}
           </ul>
-          <div className={`${classes.mobileActionBtns} ${isLoggedIn ? classes.loggedInState : ""}`}>
-            <HeaderActions isLoggedIn={isLoggedIn} />
-          </div>
         </nav>
       </div>
     </Fragment>

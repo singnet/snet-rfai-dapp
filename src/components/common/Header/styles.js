@@ -11,7 +11,6 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 5,
     backgroundColor: theme.palette.text.purple,
     boxShadow: "0 2px 6px 0 rgba(0,0,0,0.3)",
-    "@media (max-width:1280px)": { padding: "13px 10px 3px 10px" },
   },
   updateNotificationBar: {
     width: "100%",
@@ -19,14 +18,25 @@ export const useStyles = makeStyles(theme => ({
   mainHeader: {
     boxSizing: "border-box",
     width: "100%",
-    padding: "13px 65px 6px 60px",
+    padding: "14px 65px 13px 60px",
     display: "flex",
     alignItems: "center",
+    "@media (max-width:768px)": { padding: "14px 65px 13px 0" },
   },
   logoSection: {
     width: "30%",
     display: "flex",
     alignItems: "center",
+    lineHeight: 0,
+    "& > span": {
+      marginLeft: 13,
+      color: theme.palette.text.white,
+      fontSize: 22,
+      fontWeight: 200,
+      letterSpacing: -0.68,
+      lineHeight: "28px",
+      textAlign: "center",
+    },
     "@media (max-width:1024px)": { width: "40%" },
   },
   h1: {
@@ -43,8 +53,7 @@ export const useStyles = makeStyles(theme => ({
   logoIcon: { width: "100%" },
   navigationSection: {
     width: "58%",
-    marginBottom: 10,
-    "@media (max-width:1024px)": { display: "none" },
+    "@media (max-width:768px)": { display: "none" },
   },
   headerDropDown: {
     "& > div": {
@@ -82,8 +91,8 @@ export const useStyles = makeStyles(theme => ({
       textDecoration: "none",
       fontSize: 16,
       color: theme.palette.text.lightShadedGray,
-      lineHeight: "22px",
-      "&:hover": { color: theme.palette.text.white, textDecoration: "none" },
+      lineHeight: "20px",
+      "&:hover": { color: theme.palette.text.white },
     },
   },
   navLinksDropDown: {

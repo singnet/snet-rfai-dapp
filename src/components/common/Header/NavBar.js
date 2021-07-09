@@ -9,8 +9,8 @@ const NavBar = ({ data }) => {
   return (
     <nav>
       <ul className={classes.navUl}>
-        {data.tabs.map(tab => (
-          <NavItem key={tab.title} title={tab.title} link={tab.link} />
+        {data.map(tab => (
+          <NavItem key={tab.title} title={tab.title} link={tab.link} newTab={tab.newTab} />
         ))}
       </ul>
     </nav>

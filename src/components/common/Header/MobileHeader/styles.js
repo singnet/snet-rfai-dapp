@@ -11,8 +11,7 @@ export const useStyles = theme => ({
       backgroundColor: theme.palette.text.white,
       marginBottom: 3,
     },
-    "@media (max-width:1024px)": { display: "block" },
-    "@media (max-width:768px)": { margin: "0 25px 0 0" },
+    "@media (max-width:768px)": { display: "block" },
   },
   mobileNavContainer: {
     display: "flex",

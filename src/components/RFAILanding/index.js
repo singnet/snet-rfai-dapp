@@ -1,62 +1,76 @@
-import React, { Fragment } from "react";
-import Grid from "@material-ui/core/Grid";
+import React from "react";
+
 import { withStyles } from "@material-ui/styles";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
-import StyledButton from "../common/StyledButton";
-import MainSection from "./MainSection";
+import lookingForServiceIcon from "../../assets/images/lookingForService.svg";
+import Header from "../common/Header";
+import Footer from "../common/Footer";
 import { useStyles } from "./styles";
-import Routes from "../../utility/constants/Routes";
+import { Fragment } from "react";
 
-import Notification from "../Notification";
+const RFAILanding = ({ classes }) => {
+  const headerTabs = [
+    {
+      title: "AI Marketplace",
+      link: "https://beta.singularitynet.io/",
+      newTab: true,
+    },
+    {
+      title: "AI Developer",
+      link: "https://dev.singularitynet.io/",
+      newTab: true,
+    },
+  ];
 
-const RFAILanding = ({ classes, isLoggedIn }) => {
+  const openGoogleForm = () => {
+    window.open("https://beta.singularitynet.io/airequestform");
+  };
+
   return (
     <Fragment>
-      <Notification />
-      <div className={classes.RFAILandingContainer}>
-        <div className={classes.mainWrapper}>
-          <Grid container spacing={24} className={classes.topSectionCotainer}>
-            <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
-              <h2 className={classes.title}>Request for AI</h2>
-            </Grid>
-            <Grid item xs={12} sm={9} md={9} lg={9} className={classes.descriptionContainer}>
-              <div className={classes.description}>
-                <span>Welcome</span>
+      <Header data={headerTabs} portalName="RFAI" />
+      <div className={classes.disabledPortalMainContainer}>
+        <div className={classes.disabledPortalMainWrapper}>
+          <div className={classes.letterMainContainer}>
+            <span>RFAI Portal Update</span>
+            <div className={classes.letterContainer}>
+              <span>Dear SingularityNET Supporter,</span>
+              <div className={classes.letterBody}>
                 <p>
-                  This community portal allows you to make project requests for new AI services that currently are not
-                  available on the market. In addition, you can fund these projects, view other solutions, and submit
-                  solutions to claim AGIX token rewards.
+                  We are in the process of making some changes to RFAI portal and community-driven AI development
+                  support in general. To avoid unnecessary spending of AGIX or transaction costs, we have suspended new
+                  entries to the portal, until further notice. For any help or information contact support{" "}
+                  <a href="https://singularitynet.io/contact/" title="here" target="_blank">
+                    here.
+                  </a>
+                </p>
+                <p>
+                  Stay tuned and follow our social media channels to be informed about the many exciting development to
+                  come!
                 </p>
               </div>
-              {isLoggedIn ? (
-                <div className={classes.btnContainer}>
-                  <Link to={Routes.CREATE_REQUEST} className={classes.signupLink} onClick={e => e.preventDefault()}>
-                    <StyledButton type="blue" btnText="Create new Request" disabled />
-                  </Link>
-                </div>
-              ) : (
-                <div className={classes.loginContainer}>
-                  <p>
-                    Please <Link to={Routes.LOGIN}>Login</Link> or <Link to={Routes.SIGNUP}>Signup</Link> to use the
-                    full features of Request for AI [RFAI] platform.
-                  </p>
-                </div>
-              )}
-            </Grid>
-          </Grid>
-          <div>
-            <MainSection />
+              <div className={classes.letterFoot}>
+                <span>Thanks,</span>
+                <spa>SingularityNET Team</spa>
+              </div>
+            </div>
+          </div>
+          <div className={classes.lookingForNewAIServiceContainer}>
+            <img src={lookingForServiceIcon} alt="Looking for New AI Service" />
+            <div>
+              <span>Looking for New AI Service?</span>
+              <p>
+                If you have a need for a specific AI service, we would love to know! We will discuss the details with
+                you or use your suggestion to incentivize our network.
+              </p>
+              <button onClick={openGoogleForm}>request ai form</button>
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </Fragment>
   );
 };
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.userReducer.login.isLoggedIn,
-});
-
-export default connect(mapStateToProps)(withStyles(useStyles)(RFAILanding));
+export default withStyles(useStyles)(RFAILanding);
