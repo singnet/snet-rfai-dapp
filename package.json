@@ -22,7 +22,7 @@
     "react-ga": "^2.6.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "singularitynet-rfai-contracts": "^1.0.0",
@@ -61,11 +61,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
-    "eslint": "^5.16.0",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^2.7.0",
-    "lint-staged": "^8.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.0"
   }
